@@ -2,17 +2,16 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import { GlobalProvider } from './context/GlobalState';
+import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 
 export default function App() {
   return (
     <GlobalProvider>
       <Router>
-        <Link to="/login">Login</Link>
         <div>
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
@@ -28,8 +27,4 @@ export default function App() {
       </Router>
     </GlobalProvider>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }

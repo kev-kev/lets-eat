@@ -16,7 +16,6 @@ export const GlobalProvider = ({ children }) => {
       type: "LOGIN_USER",
       payload: {}
     });
-    console.log(username, password);
     // Send request to backend to login user
     // If success:
     dispatch({
