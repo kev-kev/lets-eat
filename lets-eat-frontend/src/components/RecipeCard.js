@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   recipeCard: {
     width: "20rem",
     height: "25rem",
-    margin: "2rem",
     "border-radius": "20px",
     "background-color": "#fff",
     "box-shadow": "0px 0px 20px #ddd",

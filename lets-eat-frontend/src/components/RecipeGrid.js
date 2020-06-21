@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const renderRecipeCard = (recipe, classes) => {
+const renderRecipeCard = (recipes, recipe, classes) => {
     return (
-        <Grid item xs key={recipe} >
+        <Grid item xs={recipes.length / 12} key={recipe.name} >
           <RecipeCard
             name={recipe.name}
             imgUrl={recipe.imgUrl}
@@ -29,14 +29,19 @@ const renderRecipeCard = (recipe, classes) => {
 
 const renderRecipeGrid = (props, classes) => {
     return props.recipes.map(recipe => {
-        return renderRecipeCard(recipe, classes);
+        return renderRecipeCard(props.recipes, recipe, classes);
     });
 }
 
 export default function RecipeGrid(props) {
   const classes = useStyles();
   return (
-    <Grid container spacing={3}>
+    <Grid 
+      direction="row"
+      justify="flex-start"
+      alignItems="flex-start"
+      spacing={3}
+      container>
         {renderRecipeGrid(props, classes)}
     </Grid>
   );

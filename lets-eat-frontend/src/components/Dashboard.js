@@ -10,7 +10,7 @@ import RecipeGrid from './RecipeGrid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   content: {
     flexGrow: 1,
@@ -19,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '1vh',
   },
   container: {
-    paddingTop: theme.spacing(4),
+    width: '100%',
     paddingBottom: theme.spacing(4),
+    margin: 0
   },
 }));
 
@@ -38,11 +39,23 @@ const PLACEHOLDER_RECIPES = [
         submittedBy: "miranda"
     },
     {
-        name: "strawberry, blueberry & kiwi mini fruit tarts",
+        name: "strawberry & blueberry mini fruit tarts",
         link: "https://etsy.com",
         imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
         submittedBy: "miranda"
     },
+    {
+      name: "strawberry, blueberry & kiwi mini fruit tarts",
+      link: "https://google.com",
+      imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
+      submittedBy: "miranda"
+  },
+  {
+      name: "oven baked chicken shwarma",
+      link: "https://apple.com",
+      imgUrl: "https://www.cookingclassy.com/wp-content/uploads/2017/12/oven-roasted-chicken-shawarma-6.jpg",
+      submittedBy: "miranda"
+  },
 ]
 
 export default function Dashboard() {
@@ -53,13 +66,13 @@ export default function Dashboard() {
       <CssBaseline />
       <Sidebar />
       <main className={classes.content}>
-        <Title>Recipe Vault</Title>
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth={false} className={classes.container}>
+          <Title>Recipe Vault</Title>
           <RecipeGrid recipes={PLACEHOLDER_RECIPES} />
-          <Box pt={4}>
-            <Copyright />
-          </Box>
         </Container>
+        <Box pt={4}>
+          <Copyright />
+        </Box>
       </main>
     </div>
   );
