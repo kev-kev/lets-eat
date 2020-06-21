@@ -24,6 +24,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const PLACEHOLDER_RECIPES = [
+    {
+        name: "strawberry, blueberry & kiwi mini fruit tarts",
+        link: "https://google.com",
+        imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
+        submittedBy: "miranda"
+    },
+    {
+        name: "oven baked chicken shwarma",
+        link: "https://apple.com",
+        imgUrl: "https://www.cookingclassy.com/wp-content/uploads/2017/12/oven-roasted-chicken-shawarma-6.jpg",
+        submittedBy: "miranda"
+    },
+    {
+        name: "strawberry, blueberry & kiwi mini fruit tarts",
+        link: "https://etsy.com",
+        imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
+        submittedBy: "miranda"
+    },
+]
+
 export default function Dashboard() {
   const classes = useStyles();
 
@@ -34,7 +55,7 @@ export default function Dashboard() {
       <main className={classes.content}>
         <Title>Recipe Vault</Title>
         <Container maxWidth="lg" className={classes.container}>
-          <RecipeGrid recipes={["123", "456"]} />
+          <RecipeGrid recipes={PLACEHOLDER_RECIPES} />
           <Box pt={4}>
             <Copyright />
           </Box>

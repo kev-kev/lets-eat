@@ -18,7 +18,11 @@ const useStyles = makeStyles((theme) => ({
 const renderRecipeCard = (recipe, classes) => {
     return (
         <Grid item xs key={recipe} >
-          <RecipeCard />
+          <RecipeCard
+            name={recipe.name}
+            imgUrl={recipe.imgUrl}
+            link={recipe.link}
+            submittedBy={recipe.submittedBy} />
         </Grid>
     );
 }
