@@ -12,6 +12,7 @@ import theme from './theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import GlobalOverrides from './GlobalOverrides';
+import Dashboard from './components/Dashboard';
 
 export default function App() {
   return (

@@ -27,6 +27,7 @@ const theme = createMuiTheme({
         h3: {...serifFontFamily},
         h4: {...serifFontFamily},
         h5: {...serifFontFamily},
+        h6: {...serifFontFamily},
     },
     palette: {
       primary: {
