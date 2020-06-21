@@ -2,7 +2,8 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 import { GlobalProvider } from './context/GlobalState';
 import Home from './components/Home';
@@ -23,6 +24,9 @@ export default function App() {
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
             <Switch>
+              <Route path="/home">
+                <Dashboard />
+              </Route>
               <Route path="/login">
                 <LoginForm />
               </Route>
