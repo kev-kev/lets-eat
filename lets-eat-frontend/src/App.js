@@ -15,6 +15,7 @@ import Dashboard from './components/Dashboard';
 import RecipeGrid from './components/RecipeGrid';
 import RecipeInboxGrid from './components/RecipeInboxGrid';
 import Title from './components/Title';
+import NewRecipeForm from './components/NewRecipeForm';
 
 const PLACEHOLDER_RECIPES = [
   {
@@ -70,6 +71,11 @@ export default function App() {
                 <Dashboard>
                   <Title>Recipe Inbox</Title>
                   <RecipeInboxGrid inbox={PLACEHOLDER_RECIPES} />
+                </Dashboard>
+              </Route>
+              <Route path="/new">
+                <Dashboard>
+                  <NewRecipeForm />
                 </Dashboard>
               </Route>
               <Route path="/login">
