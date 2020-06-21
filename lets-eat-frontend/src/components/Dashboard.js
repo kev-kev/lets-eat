@@ -7,6 +7,7 @@ import Sidebar from './Sidebar';
 import Copyright from './Copyright';
 import Title from './Title';
 import RecipeGrid from './RecipeGrid';
+import RecipeInboxGrid from './RecipeInboxGrid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +68,8 @@ export default function Dashboard() {
       <Sidebar />
       <main className={classes.content}>
         <Container maxWidth={false} className={classes.container}>
+          <Title>Recipe Inbox</Title>
+          <RecipeInboxGrid inbox={PLACEHOLDER_RECIPES} />
           <Title>Recipe Vault</Title>
           <RecipeGrid recipes={PLACEHOLDER_RECIPES} />
         </Container>

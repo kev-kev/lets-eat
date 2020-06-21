@@ -6,7 +6,7 @@ const renderRecipeCard = (recipes, recipe) => {
     return (
         <Grid item xs={12} sm={6} md={3} xl={2} key={recipe.name} >
           <RecipeCard
-            isRecipeVoteCard={false}
+            isRecipeVoteCard={true}
             name={recipe.name}
             imgUrl={recipe.imgUrl}
             link={recipe.link}
@@ -16,7 +16,7 @@ const renderRecipeCard = (recipes, recipe) => {
 }
 
 const renderRecipeGrid = (props) => {
-    return props.recipes.map(recipe => {
+    return props.inbox.map(recipe => {
         return renderRecipeCard(props.recipes, recipe);
     });
 }

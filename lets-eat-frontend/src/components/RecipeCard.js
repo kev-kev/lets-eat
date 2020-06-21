@@ -1,11 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import RecipeVoteBody from './RecipeVoteBody';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    // stuff
-  },
   recipeCard: {
     width: "275px",
     height: "350px",
@@ -66,9 +64,12 @@ return (
           <Button variant="outlined" color="primary" className={classes.recipeCardLink} disableElevation href={props.link}>
             visit recipe
           </Button>
-          <div className={classes.recipeCardFooter}>
-              submitted by: {props.submittedBy}
-          </div>
+          {props.isRecipeVoteCard ?
+            <RecipeVoteBody /> :
+            (<div className={classes.recipeCardFooter}>
+                  submitted by: {props.submittedBy}
+              </div>)
+          }
           </div>
       </div>
   );
