@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,8 +35,8 @@ export default function LoginForm() {
   const classes = useStyles();
   const { login, user } = useContext(GlobalContext);
 
-  const usernameInput = useRef();
-  const pwInput = useRef();
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const CHEF_KIRBY = "https://vignette.wikia.nocookie.net/kirby/images/b/bf/Kirby_cafe_pagetop.png/revision/latest?cb=20170922160315&path-prefix=en";
 
@@ -64,7 +64,7 @@ export default function LoginForm() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                ref={usernameInput}
+                onChange = {e => setUsername(e.target.value)}
             />
             <TextField
                 variant="outlined"
@@ -76,7 +76,8 @@ export default function LoginForm() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                ref={pwInput}
+                onChange = {e => setPassword(e.target.value)}
+
             />
             <Button
                 type="submit"
@@ -86,7 +87,7 @@ export default function LoginForm() {
                 className={classes.submit}
                 onClick={e => {
                     e.preventDefault();
-                    login(usernameInput.current, pwInput.current)
+                    login(username, password)
                 }}
             >
                 let's eat!

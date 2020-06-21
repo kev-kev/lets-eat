@@ -10,17 +10,17 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(username: params[:username])
-    if @user && @user.authenticate(params[:password])
+    @user = User.find_by(username: user_params[:username])
+    if @user && @user.authenticate(user_params[:password])
       token = encode_token({user_id: @user.id})
-      render json: {user: @user, token: token}
+      render json: {user: @user, token: token}, status: :accepted
     else
-      render json: {error: 'uWu oh no! your username or password is invalid 🥺👉👈'}
+      render json: {error: @user.errors}
     end
   end
 
   private
     def user_params
-      params.permit(:username, :password)
+      params.require(:user).permit(:username, :password)
     end
 end
