@@ -17,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+  kirby: {
+    width: 'auto',
+    height: theme.spacing(12),
+    margin: '20px'
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -37,6 +38,8 @@ export default function LoginForm() {
   const usernameInput = useRef();
   const pwInput = useRef();
 
+  const CHEF_KIRBY = "https://vignette.wikia.nocookie.net/kirby/images/b/bf/Kirby_cafe_pagetop.png/revision/latest?cb=20170922160315&path-prefix=en";
+
   if (user) {
       return (
           <Redirect to="/" />
@@ -46,11 +49,9 @@ export default function LoginForm() {
         <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-            <RestaurantIcon />
-            </Avatar>
+            <img className={classes.kirby} src={CHEF_KIRBY} />
             <Typography component="h1" variant="h5">
-            Sign in
+            sign in to view recipes
             </Typography>
             <form className={classes.form} noValidate>
             <TextField
@@ -88,7 +89,7 @@ export default function LoginForm() {
                     login(usernameInput.current, pwInput.current)
                 }}
             >
-                Sign In
+                let's eat!
             </Button>
             </form>
         </div>
