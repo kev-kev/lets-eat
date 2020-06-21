@@ -1,25 +1,24 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     // stuff
   },
   recipeCard: {
-    width: "20rem",
-    height: "25rem",
+    width: "275px",
+    height: "350px",
     "border-radius": "20px",
     "background-color": "#fff",
-    "box-shadow": "0px 0px 20px #ddd",
+    "box-shadow": "0px 0px 20px #eee",
     overflow: "hidden",
     transition: "box-shadow 0.5s",
   },
   recipeCardImg: props => ({
     backgroundImage: `url(${props.imgUrl});`,
     backgroundSize: "cover",
-    height: "13rem",
+    height: "150px",
     width: "100%",
     opacity: "1",
     transform: "scale(1)",
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }),
   recipeCardBody: {
     width: "100%",
-    height: "12rem",
+    height: "200px",
     padding: "5%",
     display: "flex",
     "flex-direction": "column",

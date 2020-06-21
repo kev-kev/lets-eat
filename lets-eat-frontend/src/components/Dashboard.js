@@ -45,13 +45,13 @@ const PLACEHOLDER_RECIPES = [
         submittedBy: "miranda"
     },
     {
-      name: "strawberry, blueberry & kiwi mini fruit tarts",
+      name: "strawberry, blueberry & kiwi mini fruit tarts2",
       link: "https://google.com",
       imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
       submittedBy: "miranda"
   },
   {
-      name: "oven baked chicken shwarma",
+      name: "oven baked chicken shwarma2",
       link: "https://apple.com",
       imgUrl: "https://www.cookingclassy.com/wp-content/uploads/2017/12/oven-roasted-chicken-shawarma-6.jpg",
       submittedBy: "miranda"

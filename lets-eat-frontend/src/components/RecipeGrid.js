@@ -1,23 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import RecipeCard from './RecipeCard';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
-
-const renderRecipeCard = (recipes, recipe, classes) => {
+const renderRecipeCard = (recipes, recipe) => {
     return (
-        <Grid item xs={recipes.length / 12} key={recipe.name} >
+        <Grid item xs={12} sm={6} md={3} xl={2} key={recipe.name} >
           <RecipeCard
             name={recipe.name}
             imgUrl={recipe.imgUrl}
@@ -27,14 +14,13 @@ const renderRecipeCard = (recipes, recipe, classes) => {
     );
 }
 
-const renderRecipeGrid = (props, classes) => {
+const renderRecipeGrid = (props) => {
     return props.recipes.map(recipe => {
-        return renderRecipeCard(props.recipes, recipe, classes);
+        return renderRecipeCard(props.recipes, recipe);
     });
 }
 
 export default function RecipeGrid(props) {
-  const classes = useStyles();
   return (
     <Grid 
       direction="row"
@@ -42,7 +28,7 @@ export default function RecipeGrid(props) {
       alignItems="flex-start"
       spacing={3}
       container>
-        {renderRecipeGrid(props, classes)}
+        {renderRecipeGrid(props)}
     </Grid>
   );
 }
