@@ -40,7 +40,7 @@ export default function LoginForm() {
 
   if (user) {
       return (
-          <Redirect to="/" />
+          <Redirect to="/home" />
       );
   } else {
     return (
