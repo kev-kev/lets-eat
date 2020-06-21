@@ -6,8 +6,6 @@ import Container from '@material-ui/core/Container';
 import Sidebar from './Sidebar';
 import Copyright from './Copyright';
 import Title from './Title';
-import RecipeGrid from './RecipeGrid';
-import RecipeInboxGrid from './RecipeInboxGrid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,40 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PLACEHOLDER_RECIPES = [
-    {
-        name: "strawberry, blueberry & kiwi mini fruit tarts",
-        link: "https://google.com",
-        imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
-        submittedBy: "miranda"
-    },
-    {
-        name: "oven baked chicken shwarma",
-        link: "https://apple.com",
-        imgUrl: "https://www.cookingclassy.com/wp-content/uploads/2017/12/oven-roasted-chicken-shawarma-6.jpg",
-        submittedBy: "miranda"
-    },
-    {
-        name: "strawberry & blueberry mini fruit tarts",
-        link: "https://etsy.com",
-        imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
-        submittedBy: "miranda"
-    },
-    {
-      name: "strawberry, blueberry & kiwi mini fruit tarts2",
-      link: "https://google.com",
-      imgUrl: "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/261128.jpg",
-      submittedBy: "miranda"
-  },
-  {
-      name: "oven baked chicken shwarma2",
-      link: "https://apple.com",
-      imgUrl: "https://www.cookingclassy.com/wp-content/uploads/2017/12/oven-roasted-chicken-shawarma-6.jpg",
-      submittedBy: "miranda"
-  },
-]
-
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
 
   return (
@@ -68,10 +33,7 @@ export default function Dashboard() {
       <Sidebar />
       <main className={classes.content}>
         <Container maxWidth={false} className={classes.container}>
-          <Title>Recipe Inbox</Title>
-          <RecipeInboxGrid inbox={PLACEHOLDER_RECIPES} />
-          <Title>Recipe Vault</Title>
-          <RecipeGrid recipes={PLACEHOLDER_RECIPES} />
+          {props.children}
         </Container>
         <Box pt={4}>
           <Copyright />
