@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       token = encode_token({user_id: @user.id})
       render json: {user: @user, token: token}, status: :accepted
     else
-      render json: {error: @user.errors}
+      render json: {error: 'uWu oh no! your username or password is invalid 🥺👉👈'}
     end
   end
 

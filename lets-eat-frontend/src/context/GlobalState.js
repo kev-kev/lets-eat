@@ -38,7 +38,7 @@ export const GlobalProvider = ({ children }) => {
         }
       })
       .then(data => {
-        if (data.error){
+        if (data.error) {
           console.log(data.error)
         } else {
         localStorage.setItem('token', data.jwt)
