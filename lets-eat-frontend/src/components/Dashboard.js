@@ -9,7 +9,7 @@ import Title from './Title';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   content: {
     flexGrow: 1,
@@ -18,12 +18,13 @@ const useStyles = makeStyles((theme) => ({
     padding: '1vh',
   },
   container: {
-    paddingTop: theme.spacing(4),
+    width: '100%',
     paddingBottom: theme.spacing(4),
+    margin: 0
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
 
   return (
@@ -31,12 +32,12 @@ export default function Dashboard() {
       <CssBaseline />
       <Sidebar />
       <main className={classes.content}>
-        <Title>Recipe Vault</Title>
-        <Container maxWidth="lg" className={classes.container}>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+        <Container maxWidth={false} className={classes.container}>
+          {props.children}
         </Container>
+        <Box pt={4}>
+          <Copyright />
+        </Box>
       </main>
     </div>
   );
