@@ -19,10 +19,14 @@ class RecipesController < ApplicationController
   end
 
   def change_status
-    byebug
     @recipe = Recipe.find(recipe_params[:id])
     @recipe.update(status: recipe_params[:status])
     render json: {recipe: @recipe}
+  end
+
+  def destroy
+    Recipe.destroy(recipe_params[:id])
+    render json: {recipes: Recipe.all}
   end
 
   private
