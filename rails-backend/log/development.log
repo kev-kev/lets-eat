@@ -1009,3 +1009,262 @@ Processing by UsersController#login as */*
 Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 694)
 
 
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateRecipes (20200621202742)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (23.3ms)[0m  [1m[35mCREATE TABLE "recipes" ("id" bigserial primary key, "name" character varying, "link" character varying, "notes" character varying, "status" integer, "is_favorited" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200621202742"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (19.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/submit" for ::1 at 2020-06-22 15:14:33 -0400
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RecipesController#submit as */*
+  Parameters: {"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}}
+Completed 200 OK in 3279ms (Views: 0.4ms | ActiveRecord: 11.3ms | Allocations: 48382)
+
+
+Started POST "/submit" for ::1 at 2020-06-22 15:15:43 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}}
+Completed 200 OK in 56800ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 5247)
+
+
+Started POST "/submit" for ::1 at 2020-06-22 15:16:44 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>1, "recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}}
+Completed 200 OK in 15909ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 5200)
+
+
+Started POST "/submit" for ::1 at 2020-06-22 15:22:27 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>1, "recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}}
+  [1m[36mUser Load (6.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+Completed 500 Internal Server Error in 31ms (ActiveRecord: 12.8ms | Allocations: 10195)
+
+
+  
+ActiveModel::MissingAttributeError (can't write unknown attribute `user_id`):
+  
+app/controllers/recipes_controller.rb:11:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:23:21 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>1, "recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}}
+Completed 404 Not Found in 26ms (ActiveRecord: 13.8ms | Allocations: 6218)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find User without an ID):
+  
+app/controllers/recipes_controller.rb:10:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:24:31 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>1, "recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}}
+Completed 404 Not Found in 167117ms (ActiveRecord: 13.3ms | Allocations: 14010)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find User without an ID):
+  
+app/controllers/recipes_controller.rb:11:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:27:21 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>1}
+Completed 404 Not Found in 4969ms (ActiveRecord: 0.0ms | Allocations: 4765)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find User without an ID):
+  
+app/controllers/recipes_controller.rb:11:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:27:47 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>1}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 304)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'user_id' for Recipe.):
+  
+app/controllers/recipes_controller.rb:9:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:28:02 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>1}
+Completed 404 Not Found in 42521ms (ActiveRecord: 0.0ms | Allocations: 5275)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find User without an ID):
+  
+app/controllers/recipes_controller.rb:11:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:28:47 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>1}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:11:in `submit'
+Completed 500 Internal Server Error in 2429ms (ActiveRecord: 6.7ms | Allocations: 14884)
+
+
+  
+ActiveModel::MissingAttributeError (can't write unknown attribute `user_id`):
+  
+app/controllers/recipes_controller.rb:12:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:29:11 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>1}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:11:in `submit'
+Completed 500 Internal Server Error in 2576ms (ActiveRecord: 0.4ms | Allocations: 5498)
+
+
+  
+ActiveModel::MissingAttributeError (can't write unknown attribute `user_id`):
+  
+app/controllers/recipes_controller.rb:12:in `submit'
+Started POST "/submit" for ::1 at 2020-06-22 15:29:22 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>1}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ (byebug):1:in `submit'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:11:in `submit'
+Completed 500 Internal Server Error in 48620ms (ActiveRecord: 1.2ms | Allocations: 10940)
+
+
+  
+ActiveModel::MissingAttributeError (can't write unknown attribute `user_id`):
+  
+app/controllers/recipes_controller.rb:12:in `submit'
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (47.7ms)[0m  [1m[35mDROP DATABASE IF EXISTS "backend_development"[0m
+  [1m[35m (33.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "backend_test"[0m
+  [1m[35m (156.1ms)[0m  [1m[35mCREATE DATABASE "backend_development" ENCODING = 'unicode'[0m
+  [1m[35m (68.2ms)[0m  [1m[35mCREATE DATABASE "backend_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "recipes" CASCADE[0m
+  [1m[35m (10.2ms)[0m  [1m[35mCREATE TABLE "recipes" ("id" bigserial primary key, "name" character varying, "link" character varying, "notes" character varying, "status" integer, "is_favorited" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "password_digest" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20200621202742)[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20200620210524);
+
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-06-22 19:32:47.460299"], ["updated_at", "2020-06-22 19:32:47.460299"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "3d8156c8acc143de68dcf39e404db67e8cf0cdcd"], ["created_at", "2020-06-22 19:32:47.466760"], ["updated_at", "2020-06-22 19:32:47.466760"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "recipes" CASCADE[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "recipes" ("id" bigserial primary key, "name" character varying, "link" character varying, "notes" character varying, "status" integer, "is_favorited" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "password_digest" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20200621202742)[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20200620210524);
+
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-06-22 19:32:47.542534"], ["updated_at", "2020-06-22 19:32:47.542534"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.9ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2020-06-22 19:32:47.547253"], ["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "3d8156c8acc143de68dcf39e404db67e8cf0cdcd"], ["created_at", "2020-06-22 19:32:47.552758"], ["updated_at", "2020-06-22 19:32:47.552758"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/signup" for ::1 at 2020-06-22 15:35:32 -0400
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#signup as */*
+  Parameters: {"username"=>"1", "password"=>"[FILTERED]", "user"=>{"username"=>"1"}}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/users_controller.rb:3:in `signup'
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."username") = LOWER($1) LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:3:in `signup'
+  [1m[36mUser Create (0.9ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["username", "1"], ["created_at", "2020-06-22 19:35:32.506837"], ["updated_at", "2020-06-22 19:35:32.506837"]]
+  ↳ app/controllers/users_controller.rb:3:in `signup'
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/users_controller.rb:3:in `signup'
+  [1m[36mUser Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."username") = LOWER($1) AND "users"."id" != $2 LIMIT $3[0m  [["username", "1"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:4:in `signup'
+Completed 200 OK in 43ms (Views: 0.5ms | ActiveRecord: 35.2ms | Allocations: 8612)
+
+
+Started POST "/submit" for ::1 at 2020-06-22 15:35:48 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>0}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:11:in `submit'
+Completed 404 Not Found in 15ms (ActiveRecord: 5.4ms | Allocations: 6338)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=0):
+  
+app/controllers/recipes_controller.rb:11:in `submit'
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/submit" for ::1 at 2020-06-22 15:36:12 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>1}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:11:in `submit'
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 1.2ms | Allocations: 2993)
+
+
+  
+ActiveModel::MissingAttributeError (can't write unknown attribute `user_id`):
+  
+app/controllers/recipes_controller.rb:12:in `submit'
+  [1m[35m (6.7ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddUserIdToRecipes (20200622193821)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (24.7ms)[0m  [1m[35mALTER TABLE "recipes" ADD "user_id" integer[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200622193821"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/submit" for ::1 at 2020-06-22 15:41:05 -0400
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"}, "user_id"=>1}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:11:in `submit'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+  [1m[36mRecipe Create (2.3ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Bolognese Sauce"], ["link", "https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315"], ["notes", "add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"], ["status", 0], ["is_favorited", false], ["created_at", "2020-06-22 19:41:05.261843"], ["updated_at", "2020-06-22 19:41:05.261843"], ["user_id", 1]]
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+  [1m[35m (4.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 47ms (Views: 0.8ms | ActiveRecord: 17.1ms | Allocations: 15459)
+
+
