@@ -25,29 +25,26 @@ export const GlobalProvider = ({ children }) => {
       body: JSON.stringify({user: {username, password}})
     })
       .then(r => {
-        if (r.ok) {
-          console.log(r)
-          return r.json()
-        } else {
-          return dispatch({
+        return r.json()
+      })
+      .then(data => {
+        if (data.error) {
+          console.log(data.error);
+          dispatch({
             type: "LOGIN_FAILED",
             payload: {
               error: "Login failed"
             }
           })
-        }
-      })
-      .then(data => {
-        if (data.error) {
-          console.log(data.error)
         } else {
-        localStorage.setItem('token', data.jwt)
-        dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: {
-          user: data.user
+          localStorage.setItem('token', data.jwt)
+          dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            user: data.user
+          } 
+        })
         }
-      })}
     })
 
       
