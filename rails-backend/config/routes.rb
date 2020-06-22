@@ -4,5 +4,5 @@ Rails.application.routes.draw do
 
   resources :recipes, only: [:index]
   post "/submit", to: "recipes#submit"
-  put '/recipes/:id', to: "recipes#change_status"
+  put '/recipes/change-status', to: "recipes#change_status"
 end

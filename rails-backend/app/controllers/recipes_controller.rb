@@ -19,6 +19,7 @@ class RecipesController < ApplicationController
   end
 
   def change_status
+    byebug
     @recipe = Recipe.find(recipe_params[:id])
     @recipe.update(status: recipe_params[:status])
     render json: {recipe: @recipe}
@@ -26,6 +27,6 @@ class RecipesController < ApplicationController
 
   private
     def recipe_params
-      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id)
+      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id, :id)
     end
 end
