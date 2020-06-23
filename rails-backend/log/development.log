@@ -1765,3 +1765,219 @@ Processing by RecipesController#destroy as */*
 Completed 200 OK in 17ms (Views: 1.7ms | ActiveRecord: 10.4ms | Allocations: 3513)
 
 
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddImgToRecipes (20200623213629)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (19.9ms)[0m  [1m[35mALTER TABLE "recipes" ADD "img_url" character varying[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeleteThis (20200623211946)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeleteThis (20200623211946)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddImgToRecipes (20200623213629)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "recipes" ADD "img_url" character varying[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddImgToRecipes (20200623213629)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "recipes" ADD "img_url" character varying[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to RemoveImgFromRecipes (20200623214216)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (19.7ms)[0m  [1m[35mALTER TABLE "recipes" DROP COLUMN "img_url"[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200623214216"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddImgToRecipes (20200623214347)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "recipes" ADD "img_url" character varying[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200623214347"]]
+  [1m[35m (4.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started DELETE "/recipes/" for ::1 at 2020-06-23 17:45:02 -0400
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RecipesController#destroy as */*
+  Parameters: {"recipe"=>{"id"=>5}}
+  [1m[36mRecipe Load (0.8ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes" WHERE "recipes"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[36mRecipe Destroy (1.0ms)[0m  [1m[31mDELETE FROM "recipes" WHERE "recipes"."id" = $1[0m  [["id", 5]]
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[35m (3.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[36mRecipe Load (0.5ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:28:in `destroy'
+Completed 200 OK in 47ms (Views: 3.2ms | ActiveRecord: 13.7ms | Allocations: 11445)
+
+
+Started DELETE "/recipes/" for ::1 at 2020-06-23 17:45:06 -0400
+Processing by RecipesController#destroy as */*
+  Parameters: {"recipe"=>{"id"=>6}}
+  [1m[36mRecipe Load (0.9ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes" WHERE "recipes"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[36mRecipe Destroy (0.4ms)[0m  [1m[31mDELETE FROM "recipes" WHERE "recipes"."id" = $1[0m  [["id", 6]]
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[36mRecipe Load (0.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:28:in `destroy'
+Completed 200 OK in 10ms (Views: 1.1ms | ActiveRecord: 3.6ms | Allocations: 3591)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 17:45:14 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>3, "status"=>"approved", "img_url"=>"https://food.fnr.sndimg.com/content/dam/images/food/fullset/2008/11/9/0/LR0101_Pasta-Bolognese.jpg.rend.hgtvcom.826.620.suffix/1485537164104.jpeg"}}
+[31mUnpermitted parameter: :img_url[0m
+[31mUnpermitted parameter: :img_url[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (1.0ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Bolognese Sauce"], ["link", "https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315"], ["notes", "add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"], ["status", 1], ["is_favorited", false], ["created_at", "2020-06-23 21:45:14.045575"], ["updated_at", "2020-06-23 21:45:14.045575"], ["user_id", 3]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (0.8ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 43ms (Views: 2.2ms | ActiveRecord: 7.9ms | Allocations: 11246)
+
+
+Started DELETE "/recipes/" for ::1 at 2020-06-23 17:46:09 -0400
+Processing by RecipesController#destroy as */*
+  Parameters: {"recipe"=>{"id"=>7}}
+  [1m[36mRecipe Load (0.3ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes" WHERE "recipes"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[36mRecipe Destroy (0.7ms)[0m  [1m[31mDELETE FROM "recipes" WHERE "recipes"."id" = $1[0m  [["id", 7]]
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:27:in `destroy'
+  [1m[36mRecipe Load (0.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:28:in `destroy'
+Completed 200 OK in 32ms (Views: 2.0ms | ActiveRecord: 8.1ms | Allocations: 10299)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 17:46:14 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>3, "status"=>"approved", "img_url"=>"https://food.fnr.sndimg.com/content/dam/images/food/fullset/2008/11/9/0/LR0101_Pasta-Bolognese.jpg.rend.hgtvcom.826.620.suffix/1485537164104.jpeg"}}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (0.3ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id", "img_url") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Bolognese Sauce"], ["link", "https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315"], ["notes", "add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"], ["status", 1], ["is_favorited", false], ["created_at", "2020-06-23 21:46:14.582684"], ["updated_at", "2020-06-23 21:46:14.582684"], ["user_id", 3], ["img_url", "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2008/11/9/0/LR0101_Pasta-Bolognese.jpg.rend.hgtvcom.826.620.suffix/1485537164104.jpeg"]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (2.0ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 29ms (Views: 2.3ms | ActiveRecord: 8.5ms | Allocations: 8571)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:46:26 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (1.6ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 4ms (Views: 1.9ms | ActiveRecord: 1.6ms | Allocations: 1251)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:48:22 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.4ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 2ms (Views: 1.8ms | ActiveRecord: 0.4ms | Allocations: 1269)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:48:42 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.6ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.6ms | Allocations: 1251)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:48:57 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (56.5ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 60ms (Views: 3.3ms | ActiveRecord: 56.5ms | Allocations: 1251)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:49:14 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (15.5ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 18ms (Views: 2.3ms | ActiveRecord: 15.5ms | Allocations: 1251)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:49:39 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (87.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 91ms (Views: 3.7ms | ActiveRecord: 87.2ms | Allocations: 1251)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:51:17 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (233.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 236ms (Views: 2.4ms | ActiveRecord: 233.2ms | Allocations: 1251)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 17:51:37 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"Bolognese Sauce", "link"=>"https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315", "notes"=>"add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!", "user_id"=>3, "status"=>"pending", "img_url"=>"https://food.fnr.sndimg.com/content/dam/images/food/fullset/2008/11/9/0/LR0101_Pasta-Bolognese.jpg.rend.hgtvcom.826.620.suffix/1485537164104.jpeg"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (0.5ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id", "img_url") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Bolognese Sauce"], ["link", "https://www.foodnetwork.com/recipes/anne-burrell/pasta-bolognese-recipe-1939315"], ["notes", "add in a splash of worchestershire and/or fish sauce to the simmer if you want to up the umami!"], ["status", 0], ["is_favorited", false], ["created_at", "2020-06-23 21:51:37.221504"], ["updated_at", "2020-06-23 21:51:37.221504"], ["user_id", 3], ["img_url", "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2008/11/9/0/LR0101_Pasta-Bolognese.jpg.rend.hgtvcom.826.620.suffix/1485537164104.jpeg"]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (0.3ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 20ms (Views: 2.5ms | ActiveRecord: 2.3ms | Allocations: 4573)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 17:51:39 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.3ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.3ms | Allocations: 1442)
+
+
