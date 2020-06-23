@@ -49,7 +49,7 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
-  function submitRecipe(name, link, notes){
+  function submitRecipe(name, link, notes, imgUrl){
     fetch("http://localhost:4000/submit", {
       method: "POST",
       headers: {
@@ -60,7 +60,8 @@ export const GlobalProvider = ({ children }) => {
           name: name,
           link: link,
           notes: notes,
-          user_id: state.user.id
+          user_id: state.user.id,
+          img_url: imgUrl
         }
       })
     })
@@ -69,7 +70,7 @@ export const GlobalProvider = ({ children }) => {
       dispatch({
         type: "SUBMIT_RECIPE_SUCCESS",
         payload: {
-          recipes: data
+          recipes: data.recipes
         }
       })
     })

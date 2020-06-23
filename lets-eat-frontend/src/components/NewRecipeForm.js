@@ -105,7 +105,7 @@ export default function NewRecipeForm() {
               className={classes.submit}
               onClick={e => {
                   e.preventDefault();
-                  submitRecipe(title, link, notes)
+                  submitRecipe(title, link, notes, imgUrl)
               }}
           >
               submit

@@ -1981,3 +1981,193 @@ Processing by RecipesController#index as */*
 Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.3ms | Allocations: 1442)
 
 
+Started GET "/recipes" for ::1 at 2020-06-23 17:53:07 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (1.5ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 4ms (Views: 2.3ms | ActiveRecord: 1.5ms | Allocations: 1442)
+
+
+Started POST "/login" for ::1 at 2020-06-23 18:00:57 -0400
+Processing by UsersController#login as */*
+  Parameters: {"user"=>{"username"=>"1", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:13:in `login'
+Completed 202 Accepted in 238ms (Views: 0.4ms | ActiveRecord: 0.7ms | Allocations: 1181)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:00:58 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.9ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 4ms (Views: 2.7ms | ActiveRecord: 0.9ms | Allocations: 1473)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 18:01:34 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"oven baked chicken shwarma", "link"=>"https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma", "notes"=>"it's yummy!!", "user_id"=>3}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (0.9ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "oven baked chicken shwarma"], ["link", "https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma"], ["notes", "it's yummy!!"], ["status", 0], ["is_favorited", false], ["created_at", "2020-06-23 22:01:34.708766"], ["updated_at", "2020-06-23 22:01:34.708766"], ["user_id", 3]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (2.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (0.3ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 24ms (Views: 1.6ms | ActiveRecord: 4.2ms | Allocations: 4719)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:02:16 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (1.7ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 5ms (Views: 3.0ms | ActiveRecord: 1.7ms | Allocations: 1625)
+
+
+Started POST "/login" for ::1 at 2020-06-23 18:03:00 -0400
+Processing by UsersController#login as */*
+  Parameters: {"user"=>{"username"=>"1", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:13:in `login'
+Completed 202 Accepted in 237ms (Views: 0.3ms | ActiveRecord: 0.3ms | Allocations: 956)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:03:04 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.3ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.3ms | Allocations: 1625)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 18:03:13 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"testest", "link"=>"https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma", "notes"=>"", "user_id"=>3}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (0.3ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "testest"], ["link", "https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma"], ["notes", ""], ["status", 0], ["is_favorited", false], ["created_at", "2020-06-23 22:03:13.255344"], ["updated_at", "2020-06-23 22:03:13.255344"], ["user_id", 3]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (0.4ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 13ms (Views: 5.6ms | ActiveRecord: 3.1ms | Allocations: 4888)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:04:20 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (132.4ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 136ms (Views: 3.2ms | ActiveRecord: 132.4ms | Allocations: 1805)
+
+
+Started POST "/login" for ::1 at 2020-06-23 18:04:37 -0400
+Processing by UsersController#login as */*
+  Parameters: {"user"=>{"username"=>"1", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:13:in `login'
+Completed 202 Accepted in 232ms (Views: 0.3ms | ActiveRecord: 0.2ms | Allocations: 956)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:04:37 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.4ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.4ms | Allocations: 1805)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 18:04:50 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"oven baked chicken shwarma", "link"=>"https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma", "notes"=>"", "user_id"=>3}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (0.3ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "oven baked chicken shwarma"], ["link", "https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma"], ["notes", ""], ["status", 0], ["is_favorited", false], ["created_at", "2020-06-23 22:04:50.704225"], ["updated_at", "2020-06-23 22:04:50.704225"], ["user_id", 3]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (0.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 14ms (Views: 7.0ms | ActiveRecord: 2.9ms | Allocations: 5071)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:09:03 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.6ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.6ms | Allocations: 1987)
+
+
+Started POST "/login" for ::1 at 2020-06-23 18:09:23 -0400
+Processing by UsersController#login as */*
+  Parameters: {"user"=>{"username"=>"1", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:13:in `login'
+Completed 202 Accepted in 237ms (Views: 0.4ms | ActiveRecord: 0.5ms | Allocations: 957)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:09:23 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 2ms (Views: 1.9ms | ActiveRecord: 0.2ms | Allocations: 1987)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 18:09:29 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"oven baked chicken shwarma", "link"=>"https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma", "notes"=>"", "user_id"=>3}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (0.3ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "oven baked chicken shwarma"], ["link", "https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma"], ["notes", ""], ["status", 0], ["is_favorited", false], ["created_at", "2020-06-23 22:09:29.774241"], ["updated_at", "2020-06-23 22:09:29.774241"], ["user_id", 3]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (0.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 13ms (Views: 6.2ms | ActiveRecord: 2.9ms | Allocations: 5253)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:10:49 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (3.4ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 8ms (Views: 3.9ms | ActiveRecord: 3.4ms | Allocations: 2169)
+
+
+Started POST "/login" for ::1 at 2020-06-23 18:10:57 -0400
+Processing by UsersController#login as */*
+  Parameters: {"user"=>{"username"=>"1", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:13:in `login'
+Completed 202 Accepted in 289ms (Views: 0.3ms | ActiveRecord: 1.8ms | Allocations: 956)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:10:57 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.3ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 6ms (Views: 5.4ms | ActiveRecord: 0.3ms | Allocations: 2169)
+
+
+Started POST "/submit" for ::1 at 2020-06-23 18:11:04 -0400
+Processing by RecipesController#submit as */*
+  Parameters: {"recipe"=>{"name"=>"oven baked chicken shwarma", "link"=>"https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma", "notes"=>"", "user_id"=>3, "img_url"=>"https://static01.nyt.com/images/2016/06/06/dining/06COOKING-ROASTCHICKSHAWARM2/06COOKING-ROASTCHICKSHAWARM2-articleLarge.jpg"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recipes_controller.rb:10:in `submit'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Create (0.4ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "link", "notes", "status", "is_favorited", "created_at", "updated_at", "user_id", "img_url") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "oven baked chicken shwarma"], ["link", "https://cooking.nytimes.com/recipes/1017161-oven-roasted-chicken-shawarma"], ["notes", ""], ["status", 0], ["is_favorited", false], ["created_at", "2020-06-23 22:11:04.474269"], ["updated_at", "2020-06-23 22:11:04.474269"], ["user_id", 3], ["img_url", "https://static01.nyt.com/images/2016/06/06/dining/06COOKING-ROASTCHICKSHAWARM2/06COOKING-ROASTCHICKSHAWARM2-articleLarge.jpg"]]
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recipes_controller.rb:13:in `submit'
+  [1m[36mRecipe Load (0.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:14:in `submit'
+Completed 200 OK in 10ms (Views: 2.5ms | ActiveRecord: 3.0ms | Allocations: 5477)
+
+
