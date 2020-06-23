@@ -21,6 +21,11 @@ export default (state, action) => {
         return {
           ...state,
           recipes: action.payload.recipes
+        };
+      case "FETCH_RECIPES_SUCCESS":
+        return {
+          ...state,
+          recipes: action.payload.recipes
         }
       default:
         return state;
