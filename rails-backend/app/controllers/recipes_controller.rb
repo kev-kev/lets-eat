@@ -7,12 +7,11 @@ class RecipesController < ApplicationController
   def submit
     # find user from the user id then 
     @recipe = Recipe.new(recipe_params)
-    # byebug
-    @user = User.find(params[:user_id])
+    @user = User.find(recipe_params[:user_id])
     @recipe.user = @user
     if @recipe.valid?
       @recipe.save!
-      render json: {recipe: @recipe}
+      render json: {recipes: Recipe.all}
     else
       render json: {error: 'oWo uh oh! your recipe is invalid 🥺👉👈'}
     end

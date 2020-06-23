@@ -17,6 +17,11 @@ export default (state, action) => {
           isLoggingIn: false,
           error: action.payload.error
         };
+      case "SUBMIT_RECIPE_SUCCESS":
+        return {
+          ...state,
+          recipes: action.payload.recipes
+        }
       default:
         return state;
     }
