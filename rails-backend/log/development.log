@@ -2171,3 +2171,40 @@ Processing by RecipesController#submit as */*
 Completed 200 OK in 10ms (Views: 2.5ms | ActiveRecord: 3.0ms | Allocations: 5477)
 
 
+Started POST "/login" for ::1 at 2020-06-23 18:14:22 -0400
+Processing by UsersController#login as */*
+  Parameters: {"user"=>{"username"=>"1", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:13:in `login'
+Completed 202 Accepted in 231ms (Views: 0.3ms | ActiveRecord: 0.2ms | Allocations: 956)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:14:23 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.2ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 18ms (Views: 17.2ms | ActiveRecord: 0.2ms | Allocations: 2363)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:14:30 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (98.6ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 103ms (Views: 4.3ms | ActiveRecord: 98.6ms | Allocations: 2360)
+
+
+Started POST "/login" for ::1 at 2020-06-23 18:14:31 -0400
+Processing by UsersController#login as */*
+  Parameters: {"user"=>{"username"=>"1", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "1"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:13:in `login'
+Completed 202 Accepted in 232ms (Views: 0.3ms | ActiveRecord: 0.2ms | Allocations: 957)
+
+
+Started GET "/recipes" for ::1 at 2020-06-23 18:14:32 -0400
+Processing by RecipesController#index as */*
+  [1m[36mRecipe Load (0.3ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes"[0m
+  ↳ app/controllers/recipes_controller.rb:4:in `index'
+Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.3ms | Allocations: 2360)
+
+

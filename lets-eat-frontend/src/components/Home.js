@@ -6,9 +6,7 @@ export const Home = () => {
   const { user } = useContext(GlobalContext);
   if (user) {
     return (
-        <div>
-            Signed in!
-        </div>
+        <Redirect to="/home"/>
     )
   } else {
     return (

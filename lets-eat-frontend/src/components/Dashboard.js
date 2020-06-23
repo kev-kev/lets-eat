@@ -6,6 +6,8 @@ import Container from '@material-ui/core/Container';
 import Sidebar from './Sidebar';
 import Copyright from './Copyright';
 import { GlobalContext } from "../context/GlobalState";
+import { Redirect } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,24 +28,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const { fetchRecipes } = useContext(GlobalContext)
-  
+  const { fetchRecipes, user } = useContext(GlobalContext)
   useEffect(() => {
     fetchRecipes()
   }, [])
-
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Sidebar />
-      <main className={classes.content}>
-        <Container maxWidth={false} className={classes.container}>
-          {props.children}
-        </Container>
-        <Box pt={4}>
-          <Copyright />
-        </Box>
-      </main>
-    </div>
-  );
+  if(user) {
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <Sidebar />
+        <main className={classes.content}>
+          <Container maxWidth={false} className={classes.container}>
+            {props.children}
+          </Container>
+          <Box pt={4}>
+            <Copyright />
+          </Box>
+        </main>
+      </div>
+    ) 
+  } else {
+    return <Redirect to="/login"/>
+  }
 }
