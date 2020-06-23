@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,6 +16,7 @@ import RecipeGrid from './components/RecipeGrid';
 import RecipeInboxGrid from './components/RecipeInboxGrid';
 import Title from './components/Title';
 import NewRecipeForm from './components/NewRecipeForm';
+
 
 const PLACEHOLDER_RECIPES = [
   {
@@ -64,13 +65,13 @@ export default function App() {
               <Route path="/home">
                 <Dashboard>
                   <Title>Recipe Index</Title>
-                  <RecipeGrid recipes={PLACEHOLDER_RECIPES} />
+                  <RecipeGrid/>
                 </Dashboard>
               </Route>
               <Route path="/inbox">
                 <Dashboard>
                   <Title>Recipe Inbox</Title>
-                  <RecipeInboxGrid inbox={PLACEHOLDER_RECIPES} />
+                  <RecipeInboxGrid />
                 </Dashboard>
               </Route>
               <Route path="/new">

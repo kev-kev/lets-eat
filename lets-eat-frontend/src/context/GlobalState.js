@@ -73,7 +73,20 @@ export const GlobalProvider = ({ children }) => {
         }
       })
     })
+  }
 
+  function fetchRecipes(){
+    fetch("http://localhost:4000/recipes")
+      .then(r => r.json())
+      .then(data =>  {
+        console.log(data)
+        dispatch({
+          type: "FETCH_RECIPES_SUCCESS",
+          payload: {
+            recipes: data.recipes
+          }
+        })
+      })
   }
 
   return (
@@ -83,7 +96,8 @@ export const GlobalProvider = ({ children }) => {
           isLoggingIn: state.isLoggingIn,
           login: loginUser,
           recipes: state.recipes,
-          submitRecipe: submitRecipe
+          submitRecipe: submitRecipe,
+          fetchRecipes: fetchRecipes
       }}
     >
       {children}

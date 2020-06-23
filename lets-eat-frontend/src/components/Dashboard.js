@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Sidebar from './Sidebar';
 import Copyright from './Copyright';
-import Title from './Title';
+import { GlobalContext } from "../context/GlobalState";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard(props) {
   const classes = useStyles();
+  const { fetchRecipes } = useContext(GlobalContext)
+  
+  useEffect(() => {
+    fetchRecipes()
+  }, [])
 
   return (
     <div className={classes.root}>
