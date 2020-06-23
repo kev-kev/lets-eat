@@ -16,12 +16,6 @@ const renderRecipeCard = (recipe) => {
     );
 }
 
-// const renderRecipeGrid = (recipes) => {
-//     return recipes.map(recipe => {
-//         return renderRecipeCard(recipe);
-//     });
-// }
-
 const renderRecipeGrid = (recipes) => {
   const approvedRecipes = recipes.filter(recipe => recipe.status == "approved")
   return approvedRecipes.map(recipe => {

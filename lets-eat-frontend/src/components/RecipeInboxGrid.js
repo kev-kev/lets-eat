@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import RecipeCard from './RecipeCard';
+import { GlobalContext } from '../context/GlobalState';
 
-const renderRecipeCard = (recipes, recipe) => {
+
+const renderRecipeCard = (recipe) => {
     return (
         <Grid item xs={12} sm={6} md={3} xl={2} key={recipe.name} >
           <RecipeCard
@@ -15,13 +17,15 @@ const renderRecipeCard = (recipes, recipe) => {
     );
 }
 
-const renderRecipeGrid = (props) => {
-    return props.inbox.map(recipe => {
-        return renderRecipeCard(props.recipes, recipe);
+const renderRecipeGrid = (recipes) => {
+  const pendingRecipes = recipes.filter(recipe => recipe.status === "pending")
+    return pendingRecipes.map(recipe => {
+        return renderRecipeCard(recipe);
     });
 }
 
-export default function RecipeGrid(props) {
+export default function RecipeGrid() {
+  const { recipes } = useContext(GlobalContext)
   return (
     <Grid 
       direction="row"
@@ -29,7 +33,7 @@ export default function RecipeGrid(props) {
       alignItems="flex-start"
       spacing={3}
       container>
-        {renderRecipeGrid(props)}
+        {renderRecipeGrid(recipes)}
     </Grid>
   );
 }

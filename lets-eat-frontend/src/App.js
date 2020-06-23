@@ -65,13 +65,13 @@ export default function App() {
               <Route path="/home">
                 <Dashboard>
                   <Title>Recipe Index</Title>
-                  <RecipeGrid recipes={PLACEHOLDER_RECIPES} />
+                  <RecipeGrid/>
                 </Dashboard>
               </Route>
               <Route path="/inbox">
                 <Dashboard>
                   <Title>Recipe Inbox</Title>
-                  <RecipeInboxGrid inbox={PLACEHOLDER_RECIPES} />
+                  <RecipeInboxGrid />
                 </Dashboard>
               </Route>
               <Route path="/new">
