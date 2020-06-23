@@ -3,7 +3,8 @@ import AppReducer from "./AppReducer";
 
 const initialState = {
   user: null,
-  isLoggingIn: false
+  isLoggingIn: false,
+  recipes: []
 };
 
 export const GlobalContext = createContext(initialState);
@@ -46,21 +47,33 @@ export const GlobalProvider = ({ children }) => {
         })
         }
     })
+  }
 
-      
-    // dispatch({
-    //    type: "LOGIN_SUCCESS",
-    //    payload: {
-    //        user: {
-    //            username: "mirmir"
-    //        }
-    //    }
-    // });
-    // Else:
-    // dispatch({
-    //    type: "LOGIN_FAILED",
-    //    payload: {error}
-    // })
+  function submitRecipe(name, link, notes){
+    fetch("http://localhost:4000/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({recipe: 
+        {
+          name: name,
+          link: link,
+          notes: notes,
+          user_id: state.user.id
+        }
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      dispatch({
+        type: "SUBMIT_RECIPE_SUCCESS",
+        payload: {
+          recipes: data
+        }
+      })
+    })
+
   }
 
   return (
@@ -68,7 +81,9 @@ export const GlobalProvider = ({ children }) => {
       value={{
           user: state.user,
           isLoggingIn: state.isLoggingIn,
-          login: loginUser
+          login: loginUser,
+          recipes: state.recipes,
+          submitRecipe: submitRecipe
       }}
     >
       {children}

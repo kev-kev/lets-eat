@@ -30,11 +30,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewRecipeForm() {
   const classes = useStyles();
-  // const { login, user } = useContext(GlobalContext);
+  const { submitRecipe } = useContext(GlobalContext);
 
   const [title, setTitle] = useState('')
   const [imgUrl, setImgUrl] = useState('')
   const [link, setLink] = useState('')
+  const [notes, setNotes] = useState('')
+
   return (
       <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -81,6 +83,20 @@ export default function NewRecipeForm() {
               onChange = {e => setLink(e.target.value)}
 
           />
+          <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              multiline
+              fullWidth
+              rows={4}
+              name="notes"
+              label="Notes"
+              type="notes"
+              id="notes"
+              autoComplete="notes"
+              onChange = {e => setNotes(e.target.value)}
+          />
           <Button
               type="submit"
               fullWidth
@@ -89,7 +105,7 @@ export default function NewRecipeForm() {
               className={classes.submit}
               onClick={e => {
                   e.preventDefault();
-                  console.log(title, imgUrl, link);
+                  submitRecipe(title, link, notes)
               }}
           >
               submit
