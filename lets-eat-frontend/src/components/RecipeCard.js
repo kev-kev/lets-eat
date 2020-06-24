@@ -65,7 +65,7 @@ return (
             visit recipe
           </Button>
           {props.isRecipeVoteCard ?
-            <RecipeVoteBody /> :
+            <RecipeVoteBody id={props.id}/> :
             (<div className={classes.recipeCardFooter}>
                   submitted by: {props.submittedBy}
               </div>)

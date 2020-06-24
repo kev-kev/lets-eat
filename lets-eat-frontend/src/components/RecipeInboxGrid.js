@@ -8,6 +8,7 @@ const renderRecipeCard = (recipe) => {
     return (
         <Grid item xs={12} sm={6} md={3} xl={2} key={recipe.name} >
           <RecipeCard
+            id={recipe.id}
             isRecipeVoteCard={true}
             name={recipe.name}
             imgUrl={recipe.img_url}
