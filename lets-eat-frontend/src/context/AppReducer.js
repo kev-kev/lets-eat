@@ -26,6 +26,11 @@ export default (state, action) => {
         return {
           ...state,
           recipes: action.payload.recipes
+        };
+      case "STATUS_UPDATE_SUCCESS":
+        return {
+          ...state,
+          recipes: action.payload.recipes
         }
       default:
         return state;

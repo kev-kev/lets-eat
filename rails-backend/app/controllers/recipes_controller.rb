@@ -20,7 +20,7 @@ class RecipesController < ApplicationController
   def change_status
     @recipe = Recipe.find(recipe_params[:id])
     @recipe.update(status: recipe_params[:status])
-    render json: {recipe: @recipe}
+    render json: {recipes: Recipe.all}
   end
 
   def destroy

@@ -17,7 +17,7 @@ const renderRecipeCard = (recipe) => {
 }
 
 const renderRecipeGrid = (recipes) => {
-  const approvedRecipes = recipes.filter(recipe => recipe.status == "approved")
+  const approvedRecipes = recipes.filter(recipe => recipe.status === "approved")
   return approvedRecipes.map(recipe => {
     return renderRecipeCard(recipe)
   })

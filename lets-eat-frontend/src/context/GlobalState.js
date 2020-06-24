@@ -89,6 +89,29 @@ export const GlobalProvider = ({ children }) => {
       })
   }
 
+  function changeRecipeStatus(recipe_id, recipe_status){
+    fetch(`http://localhost:4000/recipes/${recipe_id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        recipe: {
+        status: recipe_status,
+        id: recipe_id }
+      })
+    })
+      .then(r => r.json())
+      .then(data => {
+        dispatch({
+          type: "STATUS_UPDATE_SUCCESS",
+          payload: {
+            recipes: data.recipes
+          }
+        })
+      })
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -97,7 +120,8 @@ export const GlobalProvider = ({ children }) => {
           login: loginUser,
           recipes: state.recipes,
           submitRecipe: submitRecipe,
-          fetchRecipes: fetchRecipes
+          fetchRecipes: fetchRecipes,
+          changeRecipeStatus: changeRecipeStatus
       }}
     >
       {children}
