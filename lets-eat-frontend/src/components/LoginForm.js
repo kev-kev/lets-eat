@@ -47,7 +47,7 @@ export default function LoginForm() {
         <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-            <img className={classes.kirby} src={CHEF_KIRBY} />
+            <img className={classes.kirby} src={CHEF_KIRBY} alt="Chef Kirby" />
             <Typography component="h1" variant="h5">
             sign in to view recipes
             </Typography>

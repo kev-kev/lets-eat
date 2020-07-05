@@ -40,7 +40,8 @@ class RecipesController < ApplicationController
         status: recipe.status,
         notes: recipe.notes,
         id: recipe.id,
-        imgUrl: recipe.img_url
+        imgUrl: recipe.img_url,
+        link: recipe.link
       }
     end
 end

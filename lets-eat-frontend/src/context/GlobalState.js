@@ -49,7 +49,7 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
-  function submitRecipe(name, link, notes){
+  function submitRecipe(name, link, notes, imgUrl){
     fetch("http://localhost:4000/submit", {
       method: "POST",
       headers: {
@@ -60,16 +60,21 @@ export const GlobalProvider = ({ children }) => {
           name: name,
           link: link,
           notes: notes,
-          user_id: state.user.id
+          user_id: state.user.id,
+          img_url: imgUrl
         }
       })
     })
     .then(r => r.json())
     .then(data => {
-      dispatch({
-        type: "SUBMIT_RECIPE_SUCCESS",
-        payload: data.recipes
-      })
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        dispatch({
+          type: "SUBMIT_RECIPE_SUCCESS",
+          payload: data.recipes
+        })  
+      }
     })
   }
 
@@ -87,10 +92,14 @@ export const GlobalProvider = ({ children }) => {
     })
     .then(r => r.json())
     .then(data => {
-      dispatch({
-        type: "DELETE_RECIPE_SUCCESS",
-        payload: data.recipes
-      })
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        dispatch({
+          type: "DELETE_RECIPE_SUCCESS",
+          payload: data.recipes
+        })
+      }
     })
   }
 
@@ -98,11 +107,14 @@ export const GlobalProvider = ({ children }) => {
     fetch("http://localhost:4000/recipes")
       .then(r => r.json())
       .then(data =>  {
-        console.log(data)
-        dispatch({
-          type: "FETCH_RECIPES_SUCCESS",
-          payload: data.recipes
-        })
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          dispatch({
+            type: "FETCH_RECIPES_SUCCESS",
+            payload: data.recipes
+          })
+        }
       })
   }
 
@@ -120,10 +132,14 @@ export const GlobalProvider = ({ children }) => {
     })
       .then(r => r.json())
       .then(data => {
-        dispatch({
-          type: "STATUS_UPDATE_SUCCESS",
-          payload: data.recipes
-        })
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          dispatch({
+            type: "STATUS_UPDATE_SUCCESS",
+            payload: data.recipes
+          })
+        }
       })
   }
 

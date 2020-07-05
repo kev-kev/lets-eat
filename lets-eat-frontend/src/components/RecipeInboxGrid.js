@@ -11,7 +11,7 @@ const renderRecipeCard = (recipe) => {
             id={recipe.id}
             isRecipeVoteCard={true}
             name={recipe.name}
-            imgUrl={recipe.img_url}
+            imgUrl={recipe.imgUrl}
             link={recipe.link}
             submittedBy={recipe.submittedBy} />
         </Grid>
