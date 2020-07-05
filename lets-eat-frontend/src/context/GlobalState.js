@@ -143,6 +143,12 @@ export const GlobalProvider = ({ children }) => {
       })
   }
 
+  function logoutUser() {
+    dispatch({
+      type: "LOGOUT_USER"
+    });
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -153,7 +159,8 @@ export const GlobalProvider = ({ children }) => {
           submitRecipe,
           fetchRecipes,
           deleteRecipe,
-          changeRecipeStatus
+          changeRecipeStatus,
+          logoutUser
       }}
     >
       {children}

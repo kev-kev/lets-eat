@@ -37,6 +37,11 @@ export default (state, action) => {
           ...state,
           recipes: action.payload
         }
+      case "LOGOUT_USER": 
+        return {
+          ...state,
+          user: null
+        }
       default:
         return state;
     }

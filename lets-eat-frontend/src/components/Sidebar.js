@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,6 +10,8 @@ import AddIcon from '@material-ui/icons/AddCircleOutline';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import { GlobalContext } from '../context/GlobalState';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebarBottom: {
     'margin-top': 'auto',
+    display: 'flex',
+    'flex-direction': 'column',
+    'align-items': 'center'
   },
   large: {
     width: theme.spacing(7),
@@ -42,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+  const { logoutUser } = useContext(GlobalContext);
   const PLACEHOLDER_IMG_URL = "https://patriotpower.ogsd.net/wp-content/uploads/2018/03/Profile_Kirby.aead314d435d8e52d9a4e92a6f799c4eee08081e.jpg";
 
   return (
@@ -68,6 +74,11 @@ export default function Dashboard() {
                 </ListItemIcon>
             </ListItem>
             <div className={classes.sidebarBottom}>
+                <ListItem button onClick={logoutUser}>
+                    <ListItemIcon className={classes.sidebarItem}>
+                        <ExitToAppRoundedIcon />
+                    </ListItemIcon>
+                </ListItem>
                 <Divider />
                 <ListItem button component={Link} to="/login" key={"user-icon"} className={classes.userAvatar}>
                     <ListItemIcon>
