@@ -29,9 +29,7 @@ export default function Dashboard(props) {
   const classes = useStyles()
   const { fetchRecipes, user } = useContext(GlobalContext)
   
-  useEffect(() => {
-    fetchRecipes()
-  }, [fetchRecipes])
+  useEffect(fetchRecipes, [])
 
   if (user) {
     return (
