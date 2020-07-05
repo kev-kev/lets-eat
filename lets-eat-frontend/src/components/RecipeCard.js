@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import RecipeVoteBody from './RecipeVoteBody';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import IconButton from '@material-ui/core/IconButton';
 import { GlobalContext } from "../context/GlobalState";
 
 
@@ -15,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     "box-shadow": "0px 0px 20px #eee",
     overflow: "hidden",
     transition: "box-shadow 0.5s",
+    position: "relative"
   },
   recipeCardImg: props => ({
     backgroundImage: `url(${props.imgUrl});`,
@@ -52,6 +54,20 @@ const useStyles = makeStyles((theme) => ({
     "align-self": "center",
     margin: "1.5rem 0",
     height: "2rem"
+  },
+  deleteRecipeIcon: {
+    position: "absolute",
+    top: "6px",
+    right: "6px",
+    "background-color": "white",
+    "&:hover": {
+      "background-color": "#eee"
+    },
+    width: "30px",
+    height: "30px",
+    "& svg": {
+      "font-size": "1rem"
+    }
   }
 }));
 
@@ -63,10 +79,12 @@ export default function RecipeCard(props) {
   }
   return (
     <div className={classes.recipeCard}>
-        <CloseRoundedIcon
-          className={classes.recipeCardClose}
-          onClick={() => handleDeleteRecipe(props.id)}/>
         <div className={classes.recipeCardImg} />
+        <IconButton className={classes.deleteRecipeIcon}>
+            <CloseRoundedIcon
+              color="primary"
+              onClick={() => handleDeleteRecipe(props.id)}/>
+          </IconButton>
         <div className={classes.recipeCardBody}>
         <h2 className={classes.recipeCardTitle}>
             {props.name}
