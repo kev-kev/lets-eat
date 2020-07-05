@@ -68,9 +68,28 @@ export const GlobalProvider = ({ children }) => {
     .then(data => {
       dispatch({
         type: "SUBMIT_RECIPE_SUCCESS",
-        payload: {
-          recipes: data
+        payload: data.recipes
+      })
+    })
+  }
+
+  function deleteRecipe(recipe_id){
+    fetch(`http://localhost:4000/recipes/${recipe_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({recipe: 
+        {
+          id: recipe_id
         }
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      dispatch({
+        type: "DELETE_RECIPE_SUCCESS",
+        payload: data.recipes
       })
     })
   }
@@ -82,9 +101,7 @@ export const GlobalProvider = ({ children }) => {
         console.log(data)
         dispatch({
           type: "FETCH_RECIPES_SUCCESS",
-          payload: {
-            recipes: data.recipes
-          }
+          payload: data.recipes
         })
       })
   }
@@ -105,9 +122,7 @@ export const GlobalProvider = ({ children }) => {
       .then(data => {
         dispatch({
           type: "STATUS_UPDATE_SUCCESS",
-          payload: {
-            recipes: data.recipes
-          }
+          payload: data.recipes
         })
       })
   }
@@ -119,9 +134,10 @@ export const GlobalProvider = ({ children }) => {
           isLoggingIn: state.isLoggingIn,
           login: loginUser,
           recipes: state.recipes,
-          submitRecipe: submitRecipe,
-          fetchRecipes: fetchRecipes,
-          changeRecipeStatus: changeRecipeStatus
+          submitRecipe,
+          fetchRecipes,
+          deleteRecipe,
+          changeRecipeStatus
       }}
     >
       {children}

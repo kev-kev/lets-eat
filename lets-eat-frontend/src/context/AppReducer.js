@@ -20,17 +20,22 @@ export default (state, action) => {
       case "SUBMIT_RECIPE_SUCCESS":
         return {
           ...state,
-          recipes: action.payload.recipes
+          recipes: action.payload
         };
       case "FETCH_RECIPES_SUCCESS":
         return {
           ...state,
-          recipes: action.payload.recipes
+          recipes: action.payload
         };
       case "STATUS_UPDATE_SUCCESS":
         return {
           ...state,
-          recipes: action.payload.recipes
+          recipes: action.payload
+        }
+      case "DELETE_RECIPE_SUCCESS":
+        return {
+          ...state,
+          recipes: action.payload
         }
       default:
         return state;

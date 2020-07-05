@@ -9,9 +9,11 @@ const renderRecipeCard = (recipe) => {
           <RecipeCard
             isRecipeVoteCard={false}
             name={recipe.name}
-            imgUrl={recipe.img_url}
+            imgUrl={recipe.imgUrl}
             link={recipe.link}
-            submittedBy={recipe.submittedBy} />
+            submittedBy={recipe.submittedBy}
+            id={recipe.id}
+            />
         </Grid>
     );
 }
