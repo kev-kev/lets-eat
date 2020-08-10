@@ -4,7 +4,8 @@ import AppReducer from "./AppReducer";
 const initialState = {
   user: null,
   isLoggingIn: false,
-  recipes: []
+  recipes: [],
+  isSubmittingRecipe: false
 };
 
 export const GlobalContext = createContext(initialState);
@@ -13,10 +14,7 @@ export const GlobalProvider = ({ children }) => {
 
   function loginUser(username, password) {
     dispatch({
-      type: "LOGIN_USER",
-      payload: {
-        isLoggingIn: true
-      }
+      type: "LOGIN_USER"
     });
     fetch("http://localhost:4000/login", {
       method: "POST",
@@ -50,6 +48,9 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function submitRecipe(name, link, notes, imgUrl){
+    dispatch({
+      type: "SUBMITTING_RECIPE"
+    })
     fetch("http://localhost:4000/submit", {
       method: "POST",
       headers: {
@@ -154,13 +155,15 @@ export const GlobalProvider = ({ children }) => {
       value={{
           user: state.user,
           isLoggingIn: state.isLoggingIn,
+          isSubmittingRecipe: state.isSubmittingRecipe,
           login: loginUser,
           recipes: state.recipes,
           submitRecipe,
           fetchRecipes,
           deleteRecipe,
           changeRecipeStatus,
-          logoutUser
+          logoutUser,
+
       }}
     >
       {children}

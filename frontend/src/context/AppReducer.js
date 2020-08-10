@@ -2,8 +2,8 @@ export default (state, action) => {
     switch (action.type) {
       case "LOGIN_USER":
           return {
-              ...state,
-              isLoggingIn: true,
+            ...state,
+            isLoggingIn: true
           }
       case "LOGIN_SUCCESS":
         return {
@@ -17,10 +17,16 @@ export default (state, action) => {
           isLoggingIn: false,
           error: action.payload.error
         };
+      case "SUBMITTING_RECIPE":
+        return {
+          ...state,
+          isSubmittingRecipe: true
+        };
       case "SUBMIT_RECIPE_SUCCESS":
         return {
           ...state,
-          recipes: action.payload
+          recipes: action.payload,
+          isSubmittingRecipe: false
         };
       case "FETCH_RECIPES_SUCCESS":
         return {
