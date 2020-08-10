@@ -5,8 +5,16 @@ const initialState = {
   user: null,
   isLoggingIn: false,
   recipes: [],
-  isSubmittingRecipe: false
+  isSubmittingRecipe: false,
+  error: null
 };
+
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText)
+  }
+  return response
+}
 
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
@@ -28,7 +36,6 @@ export const GlobalProvider = ({ children }) => {
       })
       .then(data => {
         if (data.error) {
-          console.log(data.error);
           dispatch({
             type: "LOGIN_FAILED",
             payload: {
@@ -66,16 +73,19 @@ export const GlobalProvider = ({ children }) => {
         }
       })
     })
+    .then(handleErrors)
     .then(r => r.json())
     .then(data => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        dispatch({
-          type: "SUBMIT_RECIPE_SUCCESS",
-          payload: data.recipes
-        })  
-      }
+      dispatch({
+        type: "SUBMIT_RECIPE_SUCCESS",
+        payload: data.recipes
+      })  
+    })
+    .catch(error => {
+      dispatch({
+        type: "SUBMIT_RECIPE_FAILURE",
+        payload: error
+      })
     })
   }
 
@@ -163,7 +173,7 @@ export const GlobalProvider = ({ children }) => {
           deleteRecipe,
           changeRecipeStatus,
           logoutUser,
-
+          error: state.error 
       }}
     >
       {children}

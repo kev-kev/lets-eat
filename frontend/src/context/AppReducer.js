@@ -28,6 +28,12 @@ export default (state, action) => {
           recipes: action.payload,
           isSubmittingRecipe: false
         };
+      case "SUBMIT_RECIPE_FAILURE":
+        return {
+          ...state,
+          error: action.payload,
+          isSubmittingRecipe: false
+        }
       case "FETCH_RECIPES_SUCCESS":
         return {
           ...state,

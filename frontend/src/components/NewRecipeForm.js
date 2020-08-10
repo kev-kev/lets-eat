@@ -34,33 +34,54 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
 export default function NewRecipeForm() {
   const classes = useStyles();
-  const { submitRecipe, isSubmittingRecipe, recipes } = useContext(GlobalContext);
+  const { submitRecipe, isSubmittingRecipe, recipes, error } = useContext(GlobalContext);
 
   const [title, setTitle] = useState('')
   const [imgUrl, setImgUrl] = useState('')
   const [link, setLink] = useState('')
   const [notes, setNotes] = useState('')
-  const [shouldRenderSnackBar, setShouldRenderSnackBar] = useState(false)
+  const [successSnackbar, setSuccessSnackbar] = useState(false)
+  const [errorSnackbar, setErrorSnackbar] = useState(false)
 
   const refContainer = useRef(true)
 
-  const handleClose = () => {
-    setShouldRenderSnackBar(false)
+  const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)"
+
+  const handleError = () => {
+    if (error) {
+      setErrorSnackbar(true)
+    }
+  }
+
+  const handleCloseError = () => {
+    setErrorSnackbar(false)
+  }
+
+  const handleCloseSuccess = () => {
+    setSuccessSnackbar(false)
   }
 
   useEffect(() => {
-    console.log("useEffect running");
+    if (error) {
+      setErrorSnackbar(true)
+    }
+  })
+
+  // note
+  // here im using useEffect to set the ref to false on pageload so that
+  //   our snackbar doesn't load on initial render.
+  // any change to recipes will trigger the success snackbar, 
+  //  since a change must mean the fetch was successful
+  useEffect(() => {
     if (refContainer.current) {
-      console.log("useEffect running the first time");
       refContainer.current = false
     } else {
-      console.log("useEffect running the subsequent times");
-      setShouldRenderSnackBar(true)
+      setSuccessSnackbar(true)
     }
   }, [recipes])
-
 
   if (isSubmittingRecipe) {
     return(
@@ -70,11 +91,16 @@ export default function NewRecipeForm() {
     )
   } else {
   return (
-      <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Snackbar open={shouldRenderSnackBar} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          This is a success message!
+      <Snackbar open={errorSnackbar} autoHideDuration={6000} onClose={handleCloseError}>
+        <Alert onClose={handleCloseError} severity="error">
+          error!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={successSnackbar} autoHideDuration={6000} onClose={handleCloseSuccess}>
+        <Alert onClose={handleCloseSuccess} severity="success">
+          {successMessage}
         </Alert>
       </Snackbar>
       <div className={classes.paper}>
@@ -147,6 +173,6 @@ export default function NewRecipeForm() {
           </Button>
           </form>
       </div>
-      </Container>
+    </Container>
   );
 }}
