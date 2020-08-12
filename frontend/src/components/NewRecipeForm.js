@@ -49,18 +49,10 @@ export default function NewRecipeForm() {
   const refContainer = useRef(true)
 
   const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)"
+  const errorMessage = "Submission Failed (っ´ω`)ﾉ(╥ω╥)	"
 
-  const handleError = () => {
-    if (error) {
-      setErrorSnackbar(true)
-    }
-  }
-
-  const handleCloseError = () => {
+  const handleClose = () => {
     setErrorSnackbar(false)
-  }
-
-  const handleCloseSuccess = () => {
     setSuccessSnackbar(false)
   }
 
@@ -93,13 +85,13 @@ export default function NewRecipeForm() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Snackbar open={errorSnackbar} autoHideDuration={6000} onClose={handleCloseError}>
-        <Alert onClose={handleCloseError} severity="error">
-          error!
+      <Snackbar open={errorSnackbar} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {errorMessage}
         </Alert>
       </Snackbar>
-      <Snackbar open={successSnackbar} autoHideDuration={6000} onClose={handleCloseSuccess}>
-        <Alert onClose={handleCloseSuccess} severity="success">
+      <Snackbar open={successSnackbar} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
           {successMessage}
         </Alert>
       </Snackbar>

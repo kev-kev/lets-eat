@@ -93,7 +93,10 @@ export default function RecipeCard(props) {
           variant="outlined"
           color="primary"
           className={classes.recipeCardLink}
-          disableElevation href={props.link}>
+          disableElevation 
+          href={props.link}
+          target="_blank"
+          >
           visit recipe
         </Button>
         {props.isRecipeVoteCard ?
