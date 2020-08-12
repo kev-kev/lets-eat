@@ -6,7 +6,12 @@ const initialState = {
   isLoggingIn: false,
   recipes: [],
   isSubmittingRecipe: false,
-  error: null
+  errors: {
+    login: null,
+    submit: null,
+    grid: null,
+    inbox: null
+  }
 };
 
 function handleErrors(response) {
@@ -31,26 +36,22 @@ export const GlobalProvider = ({ children }) => {
       },
       body: JSON.stringify({user: {username, password}})
     })
-      .then(r => {
-        return r.json()
-      })
+      .then(handleErrors)
+      .then(r => r.json())
       .then(data => {
-        if (data.error) {
-          dispatch({
-            type: "LOGIN_FAILED",
-            payload: {
-              error: "Login failed"
-            }
-          })
-        } else {
-          localStorage.setItem('token', data.jwt)
-          dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: {
-            user: data.user
-          } 
-        })
-        }
+        localStorage.setItem('token', data.jwt)
+        dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          user: data.user
+        } 
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: "LOGIN_FAILURE",
+        payload: error
+      })
     })
   }
 
@@ -101,31 +102,37 @@ export const GlobalProvider = ({ children }) => {
         }
       })
     })
+    .then(handleErrors)
     .then(r => r.json())
     .then(data => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        dispatch({
-          type: "DELETE_RECIPE_SUCCESS",
-          payload: data.recipes
-        })
-      }
+      dispatch({
+        type: "DELETE_RECIPE_SUCCESS",
+        payload: data.recipes
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: "DELETE_RECIPE_FAILURE",
+        payload: error
+      })
     })
   }
 
   function fetchRecipes(){
     fetch("http://localhost:4000/recipes")
+      .then(handleErrors)
       .then(r => r.json())
       .then(data =>  {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          dispatch({
-            type: "FETCH_RECIPES_SUCCESS",
-            payload: data.recipes
-          })
-        }
+        dispatch({
+          type: "FETCH_RECIPES_SUCCESS",
+          payload: data.recipes
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: "FETCH_RECIPES_FAILURE",
+          payload: error
+        })
       })
   }
 
@@ -141,16 +148,18 @@ export const GlobalProvider = ({ children }) => {
         id: recipe_id }
       })
     })
+      .then(handleErrors)
       .then(r => r.json())
       .then(data => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          dispatch({
-            type: "STATUS_UPDATE_SUCCESS",
-            payload: data.recipes
-          })
-        }
+        dispatch({
+          type: "STATUS_UPDATE_SUCCESS",
+          payload: data.recipes
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: "STATUS_UPDATE_FAILURE"
+        })
       })
   }
 
@@ -173,7 +182,8 @@ export const GlobalProvider = ({ children }) => {
           deleteRecipe,
           changeRecipeStatus,
           logoutUser,
-          error: state.error 
+          errors: state.errors,
+
       }}
     >
       {children}

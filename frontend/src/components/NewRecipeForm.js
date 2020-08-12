@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewRecipeForm() {
   const classes = useStyles();
-  const { submitRecipe, isSubmittingRecipe, recipes, error } = useContext(GlobalContext);
+  const { submitRecipe, isSubmittingRecipe, recipes, errors } = useContext(GlobalContext);
 
   const [title, setTitle] = useState('')
   const [imgUrl, setImgUrl] = useState('')
@@ -49,7 +49,7 @@ export default function NewRecipeForm() {
   const refContainer = useRef(true)
 
   const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)"
-  const errorMessage = "Submission Failed (っ´ω`)ﾉ(╥ω╥)	"
+  const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)"
 
   const handleClose = () => {
     setErrorSnackbar(false)
@@ -57,16 +57,16 @@ export default function NewRecipeForm() {
   }
 
   useEffect(() => {
-    if (error) {
+    if (errors.submit) {
       setErrorSnackbar(true)
     }
   })
 
   // note
-  // here im using useEffect to set the ref to false on pageload so that
-  //   our snackbar doesn't load on initial render.
+  // here im using useEffect to set the ref to false on pageload
+  //   so the snackbar doesn't load on initial render.
   // any change to recipes will trigger the success snackbar, 
-  //  since a change must mean the fetch was successful
+  //   since a change must mean the fetch was successful
   useEffect(() => {
     if (refContainer.current) {
       refContainer.current = false
@@ -85,12 +85,12 @@ export default function NewRecipeForm() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Snackbar open={errorSnackbar} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={errorSnackbar} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
           {errorMessage}
         </Alert>
       </Snackbar>
-      <Snackbar open={successSnackbar} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={successSnackbar} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           {successMessage}
         </Alert>

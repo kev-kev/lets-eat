@@ -11,11 +11,14 @@ export default (state, action) => {
           isLoggingIn: false,
           user: action.payload.user
         };
-      case "LOGIN_FAILED":
+      case "LOGIN_FAILURE":
         return {
           ...state,
+          errors: {
+            ...state.errors,
+            login: action.payload
+          },
           isLoggingIn: false,
-          error: action.payload.error
         };
       case "SUBMITTING_RECIPE":
         return {
@@ -31,7 +34,10 @@ export default (state, action) => {
       case "SUBMIT_RECIPE_FAILURE":
         return {
           ...state,
-          error: action.payload,
+          errors: {
+            ...state.errors,
+            submit: action.payload
+          },
           isSubmittingRecipe: false
         }
       case "FETCH_RECIPES_SUCCESS":
@@ -39,15 +45,39 @@ export default (state, action) => {
           ...state,
           recipes: action.payload
         };
+      case "FETCH_RECIPES_FAILURE":
+        return {
+          ...state,
+          errors: {
+            ...state.errors,
+            grid: action.payload
+          }
+        }
       case "STATUS_UPDATE_SUCCESS":
         return {
           ...state,
           recipes: action.payload
         }
+      case "STATUS_UPDATE_FAILURE":
+        return {
+          ...state,
+          errors: {
+            ...state.errors,
+            grid: action.payload
+          }
+        }
       case "DELETE_RECIPE_SUCCESS":
         return {
           ...state,
           recipes: action.payload
+        }
+      case "DELETE_RECIPE_FAILURE":
+        return {
+          ...state,
+          errors: {
+            ...state.errors,
+            grid: action.payload
+          }
         }
       case "LOGOUT_USER": 
         return {

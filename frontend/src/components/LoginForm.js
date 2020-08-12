@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,51 +33,67 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm() {
   const classes = useStyles();
-  const { login, user } = useContext(GlobalContext);
+  const { login, user, errors } = useContext(GlobalContext);
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [errorSnackbar, setErrorSnackbar] = useState(false)
 
-  const CHEF_KIRBY = "https://vignette.wikia.nocookie.net/kirby/images/b/bf/Kirby_cafe_pagetop.png/revision/latest?cb=20170922160315&path-prefix=en";
+  const LOGO = "https://vignette.wikia.nocookie.net/kirby/images/b/bf/Kirby_cafe_pagetop.png/revision/latest?cb=20170922160315&path-prefix=en";
+  const errorMessage = "Login Failed (っ´ω`)ﾉ (╥ω╥)"
+
+  const handleClose = () => {
+    setErrorSnackbar(false)
+  }
+
+  useEffect(() => {
+    if (errors.login !== {}) {
+      setErrorSnackbar(true)
+    }
+  })
 
   if (user) {
-      return (
-          <Redirect to="/home" />
-      );
+    return (
+      <Redirect to="/home" />
+    );
   } else {
     return (
-        <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-            <img className={classes.kirby} src={CHEF_KIRBY} alt="Chef Kirby" />
-            <Typography component="h1" variant="h5">
-            sign in to view recipes
-            </Typography>
-            <form className={classes.form} noValidate>
+          <Snackbar open={errorSnackbar} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error">
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+          <img className={classes.kirby} src={LOGO} alt="Chef Kirby" />
+          <Typography component="h1" variant="h5">
+          sign in to view recipes
+          </Typography>
+          <form className={classes.form} noValidate>
             <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                onChange = {e => setUsername(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              onChange = {e => setUsername(e.target.value)}
             />
             <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange = {e => setPassword(e.target.value)}
-
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange = {e => setPassword(e.target.value)}
             />
             <Button
                 type="submit"
@@ -90,9 +108,9 @@ export default function LoginForm() {
             >
                 let's eat!
             </Button>
-            </form>
+          </form>
         </div>
-        </Container>
+      </Container>
     );
   }
 }
