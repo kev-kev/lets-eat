@@ -169,6 +169,12 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function clearErrors() {
+    dispatch({
+      type: "CLEAR_ERRORS"
+    })
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -183,7 +189,7 @@ export const GlobalProvider = ({ children }) => {
           changeRecipeStatus,
           logoutUser,
           errors: state.errors,
-
+          clearErrors
       }}
     >
       {children}

@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewRecipeForm() {
   const classes = useStyles();
-  const { submitRecipe, isSubmittingRecipe, recipes, errors } = useContext(GlobalContext);
+  const { submitRecipe, isSubmittingRecipe, recipes, errors, clearErrors } = useContext(GlobalContext);
 
   const [title, setTitle] = useState('')
   const [imgUrl, setImgUrl] = useState('')
@@ -54,6 +54,7 @@ export default function NewRecipeForm() {
   const handleClose = () => {
     setErrorSnackbar(false)
     setSuccessSnackbar(false)
+    clearErrors()
   }
 
   useEffect(() => {

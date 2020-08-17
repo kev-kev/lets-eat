@@ -39,7 +39,7 @@ export default (state, action) => {
             submit: action.payload
           },
           isSubmittingRecipe: false
-        }
+        };
       case "FETCH_RECIPES_SUCCESS":
         return {
           ...state,
@@ -52,12 +52,12 @@ export default (state, action) => {
             ...state.errors,
             grid: action.payload
           }
-        }
+        };
       case "STATUS_UPDATE_SUCCESS":
         return {
           ...state,
           recipes: action.payload
-        }
+        };
       case "STATUS_UPDATE_FAILURE":
         return {
           ...state,
@@ -65,12 +65,12 @@ export default (state, action) => {
             ...state.errors,
             grid: action.payload
           }
-        }
+        };
       case "DELETE_RECIPE_SUCCESS":
         return {
           ...state,
           recipes: action.payload
-        }
+        };
       case "DELETE_RECIPE_FAILURE":
         return {
           ...state,
@@ -78,12 +78,22 @@ export default (state, action) => {
             ...state.errors,
             grid: action.payload
           }
-        }
+        };
       case "LOGOUT_USER": 
         return {
           ...state,
           user: null
-        }
+        };
+      case "CLEAR_ERRORS":
+        return {
+          ...state,
+          errors: {
+            login: null,
+            submit: null,
+            grid: null,
+            inbox: null
+          }
+        };
       default:
         return state;
     }

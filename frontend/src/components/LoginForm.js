@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm() {
   const classes = useStyles();
-  const { login, user, errors } = useContext(GlobalContext);
+  const { login, user, errors, clearErrors } = useContext(GlobalContext);
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -42,12 +42,16 @@ export default function LoginForm() {
   const LOGO = "https://vignette.wikia.nocookie.net/kirby/images/b/bf/Kirby_cafe_pagetop.png/revision/latest?cb=20170922160315&path-prefix=en";
   const errorMessage = "Login Failed (っ´ω`)ﾉ (╥ω╥)"
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
     setErrorSnackbar(false)
+    clearErrors()
   }
 
   useEffect(() => {
-    if (errors.login !== {}) {
+    if (errors.login) {
       setErrorSnackbar(true)
     }
   })
