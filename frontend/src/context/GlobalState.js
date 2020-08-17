@@ -64,10 +64,10 @@ export const GlobalProvider = ({ children }) => {
       .then(handleErrors)
       .then(r => r.json())
       .then(data =>  {
-        // dispatch({
-        //   type: "FETCH_RECIPES_SUCCESS",
-        //   payload: data.recipes
-        // })
+        dispatch({
+          type: "FETCH_RECIPES_SUCCESS",
+          payload: data.recipes
+        })
       })
       .catch(error => {
         dispatch({
