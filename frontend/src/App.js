@@ -5,7 +5,6 @@ import {
   Route
 } from "react-router-dom";
 import { GlobalProvider } from './context/GlobalState';
-import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 import theme from './theme';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -25,8 +24,6 @@ export default function App() {
       <GlobalProvider>
         <Router>
           <div>
-            {/* A <Switch> looks through its children <Route>s and
-                renders the first one that matches the current URL. */}
             <Switch>
               <Route path="/home">
                 <Dashboard>
@@ -47,9 +44,6 @@ export default function App() {
               </Route>
               <Route path="/login">
                 <LoginForm />
-              </Route>
-              <Route path="/">
-                <Home />
               </Route>
             </Switch>
           </div>

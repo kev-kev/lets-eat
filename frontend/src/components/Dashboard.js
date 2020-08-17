@@ -7,6 +7,7 @@ import Sidebar from './Sidebar';
 import Copyright from './Copyright';
 import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,18 +20,39 @@ const useStyles = makeStyles((theme) => ({
     padding: '1vh',
   },
   container: {
+    display: 'flex',
     width: '100%',
     paddingBottom: theme.spacing(4),
-    margin: 0
+    margin: 0,
+    justifyContent: 'center'
   },
+  loading: {
+    margin: '40vh'
+  }
 }));
 
 export default function Dashboard(props) {
   const classes = useStyles()
-  const { fetchRecipes, user } = useContext(GlobalContext)
+  const { user, fetchRecipes, isFetchingRecipes } = useContext(GlobalContext)
   
   useEffect(fetchRecipes, [])
 
+  const renderLoadingOrChildren = () => {
+    if (isFetchingRecipes) {
+      return (
+      <CircularProgress className={classes.loading}/>
+      )
+    } else {
+      return props.children
+    }
+  }
+
+  // want to show a spinner when fetching recipes, 
+  //  but since we fetch all recipes at the beginning and
+  //  filter by approved, etc on each component,
+  //  does it make sense to do it like this? 
+  // Would need a way to show the spinner if the recipes are
+  //  fetching, regardless of if theyre' on home/inbox/favorites
   if (user) {
     return (
       <div className={classes.root}>
@@ -38,7 +60,7 @@ export default function Dashboard(props) {
         <Sidebar />
         <main className={classes.content}>
           <Container maxWidth={false} className={classes.container}>
-            {props.children}
+            {renderLoadingOrChildren()}
           </Container>
           <Box pt={4}>
             <Copyright />

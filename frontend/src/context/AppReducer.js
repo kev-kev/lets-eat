@@ -40,10 +40,16 @@ export default (state, action) => {
           },
           isSubmittingRecipe: false
         };
+      case "FETCH_RECIPES":
+        return {
+          ...state,
+          isFetchingRecipes: true
+        }
       case "FETCH_RECIPES_SUCCESS":
         return {
           ...state,
-          recipes: action.payload
+          recipes: action.payload,
+          isFetchingRecipes: false
         };
       case "FETCH_RECIPES_FAILURE":
         return {
@@ -51,7 +57,8 @@ export default (state, action) => {
           errors: {
             ...state.errors,
             grid: action.payload
-          }
+          },
+          isFetchingRecipes: false
         };
       case "STATUS_UPDATE_SUCCESS":
         return {

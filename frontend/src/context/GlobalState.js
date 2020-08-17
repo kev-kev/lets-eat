@@ -6,12 +6,13 @@ const initialState = {
   isLoggingIn: false,
   recipes: [],
   isSubmittingRecipe: false,
+  isFetchingRecipes: false,
   errors: {
     login: null,
     submit: null,
     grid: null,
     inbox: null
-  }
+  },
 };
 
 function handleErrors(response) {
@@ -53,6 +54,27 @@ export const GlobalProvider = ({ children }) => {
         payload: error
       })
     })
+  }
+
+  function fetchRecipes(){
+    dispatch({
+      type: "FETCH_RECIPES"
+    })
+    fetch("http://localhost:4000/recipes")
+      .then(handleErrors)
+      .then(r => r.json())
+      .then(data =>  {
+        // dispatch({
+        //   type: "FETCH_RECIPES_SUCCESS",
+        //   payload: data.recipes
+        // })
+      })
+      .catch(error => {
+        dispatch({
+          type: "FETCH_RECIPES_FAILURE",
+          payload: error
+        })
+      })
   }
 
   function submitRecipe(name, link, notes, imgUrl){
@@ -118,24 +140,6 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
-  function fetchRecipes(){
-    fetch("http://localhost:4000/recipes")
-      .then(handleErrors)
-      .then(r => r.json())
-      .then(data =>  {
-        dispatch({
-          type: "FETCH_RECIPES_SUCCESS",
-          payload: data.recipes
-        })
-      })
-      .catch(error => {
-        dispatch({
-          type: "FETCH_RECIPES_FAILURE",
-          payload: error
-        })
-      })
-  }
-
   function changeRecipeStatus(recipe_id, recipe_status){
     fetch(`http://localhost:4000/recipes/${recipe_id}`, {
       method: "PATCH",
@@ -189,7 +193,8 @@ export const GlobalProvider = ({ children }) => {
           changeRecipeStatus,
           logoutUser,
           errors: state.errors,
-          clearErrors
+          clearErrors,
+          isFetchingRecipes: state.isFetchingRecipes
       }}
     >
       {children}
