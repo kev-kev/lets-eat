@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '1vh',
   },
   container: {
-    display: 'flex',
     width: '100%',
     paddingBottom: theme.spacing(4),
     margin: 0,
@@ -47,12 +46,6 @@ export default function Dashboard(props) {
     }
   }
 
-  // want to show a spinner when fetching recipes, 
-  //  but since we fetch all recipes at the beginning and
-  //  filter by approved, etc on each component,
-  //  does it make sense to do it like this? 
-  // Would need a way to show the spinner if the recipes are
-  //  fetching, regardless of if theyre' on home/inbox/favorites
   if (user) {
     return (
       <div className={classes.root}>

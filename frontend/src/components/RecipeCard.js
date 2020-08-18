@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     "box-shadow": "0px 0px 20px #eee",
     overflow: "hidden",
     transition: "box-shadow 0.5s",
-    position: "relative"
+    position: "relative",
   },
   recipeCardImg: props => ({
     backgroundImage: `url(${props.imgUrl});`,
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     "flex-direction": "column",
     "justify-content": "space-around",
-    "font-family": "'Muli', sans-serif"
+    "font-family": "'Muli', sans-serif",
   },
   recipeCardTitle: {
     "justify-self": "flex-start",

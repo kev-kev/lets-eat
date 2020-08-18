@@ -4,9 +4,13 @@ import RecipeCard from './RecipeCard';
 import { GlobalContext } from '../context/GlobalState';
 import uuid from 'react-uuid'
 
+// cards (or grids?) are overlapping when screen is a certain size
+// want to put a margin on the grid/recipe card to test, but can only use styles in the export...
+
+
 const renderRecipeCard = (recipe) => {
     return (
-        <Grid item xs={12} sm={6} md={3} xl={2} key={recipe.name+uuid()} >
+        <Grid item xs key={recipe.name+uuid()} >
           <RecipeCard
             isRecipeVoteCard={false}
             name={recipe.name}
