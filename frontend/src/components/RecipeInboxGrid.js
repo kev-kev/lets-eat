@@ -7,7 +7,7 @@ import { GlobalContext } from '../context/GlobalState';
 const renderRecipeCard = (recipe, currentUser) => {
   if (recipe.submittedBy !== currentUser.username) {
     return (
-      <Grid item xs={12} sm={6} md={3} xl={2} key={recipe.name} >
+      <Grid item xs key={recipe.name} >
         <RecipeCard
           id={recipe.id}
           isRecipeVoteCard={true}
@@ -34,7 +34,7 @@ export default function RecipeGrid() {
       direction="row"
       justify="flex-start"
       alignItems="flex-start"
-      spacing={3}
+      spacing={2}
       container>
         {renderRecipeGrid(recipes, user)}
     </Grid>

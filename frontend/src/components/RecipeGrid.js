@@ -37,7 +37,7 @@ export default function RecipeGrid() {
       direction="row"
       justify="flex-start"
       alignItems="flex-start"
-      spacing={3}
+      spacing={2}
       container>
         {renderRecipeGrid(recipes)}
     </Grid>
