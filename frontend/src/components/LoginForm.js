@@ -54,15 +54,15 @@ export default function LoginForm() {
     if (errors.login) {
       setErrorSnackbar(true)
     }
-  })
+  }, [errors.login])
 
   if (user) {
     return (
-      <Redirect to="/home" />
+      <Redirect to="/" />
     );
   } else {
     return (
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth={"xs"}>
         <CssBaseline />
         <div className={classes.paper}>
           <Snackbar open={errorSnackbar} onClose={handleClose}>

@@ -148,8 +148,8 @@ export const GlobalProvider = ({ children }) => {
       },
       body: JSON.stringify({
         recipe: {
-        status: recipe_status,
-        id: recipe_id }
+          status: recipe_status,
+        }
       })
     })
       .then(handleErrors)
@@ -165,6 +165,34 @@ export const GlobalProvider = ({ children }) => {
           type: "STATUS_UPDATE_FAILURE"
         })
       })
+  }
+
+  function changeFavorite(recipe_id, value) {
+    fetch(`http://localhost:4000/recipes/${recipe_id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        recipe: {
+          is_favorited: value,
+          id: recipe_id
+        }
+      })
+    })
+    .then(handleErrors)
+    .then(r => r.json())
+    .then(data => {
+      dispatch({
+        type: "FAVORITE_UPDATE_SUCCESS",
+        payload: data.recipes
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: "FAVORITE_UPDATE_FAILURE"
+      })
+    })
   }
 
   function logoutUser() {
@@ -194,7 +222,8 @@ export const GlobalProvider = ({ children }) => {
           logoutUser,
           errors: state.errors,
           clearErrors,
-          isFetchingRecipes: state.isFetchingRecipes
+          isFetchingRecipes: state.isFetchingRecipes,
+          changeFavorite
       }}
     >
       {children}

@@ -18,19 +18,20 @@ class RecipesController < ApplicationController
   end
 
   def change_status
-    @recipe = Recipe.find(recipe_params[:id])
-    @recipe.update(status: recipe_params[:status])
+    @recipe = Recipe.find(params[:id])
+    # @recipe.update(status: recipe_params[:status])
+    @recipe.update(recipe_params)
     render json: {recipes: Recipe.all.map { |recipe| format_recipe(recipe)}}
   end
 
   def destroy
-    Recipe.destroy(recipe_params[:id])
+    Recipe.destroy(params[:id])
     render json: {recipes: Recipe.all.map{ |recipe| format_recipe(recipe) }}
   end
 
   private
     def recipe_params
-      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id, :id, :img_url)
+      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id, :img_url, :is_favorited)
     end
 
     def format_recipe(recipe)
@@ -41,7 +42,8 @@ class RecipesController < ApplicationController
         notes: recipe.notes,
         id: recipe.id,
         imgUrl: recipe.img_url,
-        link: recipe.link
+        link: recipe.link,
+        isFavorited: recipe.is_favorited
       }
     end
 end

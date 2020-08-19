@@ -6,6 +6,8 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import IconButton from '@material-ui/core/IconButton';
 import { GlobalContext } from "../context/GlobalState";
 
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles((theme) => ({
   recipeCard: {
@@ -72,11 +74,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeCard(props) {
-  const { deleteRecipe } = useContext(GlobalContext)
+  const { deleteRecipe, changeFavorite } = useContext(GlobalContext)
   const classes = useStyles(props);
+
   const handleDeleteRecipe = (id) => {
     deleteRecipe(id)
   }
+
+  const handleChangeFavorite = (id, value) => {
+    changeFavorite(id, value)
+  }
+
+  const displayFavoriteOrBorder = () => {
+    if (props.isFavorited) {
+      return (
+        <IconButton>
+          <FavoriteIcon onClick={() => {handleChangeFavorite(props.id, false)}}/>
+        </IconButton>
+      )
+    } else {
+      return (
+        <IconButton>
+          <FavoriteBorderIcon onClick={() => {handleChangeFavorite(props.id, true)}}/>
+        </IconButton>
+      )   
+    }
+  }
+
+  const renderVoteBodyOrFooter = () => {
+    if (props.isRecipeVoteCard) {
+      return <RecipeVoteBody id={props.id} />
+    } else {
+      return (
+      <div className={classes.recipeCardFooter}>
+        {displayFavoriteOrBorder()}
+        submitted by: {props.submittedBy}
+      </div>
+      )
+    }
+  }
+
   return (
     <div className={classes.recipeCard}>
         <div className={classes.recipeCardImg} />
@@ -99,12 +136,7 @@ export default function RecipeCard(props) {
           >
           visit recipe
         </Button>
-        {props.isRecipeVoteCard ?
-          <RecipeVoteBody id={props.id} /> :
-          (<div className={classes.recipeCardFooter}>
-                submitted by: {props.submittedBy}
-            </div>)
-        }
+        {renderVoteBodyOrFooter()}
         </div>
       </div>
   );

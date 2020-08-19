@@ -44,7 +44,7 @@ export default (state, action) => {
         return {
           ...state,
           isFetchingRecipes: true
-        }
+        };
       case "FETCH_RECIPES_SUCCESS":
         return {
           ...state,
@@ -73,6 +73,19 @@ export default (state, action) => {
             grid: action.payload
           }
         };
+      case "FAVORITE_UPDATE_SUCCESS":
+        return {
+          ...state,
+          recipes: action.payload
+        };
+      case "FAVORITE_UPDATE_FAILURE":
+        return {
+          ...state,
+          errors: {
+            ...state.errors,
+            grid: action.payload
+          }
+        }
       case "DELETE_RECIPE_SUCCESS":
         return {
           ...state,

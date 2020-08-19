@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 export default function NewRecipeForm() {
   const classes = useStyles();
   const { submitRecipe, isSubmittingRecipe, recipes, errors, clearErrors } = useContext(GlobalContext);
@@ -61,7 +60,7 @@ export default function NewRecipeForm() {
     if (errors.submit) {
       setErrorSnackbar(true)
     }
-  })
+  }, [errors.submit])
 
   // note
   // here im using useEffect to set the ref to false on pageload

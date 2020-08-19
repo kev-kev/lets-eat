@@ -15,6 +15,7 @@ import RecipeGrid from './components/RecipeGrid';
 import RecipeInboxGrid from './components/RecipeInboxGrid';
 import Title from './components/Title';
 import NewRecipeForm from './components/NewRecipeForm';
+import FavoritesGrid from './components/FavoritesGrid'
 
 export default function App() {
   return (
@@ -25,11 +26,8 @@ export default function App() {
         <Router>
           <div>
             <Switch>
-              <Route path="/home">
-                <Dashboard>
-                  <Title>Recipe Index</Title>
-                  <RecipeGrid/>
-                </Dashboard>
+              <Route path="/login">
+                <LoginForm />
               </Route>
               <Route path="/inbox">
                 <Dashboard>
@@ -42,8 +40,17 @@ export default function App() {
                   <NewRecipeForm />
                 </Dashboard>
               </Route>
-              <Route path="/login">
-                <LoginForm />
+              <Route path="/favorites">
+                <Dashboard>
+                  <Title>Favorites</Title>
+                  <FavoritesGrid />
+                </Dashboard>
+              </Route>
+              <Route path="/">
+                <Dashboard>
+                  <Title>Recipe Index</Title>
+                  <RecipeGrid/>
+                </Dashboard>
               </Route>
             </Switch>
           </div>

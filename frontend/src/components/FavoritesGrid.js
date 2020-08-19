@@ -13,15 +13,17 @@ const renderRecipeCard = (recipe, currentUser) => {
           name={recipe.name}
           imgUrl={recipe.imgUrl}
           link={recipe.link}
-          submittedBy={recipe.submittedBy} />
+          submittedBy={recipe.submittedBy}
+          isFavorited={recipe.isFavorited} 
+          />
       </Grid>
     );
   }
 }
 
 const renderRecipeGrid = (recipes, currentUser) => {
-  const pendingRecipes = recipes.filter(recipe => recipe.status === "pending")
-    return pendingRecipes.map(recipe => {
+  const favoritedRecipes = recipes.filter(recipe => recipe.isFavorited)
+    return favoritedRecipes.map(recipe => {
         return renderRecipeCard(recipe, currentUser);
     });
 }

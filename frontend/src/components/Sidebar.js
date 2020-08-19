@@ -63,7 +63,7 @@ export default function Dashboard() {
                     <MailIcon />
                 </ListItemIcon>
             </ListItem>
-            <ListItem button component={Link} to="/home" key={"favorites"}>
+            <ListItem button component={Link} to="/favorites" key={"favorites"}>
                 <ListItemIcon className={classes.sidebarItem}>
                     <FavoriteIcon />
                 </ListItemIcon>
