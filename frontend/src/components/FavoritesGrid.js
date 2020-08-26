@@ -23,9 +23,12 @@ const renderRecipeCard = (recipe, currentUser) => {
 
 const renderRecipeGrid = (recipes, currentUser) => {
   const favoritedRecipes = recipes.filter(recipe => recipe.isFavorited)
-    return favoritedRecipes.map(recipe => {
-        return renderRecipeCard(recipe, currentUser);
-    });
+  const sortedRecipes = favoritedRecipes.sort((a, b) => {
+    return a.id - b.id
+  })
+  return sortedRecipes.map(recipe => {
+      return renderRecipeCard(recipe, currentUser);
+  });
 }
 
 export default function RecipeGrid() {

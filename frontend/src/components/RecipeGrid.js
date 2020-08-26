@@ -22,7 +22,10 @@ const renderRecipeCard = (recipe) => {
 
 const renderRecipeGrid = (recipes) => {
   const approvedRecipes = recipes.filter(recipe => recipe.status === "approved")
-  return approvedRecipes.map(recipe => {
+  const sortedRecipes = approvedRecipes.sort((a, b) => {
+    return a.id - b.id
+  })
+  return sortedRecipes.map(recipe => {
     return renderRecipeCard(recipe)
   })
 }
