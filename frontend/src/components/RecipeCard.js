@@ -88,14 +88,14 @@ export default function RecipeCard(props) {
   const displayFavoriteOrBorder = () => {
     if (props.isFavorited) {
       return (
-        <IconButton>
-          <FavoriteIcon onClick={() => {handleChangeFavorite(props.id, false)}}/>
+        <IconButton onClick={() => {handleChangeFavorite(props.id, false)}}>
+          <FavoriteIcon/>
         </IconButton>
       )
     } else {
       return (
-        <IconButton>
-          <FavoriteBorderIcon onClick={() => {handleChangeFavorite(props.id, true)}}/>
+        <IconButton onClick={() => {handleChangeFavorite(props.id, true)}}>
+          <FavoriteBorderIcon/>
         </IconButton>
       )   
     }
@@ -117,10 +117,8 @@ export default function RecipeCard(props) {
   return (
     <div className={classes.recipeCard}>
         <div className={classes.recipeCardImg} />
-        <IconButton className={classes.deleteRecipeIcon}>
-            <CloseRoundedIcon
-              color="primary"
-              onClick={() => handleDeleteRecipe(props.id)}/>
+        <IconButton className={classes.deleteRecipeIcon} onClick={() => handleDeleteRecipe(props.id)}>
+            <CloseRoundedIcon color="primary"/>
           </IconButton>
         <div className={classes.recipeCardBody}>
         <h2 className={classes.recipeCardTitle}>

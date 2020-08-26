@@ -1,7 +1,6 @@
 class RecipesController < ApplicationController
   def index
-    @recipes = Recipe.all
-    render json: {recipes: Recipe.all.map{ |recipe| format_recipe(recipe) }}
+    render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
   end
 
   def submit
@@ -11,22 +10,22 @@ class RecipesController < ApplicationController
     @recipe.user = @user
     if @recipe.valid?
       @recipe.save!
-      render json: {recipes: Recipe.all.map{ |recipe| format_recipe(recipe) }}
+      render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
     else
       render json: {error: 'oWo uh oh! your recipe is invalid 🥺👉👈'}
     end
   end
 
-  def change_status
+  def update
     @recipe = Recipe.find(params[:id])
     # @recipe.update(status: recipe_params[:status])
     @recipe.update(recipe_params)
-    render json: {recipes: Recipe.all.map { |recipe| format_recipe(recipe)}}
+    render json: {recipes: Recipe.all.sort.map { |recipe| format_recipe(recipe)}}
   end
 
   def destroy
     Recipe.destroy(params[:id])
-    render json: {recipes: Recipe.all.map{ |recipe| format_recipe(recipe) }}
+    render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
   end
 
   private

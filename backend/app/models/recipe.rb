@@ -1,9 +1,7 @@
 class Recipe < ApplicationRecord
   belongs_to :user
-  
   # validates :link, presence: true
   # validates :name, presence: true
-
   after_initialize :set_defaults
 
   enum status: [:pending, :approved, :rejected]

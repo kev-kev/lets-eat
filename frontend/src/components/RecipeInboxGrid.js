@@ -21,10 +21,7 @@ const renderRecipeCard = (recipe, currentUser) => {
 
 const renderRecipeGrid = (recipes, currentUser) => {
   const pendingRecipes = recipes.filter(recipe => recipe.status === "pending")
-  const sortedRecipes = pendingRecipes.sort((a, b) => {
-    return a.id - b.id
-  })
-  return sortedRecipes.map(recipe => {
+  return pendingRecipes.map(recipe => {
       return renderRecipeCard(recipe, currentUser);
   });
 }
