@@ -39,7 +39,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('')
   const [errorSnackbar, setErrorSnackbar] = useState(false)
 
-  const LOGO = "https://vignette.wikia.nocookie.net/kirby/images/b/bf/Kirby_cafe_pagetop.png/revision/latest?cb=20170922160315&path-prefix=en";
+  const LOGO = "https://lets-eat-imgs.s3.amazonaws.com/kirby_logo.png"
   const errorMessage = "Login Failed (っ´ω`)ﾉ (╥ω╥)"
 
   const handleClose = (event, reason) => {
