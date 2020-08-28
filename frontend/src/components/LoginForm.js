@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,6 +39,8 @@ export default function LoginForm() {
   const [password, setPassword] = useState('')
   const [errorSnackbar, setErrorSnackbar] = useState(false)
 
+  const refContainer = useRef(true)
+
   const LOGO = "https://lets-eat-imgs.s3.amazonaws.com/kirby_logo.png"
   const errorMessage = "Login Failed (っ´ω`)ﾉ (╥ω╥)"
 
@@ -49,6 +51,15 @@ export default function LoginForm() {
     setErrorSnackbar(false)
     clearErrors()
   }
+
+  useEffect(() => {
+    if (refContainer.current) {
+      refContainer.current = false
+    }
+    else {
+      setErrorSnackbar(true)
+    }
+  }, [user])
 
   useEffect(() => {
     if (errors.login) {
