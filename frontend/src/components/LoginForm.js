@@ -9,6 +9,8 @@ import Container from '@material-ui/core/Container';
 import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,11 +31,14 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  loading: {
+    margin: '20%'
+  }
 }));
 
 export default function LoginForm() {
   const classes = useStyles();
-  const { login, user, errors, clearErrors } = useContext(GlobalContext);
+  const { login, user, errors, clearErrors, isLoggingIn } = useContext(GlobalContext);
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -67,24 +72,12 @@ export default function LoginForm() {
     }
   }, [errors.login])
 
-  if (user) {
-    return (
-      <Redirect to="/" />
-    );
-  } else {
-    return (
-      <Container component="main" maxWidth={"xs"}>
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Snackbar open={errorSnackbar} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error">
-              {errorMessage}
-            </Alert>
-          </Snackbar>
-          <img className={classes.kirby} src={LOGO} alt="Chef Kirby" />
-          <Typography component="h1" variant="h5">
-          sign in to view recipes
-          </Typography>
+  const renderLoadingOrForm = () => {
+    if (isLoggingIn) {
+      return (<CircularProgress className={classes.loading}/>)
+    } else {
+      return (
+        <div>
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
@@ -124,6 +117,30 @@ export default function LoginForm() {
                 let's eat!
             </Button>
           </form>
+        </div>
+      )
+    }
+  }
+
+  if (user) {
+    return (
+      <Redirect to="/" />
+    );
+  } else {
+    return (
+      <Container component="main" maxWidth={"xs"}>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Snackbar open={errorSnackbar} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error">
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+          <img className={classes.kirby} src={LOGO} alt="Chef Kirby" />
+          <Typography component="h1" variant="h5">
+            sign in to view recipes
+          </Typography>
+          {renderLoadingOrForm()}
         </div>
       </Container>
     );
