@@ -11,10 +11,10 @@ class Recipe < ApplicationRecord
   def set_defaults
     default_recipe_imgs = [
       "https://lets-eat-imgs.s3.amazonaws.com/recipe_1.jpg",
-      "https://lets-eat-imgs.s3.amazonaws.com/recipe_2.jpg",
-      "https://lets-eat-imgs.s3.amazonaws.com/recipe_3.jpg",
-      "https://lets-eat-imgs.s3.amazonaws.com/recipe_4.jpg",
-      "https://lets-eat-imgs.s3.amazonaws.com/recipe_5.jpg",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_2.png",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_3.jpeg",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_4.jpeg",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_5.jpeg",
     ]
 
     self.status ||= 0
