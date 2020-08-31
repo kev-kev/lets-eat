@@ -12,7 +12,7 @@ class RecipesController < ApplicationController
       @recipe.save!
       render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
     else
-      render json: {error: 'oWo uh oh! your recipe is invalid 🥺👉👈'}
+      render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }, error: 'oWo uh oh! your recipe is invalid 🥺👉👈'}
     end
   end
 

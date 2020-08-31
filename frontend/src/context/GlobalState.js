@@ -15,6 +15,8 @@ const initialState = {
   },
 };
 
+const rootURL = process.env.REACT_APP_API_URL
+
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText)
@@ -30,7 +32,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "LOGIN_USER"
     });
-    fetch("http://localhost:4000/login", {
+    fetch(rootURL + "/login", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +62,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "FETCH_RECIPES"
     })
-    fetch("http://localhost:4000/recipes")
+    fetch(rootURL + "/recipes")
       .then(handleErrors)
       .then(r => r.json())
       .then(data =>  {
@@ -81,7 +83,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "SUBMITTING_RECIPE"
     })
-    fetch("http://localhost:4000/submit", {
+    fetch("/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -113,7 +115,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function deleteRecipe(recipe_id){
-    fetch(`http://localhost:4000/recipes/${recipe_id}`, {
+    fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
@@ -141,7 +143,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function changeRecipeStatus(recipe_id, recipe_status){
-    fetch(`http://localhost:4000/recipes/${recipe_id}`, {
+    fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json'
@@ -168,7 +170,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function changeFavorite(recipe_id, value) {
-    fetch(`http://localhost:4000/recipes/${recipe_id}`, {
+    fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json'
