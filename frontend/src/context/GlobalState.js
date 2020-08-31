@@ -83,7 +83,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "SUBMITTING_RECIPE"
     })
-    fetch("/submit", {
+    fetch(rootURL + "/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
