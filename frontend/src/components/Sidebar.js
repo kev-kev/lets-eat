@@ -49,9 +49,8 @@ const useStyles = makeStyles((theme) => ({
 
 const renderInboxBadge = (recipes, currentUser) => {
 	const pendingRecipes = recipes.filter(recipe => recipe.status === "pending")
-	const currentUserPendingRecipes = pendingRecipes.filter(recipe => recipe.submittedby !== currentUser.username)
+	const currentUserPendingRecipes = pendingRecipes.filter(recipe => recipe.submittedBy !== currentUser.username)
 
-	console.log(currentUserPendingRecipes.length)
 	if (currentUserPendingRecipes.length > 0) {
 		return (
 			<Badge color="primary" variant="dot">
