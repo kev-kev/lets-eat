@@ -114,12 +114,22 @@ export default function RecipeCard(props) {
     }
   }
 
+  const renderDeleteButton = () => {
+    if (props.isRecipeVoteCard || props.isFavorited) {
+      return
+    } else {
+      return (
+        <IconButton className={classes.deleteRecipeIcon} onClick={() => handleDeleteRecipe(props.id)}>
+          <CloseRoundedIcon color="primary"/>
+        </IconButton>
+      )
+    }
+  }
+
   return (
     <div className={classes.recipeCard}>
         <div className={classes.recipeCardImg} />
-        <IconButton className={classes.deleteRecipeIcon} onClick={() => handleDeleteRecipe(props.id)}>
-            <CloseRoundedIcon color="primary"/>
-          </IconButton>
+        {renderDeleteButton()}
         <div className={classes.recipeCardBody}>
         <h2 className={classes.recipeCardTitle}>
             {props.name}

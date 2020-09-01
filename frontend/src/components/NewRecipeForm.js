@@ -9,6 +9,7 @@ import { GlobalContext } from "../context/GlobalState";
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Snackbar from "@material-ui/core/Snackbar"
 import Alert from "@material-ui/lab/Alert"
+import FormControl from '@material-ui/core/FormControl'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,13 +50,7 @@ export default function NewRecipeForm() {
 
   const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)"
   const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)"
-
-  const handleClose = () => {
-    setErrorSnackbar(false)
-    setSuccessSnackbar(false)
-    clearErrors()
-  }
-
+  
   useEffect(() => {
     if (errors.submit) {
       setErrorSnackbar(true)
@@ -74,6 +69,21 @@ export default function NewRecipeForm() {
       setSuccessSnackbar(true)
     }
   }, [recipes])
+
+  const handleClose = () => {
+    setErrorSnackbar(false)
+    setSuccessSnackbar(false)
+    clearErrors()
+  }
+
+  const handleSubmit = (title, link) => {
+    if (title === "" || link === "") {
+      setSuccessSnackbar(false)
+      setErrorSnackbar(true)
+    } else {
+      submitRecipe(title, link, notes, imgUrl)
+    }
+  }
 
   if (isSubmittingRecipe) {
     return(
@@ -96,10 +106,10 @@ export default function NewRecipeForm() {
         </Alert>
       </Snackbar>
       <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-          submit a new recipe idea
-          </Typography>
-          <form className={classes.form} noValidate>
+        <Typography component="h1" variant="h5">
+        submit a new recipe idea
+        </Typography>
+        <form className={classes.form} noValidate>
           <TextField
               variant="outlined"
               margin="normal"
@@ -115,7 +125,6 @@ export default function NewRecipeForm() {
           <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               name="imgUrl"
               label="Image URL"
@@ -139,7 +148,6 @@ export default function NewRecipeForm() {
           <TextField
               variant="outlined"
               margin="normal"
-              required
               multiline
               fullWidth
               rows={4}
@@ -158,12 +166,12 @@ export default function NewRecipeForm() {
               className={classes.submit}
               onClick={e => {
                   e.preventDefault();
-                  submitRecipe(title, link, notes, imgUrl)
+                  handleSubmit(title, link)
               }}
           >
-              submit
+            submit
           </Button>
-          </form>
+        </form>
       </div>
     </Container>
   );
