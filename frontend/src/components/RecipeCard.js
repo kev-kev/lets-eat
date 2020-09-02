@@ -13,7 +13,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-
 const useStyles = makeStyles((theme) => ({
   recipeCard: {
     width: "275px",
@@ -70,11 +69,12 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       "background-color": "#eee"
     },
-    width: "30px",
-    height: "30px",
+    width: "32px",
+    height: "32px",
     "& svg": {
       "font-size": "1rem"
-    }
+    },
+    border: '2px solid pink'
   }
 }));
 
@@ -135,7 +135,7 @@ export default function RecipeCard(props) {
       return (
         <div>
           <IconButton className={classes.deleteRecipeIcon} onClick={handleClickOpen}>
-            <CloseRoundedIcon color="primary"/>
+            <CloseRoundedIcon color="primary" variant="outlined"/>
           </IconButton>
           <Dialog
             open={open}
