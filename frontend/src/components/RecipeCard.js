@@ -1,13 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import RecipeVoteBody from './RecipeVoteBody';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import IconButton from '@material-ui/core/IconButton';
 import { GlobalContext } from "../context/GlobalState";
-
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 const useStyles = makeStyles((theme) => ({
   recipeCard: {
@@ -76,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeCard(props) {
   const { deleteRecipe, changeFavorite } = useContext(GlobalContext)
   const classes = useStyles(props);
+  const [open, setOpen] = useState(false)
 
   const handleDeleteRecipe = (id) => {
     deleteRecipe(id)
@@ -114,14 +120,46 @@ export default function RecipeCard(props) {
     }
   }
 
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose= () => {
+    setOpen(false)
+  }
+
   const renderDeleteButton = () => {
     if (props.isRecipeVoteCard || props.isFavorited) {
       return
     } else {
       return (
-        <IconButton className={classes.deleteRecipeIcon} onClick={() => handleDeleteRecipe(props.id)}>
-          <CloseRoundedIcon color="primary"/>
-        </IconButton>
+        <div>
+          <IconButton className={classes.deleteRecipeIcon} onClick={handleClickOpen}>
+            <CloseRoundedIcon color="primary"/>
+          </IconButton>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            >
+            <DialogTitle>{"Delete Recipe?"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Recipe will be deleted forever.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button color="primary" variant="outlined" autoFocus onClick={handleClose}>
+                Nevermind...
+              </Button>
+              <Button color="primary" variant="outlined" onClick={() => {
+                handleDeleteRecipe(props.id)
+                handleClose()
+              }}>
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       )
     }
   }
