@@ -42,7 +42,7 @@ export default function App() {
               </Route>
               <Route path="/favorites">
                 <Dashboard>
-                  <Title>Favorites</Title>
+                  <Title>Favorite Recipes</Title>
                   <FavoritesGrid />
                 </Dashboard>
               </Route>

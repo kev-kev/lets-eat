@@ -12,6 +12,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Collapse from '@material-ui/core/Collapse'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
+import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'
+import { Typography } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
   recipeCard: {
@@ -79,10 +87,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeCard(props) {
-  const { deleteRecipe, changeFavorite } = useContext(GlobalContext)
   const classes = useStyles(props);
+  const { deleteRecipe, changeFavorite } = useContext(GlobalContext)
   const [open, setOpen] = useState(false)
+  const [expanded, setExpanded] = useState(false)
 
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  
+  const handleClose= () => {
+    setOpen(false)
+  }
+  
   const handleDeleteRecipe = (id) => {
     deleteRecipe(id)
   }
@@ -91,7 +108,11 @@ export default function RecipeCard(props) {
     changeFavorite(id, value)
   }
 
-  const displayFavoriteOrBorder = () => {
+  const handleExpandClick = () => {
+    setExpanded(!expanded)
+  }
+
+  const renderFavoriteOrBorder = () => {
     if (props.isFavorited) {
       return (
         <IconButton onClick={() => {handleChangeFavorite(props.id, false)}}>
@@ -113,20 +134,33 @@ export default function RecipeCard(props) {
     } else {
       return (
       <div className={classes.recipeCardFooter}>
-        {displayFavoriteOrBorder()}
+        {renderFavoriteOrBorder()}
         submitted by: {props.submittedBy}
       </div>
       )
     }
   }
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  const renderCollapse = () => {
+    if (props.notes) { 
+      return (
+        <div>
+          <IconButton onClick={handleExpandClick}
+          >
+            <ExpandMoreRoundedIcon />
+          </IconButton>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>Notes:</Typography>
+              <Typography paragraph>{props.notes}</Typography>
+            </CardContent>
+          </Collapse>
+        </div>
+      )
+    }
   }
 
-  const handleClose= () => {
-    setOpen(false)
-  }
+
 
   const renderDeleteButton = () => {
     if (props.isRecipeVoteCard || props.isFavorited) {
@@ -165,7 +199,7 @@ export default function RecipeCard(props) {
   }
 
   return (
-    <div className={classes.recipeCard}>
+    <Card className={classes.recipeCard}>
         <div className={classes.recipeCardImg} />
         {renderDeleteButton()}
         <div className={classes.recipeCardBody}>
@@ -183,7 +217,8 @@ export default function RecipeCard(props) {
           visit recipe
         </Button>
         {renderVoteBodyOrFooter()}
+        {renderCollapse()}
         </div>
-      </div>
+      </Card>
   );
 }

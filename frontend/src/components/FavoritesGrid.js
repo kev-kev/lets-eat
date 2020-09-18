@@ -15,6 +15,7 @@ const renderRecipeCard = (recipe) => {
         link={recipe.link}
         submittedBy={recipe.submittedBy}
         isFavorited={recipe.isFavorited} 
+        notes={recipe.notes}
         />
     </Grid>
   );

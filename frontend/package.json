@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "heroku-postbuild": "npm run build",
-    "test": "react-scripts test",
+    "test": "jest --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,5 +40,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

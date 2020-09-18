@@ -14,7 +14,9 @@ const renderRecipeCard = (recipe, currentUser) => {
           name={recipe.name}
           imgUrl={recipe.imgUrl}
           link={recipe.link}
-          submittedBy={recipe.submittedBy} />
+          submittedBy={recipe.submittedBy}
+          notes={recipe.notes}
+        />
       </Grid>
     );
   }
