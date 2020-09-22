@@ -5,9 +5,10 @@ import RecipeInboxGrid from '../src/components/RecipeInboxGrid'
 import GlobalState from '../src/context/GlobalState'
 import { shallow, configure } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16';
+
 configure({ adapter: new Adapter() });
 
-
+const rootURL = process.env.REACT_APP_API_URL
 
 describe('<NewRecipeForm />', () => {
   const container = shallow(<NewRecipeForm />)
@@ -16,11 +17,10 @@ describe('<NewRecipeForm />', () => {
     expect(container.html()).toMatchSnapshot()
   })
 
-  it('should have a field for the recipe title', () => {
-    expect(container.find('#title'))
+  it('should have fields for title, image url, link, and notes ', () => {
+    expect(container.find('#title') && container.find('#imgUrl') && container.find('#link') && container.find('#notes'))
+    
   })  
 
-  it('should have a field for the recipe url', () => {
-    expect(container.find('#link'))
-  })
+  it('should send a post request to /submit successfully')
 })

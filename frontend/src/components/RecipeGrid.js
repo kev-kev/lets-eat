@@ -3,11 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import RecipeCard from './RecipeCard';
 import { GlobalContext } from '../context/GlobalState';
 import uuid from 'react-uuid'
+import NewRecipeCard from './NewRecipeCard'
 
 const renderRecipeCard = (recipe) => {
     return (
         <Grid item xs key={recipe.name+uuid()} >
-          <RecipeCard
+          <NewRecipeCard
             isRecipeVoteCard={false}
             name={recipe.name}
             imgUrl={recipe.imgUrl}
