@@ -18,15 +18,16 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
-    position: "relative"
+    width: 225,
+    position: "relative",
+    margin: 10,
+    overflow: "hidden",
   },
   media: {
     height: 0,
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
       "font-size": "1rem"
     },
     border: '2px solid pink'
-  },
+  }
 }));
 
 export default function RecipeReviewCard(props) {
@@ -162,7 +163,7 @@ export default function RecipeReviewCard(props) {
           {props.name}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing className={classes.cardActions}>
         {renderVoteBodyOrFooter()}
         <IconButton href={props.link}>
           <OpenInNewRoundedIcon color="primary" />

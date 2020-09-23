@@ -6,7 +6,7 @@ import NewRecipeCard from './NewRecipeCard'
 
 const renderRecipeCard = (recipe) => {
   return (
-    <Grid item xs={3} key={recipe.name+uuid()} >
+    <Grid item xs key={recipe.name+uuid()} >
       <NewRecipeCard
         id={recipe.id}
         isRecipeVoteCard={false}
@@ -32,11 +32,13 @@ export default function RecipeGrid() {
   const { recipes } = useContext(GlobalContext)
   return (
     <Grid 
+      container
+      wrap="wrap"
       direction="row"
       justify="flex-start"
       alignItems="flex-start"
-      spacing={2}
-      container>
+      spacing={1}
+      >
         {renderRecipeGrid(recipes)}
     </Grid>
   );

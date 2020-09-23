@@ -7,7 +7,7 @@ import uuid from 'react-uuid'
 const renderRecipeCard = (recipe, currentUser) => {
   if (recipe.submittedBy !== currentUser.username) {
     return (
-      <Grid item xs={3} key={recipe.name+uuid()} >
+      <Grid item xs key={recipe.name+uuid()} >
         <NewRecipeCard
           id={recipe.id}
           isRecipeVoteCard={true}
@@ -33,10 +33,11 @@ export default function RecipeGrid() {
   const { recipes, user } = useContext(GlobalContext)
   return (
     <Grid 
+      flexWrap="wrap"
       direction="row"
       justify="flex-start"
       alignItems="flex-start"
-      spacing={2}
+      spacing={1}
       container>
         {renderRecipeGrid(recipes, user)}
     </Grid>
