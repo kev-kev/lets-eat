@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     "justify-content": "center",
     "align-items": "center",
-    "margin": "10px"
   }
 }));
 
@@ -27,14 +26,14 @@ return (
           changeRecipeStatus(props.id, "rejected")
         }
       }>
-        <XCircleIcon fontSize="large" color="primary" />
+        <XCircleIcon style={{fontSize: 30}} color="primary" />
       </IconButton>
       <IconButton onClick={ e => {
           e.preventDefault()
           changeRecipeStatus(props.id, "approved")
         }
       }>
-        <CheckCircleOutlineIcon fontSize="large" color="primary" />
+        <CheckCircleOutlineIcon style={{fontSize: 30}} color="primary" />
       </IconButton>
     </Box>
   );

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
       "font-size": "1rem"
     },
     border: '2px solid pink'
-  }
+  },
 }));
 
 export default function RecipeReviewCard(props) {
@@ -97,7 +97,7 @@ export default function RecipeReviewCard(props) {
 
   const renderVoteBodyOrFooter = () => {
     if (props.isRecipeVoteCard) {
-      return <RecipeVoteBody id={props.id} />
+      return <RecipeVoteBody id={props.id} className={classes.voteBody}/>
     } else {
       return (
         displayFavoriteOrBorder()
