@@ -6,8 +6,6 @@ class Recipe < ApplicationRecord
 
   enum status: [:pending, :approved, :rejected]
 
-
-
   def set_defaults
     default_recipe_imgs = [
       "https://lets-eat-imgs.s3.amazonaws.com/recipe_1.jpg",

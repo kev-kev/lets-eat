@@ -23,8 +23,8 @@ class RecipesController < ApplicationController
     render json: {recipes: Recipe.all.sort.map { |recipe| format_recipe(recipe)}}
   end
 
-  def destroy
-    Recipe.destroy(params[:id])
+  def delete
+    Recipe.delete(params[:id])
     render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
   end
 
