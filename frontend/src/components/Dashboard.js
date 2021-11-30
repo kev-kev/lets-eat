@@ -44,22 +44,22 @@ export default function Dashboard(props) {
     }
   };
 
-  // if (user) {
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Sidebar />
-      <main className={classes.content}>
-        <Container maxWidth={false} className={classes.container}>
-          {renderLoadingOrChildren()}
-        </Container>
-        <Box pt={4}>
-          <Copyright />
-        </Box>
-      </main>
-    </div>
-  );
-  // } else {
-  //   return <Redirect to={"/login"} />;
-  // }
+  if (user) {
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <Sidebar />
+        <main className={classes.content}>
+          <Container maxWidth={false} className={classes.container}>
+            {renderLoadingOrChildren()}
+          </Container>
+          <Box pt={4}>
+            <Copyright />
+          </Box>
+        </main>
+      </div>
+    );
+  } else {
+    return <Redirect to={"/login"} />;
+  }
 }

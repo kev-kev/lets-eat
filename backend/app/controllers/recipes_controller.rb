@@ -4,7 +4,6 @@ class RecipesController < ApplicationController
   end
 
   def submit
-    # find user from the user id then 
     @recipe = Recipe.new(recipe_params)
     @user = User.find(recipe_params[:user_id])
     @recipe.user = @user
@@ -18,7 +17,6 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find(params[:id])
-    # @recipe.update(status: recipe_params[:status])
     @recipe.update(recipe_params)
     render json: {recipes: Recipe.all.sort.map { |recipe| format_recipe(recipe)}}
   end

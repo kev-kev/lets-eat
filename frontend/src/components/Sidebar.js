@@ -116,6 +116,7 @@ export default function Dashboard() {
               />
             </ListItemIcon>
           </ListItem>
+          <ListItem>{user.username}</ListItem>
         </div>
       </List>
     </div>
