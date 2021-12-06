@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { sidebarMui } from "../muiStyling";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -13,38 +13,6 @@ import { Link } from "react-router-dom";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import { GlobalContext } from "../context/GlobalState";
 import Badge from "@material-ui/core/Badge";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    "background-color": "#fff",
-    height: "100vh",
-    "border-right": "1px solid #eee",
-  },
-  list: {
-    display: "flex",
-    padding: "0",
-    "flex-direction": "column",
-  },
-  sidebarItem: {
-    "justify-content": "center",
-    padding: "10px 0",
-  },
-  sidebarBottom: {
-    "margin-top": "auto",
-    display: "flex",
-    "flex-direction": "column",
-    "align-items": "center",
-  },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
-  userAvatar: {
-    "padding-top": "15%",
-    "padding-bottom": "30%",
-  },
-}));
 
 const renderInboxBadge = (recipes, currentUser) => {
   const pendingRecipes = recipes.filter(
@@ -66,7 +34,7 @@ const renderInboxBadge = (recipes, currentUser) => {
 };
 
 export default function Dashboard() {
-  const classes = useStyles();
+  const classes = sidebarMui();
   const { logoutUser, recipes, user } = useContext(GlobalContext);
   const PLACEHOLDER_IMG_URL =
     "https://patriotpower.ogsd.net/wp-content/uploads/2018/03/Profile_Kirby.aead314d435d8e52d9a4e92a6f799c4eee08081e.jpg";

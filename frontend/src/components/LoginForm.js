@@ -10,33 +10,10 @@ import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  kirby: {
-    width: "auto",
-    height: theme.spacing(12),
-    margin: "20px",
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  loading: {
-    margin: "20%",
-  },
-}));
+import { loginMui } from "../muiStyling";
 
 export default function LoginForm() {
-  const classes = useStyles();
+  const classes = loginMui();
   const { login, user, errors, clearErrors, isLoggingIn } =
     useContext(GlobalContext);
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import { makeStyles } from "@material-ui/core/styles";
+import { newRecipeCardMui } from "../muiStyling";
 import clsx from "clsx";
 import RecipeVoteBody from "./RecipeVoteBody";
 import Button from "@material-ui/core/Button";
@@ -22,46 +22,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 225,
-    position: "relative",
-    margin: 10,
-    overflow: "hidden",
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  deleteRecipeIcon: {
-    position: "absolute",
-    top: "6px",
-    right: "6px",
-    "background-color": "white",
-    "&:hover": {
-      "background-color": "#eee",
-    },
-    width: "25px",
-    height: "25px",
-    "& svg": {
-      "font-size": "1rem",
-    },
-    border: "2px solid pink",
-  },
-}));
-
 export default function RecipeReviewCard(props) {
-  const classes = useStyles();
+  const classes = newRecipeCardMui();
 
   const { deleteRecipe, changeFavorite } = useContext(GlobalContext);
 

@@ -8,30 +8,10 @@ import Copyright from "./Copyright";
 import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
-    padding: "1vh",
-  },
-  container: {
-    width: "100%",
-    paddingBottom: theme.spacing(4),
-    margin: 0,
-    justifyContent: "center",
-  },
-  loading: {
-    margin: "40vh",
-  },
-}));
+import { dashboardMui } from "../muiStyling";
 
 export default function Dashboard(props) {
-  const classes = useStyles();
+  const classes = dashboardMui();
   const { user, fetchRecipes, isFetchingRecipes } = useContext(GlobalContext);
 
   useEffect(fetchRecipes, []);
