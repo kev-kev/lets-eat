@@ -15,39 +15,19 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default function RecipeCard(props) {
   const { deleteRecipe, changeFavorite } = useContext(GlobalContext);
-  const classes = useStyles(props);
+  const classes = recipeCardMui(props);
   const [open, setOpen] = useState(false);
 
-  const handleDeleteRecipe = (id) => {
-    deleteRecipe(id);
-  };
-
-  const handleChangeFavorite = (id, value) => {
-    changeFavorite(id, value);
-  };
-
-  const displayFavoriteOrBorder = () => {
-    if (props.isFavorited) {
-      return (
-        <IconButton
-          onClick={() => {
-            handleChangeFavorite(props.id, false);
-          }}
-        >
-          <FavoriteIcon />
-        </IconButton>
-      );
-    } else {
-      return (
-        <IconButton
-          onClick={() => {
-            handleChangeFavorite(props.id, true);
-          }}
-        >
-          <FavoriteBorderIcon />
-        </IconButton>
-      );
-    }
+  const displayFavoriteBtn = () => {
+    return (
+      <IconButton
+        onClick={() => {
+          changeFavorite(props.id, !props.isFavorited);
+        }}
+      >
+        {props.isFavorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+      </IconButton>
+    );
   };
 
   const renderVoteBodyOrFooter = () => {
@@ -56,34 +36,24 @@ export default function RecipeCard(props) {
     } else {
       return (
         <div className={classes.recipeCardFooter}>
-          {displayFavoriteOrBorder()}
+          {displayFavoriteBtn()}
           submitted by: {props.submittedBy}
         </div>
       );
     }
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const renderDeleteButton = () => {
-    if (props.isRecipeVoteCard || props.isFavorited) {
-      return;
-    } else {
+    if (!props.isRecipeVoteCard || !props.isFavorited) {
       return (
         <div>
           <IconButton
             className={classes.deleteRecipeIcon}
-            onClick={handleClickOpen}
+            onClick={setOpen(true)}
           >
             <CloseRoundedIcon color="primary" variant="outlined" />
           </IconButton>
-          <Dialog open={open} onClose={handleClose}>
+          <Dialog open={open} onClose={setOpen(false)}>
             <DialogTitle>{"Delete Recipe?"}</DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -95,7 +65,7 @@ export default function RecipeCard(props) {
                 color="primary"
                 variant="outlined"
                 autoFocus
-                onClick={handleClose}
+                onClick={setOpen(false)}
               >
                 Nevermind...
               </Button>
@@ -103,8 +73,8 @@ export default function RecipeCard(props) {
                 color="primary"
                 variant="outlined"
                 onClick={() => {
-                  handleDeleteRecipe(props.id);
-                  handleClose();
+                  deleteRecipe(props.id);
+                  setOpen(false);
                 }}
               >
                 Delete
