@@ -22,7 +22,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 
-export default function RecipeReviewCard(props) {
+export default function RecipeCard(props) {
   const classes = recipeCardMui();
 
   const { deleteRecipe, changeFavorite } = useContext(GlobalContext);
@@ -101,6 +101,7 @@ export default function RecipeReviewCard(props) {
 
   return (
     <Card className={classes.root}>
+      {props.upcoming ? "upcoming" : "not upcoming"}
       {renderDeleteButton()}
       <CardMedia
         className={classes.media}

@@ -138,3 +138,11 @@ export const sidebarMui = makeStyles((theme) => ({
     "padding-bottom": "30%",
   },
 }));
+
+export const voteBodyMui = makeStyles((theme) => ({
+  voteBox: {
+    display: "flex",
+    "justify-content": "center",
+    "align-items": "center",
+  },
+}));

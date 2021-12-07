@@ -40,7 +40,8 @@ class RecipesController < ApplicationController
         id: recipe.id,
         imgUrl: recipe.img_url,
         link: recipe.link,
-        isFavorited: recipe.is_favorited
+        isFavorited: recipe.is_favorited,
+        upcoming: recipe.upcoming
       }
     end
 end

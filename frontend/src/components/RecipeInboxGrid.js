@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-// import RecipeVoteBody from "./RecipeVoteBody";
 import RecipeCard from "./RecipeCard";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
@@ -16,7 +15,6 @@ const renderRecipeGrid = (recipes, currentUser) => {
 
 const renderRecipeCard = (recipe, currentUser) => {
   if (recipe.submittedBy !== currentUser.username) {
-    console.log(recipe);
     return (
       <Grid item xs key={recipe.name + uuid()}>
         <RecipeCard

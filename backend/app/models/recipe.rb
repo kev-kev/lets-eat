@@ -2,6 +2,14 @@ class Recipe < ApplicationRecord
   belongs_to :user
   # validates :link, presence: true
   # validates :name, presence: true
+  # make method canonlybefavoritedifapproved
+  validate :can_only_be_favorited_if_approved
+  def can_only_be_favorited_if_approved
+    if is_favorited && status != "approved"
+        errors[:favorited] << "Can only be favorited if recipe is approved."
+    end
+  end
+
   after_initialize :set_defaults
 
   enum status: [:pending, :approved, :rejected]

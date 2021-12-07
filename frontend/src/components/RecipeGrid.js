@@ -17,35 +17,53 @@ const renderRecipeCard = (recipe) => {
         id={recipe.id}
         isFavorited={recipe.isFavorited}
         notes={recipe.notes}
+        upcoming={recipe.upcoming}
       />
     </Grid>
   );
 };
 
 const renderRecipeGrid = (recipes) => {
-  const approvedRecipes = recipes.filter(
-    (recipe) => recipe.status === "approved"
-  );
-  return approvedRecipes.map((recipe) => {
+  return recipes.map((recipe) => {
     return renderRecipeCard(recipe);
   });
 };
 
 export default function RecipeGrid() {
   const { user, recipes } = useContext(GlobalContext);
+  // filter recipes into upcoming and non-upcoming
+  const approvedRecipes = recipes.filter(
+    (recipe) => recipe.status === "approved"
+  );
+  const upcoming = approvedRecipes.filter((recipe) => recipe.upcoming);
+  const nonUpcoming = approvedRecipes.filter((recipe) => !recipe.upcoming);
   if (!user) {
     return <Redirect to="/login" />;
   } else
     return (
-      <Grid
-        wrap="wrap"
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        spacing={1}
-        container
-      >
-        {renderRecipeGrid(recipes)}
-      </Grid>
+      <div>
+        <h2>upcoming</h2>
+        <Grid
+          wrap="wrap"
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+          spacing={1}
+          container
+        >
+          {renderRecipeGrid(upcoming)}
+        </Grid>
+        <h2>not upcoming</h2>
+        <Grid
+          wrap="wrap"
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+          spacing={1}
+          container
+        >
+          {renderRecipeGrid(nonUpcoming)}
+        </Grid>
+      </div>
     );
 }
