@@ -45,7 +45,7 @@ export const loginMui = makeStyles((theme) => ({
   },
 }));
 
-export const newRecipeCardMui = makeStyles((theme) => ({
+export const recipeCardMui = makeStyles((theme) => ({
   root: {
     width: 225,
     position: "relative",
@@ -83,7 +83,7 @@ export const newRecipeCardMui = makeStyles((theme) => ({
   },
 }));
 
-export const newRecipeFormMui = (theme) => ({
+export const newRecipeFormMui = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -104,71 +104,6 @@ export const newRecipeFormMui = (theme) => ({
   },
   loading: {
     justifyContent: "center",
-  },
-});
-
-export const recipeCardMui = makeStyles((theme) => ({
-  recipeCard: {
-    width: "275px",
-    height: "350px",
-    "border-radius": "20px",
-    "background-color": "#fff",
-    "box-shadow": "0px 0px 20px #eee",
-    overflow: "hidden",
-    transition: "box-shadow 0.5s",
-    position: "relative",
-  },
-  recipeCardImg: (props) => ({
-    backgroundImage: `url(${props.imgUrl});`,
-    backgroundSize: "cover",
-    height: "150px",
-    width: "100%",
-    opacity: "1",
-    transform: "scale(1)",
-    transition: "opacity 0.5s, transform 0.2s",
-    "&:hover": {
-      transform: "scale(1.1)",
-    },
-  }),
-  recipeCardBody: {
-    width: "100%",
-    height: "200px",
-    padding: "5%",
-    display: "flex",
-    "flex-direction": "column",
-    "justify-content": "space-around",
-    "font-family": "'Muli', sans-serif",
-  },
-  recipeCardTitle: {
-    "justify-self": "flex-start",
-    "text-align": "left",
-    "font-size": "20px",
-    "font-family": "'Ovo', serif",
-    height: "6rem",
-  },
-  recipeCardLink: {
-    height: "4rem",
-  },
-  recipeCardFooter: {
-    "justify-self": "flex-end",
-    "align-self": "center",
-    margin: "1.5rem 0",
-    height: "2rem",
-  },
-  deleteRecipeIcon: {
-    position: "absolute",
-    top: "6px",
-    right: "6px",
-    "background-color": "white",
-    "&:hover": {
-      "background-color": "#eee",
-    },
-    width: "32px",
-    height: "32px",
-    "& svg": {
-      "font-size": "1rem",
-    },
-    border: "2px solid pink",
   },
 }));
 

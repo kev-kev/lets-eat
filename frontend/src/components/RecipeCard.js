@@ -1,21 +1,33 @@
 import React, { useContext, useState } from "react";
-import { recipeCardMui } from "../muiStyling";
-import Button from "@material-ui/core/Button";
-import RecipeVoteBody from "./RecipeVoteBody";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import IconButton from "@material-ui/core/IconButton";
 import { GlobalContext } from "../context/GlobalState";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { recipeCardMui } from "../muiStyling";
+import clsx from "clsx";
+import RecipeVoteBody from "./RecipeVoteBody";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 
-export default function RecipeCard(props) {
+export default function RecipeReviewCard(props) {
+  const classes = recipeCardMui();
+
   const { deleteRecipe, changeFavorite } = useContext(GlobalContext);
-  const classes = recipeCardMui(props);
+
+  const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(false);
 
   const displayFavoriteBtn = () => {
@@ -25,35 +37,36 @@ export default function RecipeCard(props) {
           changeFavorite(props.id, !props.isFavorited);
         }}
       >
-        {props.isFavorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        {props.isFavorited ? (
+          <FavoriteIcon color="primary" />
+        ) : (
+          <FavoriteBorderIcon color="primary" />
+        )}
       </IconButton>
     );
   };
 
   const renderVoteBodyOrFooter = () => {
     if (props.isRecipeVoteCard) {
-      return <RecipeVoteBody id={props.id} />;
+      return <RecipeVoteBody id={props.id} className={classes.voteBody} />;
     } else {
-      return (
-        <div className={classes.recipeCardFooter}>
-          {displayFavoriteBtn()}
-          submitted by: {props.submittedBy}
-        </div>
-      );
+      return displayFavoriteBtn();
     }
   };
 
   const renderDeleteButton = () => {
-    if (!props.isRecipeVoteCard || !props.isFavorited) {
+    if (props.isRecipeVoteCard || props.isFavorited) {
+      return;
+    } else {
       return (
         <div>
           <IconButton
             className={classes.deleteRecipeIcon}
-            onClick={setOpen(true)}
+            onClick={() => setOpen(true)}
           >
             <CloseRoundedIcon color="primary" variant="outlined" />
           </IconButton>
-          <Dialog open={open} onClose={setOpen(false)}>
+          <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>{"Delete Recipe?"}</DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -65,7 +78,7 @@ export default function RecipeCard(props) {
                 color="primary"
                 variant="outlined"
                 autoFocus
-                onClick={setOpen(false)}
+                onClick={() => setOpen(false)}
               >
                 Nevermind...
               </Button>
@@ -87,23 +100,44 @@ export default function RecipeCard(props) {
   };
 
   return (
-    <div className={classes.recipeCard}>
-      <div className={classes.recipeCardImg} />
+    <Card className={classes.root}>
       {renderDeleteButton()}
-      <div className={classes.recipeCardBody}>
-        <h2 className={classes.recipeCardTitle}>{props.name}</h2>
-        <Button
-          variant="outlined"
-          color="primary"
-          className={classes.recipeCardLink}
-          disableElevation
-          href={props.link}
-          target="_blank"
-        >
-          visit recipe
-        </Button>
+      <CardMedia
+        className={classes.media}
+        image={props.imgUrl}
+        title={props.name}
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="h2">
+          {props.name}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing className={classes.cardActions}>
         {renderVoteBodyOrFooter()}
-      </div>
-    </div>
+        <IconButton href={props.link}>
+          <OpenInNewRoundedIcon color="primary" />
+        </IconButton>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={() => setExpanded(!expanded)}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon color="primary" />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography variant="subtitle2">Notes:</Typography>
+          <Typography variant="body2">{props.notes}</Typography>
+          <br />
+          <Typography variant="caption" className={classes.submittedBy}>
+            submitted by: {props.submittedBy}
+          </Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
   );
 }

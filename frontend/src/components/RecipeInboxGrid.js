@@ -1,14 +1,25 @@
 import React, { useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-import NewRecipeCard from "./NewRecipeCard";
+// import RecipeVoteBody from "./RecipeVoteBody";
+import RecipeCard from "./RecipeCard";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 
+const renderRecipeGrid = (recipes, currentUser) => {
+  const pendingRecipes = recipes.filter(
+    (recipe) => recipe.status === "pending"
+  );
+  return pendingRecipes.map((recipe) => {
+    return renderRecipeCard(recipe, currentUser);
+  });
+};
+
 const renderRecipeCard = (recipe, currentUser) => {
   if (recipe.submittedBy !== currentUser.username) {
+    console.log(recipe);
     return (
       <Grid item xs key={recipe.name + uuid()}>
-        <NewRecipeCard
+        <RecipeCard
           id={recipe.id}
           isRecipeVoteCard={true}
           name={recipe.name}
@@ -20,15 +31,6 @@ const renderRecipeCard = (recipe, currentUser) => {
       </Grid>
     );
   }
-};
-
-const renderRecipeGrid = (recipes, currentUser) => {
-  const pendingRecipes = recipes.filter(
-    (recipe) => recipe.status === "pending"
-  );
-  return pendingRecipes.map((recipe) => {
-    return renderRecipeCard(recipe, currentUser);
-  });
 };
 
 export default function RecipeGrid() {
