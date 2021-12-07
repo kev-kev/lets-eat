@@ -1,19 +1,19 @@
 class Recipe < ApplicationRecord
   belongs_to :user
-  # validates :link, presence: true
-  # validates :name, presence: true
-  # make method canonlybefavoritedifapproved
+
+  validates :link, presence: true
+  validates :name, presence: true
   validate :can_only_be_favorited_if_approved
+
   def can_only_be_favorited_if_approved
     if is_favorited && status != "approved"
         errors[:favorited] << "Can only be favorited if recipe is approved."
     end
   end
 
-  after_initialize :set_defaults
-
   enum status: [:pending, :approved, :rejected]
-
+  
+  after_initialize :set_defaults
   def set_defaults
     default_recipe_imgs = [
       "https://lets-eat-imgs.s3.amazonaws.com/recipe_1.jpg",
@@ -22,9 +22,7 @@ class Recipe < ApplicationRecord
       "https://lets-eat-imgs.s3.amazonaws.com/recipe_4.jpeg",
       "https://lets-eat-imgs.s3.amazonaws.com/recipe_5.jpeg",
     ]
-
-    self.status ||= 0
-    self.is_favorited ||= false
+    
     if !self.img_url || self.img_url == "" || self.img_url == " "
       self.img_url = default_recipe_imgs.sample
     end
