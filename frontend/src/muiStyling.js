@@ -66,7 +66,7 @@ export const recipeCardMui = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  deleteRecipeIcon: {
+  addOrRemoveBtn: {
     position: "absolute",
     top: "6px",
     right: "6px",

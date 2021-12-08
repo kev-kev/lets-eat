@@ -22,6 +22,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
+import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
 
 export default function RecipeCard(props) {
   const classes = recipeCardMui();
@@ -46,15 +47,6 @@ export default function RecipeCard(props) {
             <FavoriteBorderIcon color="primary" />
           )}
         </IconButton>
-        {!props.isUpcoming && (
-          <IconButton
-            onClick={() => {
-              toggleUpcoming(props.id, !props.isUpcoming);
-            }}
-          >
-            <AddRoundedIcon color="primary" />
-          </IconButton>
-        )}
       </>
     );
   };
@@ -67,17 +59,27 @@ export default function RecipeCard(props) {
     }
   };
 
-  const renderDeleteButton = () => {
-    if (props.isRecipeVoteCard || props.isFavorited) {
-      return;
-    } else {
+  const renderAddOrRemoveBtn = () => {
+    return (
+      <IconButton
+        className={classes.addOrRemoveBtn}
+        onClick={() => toggleUpcoming(props.id, !props.isUpcoming)}
+      >
+        {props.isUpcoming ? (
+          <CloseRoundedIcon color="primary" />
+        ) : (
+          <AddRoundedIcon color="primary" />
+        )}
+      </IconButton>
+    );
+  };
+
+  const renderDeleteBtn = () => {
+    if (!props.isRecipeVoteCard && !props.isFavorited)
       return (
-        <div>
-          <IconButton
-            className={classes.deleteRecipeIcon}
-            onClick={() => setOpen(true)}
-          >
-            <CloseRoundedIcon color="primary" variant="outlined" />
+        <>
+          <IconButton onClick={() => setOpen(true)}>
+            <DeleteForeverRoundedIcon color="primary" />
           </IconButton>
           <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>{"Delete Recipe?"}</DialogTitle>
@@ -107,15 +109,13 @@ export default function RecipeCard(props) {
               </Button>
             </DialogActions>
           </Dialog>
-        </div>
+        </>
       );
-    }
   };
-
   return (
     <Card className={classes.root}>
       {props.isUpcoming ? "upcoming" : "not upcoming"}
-      {renderDeleteButton()}
+      {renderAddOrRemoveBtn()}
       <CardMedia
         className={classes.media}
         image={props.imgUrl}
@@ -150,6 +150,7 @@ export default function RecipeCard(props) {
           <Typography variant="caption" className={classes.submittedBy}>
             submitted by: {props.submittedBy}
           </Typography>
+          {renderDeleteBtn()}
         </CardContent>
       </Collapse>
     </Card>
