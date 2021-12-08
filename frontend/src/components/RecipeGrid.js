@@ -17,7 +17,7 @@ const renderRecipeCard = (recipe) => {
         id={recipe.id}
         isFavorited={recipe.isFavorited}
         notes={recipe.notes}
-        upcoming={recipe.upcoming}
+        isUpcoming={recipe.isUpcoming}
       />
     </Grid>
   );
@@ -35,8 +35,8 @@ export default function RecipeGrid() {
   const approvedRecipes = recipes.filter(
     (recipe) => recipe.status === "approved"
   );
-  const upcoming = approvedRecipes.filter((recipe) => recipe.upcoming);
-  const nonUpcoming = approvedRecipes.filter((recipe) => !recipe.upcoming);
+  const upcoming = approvedRecipes.filter((recipe) => recipe.isUpcoming);
+  const nonUpcoming = approvedRecipes.filter((recipe) => !recipe.isUpcoming);
   if (!user) {
     return <Redirect to="/login" />;
   } else

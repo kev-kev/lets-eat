@@ -28,7 +28,7 @@ class RecipesController < ApplicationController
 
   private
     def recipe_params
-      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id, :img_url, :is_favorited)
+      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id, :img_url, :is_favorited, :upcoming)
     end
 
     def format_recipe(recipe)
@@ -41,7 +41,7 @@ class RecipesController < ApplicationController
         imgUrl: recipe.img_url,
         link: recipe.link,
         isFavorited: recipe.is_favorited,
-        upcoming: recipe.upcoming
+        isUpcoming: recipe.upcoming
       }
     end
 end

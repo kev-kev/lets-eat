@@ -6,7 +6,7 @@ import XCircleIcon from "@material-ui/icons/HighlightOff";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 
-export default function RecipeCard(props) {
+export default function RecipeVoteBody(props) {
   const classes = voteBodyMui(props);
   const { changeRecipeStatus } = useContext(GlobalContext);
 

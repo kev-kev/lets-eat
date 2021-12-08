@@ -165,11 +165,12 @@ export const GlobalProvider = ({ children }) => {
       .catch((error) => {
         dispatch({
           type: "STATUS_UPDATE_FAILURE",
+          payload: error,
         });
       });
   }
 
-  function changeFavorite(recipe_id, value) {
+  function toggleFavorite(recipe_id, value) {
     fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
       headers: {
@@ -193,6 +194,37 @@ export const GlobalProvider = ({ children }) => {
       .catch((error) => {
         dispatch({
           type: "FAVORITE_UPDATE_FAILURE",
+          payload: error,
+        });
+      });
+  }
+
+  function toggleUpcoming(recipe_id, value) {
+    console.log("toggle upcoming firing");
+    fetch(rootURL + `/recipes/${recipe_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recipe: {
+          upcoming: value,
+          id: recipe_id,
+        },
+      }),
+    })
+      .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        dispatch({
+          type: "UPCOMING_UPDATE_SUCCESS",
+          payload: data.recipes,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "UPCOMING_UPDATE_FAILURE",
+          payload: error,
         });
       });
   }
@@ -225,7 +257,8 @@ export const GlobalProvider = ({ children }) => {
         errors: state.errors,
         clearErrors,
         isFetchingRecipes: state.isFetchingRecipes,
-        changeFavorite,
+        toggleFavorite,
+        toggleUpcoming,
       }}
     >
       {children}

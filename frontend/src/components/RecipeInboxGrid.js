@@ -25,6 +25,7 @@ const renderRecipeCard = (recipe, currentUser) => {
           link={recipe.link}
           submittedBy={recipe.submittedBy}
           notes={recipe.notes}
+          isUpcoming={recipe.isUpcoming}
         />
       </Grid>
     );
@@ -35,7 +36,7 @@ export default function RecipeGrid() {
   const { recipes, user } = useContext(GlobalContext);
   return (
     <Grid
-      flexWrap="wrap"
+      flexwrap="wrap"
       direction="row"
       justify="flex-start"
       alignItems="flex-start"

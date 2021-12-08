@@ -21,28 +21,41 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
+import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 export default function RecipeCard(props) {
   const classes = recipeCardMui();
 
-  const { deleteRecipe, changeFavorite } = useContext(GlobalContext);
+  const { deleteRecipe, toggleFavorite, toggleUpcoming } =
+    useContext(GlobalContext);
 
   const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const displayFavoriteBtn = () => {
+  const renderIndexCardBody = () => {
     return (
-      <IconButton
-        onClick={() => {
-          changeFavorite(props.id, !props.isFavorited);
-        }}
-      >
-        {props.isFavorited ? (
-          <FavoriteIcon color="primary" />
-        ) : (
-          <FavoriteBorderIcon color="primary" />
+      <>
+        <IconButton
+          onClick={() => {
+            toggleFavorite(props.id, !props.isFavorited);
+          }}
+        >
+          {props.isFavorited ? (
+            <FavoriteIcon color="primary" />
+          ) : (
+            <FavoriteBorderIcon color="primary" />
+          )}
+        </IconButton>
+        {!props.isUpcoming && (
+          <IconButton
+            onClick={() => {
+              toggleUpcoming(props.id, !props.isUpcoming);
+            }}
+          >
+            <AddRoundedIcon color="primary" />
+          </IconButton>
         )}
-      </IconButton>
+      </>
     );
   };
 
@@ -50,7 +63,7 @@ export default function RecipeCard(props) {
     if (props.isRecipeVoteCard) {
       return <RecipeVoteBody id={props.id} className={classes.voteBody} />;
     } else {
-      return displayFavoriteBtn();
+      return renderIndexCardBody();
     }
   };
 
@@ -101,7 +114,7 @@ export default function RecipeCard(props) {
 
   return (
     <Card className={classes.root}>
-      {props.upcoming ? "upcoming" : "not upcoming"}
+      {props.isUpcoming ? "upcoming" : "not upcoming"}
       {renderDeleteButton()}
       <CardMedia
         className={classes.media}
