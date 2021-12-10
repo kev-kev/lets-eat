@@ -5,32 +5,31 @@ import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
 import { Redirect } from "react-router-dom";
 import { format, differenceInDays, parseISO } from "date-fns";
-import { any, all } from "underscore";
+import { any } from "underscore";
 
-const renderRecipeCard = (recipe) => {
-  return (
-    <Grid item xs key={recipe.name + uuid()}>
-      <RecipeCard
-        isRecipeVoteCard={false}
-        name={recipe.name}
-        imgUrl={recipe.imgUrl}
-        link={recipe.link}
-        submittedBy={recipe.submittedBy}
-        id={recipe.id}
-        isFavorited={recipe.isFavorited}
-        notes={recipe.notes}
-        isUpcoming={recipe.isUpcoming}
-        ingredients={recipe.ingredients}
-        weeks={recipe.weeks}
-      />
-    </Grid>
-  );
+const populateRecipeGrid = (recipes) => {
+  return recipes.map((recipe) => {
+    return (
+      <Grid item xs key={recipe.name + uuid()}>
+        <RecipeCard isRecipeVoteCard={false} recipe={recipe} />
+      </Grid>
+    );
+  });
 };
 
-const renderRecipeGrid = (recipes) => {
-  return recipes.map((recipe) => {
-    return renderRecipeCard(recipe);
-  });
+const renderGridContainer = (recipes) => {
+  return (
+    <Grid
+      wrap="wrap"
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      spacing={1}
+      container
+    >
+      {populateRecipeGrid(recipes)}
+    </Grid>
+  );
 };
 
 export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
@@ -41,12 +40,21 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
   );
 };
 
-export default function RecipeGrid() {
+export default function RecipeGrid(props) {
   const { user, recipes, selectedWeek } = useContext(GlobalContext);
-  // filter recipes into upcoming and non-upcoming
-  const approvedRecipes = recipes.filter(
-    (recipe) => recipe.status === "approved"
-  );
+  const approvedRecipes = [];
+  const pendingRecipes = [];
+  const rejectedRecipes = [];
+
+  recipes.forEach((recipe) => {
+    if (recipe.status === "approved") approvedRecipes.push(recipe);
+    else if (
+      recipe.status === "pending" &&
+      recipe.submittedBy !== user.username
+    )
+      pendingRecipes.push(recipe);
+    else if (recipe.status === "rejected") rejectedRecipes.push(recipe);
+  });
 
   const weeklyRecipes = approvedRecipes.filter((recipe) => {
     return isWeeklyRecipe(recipe.weeks, selectedWeek);
@@ -56,33 +64,17 @@ export default function RecipeGrid() {
     return !isWeeklyRecipe(recipe.weeks, selectedWeek);
   });
 
-  if (!user) {
-    return <Redirect to="/login" />;
-  } else
-    return (
-      <>
-        <h2>Week of: {format(selectedWeek, "LLL do")}</h2>
-        <Grid
-          wrap="wrap"
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-          spacing={1}
-          container
-        >
-          {renderRecipeGrid(weeklyRecipes)}
-        </Grid>
-        <h2>non-weekly recipes</h2>
-        <Grid
-          wrap="wrap"
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-          spacing={1}
-          container
-        >
-          {renderRecipeGrid(otherRecipes)}
-        </Grid>
-      </>
-    );
+  if (user) {
+    if (props.type === "index") {
+      return (
+        <>
+          <h2>Week of: {format(selectedWeek, "LLL do")}</h2>
+          {renderGridContainer(weeklyRecipes)}
+          <h2>non-weekly recipes</h2>
+          {renderGridContainer(otherRecipes)}
+        </>
+      );
+    } else if (props.type === "inbox") {
+    }
+  } else return <Redirect to="/login" />;
 }

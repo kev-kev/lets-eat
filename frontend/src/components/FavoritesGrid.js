@@ -7,18 +7,7 @@ import RecipeCard from "./RecipeCard";
 const renderRecipeCard = (recipe) => {
   return (
     <Grid item xs key={recipe.name + uuid()}>
-      <RecipeCard
-        id={recipe.id}
-        isRecipeVoteCard={false}
-        name={recipe.name}
-        imgUrl={recipe.imgUrl}
-        link={recipe.link}
-        submittedBy={recipe.submittedBy}
-        isFavorited={recipe.isFavorited}
-        notes={recipe.notes}
-        isUpcoming={recipe.isUpcoming}
-        ingredients={recipe.ingredients}
-      />
+      <RecipeCard recipe={recipe} isRecipeVoteCard={false} />
     </Grid>
   );
 };

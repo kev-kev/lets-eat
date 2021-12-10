@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 const serifFontFamily = {
   fontFamily: ["Ovo"].join(","),
 };
@@ -17,7 +17,7 @@ const sansSerifFontFamily = {
     '"Segoe UI Symbol"',
   ].join(","),
 };
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     ...sansSerifFontFamily,
     h1: { ...serifFontFamily },

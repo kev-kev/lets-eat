@@ -8,10 +8,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import GlobalOverrides from "./GlobalOverrides";
 import Dashboard from "./components/Dashboard";
 import RecipeGrid from "./components/RecipeGrid";
-import RecipeInboxGrid from "./components/RecipeInboxGrid";
 import Title from "./components/Title";
 import NewRecipeForm from "./components/NewRecipeForm";
-import FavoritesGrid from "./components/FavoritesGrid";
+// import RecipeInboxGrid from "./components/RecipeInboxGrid";
+// import FavoritesGrid from "./components/FavoritesGrid";
 
 export default function App() {
   return (
@@ -25,27 +25,27 @@ export default function App() {
               <Route path="/login">
                 <LoginForm />
               </Route>
-              <Route path="/inbox">
-                <Dashboard>
-                  <Title>Recipe Inbox</Title>
-                  <RecipeInboxGrid />
-                </Dashboard>
-              </Route>
               <Route path="/new">
                 <Dashboard>
                   <NewRecipeForm />
                 </Dashboard>
               </Route>
+              <Route path="/inbox">
+                <Dashboard>
+                  <Title>Recipe Inbox</Title>
+                  <RecipeGrid type="inbox" />
+                </Dashboard>
+              </Route>
               <Route path="/favorites">
                 <Dashboard>
                   <Title>Favorite Recipes</Title>
-                  <FavoritesGrid />
+                  <RecipeGrid type="favorites" />
                 </Dashboard>
               </Route>
               <Route path="/">
                 <Dashboard>
                   <Title>Recipe Index</Title>
-                  <RecipeGrid />
+                  <RecipeGrid type="index" />
                 </Dashboard>
               </Route>
             </Switch>

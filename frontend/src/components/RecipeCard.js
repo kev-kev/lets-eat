@@ -27,7 +27,6 @@ import { isWeeklyRecipe } from "./RecipeGrid";
 import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 export default function RecipeCard(props) {
-  console.log(props);
   const classes = recipeCardMui();
 
   const { deleteRecipe, toggleFavorite, setWeeks, selectedWeek } =
@@ -40,10 +39,10 @@ export default function RecipeCard(props) {
     return (
       <IconButton
         onClick={() => {
-          toggleFavorite(props.id, !props.isFavorited);
+          toggleFavorite(props.recipe.id, !props.recipe.isFavorited);
         }}
       >
-        {props.isFavorited ? (
+        {props.recipe.isFavorited ? (
           <FavoriteIcon color="primary" />
         ) : (
           <FavoriteBorderIcon color="primary" />
@@ -54,7 +53,9 @@ export default function RecipeCard(props) {
 
   const renderVoteBodyOrFooter = () => {
     if (props.isRecipeVoteCard) {
-      return <RecipeVoteBody id={props.id} className={classes.voteBody} />;
+      return (
+        <RecipeVoteBody id={props.recipe.id} className={classes.voteBody} />
+      );
     } else {
       return renderIndexCardBody();
     }
@@ -75,10 +76,13 @@ export default function RecipeCard(props) {
       <IconButton
         className={classes.addOrRemoveBtn}
         onClick={() => {
-          setWeeks(props.id, addOrRemoveWeek(props.weeks, selectedWeek));
+          setWeeks(
+            props.recipe.id,
+            addOrRemoveWeek(props.recipe.weeks, selectedWeek)
+          );
         }}
       >
-        {isWeeklyRecipe(props.weeks, selectedWeek) ? (
+        {isWeeklyRecipe(props.recipe.weeks, selectedWeek) ? (
           <CloseRoundedIcon color="primary" />
         ) : (
           <AddRoundedIcon color="primary" />
@@ -88,7 +92,7 @@ export default function RecipeCard(props) {
   };
 
   const renderDeleteBtn = () => {
-    if (!props.isRecipeVoteCard && !props.isFavorited)
+    if (!props.isRecipeVoteCard && !props.recipe.isFavorited)
       return (
         <>
           <IconButton onClick={() => setOpen(true)}>
@@ -114,7 +118,7 @@ export default function RecipeCard(props) {
                 color="primary"
                 variant="outlined"
                 onClick={() => {
-                  deleteRecipe(props.id);
+                  deleteRecipe(props.recipe.id);
                   setOpen(false);
                 }}
               >
@@ -131,17 +135,17 @@ export default function RecipeCard(props) {
       {renderAddOrRemoveBtn()}
       <CardMedia
         className={classes.media}
-        image={props.imgUrl}
-        title={props.name}
+        image={props.recipe.imgUrl}
+        title={props.recipe.name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="h2">
-          {props.name}
+          {props.recipe.name}
         </Typography>
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
         {renderVoteBodyOrFooter()}
-        <IconButton href={props.link}>
+        <IconButton href={props.recipe.link}>
           <OpenInNewRoundedIcon color="primary" />
         </IconButton>
         <IconButton
@@ -159,15 +163,15 @@ export default function RecipeCard(props) {
         <CardContent>
           <Typography variant="subtitle2">Ingredients:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {props.ingredients}
+            {props.recipe.ingredients}
           </Typography>
           <Typography variant="subtitle2">Notes:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {props.notes}
+            {props.recipe.notes}
           </Typography>
           <br />
           <Typography variant="caption" className={classes.submittedBy}>
-            submitted by: {props.submittedBy}
+            submitted by: {props.recipe.submittedBy}
           </Typography>
           {renderDeleteBtn()}
         </CardContent>
