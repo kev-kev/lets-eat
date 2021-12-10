@@ -16,6 +16,7 @@ class RecipesController < ApplicationController
   end
 
   def update
+    puts 'helloooo'
     @recipe = Recipe.find(params[:id])
     @recipe.update(recipe_params)
     render json: {recipes: Recipe.all.sort.map { |recipe| format_recipe(recipe)}}
@@ -28,7 +29,7 @@ class RecipesController < ApplicationController
 
   private
     def recipe_params
-      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id, :img_url, :is_favorited, :upcoming)
+      params.require(:recipe).permit(:name, :link, :status, :notes, :user_id, :img_url, :is_favorited, :upcoming, :ingredients, {weeks: []})
     end
 
     def format_recipe(recipe)
@@ -41,7 +42,9 @@ class RecipesController < ApplicationController
         imgUrl: recipe.img_url,
         link: recipe.link,
         isFavorited: recipe.is_favorited,
-        isUpcoming: recipe.upcoming
+        isUpcoming: recipe.upcoming,
+        ingredients: recipe.ingredients,
+        weeks: recipe.weeks.map(&:iso8601)
       }
     end
 end
