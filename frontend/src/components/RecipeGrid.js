@@ -4,6 +4,8 @@ import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
 import { Redirect } from "react-router-dom";
+import { format, differenceInDays, parseISO } from "date-fns";
+import { any, all } from "underscore";
 
 const renderRecipeCard = (recipe) => {
   return (
@@ -18,6 +20,8 @@ const renderRecipeCard = (recipe) => {
         isFavorited={recipe.isFavorited}
         notes={recipe.notes}
         isUpcoming={recipe.isUpcoming}
+        ingredients={recipe.ingredients}
+        weeks={recipe.weeks}
       />
     </Grid>
   );
@@ -29,20 +33,35 @@ const renderRecipeGrid = (recipes) => {
   });
 };
 
+export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
+  return any(
+    recipeWeeks.map((week) => {
+      return differenceInDays(parseISO(week), selectedWeek) === 0;
+    })
+  );
+};
+
 export default function RecipeGrid() {
-  const { user, recipes } = useContext(GlobalContext);
+  const { user, recipes, selectedWeek } = useContext(GlobalContext);
   // filter recipes into upcoming and non-upcoming
   const approvedRecipes = recipes.filter(
     (recipe) => recipe.status === "approved"
   );
-  const upcoming = approvedRecipes.filter((recipe) => recipe.isUpcoming);
-  const nonUpcoming = approvedRecipes.filter((recipe) => !recipe.isUpcoming);
+
+  const weeklyRecipes = approvedRecipes.filter((recipe) => {
+    return isWeeklyRecipe(recipe.weeks, selectedWeek);
+  });
+
+  const otherRecipes = approvedRecipes.filter((recipe) => {
+    return !isWeeklyRecipe(recipe.weeks, selectedWeek);
+  });
+
   if (!user) {
     return <Redirect to="/login" />;
   } else
     return (
-      <div>
-        <h2>upcoming</h2>
+      <>
+        <h2>Week of: {format(selectedWeek, "LLL do")}</h2>
         <Grid
           wrap="wrap"
           direction="row"
@@ -51,9 +70,9 @@ export default function RecipeGrid() {
           spacing={1}
           container
         >
-          {renderRecipeGrid(upcoming)}
+          {renderRecipeGrid(weeklyRecipes)}
         </Grid>
-        <h2>not upcoming</h2>
+        <h2>non-weekly recipes</h2>
         <Grid
           wrap="wrap"
           direction="row"
@@ -62,8 +81,8 @@ export default function RecipeGrid() {
           spacing={1}
           container
         >
-          {renderRecipeGrid(nonUpcoming)}
+          {renderRecipeGrid(otherRecipes)}
         </Grid>
-      </div>
+      </>
     );
 }

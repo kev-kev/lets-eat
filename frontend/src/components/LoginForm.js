@@ -52,7 +52,7 @@ export default function LoginForm() {
       return <CircularProgress className={classes.loading} />;
     } else {
       return (
-        <div>
+        <>
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
@@ -92,7 +92,7 @@ export default function LoginForm() {
               let's eat!
             </Button>
           </form>
-        </div>
+        </>
       );
     }
   };

@@ -99,6 +99,19 @@ export default (state, action) => {
           grid: action.payload,
         },
       };
+    case "WEEKS_UPDATE_SUCCESS":
+      return {
+        ...state,
+        recipes: action.payload,
+      };
+    case "WEEKS_UPDATE_FAILURE":
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          grid: action.payload,
+        },
+      };
     case "DELETE_RECIPE_SUCCESS":
       return {
         ...state,

@@ -17,6 +17,7 @@ const renderRecipeCard = (recipe) => {
         isFavorited={recipe.isFavorited}
         notes={recipe.notes}
         isUpcoming={recipe.isUpcoming}
+        ingredients={recipe.ingredients}
       />
     </Grid>
   );

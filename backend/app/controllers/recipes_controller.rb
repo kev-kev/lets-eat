@@ -16,7 +16,6 @@ class RecipesController < ApplicationController
   end
 
   def update
-    puts 'helloooo'
     @recipe = Recipe.find(params[:id])
     @recipe.update(recipe_params)
     render json: {recipes: Recipe.all.sort.map { |recipe| format_recipe(recipe)}}

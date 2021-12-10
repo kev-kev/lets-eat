@@ -23,11 +23,13 @@ import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
+import { isWeeklyRecipe } from "./RecipeGrid";
+import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 export default function RecipeCard(props) {
   const classes = recipeCardMui();
 
-  const { deleteRecipe, toggleFavorite, toggleUpcoming } =
+  const { deleteRecipe, toggleFavorite, setWeeks, selectedWeek } =
     useContext(GlobalContext);
 
   const [expanded, setExpanded] = useState(false);
@@ -35,19 +37,17 @@ export default function RecipeCard(props) {
 
   const renderIndexCardBody = () => {
     return (
-      <>
-        <IconButton
-          onClick={() => {
-            toggleFavorite(props.id, !props.isFavorited);
-          }}
-        >
-          {props.isFavorited ? (
-            <FavoriteIcon color="primary" />
-          ) : (
-            <FavoriteBorderIcon color="primary" />
-          )}
-        </IconButton>
-      </>
+      <IconButton
+        onClick={() => {
+          toggleFavorite(props.id, !props.isFavorited);
+        }}
+      >
+        {props.isFavorited ? (
+          <FavoriteIcon color="primary" />
+        ) : (
+          <FavoriteBorderIcon color="primary" />
+        )}
+      </IconButton>
     );
   };
 
@@ -59,13 +59,25 @@ export default function RecipeCard(props) {
     }
   };
 
+  const addOrRemoveWeek = (weeks, selectedWeek) => {
+    if (isWeeklyRecipe(weeks, selectedWeek)) {
+      return weeks.filter((week) => {
+        return differenceInDays(parseISO(week), selectedWeek) !== 0;
+      });
+    } else {
+      return weeks.concat([formatISO(selectedWeek)]);
+    }
+  };
+
   const renderAddOrRemoveBtn = () => {
     return (
       <IconButton
         className={classes.addOrRemoveBtn}
-        onClick={() => toggleUpcoming(props.id, !props.isUpcoming)}
+        onClick={() => {
+          setWeeks(props.id, addOrRemoveWeek(props.weeks, selectedWeek));
+        }}
       >
-        {props.isUpcoming ? (
+        {isWeeklyRecipe(props.weeks, selectedWeek) ? (
           <CloseRoundedIcon color="primary" />
         ) : (
           <AddRoundedIcon color="primary" />
@@ -112,9 +124,9 @@ export default function RecipeCard(props) {
         </>
       );
   };
+
   return (
     <Card className={classes.root}>
-      {props.isUpcoming ? "upcoming" : "not upcoming"}
       {renderAddOrRemoveBtn()}
       <CardMedia
         className={classes.media}
@@ -144,8 +156,14 @@ export default function RecipeCard(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
+          <Typography variant="subtitle2">Ingredients:</Typography>
+          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
+            {props.ingredients}
+          </Typography>
           <Typography variant="subtitle2">Notes:</Typography>
-          <Typography variant="body2">{props.notes}</Typography>
+          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
+            {props.notes}
+          </Typography>
           <br />
           <Typography variant="caption" className={classes.submittedBy}>
             submitted by: {props.submittedBy}

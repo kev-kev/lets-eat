@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import AppReducer from "./AppReducer";
+import { startOfWeek } from "date-fns";
 
 const initialState = {
   user: null,
@@ -13,8 +14,8 @@ const initialState = {
     grid: null,
     inbox: null,
   },
+  selectedWeek: startOfWeek(new Date()),
 };
-
 const rootURL = process.env.REACT_APP_API_URL;
 
 function handleErrors(response) {
@@ -79,7 +80,7 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function submitRecipe(name, link, notes, imgUrl) {
+  function submitRecipe(name, link, notes, imgUrl, ingredients) {
     dispatch({
       type: "SUBMITTING_RECIPE",
     });
@@ -95,6 +96,7 @@ export const GlobalProvider = ({ children }) => {
           notes: notes,
           user_id: state.user.id,
           img_url: imgUrl,
+          ingredients: ingredients,
         },
       }),
     })
@@ -200,7 +202,6 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function toggleUpcoming(recipe_id, value) {
-    console.log("toggle upcoming firing");
     fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
       headers: {
@@ -224,6 +225,34 @@ export const GlobalProvider = ({ children }) => {
       .catch((error) => {
         dispatch({
           type: "UPCOMING_UPDATE_FAILURE",
+          payload: error,
+        });
+      });
+  }
+
+  function setWeeks(recipe_id, value) {
+    fetch(rootURL + `/recipes/${recipe_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recipe: {
+          weeks: value,
+        },
+      }),
+    })
+      .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        dispatch({
+          type: "WEEKS_UPDATE_SUCCESS",
+          payload: data.recipes,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "WEEKS_UPDATE_FAILURE",
           payload: error,
         });
       });
@@ -257,8 +286,10 @@ export const GlobalProvider = ({ children }) => {
         errors: state.errors,
         clearErrors,
         isFetchingRecipes: state.isFetchingRecipes,
+        selectedWeek: state.selectedWeek,
         toggleFavorite,
         toggleUpcoming,
+        setWeeks,
       }}
     >
       {children}

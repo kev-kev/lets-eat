@@ -20,7 +20,7 @@ export default function App() {
       <GlobalOverrides />
       <GlobalProvider>
         <Router>
-          <div>
+          <>
             <Switch>
               <Route path="/login">
                 <LoginForm />
@@ -49,7 +49,7 @@ export default function App() {
                 </Dashboard>
               </Route>
             </Switch>
-          </div>
+          </>
         </Router>
       </GlobalProvider>
     </ThemeProvider>

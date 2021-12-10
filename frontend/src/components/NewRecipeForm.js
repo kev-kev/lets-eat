@@ -19,6 +19,7 @@ export default function NewRecipeForm() {
   const [imgUrl, setImgUrl] = useState("");
   const [link, setLink] = useState("");
   const [notes, setNotes] = useState("");
+  const [ingredients, setIngredients] = useState("");
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
 
@@ -57,7 +58,7 @@ export default function NewRecipeForm() {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     } else {
-      submitRecipe(title, link, notes, imgUrl);
+      submitRecipe(title, link, notes, imgUrl, ingredients);
     }
   };
 
@@ -122,6 +123,21 @@ export default function NewRecipeForm() {
               onChange={(e) => setLink(e.target.value)}
             />
             <TextField
+              className="textAreas"
+              variant="outlined"
+              margin="normal"
+              multiline
+              fullWidth
+              rows={4}
+              name="ingredients"
+              label="Ingredients"
+              type="ingredients"
+              id="ingredients"
+              autoComplete="ingredients"
+              onChange={(e) => setIngredients(e.target.value)}
+            />
+            <TextField
+              className="textAreas"
               variant="outlined"
               margin="normal"
               multiline
