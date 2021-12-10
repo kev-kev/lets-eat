@@ -17,17 +17,7 @@ const renderRecipeCard = (recipe, currentUser) => {
   if (recipe.submittedBy !== currentUser.username) {
     return (
       <Grid item xs key={recipe.name + uuid()}>
-        <RecipeCard
-          id={recipe.id}
-          isRecipeVoteCard={true}
-          name={recipe.name}
-          imgUrl={recipe.imgUrl}
-          link={recipe.link}
-          submittedBy={recipe.submittedBy}
-          notes={recipe.notes}
-          isUpcoming={recipe.isUpcoming}
-          ingredients={recipe.ingredients}
-        />
+        <RecipeCard recipe isRecipeVoteCard={true} />
       </Grid>
     );
   }

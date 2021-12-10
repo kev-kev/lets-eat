@@ -27,6 +27,7 @@ import { isWeeklyRecipe } from "./RecipeGrid";
 import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 export default function RecipeCard(props) {
+  console.log(props);
   const classes = recipeCardMui();
 
   const { deleteRecipe, toggleFavorite, setWeeks, selectedWeek } =
