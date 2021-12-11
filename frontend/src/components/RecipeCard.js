@@ -52,7 +52,7 @@ export default function RecipeCard(props) {
   };
 
   const renderVoteBodyOrFooter = () => {
-    if (props.isRecipeVoteCard) {
+    if (props.isVoteCard) {
       return (
         <RecipeVoteBody id={props.recipe.id} className={classes.voteBody} />
       );
@@ -92,7 +92,7 @@ export default function RecipeCard(props) {
   };
 
   const renderDeleteBtn = () => {
-    if (!props.isRecipeVoteCard && !props.recipe.isFavorited)
+    if (!props.isVoteCard && !props.recipe.isFavorited)
       return (
         <>
           <IconButton onClick={() => setOpen(true)}>

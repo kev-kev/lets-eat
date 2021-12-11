@@ -7,17 +7,17 @@ import { Redirect } from "react-router-dom";
 import { format, differenceInDays, parseISO } from "date-fns";
 import { any } from "underscore";
 
-const populateRecipeGrid = (recipes) => {
+const populateRecipeGrid = (recipes, isVoteCard) => {
   return recipes.map((recipe) => {
     return (
       <Grid item xs key={recipe.name + uuid()}>
-        <RecipeCard isRecipeVoteCard={false} recipe={recipe} />
+        <RecipeCard isVoteCard={isVoteCard} recipe={recipe} />
       </Grid>
     );
   });
 };
 
-const renderGridContainer = (recipes) => {
+const renderGridContainer = (recipes, isVoteCard) => {
   return (
     <Grid
       wrap="wrap"
@@ -27,7 +27,7 @@ const renderGridContainer = (recipes) => {
       spacing={1}
       container
     >
-      {populateRecipeGrid(recipes)}
+      {populateRecipeGrid(recipes, isVoteCard)}
     </Grid>
   );
 };
@@ -69,12 +69,18 @@ export default function RecipeGrid(props) {
       return (
         <>
           <h2>Week of: {format(selectedWeek, "LLL do")}</h2>
-          {renderGridContainer(weeklyRecipes)}
+          {renderGridContainer(weeklyRecipes, false)}
           <h2>non-weekly recipes</h2>
-          {renderGridContainer(otherRecipes)}
+          {renderGridContainer(otherRecipes, false)}
         </>
       );
     } else if (props.type === "inbox") {
+      return <>{renderGridContainer(pendingRecipes, true)}</>;
+    } else if (props.type === "favorites") {
+      const favoritedRecipes = approvedRecipes.filter(
+        (recipe) => recipe.isFavorited
+      );
+      return <>{renderGridContainer(favoritedRecipes, false)}</>;
     }
   } else return <Redirect to="/login" />;
 }
