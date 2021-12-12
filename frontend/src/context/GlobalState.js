@@ -258,6 +258,13 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
+  function changeSelectedWeek(week) {
+    dispatch({
+      type: "CHANGE_SELECTED_WEEK",
+      payload: week,
+    });
+  }
+
   function logoutUser() {
     dispatch({
       type: "LOGOUT_USER",
@@ -287,9 +294,10 @@ export const GlobalProvider = ({ children }) => {
         clearErrors,
         isFetchingRecipes: state.isFetchingRecipes,
         selectedWeek: state.selectedWeek,
+        changeSelectedWeek,
+        setWeeks,
         toggleFavorite,
         toggleUpcoming,
-        setWeeks,
       }}
     >
       {children}

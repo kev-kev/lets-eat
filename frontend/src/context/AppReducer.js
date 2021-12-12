@@ -125,6 +125,11 @@ export default (state, action) => {
           grid: action.payload,
         },
       };
+    case "CHANGE_SELECTED_WEEK":
+      return {
+        ...state,
+        selectedWeek: action.payload,
+      };
     case "LOGOUT_USER":
       return {
         ...state,

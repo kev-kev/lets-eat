@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
-import Grid from "@material-ui/core/Grid";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
 import { Redirect } from "react-router-dom";
-import { format, differenceInDays, parseISO } from "date-fns";
+import { format, differenceInDays, parseISO, add, sub } from "date-fns";
 import { any } from "underscore";
+import ChevronRightRoundedIcon from "@material-ui/icons/ChevronRightRounded";
+import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
+import { IconButton, Grid } from "@material-ui/core";
 
 const populateRecipeGrid = (recipes, isVoteCard) => {
   return recipes.map((recipe) => {
@@ -41,7 +43,8 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
 };
 
 export default function RecipeGrid(props) {
-  const { user, recipes, selectedWeek } = useContext(GlobalContext);
+  const { user, recipes, selectedWeek, changeSelectedWeek } =
+    useContext(GlobalContext);
   const approvedRecipes = [];
   const pendingRecipes = [];
   const rejectedRecipes = [];
@@ -64,11 +67,26 @@ export default function RecipeGrid(props) {
     return !isWeeklyRecipe(recipe.weeks, selectedWeek);
   });
 
+  const handleChangeWeek = (dir) => {
+    dir === "back"
+      ? changeSelectedWeek(sub(selectedWeek, { days: 7 }))
+      : changeSelectedWeek(add(selectedWeek, { days: 7 }));
+  };
+
   if (user) {
     if (props.type === "index") {
       return (
         <>
-          <h2>Week of: {format(selectedWeek, "LLL do")}</h2>
+          <h2>
+            Week of: {format(selectedWeek, "LLL do")} -{" "}
+            {format(add(selectedWeek, { days: 6 }), "LLL do")}
+          </h2>
+          <IconButton onClick={() => handleChangeWeek("back")}>
+            <ChevronLeftRoundedIcon color="primary" />
+          </IconButton>
+          <IconButton onClick={() => handleChangeWeek("fwd")}>
+            <ChevronRightRoundedIcon color="primary" />
+          </IconButton>
           {renderGridContainer(weeklyRecipes, false)}
           <h2>non-weekly recipes</h2>
           {renderGridContainer(otherRecipes, false)}
