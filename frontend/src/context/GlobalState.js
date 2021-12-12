@@ -201,35 +201,6 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function toggleUpcoming(recipe_id, value) {
-    fetch(rootURL + `/recipes/${recipe_id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        recipe: {
-          upcoming: value,
-          id: recipe_id,
-        },
-      }),
-    })
-      .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
-        dispatch({
-          type: "UPCOMING_UPDATE_SUCCESS",
-          payload: data.recipes,
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: "UPCOMING_UPDATE_FAILURE",
-          payload: error,
-        });
-      });
-  }
-
   function setWeeks(recipe_id, value) {
     fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
@@ -297,7 +268,6 @@ export const GlobalProvider = ({ children }) => {
         changeSelectedWeek,
         setWeeks,
         toggleFavorite,
-        toggleUpcoming,
       }}
     >
       {children}
