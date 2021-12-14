@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import AppReducer from "./AppReducer";
 import { startOfWeek } from "date-fns";
 
@@ -7,7 +7,7 @@ const initialState = {
   isLoggingIn: false,
   recipes: [],
   isSubmittingRecipe: false,
-  isFetchingRecipes: false,
+  isLoading: false,
   errors: {
     login: null,
     submit: null,
@@ -28,6 +28,8 @@ function handleErrors(response) {
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
+  useEffect(fetchRecipes, []);
 
   function loginUser(username, password) {
     dispatch({
@@ -60,6 +62,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function fetchRecipes() {
+    console.log("fetching");
     dispatch({
       type: "FETCH_RECIPES",
     });
@@ -105,7 +108,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "SUBMIT_RECIPE_SUCCESS",
-          payload: data.recipes,
+          payload: data.recipe,
         });
       })
       .catch((error) => {
@@ -161,7 +164,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "STATUS_UPDATE_SUCCESS",
-          payload: data.recipes,
+          payload: data.recipe,
         });
       })
       .catch((error) => {
@@ -190,7 +193,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "FAVORITE_UPDATE_SUCCESS",
-          payload: data.recipes,
+          payload: data.recipe,
         });
       })
       .catch((error) => {
@@ -218,7 +221,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "WEEKS_UPDATE_SUCCESS",
-          payload: data.recipes,
+          payload: data.recipe,
         });
       })
       .catch((error) => {
@@ -263,7 +266,7 @@ export const GlobalProvider = ({ children }) => {
         logoutUser,
         errors: state.errors,
         clearErrors,
-        isFetchingRecipes: state.isFetchingRecipes,
+        isLoading: state.isLoading,
         selectedWeek: state.selectedWeek,
         changeSelectedWeek,
         setWeeks,

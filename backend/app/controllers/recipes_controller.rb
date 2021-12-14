@@ -9,16 +9,16 @@ class RecipesController < ApplicationController
     @recipe.user = @user
     if @recipe.valid?
       @recipe.save!
-      render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
+      render json: {recipe: @recipe}
     else
-      render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }, error: 'oWo uh oh! your recipe is invalid 🥺👉👈'}
+      render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}
     end
   end
 
   def update
     @recipe = Recipe.find(params[:id])
     @recipe.update(recipe_params)
-    render json: {recipes: Recipe.all.sort.map { |recipe| format_recipe(recipe)}}
+    render json: {recipe: format_recipe(@recipe)}
   end
 
   def destroy

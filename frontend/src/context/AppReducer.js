@@ -28,7 +28,7 @@ export default (state, action) => {
     case "SUBMIT_RECIPE_SUCCESS":
       return {
         ...state,
-        recipes: action.payload,
+        recipes: [...state.recipes, action.payload],
         isSubmittingRecipe: false,
       };
     case "SUBMIT_RECIPE_FAILURE":
@@ -63,7 +63,7 @@ export default (state, action) => {
     case "STATUS_UPDATE_SUCCESS":
       return {
         ...state,
-        recipes: action.payload,
+        recipes: [...state.recipes, action.payload],
       };
     case "STATUS_UPDATE_FAILURE":
       return {
@@ -76,22 +76,9 @@ export default (state, action) => {
     case "FAVORITE_UPDATE_SUCCESS":
       return {
         ...state,
-        recipes: action.payload,
+        recipes: [...state.recipes, action.payload],
       };
     case "FAVORITE_UPDATE_FAILURE":
-      return {
-        ...state,
-        errors: {
-          ...state.errors,
-          grid: action.payload,
-        },
-      };
-    case "UPCOMING_UPDATE_SUCCESS":
-      return {
-        ...state,
-        recipes: action.payload,
-      };
-    case "UPCOMING_UPDATE_FAILURE":
       return {
         ...state,
         errors: {
@@ -102,7 +89,7 @@ export default (state, action) => {
     case "WEEKS_UPDATE_SUCCESS":
       return {
         ...state,
-        recipes: action.payload,
+        recipes: [...state.recipes, action.payload],
       };
     case "WEEKS_UPDATE_FAILURE":
       return {

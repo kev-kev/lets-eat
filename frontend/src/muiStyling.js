@@ -1,5 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
+export const gridMui = makeStyles((theme) => ({
+  loading: {
+    margin: "40vh",
+  },
+}));
+
 export const dashboardMui = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -15,9 +21,6 @@ export const dashboardMui = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
     margin: 0,
     justifyContent: "center",
-  },
-  loading: {
-    margin: "40vh",
   },
 }));
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
@@ -8,6 +8,8 @@ import { any } from "underscore";
 import ChevronRightRoundedIcon from "@material-ui/icons/ChevronRightRounded";
 import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
 import { IconButton, Grid } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { gridMui } from "../muiStyling";
 
 const populateRecipeGrid = (recipes, isVoteCard) => {
   return recipes.map((recipe) => {
@@ -43,8 +45,10 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
 };
 
 export default function RecipeGrid(props) {
-  const { user, recipes, selectedWeek, changeSelectedWeek } =
+  const { user, recipes, selectedWeek, changeSelectedWeek, isLoading } =
     useContext(GlobalContext);
+  const classes = gridMui();
+
   const approvedRecipes = [];
   const pendingRecipes = [];
   const rejectedRecipes = [];
@@ -73,7 +77,11 @@ export default function RecipeGrid(props) {
       : changeSelectedWeek(add(selectedWeek, { days: 7 }));
   };
 
-  if (user) {
+  if (!user) return <Redirect to="/login" />;
+
+  if (isLoading) {
+    return <CircularProgress className={classes.loading} />;
+  } else {
     if (props.type === "index") {
       return (
         <>
@@ -100,5 +108,5 @@ export default function RecipeGrid(props) {
       );
       return <>{renderGridContainer(favoritedRecipes, false)}</>;
     }
-  } else return <Redirect to="/login" />;
+  }
 }

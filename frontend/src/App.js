@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalState";
 import LoginForm from "./components/LoginForm";
@@ -10,6 +10,9 @@ import Dashboard from "./components/Dashboard";
 import RecipeGrid from "./components/RecipeGrid";
 import Title from "./components/Title";
 import NewRecipeForm from "./components/NewRecipeForm";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { appMui } from "./muiStyling";
+import { GlobalContext } from "./context/GlobalState";
 // import RecipeInboxGrid from "./components/RecipeInboxGrid";
 // import FavoritesGrid from "./components/FavoritesGrid";
 
