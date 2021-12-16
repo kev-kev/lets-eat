@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect } from "react";
+import { useParams } from "react-router-dom/";
 import AppReducer from "./AppReducer";
 import { startOfWeek } from "date-fns";
 
@@ -28,9 +29,6 @@ function handleErrors(response) {
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-
-  useEffect(fetchRecipes, []);
-
   function loginUser(username, password) {
     dispatch({
       type: "LOGIN_USER",
@@ -61,12 +59,11 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function fetchRecipes() {
-    console.log("fetching");
+  function fetchRecipes(page) {
     dispatch({
       type: "FETCH_RECIPES",
     });
-    fetch(rootURL + "/recipes")
+    fetch(rootURL + `/recipes/?page=${page}`)
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
@@ -108,7 +105,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "SUBMIT_RECIPE_SUCCESS",
-          payload: data.recipe,
+          payload: data.recipes,
         });
       })
       .catch((error) => {
@@ -136,7 +133,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "DELETE_RECIPE_SUCCESS",
-          payload: data.recipes,
+          payload: data.recipess,
         });
       })
       .catch((error) => {
@@ -164,7 +161,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "STATUS_UPDATE_SUCCESS",
-          payload: data.recipe,
+          payload: data.recipes,
         });
       })
       .catch((error) => {
@@ -193,7 +190,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "FAVORITE_UPDATE_SUCCESS",
-          payload: data.recipe,
+          payload: data.recipes,
         });
       })
       .catch((error) => {
@@ -221,7 +218,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "WEEKS_UPDATE_SUCCESS",
-          payload: data.recipe,
+          payload: data.recipes,
         });
       })
       .catch((error) => {

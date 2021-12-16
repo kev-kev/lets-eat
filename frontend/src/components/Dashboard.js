@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";

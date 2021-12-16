@@ -1,6 +1,9 @@
 class RecipesController < ApplicationController
   def index
-    render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
+    page = request.query_parameters || 1
+    render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}
+    puts "the query params are"
+    puts page
   end
 
   def submit
@@ -18,12 +21,13 @@ class RecipesController < ApplicationController
   def update
     @recipe = Recipe.find(params[:id])
     @recipe.update(recipe_params)
-    render json: {recipe: format_recipe(@recipe)}
+    # render json: {recipe: format_recipe(@recipe)}
+    self.index
   end
 
   def destroy
     Recipe.destroy(params[:id])
-    render json: {recipes: Recipe.all.sort.map{ |recipe| format_recipe(recipe) }}
+    render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}
   end
 
   private

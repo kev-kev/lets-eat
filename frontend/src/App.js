@@ -10,11 +10,7 @@ import Dashboard from "./components/Dashboard";
 import RecipeGrid from "./components/RecipeGrid";
 import Title from "./components/Title";
 import NewRecipeForm from "./components/NewRecipeForm";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { appMui } from "./muiStyling";
-import { GlobalContext } from "./context/GlobalState";
-// import RecipeInboxGrid from "./components/RecipeInboxGrid";
-// import FavoritesGrid from "./components/FavoritesGrid";
+import GridParent from "./components/GridParent";
 
 export default function App() {
   return (
@@ -33,24 +29,26 @@ export default function App() {
                   <NewRecipeForm />
                 </Dashboard>
               </Route>
-              <Route path="/inbox">
-                <Dashboard>
-                  <Title>Recipe Inbox</Title>
-                  <RecipeGrid type="inbox" />
-                </Dashboard>
-              </Route>
-              <Route path="/favorites">
-                <Dashboard>
-                  <Title>Favorite Recipes</Title>
-                  <RecipeGrid type="favorites" />
-                </Dashboard>
-              </Route>
-              <Route path="/">
-                <Dashboard>
-                  <Title>Recipe Index</Title>
-                  <RecipeGrid type="index" />
-                </Dashboard>
-              </Route>
+              <GridParent>
+                <Route path="/inbox/:page?">
+                  <Dashboard>
+                    <Title>Recipe Inbox</Title>
+                    <RecipeGrid type="inbox" />
+                  </Dashboard>
+                </Route>
+                <Route path="/favorites/:page?">
+                  <Dashboard>
+                    <Title>Favorite Recipes</Title>
+                    <RecipeGrid type="favorites" />
+                  </Dashboard>
+                </Route>
+                <Route path="/:page?">
+                  <Dashboard>
+                    <Title>Recipe Index</Title>
+                    <RecipeGrid type="index" />
+                  </Dashboard>
+                </Route>
+              </GridParent>
             </Switch>
           </>
         </Router>

@@ -33,7 +33,7 @@ const renderInboxBadge = (recipes, currentUser) => {
   }
 };
 
-export default function Dashboard() {
+export default function Sidebar() {
   const classes = sidebarMui();
   const { logoutUser, recipes, user } = useContext(GlobalContext);
   const PLACEHOLDER_IMG_URL =
@@ -42,7 +42,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <List className={classes.list}>
-        <ListItem button component={Link} to="/home" key={"home"}>
+        <ListItem button component={Link} to="/" key={"home"}>
           <ListItemIcon className={classes.sidebarItem}>
             <HomeIcon />
           </ListItemIcon>
