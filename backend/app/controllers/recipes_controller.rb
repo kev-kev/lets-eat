@@ -12,22 +12,30 @@ class RecipesController < ApplicationController
     @recipe.user = @user
     if @recipe.valid?
       @recipe.save!
-      render json: {recipe: @recipe}
+      render json: {recipe: @recipe}, status: 200
     else
-      render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}
+      render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}, status 400
     end
   end
 
   def update
     @recipe = Recipe.find(params[:id])
-    @recipe.update(recipe_params)
-    # render json: {recipe: format_recipe(@recipe)}
-    self.index
+    if @recipe
+      @recipe.update(recipe_params)
+      page = request.query_parameters[:page]
+      page = 0 if page === "undefined"
+      render json: {recipes: Recipe.order(:created_at).offset(page * RECIPES_PER_PAGE).limit(RECIPES_PER_PAGE).map{ |recipe| format_recipe(recipe)}}, status: 200
+    else
+      render json: {error: "unable to update recipe"}, status: 400
+    # if successful, render a 200 response that it succeeded, otherwise return error codes
   end
 
   def destroy
-    Recipe.destroy(params[:id])
-    render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}
+    if Recipe.destroy(params[:id])
+
+      render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}, status: 200
+    else
+      render json: { error: 'unabme to delete recipe'}, status: 400
   end
 
   private
