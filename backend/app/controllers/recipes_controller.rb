@@ -1,9 +1,9 @@
 class RecipesController < ApplicationController
+  RECIPES_PER_PAGE = 20
   def index
-    page = request.query_parameters || 1
-    render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}
-    puts "the query params are"
-    puts page
+    page = request.query_parameters[:page]
+    page = 0 if page === "undefined"
+    render json: {recipes: Recipe.order(:created_at).offset(page * RECIPES_PER_PAGE).limit(RECIPES_PER_PAGE).map{ |recipe| format_recipe(recipe)}}
   end
 
   def submit
