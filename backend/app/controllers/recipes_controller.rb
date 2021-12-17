@@ -1,9 +1,16 @@
 class RecipesController < ApplicationController
   RECIPES_PER_PAGE = 20
+  WEEKLY_RECIPES_PER_PAGE = 4
   def index
-    page = request.query_parameters[:page]
+    page = request.query_parameters[:page];
     page = 1 if page === "undefined"
-    render json: {recipes: Recipe.order(:created_at).offset(page * RECIPES_PER_PAGE).limit(RECIPES_PER_PAGE).map{ |recipe| format_recipe(recipe)}}
+    week = request.query_parameters[:week];
+    render json: {
+      weeklyRecipes: Recipe.where("'#{Date.parse(week)}' = ANY (weeks)").order(:id).offset((page.to_i-1) * RECIPES_PER_PAGE).limit(RECIPES_PER_PAGE).map{ |recipe| format_recipe(recipe)},
+      nonWeeklyRecipes: Recipe.where("cardinality(weeks) = 0").map{|recipe| format_recipe(recipe)}
+      # recipes: Recipe.order(:id).offset((page-1) * RECIPES_PER_PAGE).limit(RECIPES_PER_PAGE).map{ |recipe| format_recipe(recipe)}
+    }
+
   end
 
   def submit

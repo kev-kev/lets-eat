@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, useEffect } from "react";
-import { useParams } from "react-router-dom/";
 import AppReducer from "./AppReducer";
 import { startOfWeek } from "date-fns";
 
@@ -30,7 +29,7 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
   useEffect(() => {
-    fetchRecipes();
+    fetchRecipes(state.selectedWeek, 1);
   }, []);
   function loginUser(username, password) {
     dispatch({
@@ -62,17 +61,17 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function fetchRecipes(page) {
+  function fetchRecipes(week, page) {
     dispatch({
       type: "FETCH_RECIPES",
     });
-    fetch(rootURL + `/recipes/?page=${page}`)
+    fetch(rootURL + `/recipes/?page=${page}&week=${week}`)
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
         dispatch({
           type: "FETCH_RECIPES_SUCCESS",
-          payload: data.recipes,
+          payload: { recipes: data.recipes, weeklyRecipes: data.weeklyRecipes },
         });
       })
       .catch((error) => {
@@ -108,7 +107,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "SUBMIT_RECIPE_SUCCESS",
-          payload: data.recipes,
+          payload: data.recipe,
         });
       })
       .catch((error) => {

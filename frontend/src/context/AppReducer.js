@@ -33,7 +33,7 @@ export default (state, action) => {
     case "SUBMIT_RECIPE_SUCCESS":
       return {
         ...state,
-        recipes: action.payload,
+        recipes: [action.payload].concat(state.recipes),
         isSubmittingRecipe: false,
       };
     case "SUBMIT_RECIPE_FAILURE":
@@ -53,7 +53,7 @@ export default (state, action) => {
     case "FETCH_RECIPES_SUCCESS":
       return {
         ...state,
-        recipes: action.payload,
+        recipes: action.payload.recipes,
         isFetchingRecipes: false,
       };
     case "FETCH_RECIPES_FAILURE":
@@ -94,10 +94,6 @@ export default (state, action) => {
         },
       };
     case "WEEKS_UPDATE_SUCCESS":
-      // const updatedRecipes = state.recipes;
-      // updatedRecipes.find(
-      //   (recipe) => recipe.id === action.payload.recipe_id
-      // ).weeks = action.payload.value;
       updatedRecipe = findRecipeById(state.recipes, action.payload.recipe_id);
       updatedRecipe.weeks = action.payload.value;
       return {
