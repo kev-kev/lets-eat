@@ -74,9 +74,13 @@ export default (state, action) => {
         },
       };
     case "FAVORITE_UPDATE_SUCCESS":
+      const updatedRecipes = state.recipes;
+      updatedRecipes.find(
+        (recipe) => recipe.id === action.payload.recipe_id
+      ).isFavorited = action.payload.value;
       return {
         ...state,
-        recipes: action.payload,
+        recipes: updatedRecipes,
       };
     case "FAVORITE_UPDATE_FAILURE":
       return {

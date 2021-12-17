@@ -29,26 +29,25 @@ export default function App() {
                   <NewRecipeForm />
                 </Dashboard>
               </Route>
-              <GridParent>
-                <Route path="/inbox/:page?">
-                  <Dashboard>
-                    <Title>Recipe Inbox</Title>
-                    <RecipeGrid type="inbox" />
-                  </Dashboard>
-                </Route>
-                <Route path="/favorites/:page?">
-                  <Dashboard>
-                    <Title>Favorite Recipes</Title>
-                    <RecipeGrid type="favorites" />
-                  </Dashboard>
-                </Route>
-                <Route path="/:page?">
-                  <Dashboard>
-                    <Title>Recipe Index</Title>
-                    <RecipeGrid type="index" />
-                  </Dashboard>
-                </Route>
-              </GridParent>
+
+              <Route path="/inbox/:page?">
+                <Dashboard>
+                  <Title>Recipe Inbox</Title>
+                  <RecipeGrid type="inbox" />
+                </Dashboard>
+              </Route>
+              <Route path="/favorites/:page?">
+                <Dashboard>
+                  <Title>Favorite Recipes</Title>
+                  <RecipeGrid type="favorites" />
+                </Dashboard>
+              </Route>
+              <Route path="/:page?">
+                <Dashboard>
+                  <Title>Recipe Index</Title>
+                  <RecipeGrid type="index" />
+                </Dashboard>
+              </Route>
             </Switch>
           </>
         </Router>

@@ -29,6 +29,9 @@ function handleErrors(response) {
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
   function loginUser(username, password) {
     dispatch({
       type: "LOGIN_USER",
@@ -186,12 +189,12 @@ export const GlobalProvider = ({ children }) => {
       }),
     })
       .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
-        dispatch({
-          type: "FAVORITE_UPDATE_SUCCESS",
-          payload: data.recipes,
-        });
+      .then((r) => {
+        if (r.status === 200)
+          dispatch({
+            type: "FAVORITE_UPDATE_SUCCESS",
+            payload: { recipe_id, value },
+          });
       })
       .catch((error) => {
         dispatch({
@@ -211,6 +214,7 @@ export const GlobalProvider = ({ children }) => {
         recipe: {
           weeks: value,
         },
+        page: 1,
       }),
     })
       .then(handleErrors)
