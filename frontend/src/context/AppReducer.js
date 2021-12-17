@@ -1,4 +1,9 @@
+const findRecipeById = (recipes, id) => {
+  return recipes.find((recipe) => recipe.id === id);
+};
+
 export default (state, action) => {
+  let updatedRecipe;
   switch (action.type) {
     case "LOGIN_USER":
       return {
@@ -74,13 +79,11 @@ export default (state, action) => {
         },
       };
     case "FAVORITE_UPDATE_SUCCESS":
-      const updatedRecipes = state.recipes;
-      updatedRecipes.find(
-        (recipe) => recipe.id === action.payload.recipe_id
-      ).isFavorited = action.payload.value;
+      updatedRecipe = findRecipeById(state.recipes, action.payload.recipe_id);
+      updatedRecipe.isFavorited = action.payload.value;
       return {
         ...state,
-        recipes: updatedRecipes,
+        recipes: state.recipes,
       };
     case "FAVORITE_UPDATE_FAILURE":
       return {
@@ -91,9 +94,15 @@ export default (state, action) => {
         },
       };
     case "WEEKS_UPDATE_SUCCESS":
+      // const updatedRecipes = state.recipes;
+      // updatedRecipes.find(
+      //   (recipe) => recipe.id === action.payload.recipe_id
+      // ).weeks = action.payload.value;
+      updatedRecipe = findRecipeById(state.recipes, action.payload.recipe_id);
+      updatedRecipe.weeks = action.payload.value;
       return {
         ...state,
-        recipes: action.payload,
+        recipes: state.recipes,
       };
     case "WEEKS_UPDATE_FAILURE":
       return {

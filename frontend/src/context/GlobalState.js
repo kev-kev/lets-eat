@@ -218,12 +218,12 @@ export const GlobalProvider = ({ children }) => {
       }),
     })
       .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
-        dispatch({
-          type: "WEEKS_UPDATE_SUCCESS",
-          payload: data.recipes,
-        });
+      .then((r) => {
+        if (r.status === 200)
+          dispatch({
+            type: "WEEKS_UPDATE_SUCCESS",
+            payload: { recipe_id, value },
+          });
       })
       .catch((error) => {
         dispatch({
