@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
@@ -11,6 +11,7 @@ import { IconButton, Grid } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { gridMui } from "../muiStyling";
 
+const RECIPES_PER_PAGE = 20;
 const populateRecipeGrid = (recipes, isVoteCard) => {
   return recipes.map((recipe) => {
     return (
@@ -45,10 +46,13 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
 };
 
 export default function RecipeGrid(props) {
+  const classes = gridMui();
   const { user, recipes, selectedWeek, changeSelectedWeek, isLoading } =
     useContext(GlobalContext);
-  const classes = gridMui();
 
+  const [page, setPage] = useState(1);
+  const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
+  const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(true);
   const approvedRecipes = [];
   const pendingRecipes = [];
   const rejectedRecipes = [];
@@ -63,26 +67,45 @@ export default function RecipeGrid(props) {
     else if (recipe.status === "rejected") rejectedRecipes.push(recipe);
   });
 
-  const weeklyRecipes = approvedRecipes.filter((recipe) => {
-    return isWeeklyRecipe(recipe.weeks, selectedWeek);
-  });
-
-  const otherRecipes = approvedRecipes.filter((recipe) => {
-    return !isWeeklyRecipe(recipe.weeks, selectedWeek);
-  });
-
   const handleChangeWeek = (dir) => {
     dir === "back"
       ? changeSelectedWeek(sub(selectedWeek, { days: 7 }))
       : changeSelectedWeek(add(selectedWeek, { days: 7 }));
   };
 
+  const handlePageClick = (dir) => {
+    let nextPage;
+    if (dir === "back") {
+      nextPage = page - 1;
+    } else {
+      nextPage = page + 1;
+    }
+
+    setPage(nextPage);
+
+    if (nextPage > 1) {
+      setShouldShowBackBtn(true);
+    } else {
+      setShouldShowBackBtn(false);
+    }
+
+    // setShouldShowFwdBtn if nextPage is greater than the number of pages
+  };
   if (!user) return <Redirect to="/login" />;
 
   if (isLoading) {
     return <CircularProgress className={classes.loading} />;
   } else {
     if (props.type === "index") {
+      const weeklyRecipes = approvedRecipes.filter((recipe) => {
+        return isWeeklyRecipe(recipe.weeks, selectedWeek);
+      });
+
+      const otherRecipes = approvedRecipes
+        .filter((recipe) => {
+          return !isWeeklyRecipe(recipe.weeks, selectedWeek);
+        })
+        .slice((page - 1) * RECIPES_PER_PAGE, page * RECIPES_PER_PAGE);
       return (
         <>
           <h2>
@@ -98,6 +121,17 @@ export default function RecipeGrid(props) {
           {renderGridContainer(weeklyRecipes, false)}
           <h2>non-weekly recipes</h2>
           {renderGridContainer(otherRecipes, false)}
+          {shouldShowBackBtn && (
+            <IconButton onClick={() => handlePageClick("back")}>
+              <ChevronLeftRoundedIcon color="primary" />
+            </IconButton>
+          )}
+          {page}
+          {shouldShowFwdBtn && (
+            <IconButton onClick={() => handlePageClick("fwd")}>
+              <ChevronRightRoundedIcon color="primary" />
+            </IconButton>
+          )}
         </>
       );
     } else if (props.type === "inbox") {
