@@ -10,7 +10,6 @@ import Dashboard from "./components/Dashboard";
 import RecipeGrid from "./components/RecipeGrid";
 import Title from "./components/Title";
 import NewRecipeForm from "./components/NewRecipeForm";
-import GridParent from "./components/GridParent";
 
 export default function App() {
   return (
@@ -30,19 +29,19 @@ export default function App() {
                 </Dashboard>
               </Route>
 
-              <Route path="/inbox/:page?">
+              <Route path="/inbox/">
                 <Dashboard>
                   <Title>Recipe Inbox</Title>
                   <RecipeGrid type="inbox" />
                 </Dashboard>
               </Route>
-              <Route path="/favorites/:page?">
+              <Route path="/favorites/">
                 <Dashboard>
                   <Title>Favorite Recipes</Title>
                   <RecipeGrid type="favorites" />
                 </Dashboard>
               </Route>
-              <Route path="/:page?">
+              <Route path="/">
                 <Dashboard>
                   <Title>Recipe Index</Title>
                   <RecipeGrid type="index" />

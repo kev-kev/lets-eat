@@ -29,7 +29,7 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
   useEffect(() => {
-    fetchRecipes(state.selectedWeek, 1);
+    fetchRecipes(state.selectedWeek);
   }, []);
   function loginUser(username, password) {
     dispatch({
@@ -61,11 +61,11 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function fetchRecipes(week, page) {
+  function fetchRecipes(week) {
     dispatch({
       type: "FETCH_RECIPES",
     });
-    fetch(rootURL + `/recipes/?page=${page}&week=${week}`)
+    fetch(rootURL + `/recipes/?week=${week}`)
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {

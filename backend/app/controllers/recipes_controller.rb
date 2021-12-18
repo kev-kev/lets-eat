@@ -1,16 +1,10 @@
 class RecipesController < ApplicationController
-  RECIPES_PER_PAGE = 20
-  WEEKLY_RECIPES_PER_PAGE = 4
   def index
-    page = request.query_parameters[:page];
-    page = 1 if page === "undefined"
-    week = request.query_parameters[:week];
+    week = request.query_parameters[:week]
+    recipes = Recipe.order(:id).map{|recipe| format_recipe(recipe)}
     render json: {
-      weeklyRecipes: Recipe.where("'#{Date.parse(week)}' = ANY (weeks)").order(:id).offset((page.to_i-1) * RECIPES_PER_PAGE).limit(RECIPES_PER_PAGE).map{ |recipe| format_recipe(recipe)},
-      nonWeeklyRecipes: Recipe.where("cardinality(weeks) = 0").map{|recipe| format_recipe(recipe)}
-      # recipes: Recipe.order(:id).offset((page-1) * RECIPES_PER_PAGE).limit(RECIPES_PER_PAGE).map{ |recipe| format_recipe(recipe)}
+      recipes: recipes
     }
-
   end
 
   def submit
@@ -29,8 +23,6 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     if @recipe
       @recipe.update(recipe_params)
-      page = request.query_parameters[:page]
-      page = 0 if page === "undefined"
       render status: 200
     else
       render json: {error: "unable to update recipe"}, status: 400
