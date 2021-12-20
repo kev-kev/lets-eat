@@ -12,17 +12,17 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { gridMui } from "../muiStyling";
 
 const RECIPES_PER_PAGE = 20;
-const populateRecipeGrid = (recipes, isVoteCard) => {
+const populateRecipeGrid = (recipes, type) => {
   return recipes.map((recipe) => {
     return (
       <Grid item xs key={recipe.name + uuid()}>
-        <RecipeCard isVoteCard={isVoteCard} recipe={recipe} />
+        <RecipeCard type={type} recipe={recipe} />
       </Grid>
     );
   });
 };
 
-const renderGridContainer = (recipes, isVoteCard) => {
+const renderGridContainer = (recipes, type) => {
   return (
     <Grid
       wrap="wrap"
@@ -32,7 +32,7 @@ const renderGridContainer = (recipes, isVoteCard) => {
       spacing={1}
       container
     >
-      {populateRecipeGrid(recipes, isVoteCard)}
+      {populateRecipeGrid(recipes, type)}
     </Grid>
   );
 };
@@ -56,16 +56,21 @@ export default function RecipeGrid(props) {
   const approvedRecipes = [];
   const pendingRecipes = [];
   const rejectedRecipes = [];
+  const favoritedRecipes = [];
 
   recipes.forEach((recipe) => {
-    if (recipe.status === "approved") approvedRecipes.push(recipe);
-    else if (
+    if (recipe.status === "approved") {
+      approvedRecipes.push(recipe);
+      if (recipe.isFavorited) favoritedRecipes.push(recipe);
+    } else if (
       recipe.status === "pending" &&
       recipe.submittedBy !== user.username
     )
       pendingRecipes.push(recipe);
     else if (recipe.status === "rejected") rejectedRecipes.push(recipe);
   });
+
+  approvedRecipes.filter((recipe) => recipe.isFavorited);
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -76,19 +81,12 @@ export default function RecipeGrid(props) {
   const handlePageClick = (dir) => {
     let nextPage = page;
     dir === "back" ? (nextPage -= 1) : (nextPage += 1);
-
-    // if (dir === "back") {
-    //   nextPage = page - 1;
-    // } else {
-    //   nextPage = page + 1;
-    // }
     setPage(nextPage);
     nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
 
     nextPage <= recipes.length / RECIPES_PER_PAGE
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
-    // setShouldShowFwdBtn if nextPage is greater than the number of pages
   };
   if (!user) return <Redirect to="/login" />;
 
@@ -105,6 +103,7 @@ export default function RecipeGrid(props) {
           return !isWeeklyRecipe(recipe.weeks, selectedWeek);
         })
         .slice((page - 1) * RECIPES_PER_PAGE, page * RECIPES_PER_PAGE);
+
       return (
         <>
           <h2>
@@ -117,9 +116,9 @@ export default function RecipeGrid(props) {
           <IconButton onClick={() => handleChangeWeek("fwd")}>
             <ChevronRightRoundedIcon color="primary" />
           </IconButton>
-          {renderGridContainer(weeklyRecipes, false)}
+          {renderGridContainer(weeklyRecipes, props.type)}
           <h2>non-weekly recipes</h2>
-          {renderGridContainer(otherRecipes, false)}
+          {renderGridContainer(otherRecipes, props.type)}
           {shouldShowBackBtn && (
             <IconButton onClick={() => handlePageClick("back")}>
               <ChevronLeftRoundedIcon color="primary" />
@@ -133,13 +132,11 @@ export default function RecipeGrid(props) {
           )}
         </>
       );
-    } else if (props.type === "inbox") {
-      return <>{renderGridContainer(pendingRecipes, true)}</>;
-    } else if (props.type === "favorites") {
-      const favoritedRecipes = approvedRecipes.filter(
-        (recipe) => recipe.isFavorited
-      );
-      return <>{renderGridContainer(favoritedRecipes, false)}</>;
+    } else {
+      if (props.type === "inbox")
+        return <>{renderGridContainer(pendingRecipes, props.type)}</>;
+      if (props.type === "favorites")
+        return <>{renderGridContainer(favoritedRecipes, props.type)}</>;
     }
   }
 }

@@ -52,7 +52,7 @@ export default function RecipeCard(props) {
   };
 
   const renderVoteBodyOrFooter = () => {
-    if (props.isVoteCard) {
+    if (props.type === "inbox") {
       return (
         <RecipeVoteBody id={props.recipe.id} className={classes.voteBody} />
       );
@@ -72,27 +72,28 @@ export default function RecipeCard(props) {
   };
 
   const renderAddOrRemoveBtn = () => {
-    return (
-      <IconButton
-        className={classes.addOrRemoveBtn}
-        onClick={() => {
-          setWeeks(
-            props.recipe.id,
-            addOrRemoveWeek(props.recipe.weeks, selectedWeek)
-          );
-        }}
-      >
-        {isWeeklyRecipe(props.recipe.weeks, selectedWeek) ? (
-          <CloseRoundedIcon color="primary" />
-        ) : (
-          <AddRoundedIcon color="primary" />
-        )}
-      </IconButton>
-    );
+    if (props.type === "index")
+      return (
+        <IconButton
+          className={classes.addOrRemoveBtn}
+          onClick={() => {
+            setWeeks(
+              props.recipe.id,
+              addOrRemoveWeek(props.recipe.weeks, selectedWeek)
+            );
+          }}
+        >
+          {isWeeklyRecipe(props.recipe.weeks, selectedWeek) ? (
+            <CloseRoundedIcon color="primary" />
+          ) : (
+            <AddRoundedIcon color="primary" />
+          )}
+        </IconButton>
+      );
   };
 
   const renderDeleteBtn = () => {
-    if (!props.isVoteCard && !props.recipe.isFavorited)
+    if (props.type === "inbox" && !props.recipe.isFavorited)
       return (
         <>
           <IconButton onClick={() => setOpen(true)}>
@@ -102,7 +103,7 @@ export default function RecipeCard(props) {
             <DialogTitle>{"Delete Recipe?"}</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Recipe will be deleted forever.
+                recipe will be deleted forever.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -112,7 +113,7 @@ export default function RecipeCard(props) {
                 autoFocus
                 onClick={() => setOpen(false)}
               >
-                Nevermind...
+                nevermind...
               </Button>
               <Button
                 color="primary"
@@ -122,7 +123,7 @@ export default function RecipeCard(props) {
                   setOpen(false);
                 }}
               >
-                Delete
+                delete
               </Button>
             </DialogActions>
           </Dialog>
