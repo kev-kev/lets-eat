@@ -2,7 +2,7 @@ const findRecipeById = (recipes, id) => {
   return recipes.find((recipe) => recipe.id === id);
 };
 
-export default (state, action) => {
+export const AppReducer = (state, action) => {
   let updatedRecipe;
   switch (action.type) {
     case "LOGIN_USER":

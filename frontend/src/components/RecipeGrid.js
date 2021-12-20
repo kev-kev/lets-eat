@@ -74,21 +74,20 @@ export default function RecipeGrid(props) {
   };
 
   const handlePageClick = (dir) => {
-    let nextPage;
-    if (dir === "back") {
-      nextPage = page - 1;
-    } else {
-      nextPage = page + 1;
-    }
+    let nextPage = page;
+    dir === "back" ? (nextPage -= 1) : (nextPage += 1);
 
+    // if (dir === "back") {
+    //   nextPage = page - 1;
+    // } else {
+    //   nextPage = page + 1;
+    // }
     setPage(nextPage);
+    nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
 
-    if (nextPage > 1) {
-      setShouldShowBackBtn(true);
-    } else {
-      setShouldShowBackBtn(false);
-    }
-
+    nextPage <= recipes.length / RECIPES_PER_PAGE
+      ? setShouldShowFwdBtn(true)
+      : setShouldShowFwdBtn(false);
     // setShouldShowFwdBtn if nextPage is greater than the number of pages
   };
   if (!user) return <Redirect to="/login" />;

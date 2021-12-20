@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalState";
 import LoginForm from "./components/LoginForm";

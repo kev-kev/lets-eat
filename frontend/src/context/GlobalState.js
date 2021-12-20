@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useEffect } from "react";
-import AppReducer from "./AppReducer";
+import { AppReducer } from "./AppReducer";
 import { startOfWeek } from "date-fns";
 
 const initialState = {
@@ -28,9 +28,31 @@ function handleErrors(response) {
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
   useEffect(() => {
-    fetchRecipes(state.selectedWeek);
+    dispatch({
+      type: "FETCH_RECIPES",
+    });
+    fetch(rootURL + `/recipes/?week=${state.selectedWeek}`)
+      .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        dispatch({
+          type: "FETCH_RECIPES_SUCCESS",
+          payload: {
+            recipes: data.recipes,
+            weeklyRecipes: data.weeklyRecipes,
+          },
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "FETCH_RECIPES_FAILURE",
+          payload: error,
+        });
+      });
   }, []);
+
   function loginUser(username, password) {
     dispatch({
       type: "LOGIN_USER",
