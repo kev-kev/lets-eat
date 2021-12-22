@@ -119,17 +119,19 @@ export default function RecipeGrid(props) {
           {renderGridContainer(weeklyRecipes, props.type)}
           <h2>non-weekly recipes</h2>
           {renderGridContainer(otherRecipes, props.type)}
-          {shouldShowBackBtn && (
-            <IconButton onClick={() => handlePageClick("back")}>
-              <ChevronLeftRoundedIcon color="primary" />
-            </IconButton>
-          )}
-          {page}
-          {shouldShowFwdBtn && (
-            <IconButton onClick={() => handlePageClick("fwd")}>
-              <ChevronRightRoundedIcon color="primary" />
-            </IconButton>
-          )}
+          <div className={classes.pageNav}>
+            {shouldShowBackBtn && (
+              <IconButton onClick={() => handlePageClick("back")}>
+                <ChevronLeftRoundedIcon color="primary" />
+              </IconButton>
+            )}
+            {page}
+            {shouldShowFwdBtn && (
+              <IconButton onClick={() => handlePageClick("fwd")}>
+                <ChevronRightRoundedIcon color="primary" />
+              </IconButton>
+            )}
+          </div>
         </>
       );
     } else {

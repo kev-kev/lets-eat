@@ -42,22 +42,22 @@ export default function Sidebar() {
   return (
     <div className={classes.root}>
       <List className={classes.list}>
-        <ListItem button component={Link} to="/" key={"home"}>
+        <ListItem button component={Link} to="/">
           <ListItemIcon className={classes.sidebarItem}>
             <HomeIcon />
           </ListItemIcon>
         </ListItem>
-        <ListItem button component={Link} to="/inbox" key={"inbox"}>
+        <ListItem button component={Link} to="/inbox">
           <ListItemIcon className={classes.sidebarItem}>
             {renderInboxBadge(recipes, user)}
           </ListItemIcon>
         </ListItem>
-        <ListItem button component={Link} to="/favorites" key={"favorites"}>
+        <ListItem button component={Link} to="/favorites">
           <ListItemIcon className={classes.sidebarItem}>
             <FavoriteIcon />
           </ListItemIcon>
         </ListItem>
-        <ListItem button component={Link} to="/new" key={"new-recipe"}>
+        <ListItem button component={Link} to="/new">
           <ListItemIcon className={classes.sidebarItem}>
             <AddIcon />
           </ListItemIcon>

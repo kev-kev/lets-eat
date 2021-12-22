@@ -4,6 +4,12 @@ export const gridMui = makeStyles((theme) => ({
   loading: {
     margin: "40vh",
   },
+  pageNav: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "no-wrap",
+    justifyContent: "center",
+  },
 }));
 
 export const dashboardMui = makeStyles((theme) => ({

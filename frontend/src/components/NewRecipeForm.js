@@ -122,6 +122,7 @@ export default function NewRecipeForm() {
               autoComplete="current-link"
               onChange={(e) => setLink(e.target.value)}
             />
+            ingredient format: name, count, unit of measurement
             <TextField
               className="textAreas"
               variant="outlined"
