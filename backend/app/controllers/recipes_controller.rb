@@ -8,11 +8,23 @@ class RecipesController < ApplicationController
   end
 
   def submit
-    @recipe = Recipe.new(recipe_params)
+   # p 'the ingredients are....................................'
+    # recipe_params[:ingredients].split("\n").each{|ingredient| p ingredient.split(", ")}
+    @recipe = Recipe.new(recipe_params.except(:ingredients))
     @user = User.find(recipe_params[:user_id])
     @recipe.user = @user
     if @recipe.valid?
+      ingredients = recipe_params[:ingredients].split("\n")
       @recipe.save!
+      ingredients.each do |ingredient|
+        name, count, unit = ingredient.split(", ")
+        ingredient = Ingredient.find_or_create_by({"name"=> name, "unit" => unit})
+        if ingredient.valid?
+          ingredient.save!
+          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe.id, "ingredient_id"=> ingredient.id, "count"=>count})
+          recipe_ingredient.save!
+        end
+      end
       render json: {recipe: @recipe}, status: 200
     else
       render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}, status: 400
