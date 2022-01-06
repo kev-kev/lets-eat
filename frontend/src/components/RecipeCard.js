@@ -62,6 +62,7 @@ export default function RecipeCard(props) {
   };
 
   const addOrRemoveWeek = (weeks, selectedWeek) => {
+    // Use function to set weekly recipes in the GlobalState
     if (isWeeklyRecipe(weeks, selectedWeek)) {
       return weeks.filter((week) => {
         return differenceInDays(parseISO(week), selectedWeek) !== 0;

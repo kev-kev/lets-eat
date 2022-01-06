@@ -15,6 +15,7 @@ const initialState = {
     inbox: null,
   },
   selectedWeek: startOfWeek(new Date()),
+  weeklyRecipes: [],
   groceryList: null,
 };
 const rootURL = process.env.REACT_APP_API_URL;

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
@@ -79,6 +79,15 @@ export default function RecipeGrid(props) {
 
   approvedRecipes.filter((recipe) => recipe.isFavorited);
 
+  const weeklyRecipes = approvedRecipes.filter((recipe) => {
+    return isWeeklyRecipe(recipe.weeks, selectedWeek);
+  });
+  const otherRecipes = approvedRecipes
+    .filter((recipe) => {
+      return !isWeeklyRecipe(recipe.weeks, selectedWeek);
+    })
+    .slice((page - 1) * RECIPES_PER_PAGE, page * RECIPES_PER_PAGE);
+
   const handleChangeWeek = (dir) => {
     dir === "back"
       ? changeSelectedWeek(sub(selectedWeek, { days: 7 }))
@@ -102,16 +111,6 @@ export default function RecipeGrid(props) {
     return <CircularProgress className={classes.loading} />;
   } else {
     if (props.type === "index") {
-      const weeklyRecipes = approvedRecipes.filter((recipe) => {
-        return isWeeklyRecipe(recipe.weeks, selectedWeek);
-      });
-
-      const otherRecipes = approvedRecipes
-        .filter((recipe) => {
-          return !isWeeklyRecipe(recipe.weeks, selectedWeek);
-        })
-        .slice((page - 1) * RECIPES_PER_PAGE, page * RECIPES_PER_PAGE);
-
       return (
         <>
           <h2>
@@ -124,7 +123,9 @@ export default function RecipeGrid(props) {
               <ChevronRightRoundedIcon color="primary" />
             </IconButton>
           </h2>
-          <button onClick={() => getGroceryList()}>Get Grocery List</button>
+          {weeklyRecipes.length > 0 && (
+            <button onClick={() => getGroceryList()}>Get Grocery List</button>
+          )}
           {renderGridContainer(weeklyRecipes, props.type)}
           <h2>non-weekly recipes</h2>
           {renderGridContainer(otherRecipes, props.type)}
