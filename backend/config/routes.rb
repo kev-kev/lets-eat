@@ -4,4 +4,6 @@ Rails.application.routes.draw do
 
   resources :recipes, only: [:index, :destroy, :update]
   post "/submit", to: "recipes#submit"
+
+  get "/grocery_list", to: "home#get_grocery_list"
 end

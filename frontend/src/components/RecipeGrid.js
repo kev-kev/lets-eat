@@ -47,8 +47,15 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
 
 export default function RecipeGrid(props) {
   const classes = gridMui();
-  const { user, recipes, selectedWeek, changeSelectedWeek, isLoading } =
-    useContext(GlobalContext);
+  const {
+    user,
+    recipes,
+    selectedWeek,
+    changeSelectedWeek,
+    isLoading,
+    groceryList,
+    getGroceryList,
+  } = useContext(GlobalContext);
 
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
@@ -88,6 +95,7 @@ export default function RecipeGrid(props) {
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
   };
+
   if (!user) return <Redirect to="/login" />;
 
   if (isLoading) {
@@ -107,15 +115,16 @@ export default function RecipeGrid(props) {
       return (
         <>
           <h2>
+            <IconButton onClick={() => handleChangeWeek("back")}>
+              <ChevronLeftRoundedIcon color="primary" />
+            </IconButton>
             Week of: {format(selectedWeek, "LLL do")} -{" "}
             {format(add(selectedWeek, { days: 6 }), "LLL do")}
+            <IconButton onClick={() => handleChangeWeek("fwd")}>
+              <ChevronRightRoundedIcon color="primary" />
+            </IconButton>
           </h2>
-          <IconButton onClick={() => handleChangeWeek("back")}>
-            <ChevronLeftRoundedIcon color="primary" />
-          </IconButton>
-          <IconButton onClick={() => handleChangeWeek("fwd")}>
-            <ChevronRightRoundedIcon color="primary" />
-          </IconButton>
+          <button onClick={() => getGroceryList()}>Get Grocery List</button>
           {renderGridContainer(weeklyRecipes, props.type)}
           <h2>non-weekly recipes</h2>
           {renderGridContainer(otherRecipes, props.type)}

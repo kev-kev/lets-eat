@@ -126,6 +126,19 @@ export const AppReducer = (state, action) => {
         ...state,
         selectedWeek: action.payload,
       };
+    case "GET_GROCERY_LIST_SUCCESS":
+      return {
+        ...state,
+        groceryList: action.payload,
+      };
+    case "GET_GROCERY_LIST_FAILURE":
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          grid: action.payload,
+        },
+      };
     case "LOGOUT_USER":
       return {
         ...state,

@@ -15,6 +15,7 @@ const initialState = {
     inbox: null,
   },
   selectedWeek: startOfWeek(new Date()),
+  groceryList: null,
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -33,7 +34,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "FETCH_RECIPES",
     });
-    fetch(rootURL + `/recipes/?week=${state.selectedWeek}`)
+    fetch(rootURL + "/recipes/")
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
@@ -41,7 +42,6 @@ export const GlobalProvider = ({ children }) => {
           type: "FETCH_RECIPES_SUCCESS",
           payload: {
             recipes: data.recipes,
-            weeklyRecipes: data.weeklyRecipes,
           },
         });
       })
@@ -254,6 +254,24 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
+  function getGroceryList() {
+    fetch(rootURL + `/grocery_list/?week=${state.selectedWeek}`)
+      .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_GROCERY_LIST_SUCCESS",
+          payload: { groceryList: data.groceryList },
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "GET_GROCERY_LIST_FAILURE",
+          payload: error,
+        });
+      });
+  }
+
   function changeSelectedWeek(week) {
     dispatch({
       type: "CHANGE_SELECTED_WEEK",
@@ -293,6 +311,8 @@ export const GlobalProvider = ({ children }) => {
         changeSelectedWeek,
         setWeeks,
         toggleFavorite,
+        getGroceryList,
+        groceryList: state.groceryList,
       }}
     >
       {children}

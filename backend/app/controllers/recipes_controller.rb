@@ -1,6 +1,5 @@
 class RecipesController < ApplicationController
   def index
-    week = request.query_parameters[:week]
     recipes = Recipe.order(:id).map{|recipe| format_recipe(recipe)}
     render json: {
       recipes: recipes
@@ -8,8 +7,6 @@ class RecipesController < ApplicationController
   end
 
   def submit
-   # p 'the ingredients are....................................'
-    # recipe_params[:ingredients].split("\n").each{|ingredient| p ingredient.split(", ")}
     @recipe = Recipe.new(recipe_params.except(:ingredients))
     @user = User.find(recipe_params[:user_id])
     @recipe.user = @user
@@ -18,11 +15,13 @@ class RecipesController < ApplicationController
       @recipe.save!
       ingredients.each do |ingredient|
         name, count, unit = ingredient.split(", ")
-        ingredient = Ingredient.find_or_create_by({"name"=> name, "unit" => unit})
-        if ingredient.valid?
-          ingredient.save!
-          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe.id, "ingredient_id"=> ingredient.id, "count"=>count})
+        new_ingredient = Ingredient.find_or_create_by({"name"=> name, "unit" => unit})
+        if new_ingredient.valid?
+          new_ingredient.save!
+          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe.id, "ingredient_id"=> new_ingredient.id, "count"=>count})
           recipe_ingredient.save!
+        else
+          render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
         end
       end
       render json: {recipe: @recipe}, status: 200
@@ -45,7 +44,7 @@ class RecipesController < ApplicationController
     if Recipe.destroy(params[:id])
       render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}, status: 200
     else
-      render json: { error: 'unabme to delete recipe'}, status: 400
+      render json: { error: 'unable to delete recipe'}, status: 400
     end
   end
 
@@ -64,7 +63,6 @@ class RecipesController < ApplicationController
         imgUrl: recipe.img_url,
         link: recipe.link,
         isFavorited: recipe.is_favorited,
-        ingredients: recipe.ingredients,
         weeks: recipe.weeks.map(&:iso8601)
       }
     end
