@@ -262,7 +262,7 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "GET_GROCERY_LIST_SUCCESS",
-          payload: { groceryList: data.groceryList },
+          payload: data.groceryList,
         });
       })
       .catch((error) => {

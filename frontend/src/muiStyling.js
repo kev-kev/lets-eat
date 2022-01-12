@@ -10,6 +10,13 @@ export const gridMui = makeStyles((theme) => ({
     flexWrap: "no-wrap",
     justifyContent: "center",
   },
+  modal: {
+    width: 400,
+    backgroundColor: theme.palette.secondary.light,
+    border: "2px solid #000",
+    boxShadow: 2,
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 export const dashboardMui = makeStyles((theme) => ({
