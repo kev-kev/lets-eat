@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
@@ -11,6 +11,7 @@ import { IconButton, Grid } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { gridMui } from "../muiStyling";
 import Modal from "@material-ui/core/Modal";
+import pluralize from "pluralize";
 
 const RECIPES_PER_PAGE = 20;
 const populateRecipeGrid = (recipes, type) => {
@@ -65,6 +66,7 @@ export default function RecipeGrid(props) {
     isLoading,
     groceryList,
     getGroceryList,
+    fetchRecipes,
   } = useContext(GlobalContext);
 
   const [page, setPage] = useState(1);
@@ -75,6 +77,10 @@ export default function RecipeGrid(props) {
   const pendingRecipes = [];
   const rejectedRecipes = [];
   const favoritedRecipes = [];
+
+  useEffect(() => {
+    fetchRecipes(selectedWeek);
+  }, []);
 
   recipes.forEach((recipe) => {
     if (recipe.status === "approved") {
@@ -124,11 +130,9 @@ export default function RecipeGrid(props) {
   const renderAmountsList = (amounts) => {
     return amounts.map((amount) => {
       return (
-        <>
-          <span>
-            {amount.count} {amount.unit}
-          </span>{" "}
-        </>
+        <span key={amount.unit}>
+          {amount.count} {pluralize(amount.unit, amount.count)}
+        </span>
       );
     });
   };

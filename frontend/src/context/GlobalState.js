@@ -31,29 +31,6 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  useEffect(() => {
-    dispatch({
-      type: "FETCH_RECIPES",
-    });
-    fetch(rootURL + "/recipes/")
-      .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
-        dispatch({
-          type: "FETCH_RECIPES_SUCCESS",
-          payload: {
-            recipes: data.recipes,
-          },
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: "FETCH_RECIPES_FAILURE",
-          payload: error,
-        });
-      });
-  }, []);
-
   function loginUser(username, password) {
     dispatch({
       type: "LOGIN_USER",
