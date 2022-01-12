@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer } from "react";
 import { AppReducer } from "./AppReducer";
 import { startOfWeek } from "date-fns";
 
@@ -21,9 +21,7 @@ const initialState = {
 const rootURL = process.env.REACT_APP_API_URL;
 
 function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
+  if (!response.ok) throw Error(response.statusText);
   return response;
 }
 

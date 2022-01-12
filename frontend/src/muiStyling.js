@@ -72,15 +72,22 @@ export const recipeCardMui = makeStyles((theme) => ({
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
+  // expand: {
+  //   transform: "rotate(0deg)",
+  //   marginLeft: "auto",
+  //   transition: theme.transitions.create("transform", {
+  //     duration: theme.transitions.duration.shortest,
+  //   }),
+  // },
+  // expandOpen: {
+  //   transform: "rotate(180deg)",
+  // },
+  modal: {
+    width: 400,
+    backgroundColor: theme.palette.secondary.light,
+    border: "2px solid #000",
+    boxShadow: 2,
+    padding: theme.spacing(2, 4, 3),
   },
   addOrRemoveBtn: {
     position: "absolute",

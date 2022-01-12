@@ -47,13 +47,11 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
   );
 };
 
-const getModalStyle = () => {
-  return {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
 };
 
 export default function RecipeGrid(props) {
@@ -178,11 +176,7 @@ export default function RecipeGrid(props) {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
               >
-                <div
-                  style={getModalStyle()}
-                  className={classes.modal}
-                  mx="auto"
-                >
+                <div style={modalStyle} className={classes.modal} mx="auto">
                   <h2 id="simple-modal-title">Grocery List</h2>
                   <div id="simple-modal-description">{renderGroceryList()}</div>
                 </div>

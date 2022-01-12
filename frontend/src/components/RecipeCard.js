@@ -1,14 +1,13 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { recipeCardMui } from "../muiStyling";
-import clsx from "clsx";
+import Modal from "@material-ui/core/Modal";
 import RecipeVoteBody from "./RecipeVoteBody";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
@@ -23,8 +22,16 @@ import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { isWeeklyRecipe } from "./RecipeGrid";
 import { differenceInDays, formatISO, parseISO } from "date-fns";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
 
 export default function RecipeCard(props) {
   const classes = recipeCardMui();
@@ -32,7 +39,8 @@ export default function RecipeCard(props) {
   const { deleteRecipe, toggleFavorite, setWeeks, selectedWeek } =
     useContext(GlobalContext);
 
-  const [expanded, setExpanded] = useState(false);
+  // const [expanded, setExpanded] = useState(false);
+  const [shouldShowModal, setShouldShowModal] = useState(false);
   const [open, setOpen] = useState(false);
 
   const renderIndexCardBody = () => {
@@ -132,6 +140,26 @@ export default function RecipeCard(props) {
       );
   };
 
+  const renderCardModalBody = () => {
+    return (
+      <>
+        <Typography variant="subtitle2">Ingredients:</Typography>
+        <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
+          {props.recipe.ingredients}
+        </Typography>
+        <Typography variant="subtitle2">Notes:</Typography>
+        <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
+          {props.recipe.notes}
+        </Typography>
+        <br />
+        <Typography variant="caption">
+          submitted by: {props.recipe.submittedBy}
+        </Typography>
+        {renderDeleteBtn()}
+      </>
+    );
+  };
+
   return (
     <Card className={classes.root}>
       {renderAddOrRemoveBtn()}
@@ -151,33 +179,23 @@ export default function RecipeCard(props) {
           <OpenInNewRoundedIcon color="primary" />
         </IconButton>
         <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={() => setExpanded(!expanded)}
-          aria-expanded={expanded}
+          onClick={() => setShouldShowModal(true)}
           aria-label="show more"
         >
-          <ExpandMoreIcon color="primary" />
+          <MoreHorizIcon color="primary" />
         </IconButton>
+        <Modal
+          open={shouldShowModal}
+          onClose={() => setShouldShowModal(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div style={modalStyle} className={classes.modal} mx="auto">
+            <h2 id="simple-modal-title">{props.recipe.name}</h2>
+            <div id="simple-modal-description">{renderCardModalBody()}</div>
+          </div>
+        </Modal>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography variant="subtitle2">Ingredients:</Typography>
-          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {props.recipe.ingredients}
-          </Typography>
-          <Typography variant="subtitle2">Notes:</Typography>
-          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {props.recipe.notes}
-          </Typography>
-          <br />
-          <Typography variant="caption" className={classes.submittedBy}>
-            submitted by: {props.recipe.submittedBy}
-          </Typography>
-          {renderDeleteBtn()}
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }
