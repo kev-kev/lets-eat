@@ -11,14 +11,13 @@ class RecipesController < ApplicationController
     @user = User.find(recipe_params[:user_id])
     @recipe.user = @user
     if @recipe.valid?
-      ingredients = recipe_params[:ingredients].split("\n")
+      ingredients = recipe_params[:ingredients]
       @recipe.save!
       ingredients.each do |ingredient|
-        name, count, unit = ingredient.split(", ")
-        new_ingredient = Ingredient.find_or_create_by({"name"=> name, "unit" => unit})
+        new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient.name, "unit" => ingredientunit})
         if new_ingredient.valid?
           new_ingredient.save!
-          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe.id, "ingredient_id"=> new_ingredient.id, "count"=>count})
+          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe.id, "ingredient_id"=> new_ingredient.id, "count"=>ingredient.count})
           recipe_ingredient.save!
         else
           render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400

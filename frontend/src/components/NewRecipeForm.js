@@ -9,6 +9,8 @@ import { GlobalContext } from "../context/GlobalState";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import IngredientInputForm from "./IngredientInputForm";
+import uuid from "react-uuid";
 
 export default function NewRecipeForm() {
   const classes = newRecipeFormMui();
@@ -20,10 +22,11 @@ export default function NewRecipeForm() {
   const [link, setLink] = useState("");
   const [notes, setNotes] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [ingredientInputs, setIngredientInputs] = useState([]);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
 
-  const refContainer = useRef(true);
+  // const refContainer = useRef(true);
 
   const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
   const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
@@ -39,13 +42,13 @@ export default function NewRecipeForm() {
   //   so the snackbar doesn't load on initial render.
   // any change to recipes will trigger the success snackbar,
   //   since a change must mean the fetch was successful
-  useEffect(() => {
-    if (refContainer.current) {
-      refContainer.current = false;
-    } else {
-      setSuccessSnackbar(true);
-    }
-  }, [recipes]);
+  // useEffect(() => {
+  //   if (refContainer.current) {
+  //     refContainer.current = false;
+  //   } else {
+  //     setSuccessSnackbar(true);
+  //   }
+  // }, [recipes]);
 
   const handleClose = () => {
     setErrorSnackbar(false);
@@ -54,12 +57,43 @@ export default function NewRecipeForm() {
   };
 
   const handleSubmit = (title, link) => {
+    console.log(ingredientInputs);
     if (title === "" || link === "") {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     } else {
-      submitRecipe(title, link, notes, imgUrl, ingredients);
+      submitRecipe(title, link, notes, imgUrl, ingredientInputs);
     }
+  };
+
+  const handleAddIngredientInput = () => {
+    setIngredientInputs([
+      ...ingredientInputs,
+      { name: "", count: 0, unit: "" },
+    ]);
+  };
+
+  const setAttributeForIngredient = (index, attribute, value) => {
+    const newIngredientInputs = [...ingredientInputs];
+    newIngredientInputs[index][attribute] = value;
+    setIngredientInputs(newIngredientInputs);
+  };
+
+  const renderIngredientInputs = () => {
+    return ingredientInputs.map((ingredientInput, index) => {
+      return (
+        <IngredientInputForm
+          ingredientInput={ingredientInput}
+          setName={(ingredientName) =>
+            setAttributeForIngredient(index, "name", ingredientName)
+          }
+          setCount={(count) => setAttributeForIngredient(index, "count", count)}
+          setUnit={(unit) => setAttributeForIngredient(index, "unit", unit)}
+          key={index}
+          index={index}
+        />
+      );
+    });
   };
 
   if (isSubmittingRecipe) {
@@ -137,6 +171,17 @@ export default function NewRecipeForm() {
               autoComplete="ingredients"
               onChange={(e) => setIngredients(e.target.value)}
             />
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                handleAddIngredientInput();
+              }}
+            >
+              New Ingredient
+            </Button>
+            <br />
+            {renderIngredientInputs()}
             <TextField
               className="textAreas"
               variant="outlined"
