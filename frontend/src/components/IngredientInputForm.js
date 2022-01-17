@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Select from "@material-ui/core/Select";
 import { Box, MenuItem, TextField } from "@material-ui/core";
 
@@ -26,12 +26,12 @@ const IngredientInputForm = (props) => {
         <MenuItem value={"pounds"}>Pounds</MenuItem>
         <MenuItem value={"milliliters"}>Milliliters</MenuItem>
         <MenuItem value={"liters"}>Liters</MenuItem>
-        <MenuItem value={"teaspoon"}>Teaspoon</MenuItem>
-        <MenuItem value={"tablespoon"}>Tablespoon</MenuItem>
-        <MenuItem value={"cup"}>Cup</MenuItem>
-        <MenuItem value={"pint"}>Pint</MenuItem>
-        <MenuItem value={"quart"}>Quart</MenuItem>
-        <MenuItem value={"gallon"}>Gallon</MenuItem>
+        <MenuItem value={"teaspoon"}>Teaspoons</MenuItem>
+        <MenuItem value={"tablespoon"}>Tablespoons</MenuItem>
+        <MenuItem value={"cup"}>Cups</MenuItem>
+        <MenuItem value={"pint"}>Pints</MenuItem>
+        <MenuItem value={"quart"}>Quarts</MenuItem>
+        <MenuItem value={"gallon"}>Gallons</MenuItem>
       </Select>
       <TextField
         type="text"

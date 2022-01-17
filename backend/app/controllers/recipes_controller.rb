@@ -14,10 +14,10 @@ class RecipesController < ApplicationController
       ingredients = recipe_params[:ingredients]
       @recipe.save!
       ingredients.each do |ingredient|
-        new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient.name, "unit" => ingredientunit})
+        new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient[:name], "unit" => ingredient[:unit]})
         if new_ingredient.valid?
           new_ingredient.save!
-          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe.id, "ingredient_id"=> new_ingredient.id, "count"=>ingredient.count})
+          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
           recipe_ingredient.save!
         else
           render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
@@ -49,7 +49,7 @@ class RecipesController < ApplicationController
 
   private
     def recipe_params
-      params.require(:recipe).permit(:id, :name, :link, :status, :notes, :user_id, :img_url, :is_favorited, :ingredients, {weeks: []})
+      params.require(:recipe).permit(:id, :name, :link, :status, :notes, :user_id, :img_url, :is_favorited, {ingredients: [:name, :count, :unit]}, {weeks: []})
     end
 
     def format_recipe(recipe)

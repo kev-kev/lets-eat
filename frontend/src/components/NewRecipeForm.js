@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -10,7 +10,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import IngredientInputForm from "./IngredientInputForm";
-import uuid from "react-uuid";
+
+const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
+const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
 export default function NewRecipeForm() {
   const classes = newRecipeFormMui();
@@ -21,34 +23,13 @@ export default function NewRecipeForm() {
   const [imgUrl, setImgUrl] = useState("");
   const [link, setLink] = useState("");
   const [notes, setNotes] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [ingredientInputs, setIngredientInputs] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
 
-  // const refContainer = useRef(true);
-
-  const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
-  const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
-
   useEffect(() => {
-    if (errors.submit) {
-      setErrorSnackbar(true);
-    }
+    if (errors.submit) setErrorSnackbar(true);
   }, [errors.submit]);
-
-  // note
-  // here im using useEffect to set the ref to false on pageload
-  //   so the snackbar doesn't load on initial render.
-  // any change to recipes will trigger the success snackbar,
-  //   since a change must mean the fetch was successful
-  // useEffect(() => {
-  //   if (refContainer.current) {
-  //     refContainer.current = false;
-  //   } else {
-  //     setSuccessSnackbar(true);
-  //   }
-  // }, [recipes]);
 
   const handleClose = () => {
     setErrorSnackbar(false);
@@ -57,30 +38,27 @@ export default function NewRecipeForm() {
   };
 
   const handleSubmit = (title, link) => {
-    console.log(ingredientInputs);
+    console.log(ingredients);
     if (title === "" || link === "") {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     } else {
-      submitRecipe(title, link, notes, imgUrl, ingredientInputs);
+      submitRecipe(title, link, notes, imgUrl, ingredients);
     }
   };
 
   const handleAddIngredientInput = () => {
-    setIngredientInputs([
-      ...ingredientInputs,
-      { name: "", count: 0, unit: "" },
-    ]);
+    setIngredients([...ingredients, { name: "", count: 0, unit: "" }]);
   };
 
   const setAttributeForIngredient = (index, attribute, value) => {
-    const newIngredientInputs = [...ingredientInputs];
-    newIngredientInputs[index][attribute] = value;
-    setIngredientInputs(newIngredientInputs);
+    const newIngredients = [...ingredients];
+    newIngredients[index][attribute] = value;
+    setIngredients(newIngredients);
   };
 
-  const renderIngredientInputs = () => {
-    return ingredientInputs.map((ingredientInput, index) => {
+  const renderIngredients = () => {
+    return ingredients.map((ingredientInput, index) => {
       return (
         <IngredientInputForm
           ingredientInput={ingredientInput}
@@ -156,21 +134,6 @@ export default function NewRecipeForm() {
               autoComplete="current-link"
               onChange={(e) => setLink(e.target.value)}
             />
-            ingredient format: name, count, unit of measurement
-            <TextField
-              className="textAreas"
-              variant="outlined"
-              margin="normal"
-              multiline
-              fullWidth
-              rows={4}
-              name="ingredients"
-              label="Ingredients"
-              type="ingredients"
-              id="ingredients"
-              autoComplete="ingredients"
-              onChange={(e) => setIngredients(e.target.value)}
-            />
             <Button
               color="primary"
               variant="contained"
@@ -181,7 +144,7 @@ export default function NewRecipeForm() {
               New Ingredient
             </Button>
             <br />
-            {renderIngredientInputs()}
+            {renderIngredients()}
             <TextField
               className="textAreas"
               variant="outlined"
