@@ -16,7 +16,7 @@ const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
 export default function NewRecipeForm() {
   const classes = newRecipeFormMui();
-  const { submitRecipe, isSubmittingRecipe, recipes, errors, clearErrors } =
+  const { submitRecipe, isSubmittingRecipe, errors, clearErrors } =
     useContext(GlobalContext);
 
   const [title, setTitle] = useState("");
@@ -52,9 +52,15 @@ export default function NewRecipeForm() {
   };
 
   const setAttributeForIngredient = (index, attribute, value) => {
-    const newIngredients = [...ingredients];
-    newIngredients[index][attribute] = value;
-    setIngredients(newIngredients);
+    const updatedIngredients = [...ingredients];
+    updatedIngredients[index][attribute] = value;
+    setIngredients(updatedIngredients);
+  };
+
+  const handleDeleteIngredient = (index) => {
+    const updatedIngredients = [...ingredients];
+    updatedIngredients.splice(index, 1);
+    setIngredients(updatedIngredients);
   };
 
   const renderIngredients = () => {
@@ -69,6 +75,7 @@ export default function NewRecipeForm() {
           setUnit={(unit) => setAttributeForIngredient(index, "unit", unit)}
           key={index}
           index={index}
+          handleDeleteIngredient={(index) => handleDeleteIngredient(index)}
         />
       );
     });
@@ -137,9 +144,7 @@ export default function NewRecipeForm() {
             <Button
               color="primary"
               variant="contained"
-              onClick={() => {
-                handleAddIngredientInput();
-              }}
+              onClick={handleAddIngredientInput}
             >
               New Ingredient
             </Button>
