@@ -5,8 +5,18 @@ import RecipeCard from "./RecipeCard";
 import { Redirect } from "react-router-dom";
 import { format, differenceInDays, parseISO, add, sub } from "date-fns";
 import { any } from "underscore";
-import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
-import { IconButton, Grid, Modal, CircularProgress } from "@material-ui/core";
+import {
+  ChevronRightRounded,
+  ChevronLeftRounded,
+  ShoppingBasketRounded,
+} from "@material-ui/icons/";
+import {
+  IconButton,
+  Grid,
+  Modal,
+  CircularProgress,
+  Button,
+} from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
 import pluralize from "pluralize";
 
@@ -111,7 +121,6 @@ export default function RecipeGrid(props) {
     dir === "back" ? (nextPage -= 1) : (nextPage += 1);
     setPage(nextPage);
     nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
-
     nextPage <= recipes.length / RECIPES_PER_PAGE
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
@@ -130,6 +139,36 @@ export default function RecipeGrid(props) {
         </span>
       );
     });
+  };
+
+  const renderGroceryListModal = () => {
+    if (weeklyRecipes.length > 0) {
+      return (
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleGetGroceryList()}
+            className={classes.button}
+            startIcon={<ShoppingBasketRounded />}
+            style={{ fontWeight: "bolder" }}
+          >
+            get grocery list
+          </Button>
+          <Modal
+            open={shouldShowModal}
+            onClose={() => setShouldShowModal(false)}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <div style={modalStyle} className={classes.modal} mx="auto">
+              <h2 id="simple-modal-title">Grocery List</h2>
+              <div id="simple-modal-description">{renderGroceryList()}</div>
+            </div>
+          </Modal>
+        </>
+      );
+    }
   };
 
   const renderGroceryList = () => {
@@ -162,25 +201,8 @@ export default function RecipeGrid(props) {
               <ChevronRightRounded color="primary" />
             </IconButton>
           </h2>
-          {weeklyRecipes.length > 0 && (
-            <>
-              <button onClick={() => handleGetGroceryList()}>
-                Get Grocery List
-              </button>
-              <Modal
-                open={shouldShowModal}
-                onClose={() => setShouldShowModal(false)}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-              >
-                <div style={modalStyle} className={classes.modal} mx="auto">
-                  <h2 id="simple-modal-title">Grocery List</h2>
-                  <div id="simple-modal-description">{renderGroceryList()}</div>
-                </div>
-              </Modal>
-            </>
-          )}
           {renderGridContainer(weeklyRecipes, props.type)}
+          {renderGroceryListModal()}
           <h2>non-weekly recipes</h2>
           {renderGridContainer(otherRecipes, props.type)}
           <div className={classes.pageNav}>

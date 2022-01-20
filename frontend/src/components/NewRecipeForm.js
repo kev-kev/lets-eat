@@ -40,7 +40,6 @@ export default function NewRecipeForm() {
   };
 
   const handleSubmit = (title, link) => {
-    console.log(ingredients);
     if (title === "" || link === "") {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
@@ -147,6 +146,7 @@ export default function NewRecipeForm() {
               color="primary"
               variant="contained"
               onClick={handleAddIngredientInput}
+              className={classes.button}
             >
               New Ingredient
             </Button>
@@ -171,7 +171,7 @@ export default function NewRecipeForm() {
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              className={classes.submit + " " + classes.button}
               onClick={(e) => {
                 e.preventDefault();
                 handleSubmit(title, link);

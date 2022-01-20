@@ -17,6 +17,9 @@ export const gridStyle = makeStyles((theme) => ({
     boxShadow: 2,
     padding: theme.spacing(2, 4, 3),
   },
+  button: {
+    color: "white",
+  },
 }));
 
 export const dashboardStyle = makeStyles((theme) => ({
@@ -72,16 +75,6 @@ export const recipeCardStyle = makeStyles((theme) => ({
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  // expand: {
-  //   transform: "rotate(0deg)",
-  //   marginLeft: "auto",
-  //   transition: theme.transitions.create("transform", {
-  //     duration: theme.transitions.duration.shortest,
-  //   }),
-  // },
-  // expandOpen: {
-  //   transform: "rotate(180deg)",
-  // },
   modal: {
     width: 400,
     backgroundColor: theme.palette.secondary.light,
@@ -127,6 +120,10 @@ export const newRecipeFormStyle = makeStyles((theme) => ({
   },
   loading: {
     justifyContent: "center",
+  },
+  button: {
+    color: "white",
+    "font-weight": "bolder",
   },
 }));
 
