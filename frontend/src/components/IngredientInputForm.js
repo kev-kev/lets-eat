@@ -1,7 +1,12 @@
 import React from "react";
-import Select from "@material-ui/core/Select";
-import { Box, MenuItem, TextField, IconButton } from "@material-ui/core";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import {
+  Box,
+  MenuItem,
+  TextField,
+  IconButton,
+  Select,
+} from "@material-ui/core";
+import { CloseRounded } from "@material-ui/icons/";
 
 const IngredientInputForm = (props) => {
   return (
@@ -42,7 +47,7 @@ const IngredientInputForm = (props) => {
         key={props.index + "name"}
       />
       <IconButton onClick={() => props.handleDeleteIngredient(props.index)}>
-        <CloseRoundedIcon color="primary" />
+        <CloseRounded color="primary" />
       </IconButton>
     </Box>
   );

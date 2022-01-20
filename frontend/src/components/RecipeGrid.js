@@ -5,12 +5,9 @@ import RecipeCard from "./RecipeCard";
 import { Redirect } from "react-router-dom";
 import { format, differenceInDays, parseISO, add, sub } from "date-fns";
 import { any } from "underscore";
-import ChevronRightRoundedIcon from "@material-ui/icons/ChevronRightRounded";
-import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
-import { IconButton, Grid } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { gridMui } from "../muiStyling";
-import Modal from "@material-ui/core/Modal";
+import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
+import { IconButton, Grid, Modal, CircularProgress } from "@material-ui/core";
+import { gridStyle } from "../muiStyling";
 import pluralize from "pluralize";
 
 const RECIPES_PER_PAGE = 20;
@@ -55,7 +52,7 @@ const modalStyle = {
 };
 
 export default function RecipeGrid(props) {
-  const classes = gridMui();
+  const classes = gridStyle();
   const {
     user,
     recipes,
@@ -157,12 +154,12 @@ export default function RecipeGrid(props) {
         <>
           <h2>
             <IconButton onClick={() => handleChangeWeek("back")}>
-              <ChevronLeftRoundedIcon color="primary" />
+              <ChevronLeftRounded color="primary" />
             </IconButton>
             Week of: {format(selectedWeek, "LLL do")} -{" "}
             {format(add(selectedWeek, { days: 6 }), "LLL do")}
             <IconButton onClick={() => handleChangeWeek("fwd")}>
-              <ChevronRightRoundedIcon color="primary" />
+              <ChevronRightRounded color="primary" />
             </IconButton>
           </h2>
           {weeklyRecipes.length > 0 && (
@@ -189,13 +186,13 @@ export default function RecipeGrid(props) {
           <div className={classes.pageNav}>
             {shouldShowBackBtn && (
               <IconButton onClick={() => handlePageClick("back")}>
-                <ChevronLeftRoundedIcon color="primary" />
+                <ChevronLeftRounded color="primary" />
               </IconButton>
             )}
             {page}
             {shouldShowFwdBtn && (
               <IconButton onClick={() => handlePageClick("fwd")}>
-                <ChevronRightRoundedIcon color="primary" />
+                <ChevronRightRounded color="primary" />
               </IconButton>
             )}
           </div>

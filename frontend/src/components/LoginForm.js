@@ -1,18 +1,20 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
+import {
+  Button,
+  Snackbar,
+  CssBaseline,
+  TextField,
+  Typography,
+  Container,
+  CircularProgress,
+} from "@material-ui/core/";
 import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { loginMui } from "../muiStyling";
+import { Alert } from "@material-ui/lab/";
+import { loginStyle } from "../muiStyling";
 
 export default function LoginForm() {
-  const classes = loginMui();
+  const classes = loginStyle();
   const { login, user, errors, clearErrors, isLoggingIn } =
     useContext(GlobalContext);
 

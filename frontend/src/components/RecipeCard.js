@@ -1,29 +1,32 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import { recipeCardMui } from "../muiStyling";
-import Modal from "@material-ui/core/Modal";
 import RecipeVoteBody from "./RecipeVoteBody";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
-import AddRoundedIcon from "@material-ui/icons/AddRounded";
-import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { isWeeklyRecipe } from "./RecipeGrid";
+import { recipeCardStyle } from "../muiStyling";
+import {
+  Favorite,
+  FavoriteBorder,
+  CloseRounded,
+  OpenInNewRounded,
+  AddRounded,
+  DeleteForeverRounded,
+  MoreHoriz,
+} from "@material-ui/icons/";
+import {
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Modal,
+  Button,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 const modalStyle = {
@@ -34,7 +37,7 @@ const modalStyle = {
 };
 
 export default function RecipeCard(props) {
-  const classes = recipeCardMui();
+  const classes = recipeCardStyle();
 
   const { deleteRecipe, toggleFavorite, setWeeks, selectedWeek } =
     useContext(GlobalContext);
@@ -51,9 +54,9 @@ export default function RecipeCard(props) {
         }}
       >
         {props.recipe.isFavorited ? (
-          <FavoriteIcon color="primary" />
+          <Favorite color="primary" />
         ) : (
-          <FavoriteBorderIcon color="primary" />
+          <FavoriteBorder color="primary" />
         )}
       </IconButton>
     );
@@ -93,9 +96,9 @@ export default function RecipeCard(props) {
           }}
         >
           {isWeeklyRecipe(props.recipe.weeks, selectedWeek) ? (
-            <CloseRoundedIcon color="primary" />
+            <CloseRounded color="primary" />
           ) : (
-            <AddRoundedIcon color="primary" />
+            <AddRounded color="primary" />
           )}
         </IconButton>
       );
@@ -106,7 +109,7 @@ export default function RecipeCard(props) {
       return (
         <>
           <IconButton onClick={() => setOpen(true)}>
-            <DeleteForeverRoundedIcon color="primary" />
+            <DeleteForeverRounded color="primary" />
           </IconButton>
           <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>{"Delete Recipe?"}</DialogTitle>
@@ -176,13 +179,13 @@ export default function RecipeCard(props) {
       <CardActions disableSpacing className={classes.cardActions}>
         {renderVoteBodyOrFooter()}
         <IconButton href={props.recipe.link}>
-          <OpenInNewRoundedIcon color="primary" />
+          <OpenInNewRounded color="primary" />
         </IconButton>
         <IconButton
           onClick={() => setShouldShowModal(true)}
           aria-label="show more"
         >
-          <MoreHorizIcon color="primary" />
+          <MoreHoriz color="primary" />
         </IconButton>
         <Modal
           open={shouldShowModal}

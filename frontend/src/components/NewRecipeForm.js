@@ -1,21 +1,23 @@
 import React, { useContext, useState, useEffect } from "react";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import { newRecipeFormMui } from "../muiStyling";
-import Container from "@material-ui/core/Container";
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Typography,
+  Container,
+  CircularProgress,
+  Snackbar,
+} from "@material-ui/core/";
+import { newRecipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
+import { Alert } from "@material-ui/lab/";
 import IngredientInputForm from "./IngredientInputForm";
 
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
 export default function NewRecipeForm() {
-  const classes = newRecipeFormMui();
+  const classes = newRecipeFormStyle();
   const { submitRecipe, isSubmittingRecipe, errors, clearErrors } =
     useContext(GlobalContext);
 

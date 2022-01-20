@@ -1,17 +1,14 @@
 import React, { useContext } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
+import { Box, Container, CssBaseline } from "@material-ui/core";
 import Sidebar from "./Sidebar";
 import Copyright from "./Copyright";
 import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
-import { dashboardMui } from "../muiStyling";
+import { dashboardStyle } from "../muiStyling";
 
 export default function Dashboard(props) {
-  const classes = dashboardMui();
+  const classes = dashboardStyle();
   const { user } = useContext(GlobalContext);
-
   if (user) {
     return (
       <div className={classes.root}>

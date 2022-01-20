@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import { voteBodyMui } from "../muiStyling";
+import { voteBodyStyle } from "../muiStyling";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import XCircleIcon from "@material-ui/icons/HighlightOff";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 
 export default function RecipeVoteBody(props) {
-  const classes = voteBodyMui(props);
+  const classes = voteBodyStyle(props);
   const { changeRecipeStatus } = useContext(GlobalContext);
 
   return (

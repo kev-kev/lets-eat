@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const gridMui = makeStyles((theme) => ({
+export const gridStyle = makeStyles((theme) => ({
   loading: {
     margin: "40vh",
   },
@@ -19,7 +19,7 @@ export const gridMui = makeStyles((theme) => ({
   },
 }));
 
-export const dashboardMui = makeStyles((theme) => ({
+export const dashboardStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
@@ -37,7 +37,7 @@ export const dashboardMui = makeStyles((theme) => ({
   },
 }));
 
-export const loginMui = makeStyles((theme) => ({
+export const loginStyle = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -61,7 +61,7 @@ export const loginMui = makeStyles((theme) => ({
   },
 }));
 
-export const recipeCardMui = makeStyles((theme) => ({
+export const recipeCardStyle = makeStyles((theme) => ({
   root: {
     width: 225,
     position: "relative",
@@ -106,7 +106,7 @@ export const recipeCardMui = makeStyles((theme) => ({
   },
 }));
 
-export const newRecipeFormMui = makeStyles((theme) => ({
+export const newRecipeFormStyle = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -130,7 +130,7 @@ export const newRecipeFormMui = makeStyles((theme) => ({
   },
 }));
 
-export const sidebarMui = makeStyles((theme) => ({
+export const sidebarStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
     "background-color": "#fff",
@@ -162,7 +162,7 @@ export const sidebarMui = makeStyles((theme) => ({
   },
 }));
 
-export const voteBodyMui = makeStyles((theme) => ({
+export const voteBodyStyle = makeStyles((theme) => ({
   voteBox: {
     display: "flex",
     "justify-content": "center",

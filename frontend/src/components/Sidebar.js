@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { sidebarMui } from "../muiStyling";
+import { sidebarStyle } from "../muiStyling";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -34,7 +34,7 @@ const renderInboxBadge = (recipes, currentUser) => {
 };
 
 export default function Sidebar() {
-  const classes = sidebarMui();
+  const classes = sidebarStyle();
   const { logoutUser, recipes, user } = useContext(GlobalContext);
   const PLACEHOLDER_IMG_URL =
     "https://patriotpower.ogsd.net/wp-content/uploads/2018/03/Profile_Kirby.aead314d435d8e52d9a4e92a6f799c4eee08081e.jpg";
