@@ -4,7 +4,6 @@ import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
 import { Redirect } from "react-router-dom";
 import { format, differenceInDays, parseISO, add, sub } from "date-fns";
-import { any } from "underscore";
 import {
   ChevronRightRounded,
   ChevronLeftRounded,
@@ -47,10 +46,8 @@ const renderGridContainer = (recipes, type) => {
 };
 
 export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
-  return any(
-    recipeWeeks.map((week) => {
-      return differenceInDays(parseISO(week), selectedWeek) === 0;
-    })
+  return recipeWeeks.some(
+    (week) => differenceInDays(parseISO(week), selectedWeek) === 0
   );
 };
 
@@ -163,7 +160,7 @@ export default function RecipeGrid(props) {
           >
             <div style={modalStyle} className={classes.modal} mx="auto">
               <h2 id="simple-modal-title">Grocery List</h2>
-              <div id="simple-modal-description">{renderGroceryList()}</div>
+              <div id="simple-modal-description">{renderGroceryListBody()}</div>
             </div>
           </Modal>
         </>
@@ -171,7 +168,7 @@ export default function RecipeGrid(props) {
     }
   };
 
-  const renderGroceryList = () => {
+  const renderGroceryListBody = () => {
     if (groceryList) {
       return Object.entries(groceryList).map(([name, amounts]) => {
         return (
