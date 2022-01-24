@@ -10,13 +10,6 @@ export const gridStyle = makeStyles((theme) => ({
     flexWrap: "no-wrap",
     justifyContent: "center",
   },
-  modal: {
-    width: 400,
-    backgroundColor: theme.palette.secondary.light,
-    border: "2px solid #000",
-    boxShadow: 2,
-    padding: theme.spacing(2, 4, 3),
-  },
   button: {
     color: "white",
   },
@@ -75,13 +68,6 @@ export const recipeCardStyle = makeStyles((theme) => ({
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
-  modal: {
-    width: 400,
-    backgroundColor: theme.palette.secondary.light,
-    border: "2px solid #000",
-    boxShadow: 2,
-    padding: theme.spacing(2, 4, 3),
-  },
   addOrRemoveBtn: {
     position: "absolute",
     top: "6px",
@@ -96,6 +82,20 @@ export const recipeCardStyle = makeStyles((theme) => ({
       "font-size": "1rem",
     },
     border: "2px solid pink",
+  },
+}));
+
+export const modalStyle = makeStyles((theme) => ({
+  modal: {
+    width: 400,
+    backgroundColor: theme.palette.secondary.light,
+    border: "2px solid #000",
+    boxShadow: 2,
+    padding: theme.spacing(2, 4, 3),
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
   },
 }));
 

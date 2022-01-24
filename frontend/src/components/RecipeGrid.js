@@ -20,7 +20,7 @@ import { gridStyle } from "../muiStyling";
 import pluralize from "pluralize";
 
 const RECIPES_PER_PAGE = 20;
-const populateRecipeGrid = (recipes, type) => {
+const renderRecipeCards = (recipes, type) => {
   return recipes.map((recipe) => {
     return (
       <Grid item xs key={recipe.name + uuid()}>
@@ -40,7 +40,7 @@ const renderGridContainer = (recipes, type) => {
       spacing={1}
       container
     >
-      {populateRecipeGrid(recipes, type)}
+      {renderRecipeCards(recipes, type)}
     </Grid>
   );
 };
