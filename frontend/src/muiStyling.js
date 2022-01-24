@@ -97,6 +97,9 @@ export const modalStyle = makeStyles((theme) => ({
     left: "50%",
     transform: "translate(-50%, -50%)",
   },
+  button: {
+    color: "white",
+  },
 }));
 
 export const newRecipeFormStyle = makeStyles((theme) => ({

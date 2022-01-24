@@ -4,20 +4,10 @@ import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
 import { Redirect } from "react-router-dom";
 import { format, differenceInDays, parseISO, add, sub } from "date-fns";
-import {
-  ChevronRightRounded,
-  ChevronLeftRounded,
-  ShoppingBasketRounded,
-} from "@material-ui/icons/";
-import {
-  IconButton,
-  Grid,
-  Modal,
-  CircularProgress,
-  Button,
-} from "@material-ui/core";
+import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
+import { IconButton, Grid, CircularProgress } from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
-import pluralize from "pluralize";
+import GroceryListModal from "./GroceryListModal";
 
 const RECIPES_PER_PAGE = 20;
 const renderRecipeCards = (recipes, type) => {
@@ -51,13 +41,6 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
   );
 };
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
-
 export default function RecipeGrid(props) {
   const classes = gridStyle();
   const {
@@ -66,15 +49,12 @@ export default function RecipeGrid(props) {
     selectedWeek,
     changeSelectedWeek,
     isLoading,
-    groceryList,
-    getGroceryList,
     fetchRecipes,
   } = useContext(GlobalContext);
 
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(true);
-  const [shouldShowModal, setShouldShowModal] = useState(false);
   const approvedRecipes = [];
   const pendingRecipes = [];
   const rejectedRecipes = [];
@@ -123,60 +103,9 @@ export default function RecipeGrid(props) {
       : setShouldShowFwdBtn(false);
   };
 
-  const handleGetGroceryList = () => {
-    getGroceryList();
-    setShouldShowModal(true);
-  };
-
-  const renderAmountsList = (amounts) => {
-    return amounts.map((amount) => {
-      return (
-        <span key={amount.unit}>
-          {amount.count} {pluralize(amount.unit, amount.count)}
-        </span>
-      );
-    });
-  };
-
   const renderGroceryListModal = () => {
     if (weeklyRecipes.length > 0) {
-      return (
-        <>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleGetGroceryList()}
-            className={classes.button}
-            startIcon={<ShoppingBasketRounded />}
-            style={{ fontWeight: "bolder" }}
-          >
-            get grocery list
-          </Button>
-          <Modal
-            open={shouldShowModal}
-            onClose={() => setShouldShowModal(false)}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            <div style={modalStyle} className={classes.modal} mx="auto">
-              <h2 id="simple-modal-title">Grocery List</h2>
-              <div id="simple-modal-description">{renderGroceryListBody()}</div>
-            </div>
-          </Modal>
-        </>
-      );
-    }
-  };
-
-  const renderGroceryListBody = () => {
-    if (groceryList) {
-      return Object.entries(groceryList).map(([name, amounts]) => {
-        return (
-          <div>
-            {name}: {renderAmountsList(amounts)}
-          </div>
-        );
-      });
+      return <GroceryListModal />;
     }
   };
 
