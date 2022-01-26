@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { CloseRounded } from "@material-ui/icons/";
 
-const IngredientInputForm = (props) => {
+const IngredientForm = (props) => {
   return (
     <Box display="flex">
       <TextField
@@ -53,4 +53,4 @@ const IngredientInputForm = (props) => {
   );
 };
 
-export default IngredientInputForm;
+export default IngredientForm;

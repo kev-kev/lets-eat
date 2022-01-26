@@ -11,7 +11,7 @@ import {
 import { newRecipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Alert } from "@material-ui/lab/";
-import IngredientInputForm from "./IngredientInputForm";
+import IngredientForm from "./IngredientForm";
 
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
@@ -67,7 +67,7 @@ const NewRecipeForm = () => {
   const renderIngredients = () => {
     return ingredients.map((ingredientInput, index) => {
       return (
-        <IngredientInputForm
+        <IngredientForm
           ingredientInput={ingredientInput}
           setName={(ingredientName) =>
             setAttributeForIngredient(index, "name", ingredientName)

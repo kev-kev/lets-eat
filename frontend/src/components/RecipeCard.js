@@ -109,16 +109,22 @@ const RecipeCard = (props) => {
         overlap="circular"
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
       >
-        <Card className={classes.root} onClick={() => setShouldShowModal(true)}>
+        <Card className={classes.root}>
           {renderAddOrRemoveBtn()}
           <CardMedia
             className={classes.media}
             image={props.recipe.imgUrl}
             title={props.recipe.name}
+            onClick={() => setShouldShowModal(true)}
           />
 
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="h2">
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="h2"
+              onClick={() => setShouldShowModal(true)}
+            >
               {props.recipe.name}
             </Typography>
           </CardContent>
