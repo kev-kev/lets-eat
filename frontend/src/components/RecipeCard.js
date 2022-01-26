@@ -5,14 +5,15 @@ import RecipeCardModal from "./RecipeCardModal";
 import { isWeeklyRecipe } from "./RecipeGrid";
 import { recipeCardStyle } from "../muiStyling";
 import {
+  AddRounded,
+  CloseRounded,
   Favorite,
   FavoriteBorder,
-  CloseRounded,
-  OpenInNewRounded,
-  AddRounded,
   MoreHoriz,
+  OpenInNewRounded,
 } from "@material-ui/icons/";
 import {
+  Badge,
   Card,
   CardMedia,
   CardContent,
@@ -24,14 +25,16 @@ import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 export default function RecipeCard(props) {
   const classes = recipeCardStyle();
-
   const { toggleFavorite, setWeeks, selectedWeek } = useContext(GlobalContext);
-
   const [shouldShowModal, setShouldShowModal] = useState(false);
+  const [badgeInfo, setBadgeInfo] = useState([]);
 
   useEffect(() => {
-    console.log(shouldShowModal);
-  }, [shouldShowModal]);
+    if (props.recipe.status === "pending") setBadgeInfo(["Pending", "primary"]);
+    else if (props.recipe.status === "rejected")
+      setBadgeInfo(["Rejected", "error"]);
+    else setBadgeInfo(["Pending", "secondary"]);
+  }, []);
 
   const renderIndexCardBody = () => {
     return (
@@ -49,7 +52,7 @@ export default function RecipeCard(props) {
     );
   };
 
-  const renderVoteBodyOrFooter = () => {
+  const renderCardBody = () => {
     if (props.type === "inbox") {
       return (
         <RecipeVoteBody id={props.recipe.id} className={classes.voteBody} />
@@ -92,37 +95,45 @@ export default function RecipeCard(props) {
 
   return (
     <>
-      <Card className={classes.root} onClick={() => setShouldShowModal(true)}>
-        {renderAddOrRemoveBtn()}
-        <CardMedia
-          className={classes.media}
-          image={props.recipe.imgUrl}
-          title={props.recipe.name}
-        />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="h2">
-            {props.recipe.name}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing className={classes.cardActions}>
-          {renderVoteBodyOrFooter()}
-          <IconButton href={props.recipe.link}>
-            <OpenInNewRounded color="primary" />
-          </IconButton>
-          <IconButton
-            onClick={() => setShouldShowModal(true)}
-            aria-label="show more"
-          >
-            <MoreHoriz color="primary" />
-          </IconButton>
-        </CardActions>
-      </Card>
+      <Badge
+        badgeContent={badgeInfo[0]}
+        classes={{ badge: classes.badge }} //overriding MUI badge color
+        color={badgeInfo[1]}
+        overlap="circular"
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+      >
+        <Card className={classes.root} onClick={() => setShouldShowModal(true)}>
+          {renderAddOrRemoveBtn()}
+          <CardMedia
+            className={classes.media}
+            image={props.recipe.imgUrl}
+            title={props.recipe.name}
+          />
+
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="h2">
+              {props.recipe.name}
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing className={classes.cardActions}>
+            {renderCardBody()}
+            <IconButton href={props.recipe.link}>
+              <OpenInNewRounded color="primary" />
+            </IconButton>
+            <IconButton
+              onClick={() => setShouldShowModal(true)}
+              aria-label="show more"
+            >
+              <MoreHoriz color="primary" />
+            </IconButton>
+          </CardActions>
+        </Card>
+      </Badge>
       <RecipeCardModal
         recipe={props.recipe}
         type={props.type}
         shouldShowModal={shouldShowModal}
         onClose={() => {
-          console.log("onClose called!");
           setShouldShowModal(false);
         }}
       />

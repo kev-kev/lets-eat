@@ -83,6 +83,14 @@ export const recipeCardStyle = makeStyles((theme) => ({
     },
     border: "2px solid pink",
   },
+  badge: {
+    color: "white",
+    "font-weight": "bolder",
+    left: 45,
+    top: 25,
+    height: 22,
+    "font-size": "0.8rem",
+  },
 }));
 
 export const modalStyle = makeStyles((theme) => ({
