@@ -6,7 +6,7 @@ import XCircleIcon from "@material-ui/icons/HighlightOff";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 
-export default function RecipeVoteBody(props) {
+const RecipeVoteBody = (props) => {
   const classes = voteBodyStyle(props);
   const { changeRecipeStatus } = useContext(GlobalContext);
 
@@ -30,4 +30,6 @@ export default function RecipeVoteBody(props) {
       </IconButton>
     </Box>
   );
-}
+};
+
+export default RecipeVoteBody;

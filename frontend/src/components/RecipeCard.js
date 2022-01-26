@@ -23,17 +23,24 @@ import {
 } from "@material-ui/core";
 import { differenceInDays, formatISO, parseISO } from "date-fns";
 
-export default function RecipeCard(props) {
+const RecipeCard = (props) => {
   const classes = recipeCardStyle();
   const { toggleFavorite, setWeeks, selectedWeek } = useContext(GlobalContext);
   const [shouldShowModal, setShouldShowModal] = useState(false);
   const [badgeInfo, setBadgeInfo] = useState([]);
 
   useEffect(() => {
-    if (props.recipe.status === "pending") setBadgeInfo(["Pending", "primary"]);
-    else if (props.recipe.status === "rejected")
-      setBadgeInfo(["Rejected", "error"]);
-    else setBadgeInfo(["Pending", "secondary"]);
+    switch (props.recipe.status) {
+      case "pending":
+        setBadgeInfo(["Pending", "primary"]);
+        break;
+      case "rejected":
+        setBadgeInfo(["Rejected", "error"]);
+        break;
+      default:
+        setBadgeInfo([0, ""]);
+        break;
+    }
   }, []);
 
   const renderIndexCardBody = () => {
@@ -139,4 +146,5 @@ export default function RecipeCard(props) {
       />
     </>
   );
-}
+};
+export default RecipeCard;

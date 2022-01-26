@@ -16,7 +16,7 @@ import IngredientInputForm from "./IngredientInputForm";
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
-export default function NewRecipeForm() {
+const NewRecipeForm = () => {
   const classes = newRecipeFormStyle();
   const { submitRecipe, isSubmittingRecipe, errors, clearErrors } =
     useContext(GlobalContext);
@@ -184,4 +184,6 @@ export default function NewRecipeForm() {
       </Container>
     );
   }
-}
+};
+
+export default NewRecipeForm;

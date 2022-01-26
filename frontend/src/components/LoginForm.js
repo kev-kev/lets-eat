@@ -13,7 +13,7 @@ import { Redirect } from "react-router-dom";
 import { Alert } from "@material-ui/lab/";
 import { loginStyle } from "../muiStyling";
 
-export default function LoginForm() {
+const LoginForm = () => {
   const classes = loginStyle();
   const { login, user, errors, clearErrors, isLoggingIn } =
     useContext(GlobalContext);
@@ -120,4 +120,6 @@ export default function LoginForm() {
       </Container>
     );
   }
-}
+};
+
+export default LoginForm;

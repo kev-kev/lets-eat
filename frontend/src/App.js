@@ -11,7 +11,7 @@ import RecipeGrid from "./components/RecipeGrid";
 import Title from "./components/Title";
 import NewRecipeForm from "./components/NewRecipeForm";
 
-export default function App() {
+const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -53,4 +53,6 @@ export default function App() {
       </GlobalProvider>
     </ThemeProvider>
   );
-}
+};
+
+export default App;

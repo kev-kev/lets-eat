@@ -33,7 +33,7 @@ const renderInboxBadge = (recipes, currentUser) => {
   }
 };
 
-export default function Sidebar() {
+const Sidebar = () => {
   const classes = sidebarStyle();
   const { logoutUser, recipes, user } = useContext(GlobalContext);
   const PLACEHOLDER_IMG_URL =
@@ -89,4 +89,6 @@ export default function Sidebar() {
       </List>
     </div>
   );
-}
+};
+
+export default Sidebar;

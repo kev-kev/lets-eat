@@ -6,7 +6,7 @@ import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
 import { dashboardStyle } from "../muiStyling";
 
-export default function Dashboard(props) {
+const Dashboard = (props) => {
   const classes = dashboardStyle();
   const { user } = useContext(GlobalContext);
   if (user) {
@@ -27,4 +27,6 @@ export default function Dashboard(props) {
   } else {
     return <Redirect to={"/login"} />;
   }
-}
+};
+
+export default Dashboard;

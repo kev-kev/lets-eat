@@ -10,6 +10,7 @@ import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
 const RECIPES_PER_PAGE = 20;
+
 const renderRecipeCards = (recipes, type) => {
   return recipes.map((recipe) => {
     return (
