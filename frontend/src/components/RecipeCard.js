@@ -30,7 +30,7 @@ const RecipeCard = (props) => {
   const [badgeInfo, setBadgeInfo] = useState([]);
 
   useEffect(() => {
-    switch (props.recipe.status) {
+    switch (props.type) {
       case "pending":
         setBadgeInfo(["Pending", "primary"]);
         break;
