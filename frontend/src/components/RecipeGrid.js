@@ -56,7 +56,9 @@ export default function RecipeGrid(props) {
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(true);
+
   const approvedRecipes = [];
+  const inboxRecipes = [];
   const pendingRecipes = [];
   const rejectedRecipes = [];
   const favoritedRecipes = [];
@@ -66,22 +68,27 @@ export default function RecipeGrid(props) {
   }, []);
 
   recipes.forEach((recipe) => {
-    if (recipe.status === "approved") {
-      approvedRecipes.push(recipe);
-      if (recipe.isFavorited) favoritedRecipes.push(recipe);
-    } else if (
-      recipe.status === "pending" &&
-      recipe.submittedBy !== user.username
-    )
-      pendingRecipes.push(recipe);
-    else if (recipe.status === "rejected") rejectedRecipes.push(recipe);
+    // eslint-disable-next-line
+    switch (recipe.status) {
+      case "approved":
+        approvedRecipes.push(recipe);
+        if (recipe.isFavorited) favoritedRecipes.push(recipe);
+        break;
+      case "pending":
+        recipe.submittedBy === user.username
+          ? pendingRecipes.push(recipe)
+          : inboxRecipes.push(recipe);
+        break;
+      case "rejected":
+        rejectedRecipes.push(recipe);
+        break;
+    }
   });
-
-  approvedRecipes.filter((recipe) => recipe.isFavorited);
 
   const weeklyRecipes = approvedRecipes.filter((recipe) => {
     return isWeeklyRecipe(recipe.weeks, selectedWeek);
   });
+
   const otherRecipes = approvedRecipes
     .filter((recipe) => {
       return !isWeeklyRecipe(recipe.weeks, selectedWeek);
@@ -149,7 +156,13 @@ export default function RecipeGrid(props) {
       );
     } else {
       if (props.type === "inbox")
-        return <>{renderGridContainer(pendingRecipes, props.type)}</>;
+        return (
+          <>
+            {renderGridContainer(inboxRecipes, "inbox")}
+            <h2>pending recipes</h2>
+            {renderGridContainer(pendingRecipes, "pending")}
+          </>
+        );
       if (props.type === "favorites")
         return <>{renderGridContainer(favoritedRecipes, props.type)}</>;
     }

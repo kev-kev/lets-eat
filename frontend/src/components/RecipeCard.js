@@ -38,10 +38,10 @@ const RecipeCard = (props) => {
         setBadgeInfo(["Rejected", "error"]);
         break;
       default:
-        setBadgeInfo([0, ""]);
+        setBadgeInfo([0, "primary"]);
         break;
     }
-  }, []);
+  }, [props.recipe.status]);
 
   const renderIndexCardBody = () => {
     return (
@@ -64,8 +64,10 @@ const RecipeCard = (props) => {
       return (
         <RecipeVoteBody id={props.recipe.id} className={classes.voteBody} />
       );
-    } else {
+    } else if (props.type === "index") {
       return renderIndexCardBody();
+    } else {
+      return;
     }
   };
 
