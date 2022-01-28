@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
-import { Redirect } from "react-router-dom";
 import { format, differenceInDays, parseISO, add, sub } from "date-fns";
 import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
 import { IconButton, Grid, CircularProgress } from "@material-ui/core";
@@ -50,7 +49,7 @@ export default function RecipeGrid(props) {
     selectedWeek,
     changeSelectedWeek,
     isLoading,
-    fetchRecipes,
+    // fetchRecipes,
   } = useContext(GlobalContext);
 
   const [page, setPage] = useState(1);
@@ -64,7 +63,7 @@ export default function RecipeGrid(props) {
   const favoritedRecipes = [];
 
   useEffect(() => {
-    fetchRecipes(selectedWeek);
+    // fetchRecipes(selectedWeek);
   }, []);
 
   recipes.forEach((recipe) => {
@@ -117,8 +116,6 @@ export default function RecipeGrid(props) {
     }
   };
 
-  if (!user) return <Redirect to="/login" />;
-
   if (isLoading) {
     return <CircularProgress className={classes.loading} />;
   } else {
@@ -163,8 +160,10 @@ export default function RecipeGrid(props) {
             {renderGridContainer(pendingRecipes, "pending")}
           </>
         );
-      if (props.type === "favorites")
-        return <>{renderGridContainer(favoritedRecipes, props.type)}</>;
+      else if (props.type === "favorites")
+        return renderGridContainer(favoritedRecipes, props.type);
+      else if (props.type === "rejected")
+        return renderGridContainer(rejectedRecipes, "rejected");
     }
   }
 }

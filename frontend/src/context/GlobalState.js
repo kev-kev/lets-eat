@@ -1,11 +1,10 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import { AppReducer } from "./AppReducer";
 import { startOfWeek } from "date-fns";
 
 const initialState = {
   user: null,
   isLoggingIn: false,
-  recipes: [],
   isSubmittingRecipe: false,
   isLoading: false,
   errors: {
@@ -15,8 +14,14 @@ const initialState = {
     inbox: null,
   },
   selectedWeek: startOfWeek(new Date()),
-  weeklyRecipes: [],
   groceryList: null,
+  recipes: [],
+  weeklyRecipes: [],
+  approvedRecipes: [],
+  inboxRecipes: [],
+  pendingRecipes: [],
+  rejectedRecipes: [],
+  favoritedRecipes: [],
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -28,6 +33,29 @@ function handleErrors(response) {
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
+  useEffect(() => {
+    console.log("Fetching recipes...");
+    state.user &&
+      dispatch({
+        type: "FETCH_RECIPES",
+      });
+    fetch(rootURL + `/recipes/`)
+      .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        dispatch({
+          type: "FETCH_RECIPES_SUCCESS",
+          payload: { recipes: data.recipes },
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "FETCH_RECIPES_FAILURE",
+          payload: error,
+        });
+      });
+  }, [state.user]);
 
   function loginUser(username, password) {
     dispatch({
@@ -54,27 +82,6 @@ export const GlobalProvider = ({ children }) => {
       .catch((error) => {
         dispatch({
           type: "LOGIN_FAILURE",
-          payload: error,
-        });
-      });
-  }
-
-  function fetchRecipes(week) {
-    dispatch({
-      type: "FETCH_RECIPES",
-    });
-    fetch(rootURL + `/recipes/?week=${week}`)
-      .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
-        dispatch({
-          type: "FETCH_RECIPES_SUCCESS",
-          payload: { recipes: data.recipes, weeklyRecipes: data.weeklyRecipes },
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: "FETCH_RECIPES_FAILURE",
           payload: error,
         });
       });
@@ -276,7 +283,6 @@ export const GlobalProvider = ({ children }) => {
         login: loginUser,
         recipes: state.recipes,
         submitRecipe,
-        fetchRecipes,
         deleteRecipe,
         changeRecipeStatus,
         logoutUser,

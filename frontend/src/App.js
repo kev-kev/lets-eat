@@ -6,10 +6,7 @@ import theme from "./theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import GlobalOverrides from "./GlobalOverrides";
-import Dashboard from "./components/Dashboard";
-import RecipeGrid from "./components/RecipeGrid";
-import Title from "./components/Title";
-import NewRecipeForm from "./components/NewRecipeForm";
+import Home from "./components/Home";
 
 const App = () => {
   return (
@@ -18,37 +15,9 @@ const App = () => {
       <GlobalOverrides />
       <GlobalProvider>
         <Router>
-          <>
-            <Switch>
-              <Route path="/login">
-                <LoginForm />
-              </Route>
-              <Route path="/new">
-                <Dashboard>
-                  <NewRecipeForm />
-                </Dashboard>
-              </Route>
-
-              <Route path="/inbox/">
-                <Dashboard>
-                  <Title>Recipe Inbox</Title>
-                  <RecipeGrid type="inbox" />
-                </Dashboard>
-              </Route>
-              <Route path="/favorites/">
-                <Dashboard>
-                  <Title>Favorite Recipes</Title>
-                  <RecipeGrid type="favorites" />
-                </Dashboard>
-              </Route>
-              <Route path="/">
-                <Dashboard>
-                  <Title>Recipe Index</Title>
-                  <RecipeGrid type="index" />
-                </Dashboard>
-              </Route>
-            </Switch>
-          </>
+          <Route path="/">
+            <Home />
+          </Route>
         </Router>
       </GlobalProvider>
     </ThemeProvider>

@@ -1,18 +1,23 @@
 import React, { useContext } from "react";
 import { sidebarStyle } from "../muiStyling";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import HomeIcon from "@material-ui/icons/HomeOutlined";
-import MailIcon from "@material-ui/icons/MailOutline";
-import FavoriteIcon from "@material-ui/icons/FavoriteBorder";
-import AddIcon from "@material-ui/icons/AddCircleOutline";
-import Avatar from "@material-ui/core/Avatar";
-import Divider from "@material-ui/core/Divider";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  Avatar,
+  Divider,
+  Badge,
+} from "@material-ui/core/";
 import { Link } from "react-router-dom";
-import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
+import {
+  ExitToAppRounded,
+  DeleteOutlineRounded,
+  HomeOutlined,
+  MailOutline,
+  FavoriteBorder,
+  AddCircleOutline,
+} from "@material-ui/icons/";
 import { GlobalContext } from "../context/GlobalState";
-import Badge from "@material-ui/core/Badge";
 
 const renderInboxBadge = (recipes, currentUser) => {
   const pendingRecipes = recipes.filter(
@@ -25,11 +30,11 @@ const renderInboxBadge = (recipes, currentUser) => {
   if (currentUserPendingRecipes.length > 0) {
     return (
       <Badge color="primary" variant="dot">
-        <MailIcon />
+        <MailOutline />
       </Badge>
     );
   } else {
-    return <MailIcon />;
+    return <MailOutline />;
   }
 };
 
@@ -44,7 +49,7 @@ const Sidebar = () => {
       <List className={classes.list}>
         <ListItem button component={Link} to="/">
           <ListItemIcon className={classes.sidebarItem}>
-            <HomeIcon />
+            <HomeOutlined />
           </ListItemIcon>
         </ListItem>
         <ListItem button component={Link} to="/inbox">
@@ -54,18 +59,23 @@ const Sidebar = () => {
         </ListItem>
         <ListItem button component={Link} to="/favorites">
           <ListItemIcon className={classes.sidebarItem}>
-            <FavoriteIcon />
+            <FavoriteBorder />
           </ListItemIcon>
         </ListItem>
         <ListItem button component={Link} to="/new">
           <ListItemIcon className={classes.sidebarItem}>
-            <AddIcon />
+            <AddCircleOutline />
+          </ListItemIcon>
+        </ListItem>
+        <ListItem button component={Link} to="/rejected">
+          <ListItemIcon className={classes.sidebarItem}>
+            <DeleteOutlineRounded />
           </ListItemIcon>
         </ListItem>
         <div className={classes.sidebarBottom}>
           <ListItem button onClick={logoutUser}>
             <ListItemIcon className={classes.sidebarItem}>
-              <ExitToAppRoundedIcon />
+              <ExitToAppRounded />
             </ListItemIcon>
           </ListItem>
           <Divider />
