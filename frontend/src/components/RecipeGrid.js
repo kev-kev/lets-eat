@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
-import { format, differenceInDays, parseISO, add, sub } from "date-fns";
+import { format, add, sub, differenceInDays, parseISO } from "date-fns";
 import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
 import { IconButton, Grid, CircularProgress } from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
@@ -14,7 +14,11 @@ const renderRecipeCards = (recipes, type) => {
   return recipes.map((recipe) => {
     return (
       <Grid item xs key={recipe.name + uuid()}>
-        <RecipeCard type={type} recipe={recipe} />
+        <RecipeCard
+          type={type}
+          recipe={recipe}
+          isWeeklyRecipe={isWeeklyRecipe}
+        />
       </Grid>
     );
   });
@@ -35,7 +39,7 @@ const renderGridContainer = (recipes, type) => {
   );
 };
 
-export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
+const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
   return recipeWeeks.some(
     (week) => differenceInDays(parseISO(week), selectedWeek) === 0
   );
@@ -44,45 +48,19 @@ export const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
 export default function RecipeGrid(props) {
   const classes = gridStyle();
   const {
-    user,
-    recipes,
+    approvedRecipes,
+    inboxRecipes,
+    pendingRecipes,
+    rejectedRecipes,
+    favoritedRecipes,
     selectedWeek,
     changeSelectedWeek,
     isLoading,
-    // fetchRecipes,
   } = useContext(GlobalContext);
 
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(true);
-
-  const approvedRecipes = [];
-  const inboxRecipes = [];
-  const pendingRecipes = [];
-  const rejectedRecipes = [];
-  const favoritedRecipes = [];
-
-  useEffect(() => {
-    // fetchRecipes(selectedWeek);
-  }, []);
-
-  recipes.forEach((recipe) => {
-    // eslint-disable-next-line
-    switch (recipe.status) {
-      case "approved":
-        approvedRecipes.push(recipe);
-        if (recipe.isFavorited) favoritedRecipes.push(recipe);
-        break;
-      case "pending":
-        recipe.submittedBy === user.username
-          ? pendingRecipes.push(recipe)
-          : inboxRecipes.push(recipe);
-        break;
-      case "rejected":
-        rejectedRecipes.push(recipe);
-        break;
-    }
-  });
 
   const weeklyRecipes = approvedRecipes.filter((recipe) => {
     return isWeeklyRecipe(recipe.weeks, selectedWeek);
@@ -105,7 +83,7 @@ export default function RecipeGrid(props) {
     dir === "back" ? (nextPage -= 1) : (nextPage += 1);
     setPage(nextPage);
     nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
-    nextPage <= recipes.length / RECIPES_PER_PAGE
+    nextPage <= otherRecipes.length / RECIPES_PER_PAGE
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
   };

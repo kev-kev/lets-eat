@@ -100,7 +100,7 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to="/recipes" />;
+    return <Redirect to="/" />;
   } else {
     return (
       <Container component="main" maxWidth={"xs"}>

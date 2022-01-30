@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import RecipeVoteBody from "./RecipeVoteBody";
 import RecipeCardModal from "./RecipeCardModal";
-import { isWeeklyRecipe } from "./RecipeGrid";
 import { recipeCardStyle } from "../muiStyling";
 import {
   AddRounded,
@@ -81,7 +80,7 @@ const RecipeCard = (props) => {
   };
 
   const addOrRemoveWeek = (weeks, selectedWeek) => {
-    if (isWeeklyRecipe(weeks, selectedWeek)) {
+    if (props.isWeeklyRecipe(weeks, selectedWeek)) {
       return weeks.filter((week) => {
         return differenceInDays(parseISO(week), selectedWeek) !== 0;
       });
@@ -102,7 +101,7 @@ const RecipeCard = (props) => {
             );
           }}
         >
-          {isWeeklyRecipe(props.recipe.weeks, selectedWeek) ? (
+          {props.isWeeklyRecipe(props.recipe.weeks, selectedWeek) ? (
             <CloseRounded color="primary" />
           ) : (
             <AddRounded color="primary" />

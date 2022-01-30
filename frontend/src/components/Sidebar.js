@@ -19,30 +19,23 @@ import {
 } from "@material-ui/icons/";
 import { GlobalContext } from "../context/GlobalState";
 
-const renderInboxBadge = (recipes, currentUser) => {
-  const pendingRecipes = recipes.filter(
-    (recipe) => recipe.status === "pending"
-  );
-  const currentUserPendingRecipes = pendingRecipes.filter(
-    (recipe) => recipe.submittedBy !== currentUser.username
-  );
-
-  if (currentUserPendingRecipes.length > 0) {
-    return (
-      <Badge color="primary" variant="dot">
-        <MailOutline />
-      </Badge>
-    );
-  } else {
-    return <MailOutline />;
-  }
-};
-
 const Sidebar = () => {
   const classes = sidebarStyle();
-  const { logoutUser, recipes, user } = useContext(GlobalContext);
+  const { logoutUser, recipes, user, inboxRecipes } = useContext(GlobalContext);
   const PLACEHOLDER_IMG_URL =
     "https://patriotpower.ogsd.net/wp-content/uploads/2018/03/Profile_Kirby.aead314d435d8e52d9a4e92a6f799c4eee08081e.jpg";
+
+  const renderInboxBadge = () => {
+    if (inboxRecipes.length > 0) {
+      return (
+        <Badge color="primary" variant="dot">
+          <MailOutline />
+        </Badge>
+      );
+    } else {
+      return <MailOutline />;
+    }
+  };
 
   return (
     <div className={classes.root}>

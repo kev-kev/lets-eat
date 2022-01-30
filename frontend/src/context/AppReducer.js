@@ -65,6 +65,38 @@ export const AppReducer = (state, action) => {
         },
         isFetchingRecipes: false,
       };
+    case "SET_RECIPES":
+      //eslint-disable-next-line
+      switch (action.payload[0]) {
+        case "approved":
+          return {
+            ...state,
+            approvedRecipes: action.payload[1],
+          };
+        case "favorited":
+          return {
+            ...state,
+            favoritedRecipes: action.payload[1],
+          };
+
+        case "inbox":
+          return {
+            ...state,
+            inboxRecipes: action.payload[1],
+          };
+
+        case "pending":
+          return {
+            ...state,
+            pendingRecipes: action.payload[1],
+          };
+
+        case "rejected":
+          return {
+            ...state,
+            rejectedRecipes: action.payload[1],
+          };
+      }
     case "STATUS_UPDATE_SUCCESS":
       return {
         ...state,

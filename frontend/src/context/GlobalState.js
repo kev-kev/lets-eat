@@ -15,35 +15,32 @@ const initialState = {
   },
   selectedWeek: startOfWeek(new Date()),
   groceryList: null,
-  recipes: [],
-  weeklyRecipes: [],
+  favoritedRecipes: [],
   approvedRecipes: [],
   inboxRecipes: [],
   pendingRecipes: [],
   rejectedRecipes: [],
-  favoritedRecipes: [],
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
-function handleErrors(response) {
+const handleErrors = (response) => {
   if (!response.ok) throw Error(response.statusText);
   return response;
-}
+};
 
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  useEffect(() => {
-    console.log("Fetching recipes...");
-    state.user &&
-      dispatch({
-        type: "FETCH_RECIPES",
-      });
+  const fetchRecipes = (user) => {
+    dispatch({
+      type: "FETCH_RECIPES",
+    });
     fetch(rootURL + `/recipes/`)
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
+        filterAndSetRecipes(data.recipes, user);
         dispatch({
           type: "FETCH_RECIPES_SUCCESS",
           payload: { recipes: data.recipes },
@@ -55,7 +52,48 @@ export const GlobalProvider = ({ children }) => {
           payload: error,
         });
       });
-  }, [state.user]);
+  };
+
+  const filterAndSetRecipes = (recipes, user) => {
+    const approvedRecipes = [];
+    const favoritedRecipes = [];
+    const inboxRecipes = [];
+    const pendingRecipes = [];
+    const rejectedRecipes = [];
+
+    recipes.forEach((recipe) => {
+      switch (
+        recipe.status // eslint-disable-line
+      ) {
+        case "approved":
+          approvedRecipes.push(recipe);
+          if (recipe.isFavorited) favoritedRecipes.push(recipe);
+          break;
+        case "pending":
+          recipe.submittedBy === user.username
+            ? pendingRecipes.push(recipe)
+            : inboxRecipes.push(recipe);
+          break;
+        case "rejected":
+          rejectedRecipes.push(recipe);
+          break;
+      }
+    });
+    const allRecipes = [
+      ["approved", approvedRecipes],
+      ["favorited", favoritedRecipes],
+      ["inbox", inboxRecipes],
+      ["pending", pendingRecipes],
+      ["rejected", rejectedRecipes],
+    ];
+
+    for (const subArr of allRecipes) {
+      dispatch({
+        type: "SET_RECIPES",
+        payload: subArr,
+      });
+    }
+  };
 
   function loginUser(username, password) {
     dispatch({
@@ -295,6 +333,12 @@ export const GlobalProvider = ({ children }) => {
         toggleFavorite,
         getGroceryList,
         groceryList: state.groceryList,
+        fetchRecipes,
+        favoritedRecipes: state.favoritedRecipes,
+        approvedRecipes: state.approvedRecipes,
+        inboxRecipes: state.inboxRecipes,
+        pendingRecipes: state.pendingRecipes,
+        rejectedRecipes: state.rejectedRecipes,
       }}
     >
       {children}
