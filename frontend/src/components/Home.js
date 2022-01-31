@@ -1,10 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import {
-  Box,
-  Container,
-  CssBaseline,
-  CircularProgress,
-} from "@material-ui/core";
+import { Box, Container, CssBaseline } from "@material-ui/core";
 import Sidebar from "./Sidebar";
 import Copyright from "./Copyright";
 import { GlobalContext } from "../context/GlobalState";
