@@ -6,7 +6,7 @@ const initialState = {
   user: null,
   isLoggingIn: false,
   isSubmittingRecipe: false,
-  isLoading: false,
+  isFetchingRecipes: false,
   errors: {
     login: null,
     submit: null,
@@ -86,7 +86,6 @@ export const GlobalProvider = ({ children }) => {
       ["pending", pendingRecipes],
       ["rejected", rejectedRecipes],
     ];
-
     for (const subArr of allRecipes) {
       dispatch({
         type: "SET_RECIPES",
@@ -326,7 +325,7 @@ export const GlobalProvider = ({ children }) => {
         logoutUser,
         errors: state.errors,
         clearErrors,
-        isLoading: state.isLoading,
+        isFetchingRecipes: state.isFetchingRecipes,
         selectedWeek: state.selectedWeek,
         changeSelectedWeek,
         setWeeks,

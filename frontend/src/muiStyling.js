@@ -15,7 +15,7 @@ export const gridStyle = makeStyles((theme) => ({
   },
 }));
 
-export const dashboardStyle = makeStyles((theme) => ({
+export const homeStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
   },

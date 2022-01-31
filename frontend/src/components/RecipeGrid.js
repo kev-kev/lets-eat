@@ -55,7 +55,7 @@ export default function RecipeGrid(props) {
     favoritedRecipes,
     selectedWeek,
     changeSelectedWeek,
-    isLoading,
+    isFetchingRecipes,
   } = useContext(GlobalContext);
 
   const [page, setPage] = useState(1);
@@ -94,7 +94,7 @@ export default function RecipeGrid(props) {
     }
   };
 
-  if (isLoading) {
+  if (isFetchingRecipes) {
     return <CircularProgress className={classes.loading} />;
   } else {
     if (props.type === "index") {

@@ -1,22 +1,27 @@
 import React, { useContext, useEffect } from "react";
-import { Box, Container, CssBaseline } from "@material-ui/core";
+import {
+  Box,
+  Container,
+  CssBaseline,
+  CircularProgress,
+} from "@material-ui/core";
 import Sidebar from "./Sidebar";
 import Copyright from "./Copyright";
 import { GlobalContext } from "../context/GlobalState";
 import { Switch, Route } from "react-router-dom";
-import { dashboardStyle } from "../muiStyling";
+import { homeStyle } from "../muiStyling";
 import RecipeGrid from "./RecipeGrid";
 import Title from "./Title";
 import NewRecipeForm from "./NewRecipeForm";
 import LoginForm from "./LoginForm";
 
 const Home = () => {
-  const classes = dashboardStyle();
+  const classes = homeStyle();
   const { user, fetchRecipes } = useContext(GlobalContext);
 
   useEffect(() => {
-    fetchRecipes(user);
-  }, []);
+    user && fetchRecipes(user);
+  }, [user]);
 
   if (user) {
     return (
