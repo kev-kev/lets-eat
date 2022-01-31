@@ -12,7 +12,6 @@ import {
   OpenInNewRounded,
 } from "@material-ui/icons/";
 import {
-  Badge,
   Card,
   CardMedia,
   CardContent,
@@ -26,21 +25,6 @@ const RecipeCard = (props) => {
   const classes = recipeCardStyle();
   const { toggleFavorite, setWeeks, selectedWeek } = useContext(GlobalContext);
   const [shouldShowModal, setShouldShowModal] = useState(false);
-  const [badgeInfo, setBadgeInfo] = useState([]);
-
-  useEffect(() => {
-    switch (props.type) {
-      case "pending":
-        setBadgeInfo(["Pending", "primary"]);
-        break;
-      case "rejected":
-        setBadgeInfo(["Rejected", "error"]);
-        break;
-      default:
-        setBadgeInfo([0, "primary"]);
-        break;
-    }
-  }, [props.recipe.status]);
 
   const renderIndexCardBody = () => {
     return (
@@ -112,46 +96,38 @@ const RecipeCard = (props) => {
 
   return (
     <>
-      <Badge
-        badgeContent={badgeInfo[0]}
-        classes={{ badge: classes.badge }} //overriding MUI badge color
-        color={badgeInfo[1]}
-        overlap="circular"
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-      >
-        <Card className={classes.root}>
-          {renderAddOrRemoveBtn()}
-          <CardMedia
-            className={classes.media}
-            image={props.recipe.imgUrl}
-            title={props.recipe.name}
-            onClick={() => setShouldShowModal(true)}
-          />
+      <Card className={classes.root}>
+        {renderAddOrRemoveBtn()}
+        <CardMedia
+          className={classes.media}
+          image={props.recipe.imgUrl}
+          title={props.recipe.name}
+          onClick={() => setShouldShowModal(true)}
+        />
 
-          <CardContent>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="h2"
-              onClick={() => setShouldShowModal(true)}
-            >
-              {props.recipe.name}
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing className={classes.cardActions}>
-            {renderCardBody()}
-            <IconButton href={props.recipe.link}>
-              <OpenInNewRounded color="primary" />
-            </IconButton>
-            <IconButton
-              onClick={() => setShouldShowModal(true)}
-              aria-label="show more"
-            >
-              <MoreHoriz color="primary" />
-            </IconButton>
-          </CardActions>
-        </Card>
-      </Badge>
+        <CardContent>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="h2"
+            onClick={() => setShouldShowModal(true)}
+          >
+            {props.recipe.name}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing className={classes.cardActions}>
+          {renderCardBody()}
+          <IconButton href={props.recipe.link}>
+            <OpenInNewRounded color="primary" />
+          </IconButton>
+          <IconButton
+            onClick={() => setShouldShowModal(true)}
+            aria-label="show more"
+          >
+            <MoreHoriz color="primary" />
+          </IconButton>
+        </CardActions>
+      </Card>
       <RecipeCardModal
         recipe={props.recipe}
         type={props.type}
