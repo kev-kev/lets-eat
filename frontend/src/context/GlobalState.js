@@ -7,6 +7,7 @@ const initialState = {
   isLoggingIn: false,
   isSubmittingRecipe: false,
   isFetchingRecipes: false,
+  isFetchingRecipeIngredients: false,
   errors: {
     login: null,
     submit: null,
@@ -20,6 +21,7 @@ const initialState = {
   inboxRecipes: [],
   pendingRecipes: [],
   rejectedRecipes: [],
+  curRecipeIngredients: [],
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -52,6 +54,16 @@ export const GlobalProvider = ({ children }) => {
           payload: error,
         });
       });
+  };
+
+  const fetchRecipeIngredients = (recipe_id) => {
+    dispatch({
+      type: "FETCH_RECIPE_INGREDIENTS",
+    });
+    fetch(rootURL + `/recipe_ingredients/?recipe_id=${recipe_id}`)
+      .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {});
   };
 
   const filterAndSetRecipes = (recipes, user) => {
@@ -97,7 +109,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "LOGIN_USER",
     });
-    fetch(rootURL + "/login", {
+    fetch(rootURL + "/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,7 +139,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "SUBMITTING_RECIPE",
     });
-    fetch(rootURL + "/submit", {
+    fetch(rootURL + "/submit/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -190,7 +202,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function changeRecipeStatus(recipe_id, recipe_status) {
-    fetch(rootURL + `/recipes/${recipe_id}`, {
+    fetch(rootURL + `/recipes/${recipe_id}/`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -327,6 +339,7 @@ export const GlobalProvider = ({ children }) => {
         errors: state.errors,
         clearErrors,
         isFetchingRecipes: state.isFetchingRecipes,
+        isFetchingRecipeIngredients: state.isFetchingRecipeIngredients,
         selectedWeek: state.selectedWeek,
         changeSelectedWeek,
         setWeeks,
@@ -334,6 +347,7 @@ export const GlobalProvider = ({ children }) => {
         getGroceryList,
         groceryList: state.groceryList,
         fetchRecipes,
+        fetchRecipeIngredients,
         favoritedRecipes: state.favoritedRecipes,
         approvedRecipes: state.approvedRecipes,
         inboxRecipes: state.inboxRecipes,

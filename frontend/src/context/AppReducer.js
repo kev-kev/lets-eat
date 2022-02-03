@@ -33,7 +33,7 @@ export const AppReducer = (state, action) => {
     case "SUBMIT_RECIPE_SUCCESS":
       return {
         ...state,
-        recipes: [action.payload].concat(state.recipes),
+        recipes: [...state.recipes, action.payload],
         isSubmittingRecipe: false,
       };
     case "SUBMIT_RECIPE_FAILURE":
@@ -65,6 +65,26 @@ export const AppReducer = (state, action) => {
         },
         isFetchingRecipes: false,
       };
+    case "FETCH_RECIPE_INGREDIENTS":
+      return {
+        ...state,
+        isFetchingRecipeIngredients: true,
+      };
+    case "FETCH_RECIPE_INGREDIENTS_SUCCESS":
+      return {
+        ...state,
+        isFetchingRecipeIngredients: false,
+        curRecipeIngredients: action.payload,
+      };
+    case "FETCH_RECIPE_INGREDIENTS_FAILURE":
+      return {
+        ...state,
+        isFetchingRecipeIngredients: false,
+        errors: {
+          ...state.errors,
+          grid: action.payload,
+        },
+      };
     case "SET_RECIPES":
       //eslint-disable-next-line
       switch (action.payload[0]) {
@@ -78,19 +98,16 @@ export const AppReducer = (state, action) => {
             ...state,
             favoritedRecipes: action.payload[1],
           };
-
         case "inbox":
           return {
             ...state,
             inboxRecipes: action.payload[1],
           };
-
         case "pending":
           return {
             ...state,
             pendingRecipes: action.payload[1],
           };
-
         case "rejected":
           return {
             ...state,

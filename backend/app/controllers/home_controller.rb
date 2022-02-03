@@ -36,4 +36,12 @@ class HomeController < ApplicationController
       groceryList: grocery_list
     }
   end
+
+  def get_ingredients_by_recipe
+    ingredients = Recipe.find(params[:recipe_id]).ingredients
+    render json: {
+      ingredients: ingredients
+    }
+  end
+
 end
