@@ -11,32 +11,59 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { DeleteForeverRounded } from "@material-ui/icons";
+import { DeleteForeverRounded, EditRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
+import NewRecipeForm from "./NewRecipeForm";
 
 const CardModal = (props) => {
   const classes = modalStyle();
   const { deleteRecipe } = useContext(GlobalContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const renderCardModalBody = () => {
-    return (
-      <>
-        <Typography variant="subtitle2">Ingredients:</Typography>
-        <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-          {props.recipe.ingredients}
-        </Typography>
-        <Typography variant="subtitle2">Notes:</Typography>
-        <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-          {props.recipe.notes}
-        </Typography>
-        <br />
-        <Typography variant="caption">
-          submitted by: {props.recipe.submittedBy}
-        </Typography>
-        {renderDeleteBtn()}
-      </>
-    );
+    if (isEditing) {
+      return (
+        <>
+          <NewRecipeForm recipe={props.recipe} />
+          <Button onClick={() => setIsEditing(false)}>back</Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Typography variant="subtitle2">Ingredients:</Typography>
+          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
+            {props.recipe.ingredients}
+          </Typography>
+          <Typography variant="subtitle2">Notes:</Typography>
+          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
+            {props.recipe.notes}
+          </Typography>
+          <br />
+          <Typography variant="caption">
+            submitted by: {props.recipe.submittedBy}
+          </Typography>
+          {renderEditBtn()}
+          {renderDeleteBtn()}
+        </>
+      );
+    }
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const renderEditBtn = () => {
+    if (props.recipe.status === "approved")
+      return (
+        <>
+          <IconButton onClick={handleEditClick}>
+            <EditRounded color="primary" />
+          </IconButton>
+        </>
+      );
   };
 
   const renderDeleteBtn = () => {
@@ -81,7 +108,7 @@ const CardModal = (props) => {
     <Modal open={props.shouldShowModal} onClose={props.onClose}>
       <div className={classes.modal} mx="auto">
         <h2>{props.recipe.name}</h2>
-        <div>{renderCardModalBody()}</div>
+        {renderCardModalBody()}
       </div>
     </Modal>
   );

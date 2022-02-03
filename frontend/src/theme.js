@@ -26,6 +26,7 @@ const theme = createTheme({
     h4: { ...serifFontFamily },
     h5: { ...serifFontFamily },
     h6: { ...serifFontFamily },
+    button: { textTransform: "none" },
   },
   palette: {
     primary: {

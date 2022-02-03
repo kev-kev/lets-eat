@@ -16,7 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     user && fetchRecipes(user);
-  }, [user]);
+  }, [user]); //eslint-disable-line
 
   if (user) {
     return (

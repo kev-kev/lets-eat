@@ -16,7 +16,7 @@ import IngredientForm from "./IngredientForm";
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
-const NewRecipeForm = () => {
+const NewRecipeForm = (props) => {
   const classes = newRecipeFormStyle();
   const { submitRecipe, isSubmittingRecipe, errors, clearErrors } =
     useContext(GlobalContext);
@@ -40,6 +40,9 @@ const NewRecipeForm = () => {
   };
 
   const handleSubmit = (title, link) => {
+    if (props.recipe) {
+      // fetch a put request to the recipe
+    }
     if (title === "" || link === "") {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
@@ -65,6 +68,9 @@ const NewRecipeForm = () => {
   };
 
   const renderIngredients = () => {
+    if (props.recipe && props.recipe.ingredients) {
+      setIngredients(props.recipe.ingredients);
+    }
     return ingredients.map((ingredientInput, index) => {
       return (
         <IngredientForm
@@ -76,10 +82,15 @@ const NewRecipeForm = () => {
           setUnit={(unit) => setAttributeForIngredient(index, "unit", unit)}
           key={index}
           index={index}
-          handleDeleteIngredient={(index) => handleDeleteIngredient(index)}
+          handleDeleteIngredient={() => handleDeleteIngredient(index)}
         />
       );
     });
+  };
+
+  const renderFormHeader = () => {
+    if (props.recipe) return "editing recipe";
+    else return "submit a new recipe idea";
   };
 
   if (isSubmittingRecipe) {
@@ -104,7 +115,7 @@ const NewRecipeForm = () => {
         </Snackbar>
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            submit a new recipe idea
+            {renderFormHeader()}
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -118,6 +129,7 @@ const NewRecipeForm = () => {
               autoComplete="title"
               autoFocus
               onChange={(e) => setTitle(e.target.value)}
+              defaultValue={props.recipe && props.recipe.name}
             />
             <TextField
               variant="outlined"
@@ -129,6 +141,7 @@ const NewRecipeForm = () => {
               id="imgUrl"
               autoComplete="current-imgUrl"
               onChange={(e) => setImgUrl(e.target.value)}
+              defaultValue={props.recipe && props.recipe.imgUrl}
             />
             <TextField
               variant="outlined"
@@ -141,6 +154,7 @@ const NewRecipeForm = () => {
               id="link"
               autoComplete="current-link"
               onChange={(e) => setLink(e.target.value)}
+              defaultValue={props.recipe && props.recipe.link}
             />
             <Button
               color="primary"
@@ -165,6 +179,7 @@ const NewRecipeForm = () => {
               id="notes"
               autoComplete="notes"
               onChange={(e) => setNotes(e.target.value)}
+              defaultValue={props.recipe && props.recipe.notes}
             />
             <Button
               type="submit"

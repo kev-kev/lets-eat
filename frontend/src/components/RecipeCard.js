@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import RecipeVoteBody from "./RecipeVoteBody";
 import RecipeCardModal from "./RecipeCardModal";

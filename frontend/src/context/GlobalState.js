@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer } from "react";
 import { AppReducer } from "./AppReducer";
 import { startOfWeek } from "date-fns";
 
@@ -62,9 +62,8 @@ export const GlobalProvider = ({ children }) => {
     const rejectedRecipes = [];
 
     recipes.forEach((recipe) => {
-      switch (
-        recipe.status // eslint-disable-line
-      ) {
+      //eslint-disable-next-line
+      switch (recipe.status) {
         case "approved":
           approvedRecipes.push(recipe);
           if (recipe.isFavorited) favoritedRecipes.push(recipe);
@@ -177,7 +176,9 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "DELETE_RECIPE_SUCCESS",
-          payload: data.recipess,
+          payload: data.recipes.filter(
+            (recipe) => recipe.status === "approved"
+          ),
         });
       })
       .catch((error) => {

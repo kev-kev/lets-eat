@@ -97,6 +97,7 @@ export const AppReducer = (state, action) => {
             rejectedRecipes: action.payload[1],
           };
       }
+      break;
     case "STATUS_UPDATE_SUCCESS":
       return {
         ...state,
@@ -143,7 +144,7 @@ export const AppReducer = (state, action) => {
     case "DELETE_RECIPE_SUCCESS":
       return {
         ...state,
-        recipes: action.payload,
+        approvedRecipes: action.payload,
       };
     case "DELETE_RECIPE_FAILURE":
       return {
