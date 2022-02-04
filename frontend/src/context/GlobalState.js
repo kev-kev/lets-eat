@@ -7,7 +7,7 @@ const initialState = {
   isLoggingIn: false,
   isSubmittingRecipe: false,
   isFetchingRecipes: false,
-  isFetchingRecipeIngredients: false,
+  isFetchingRecipeList: false,
   errors: {
     login: null,
     submit: null,
@@ -58,9 +58,9 @@ export const GlobalProvider = ({ children }) => {
 
   const fetchRecipeIngredients = (recipe_id) => {
     dispatch({
-      type: "FETCH_RECIPE_INGREDIENTS",
+      type: "FETCH_INGREDIENTS_LIST",
     });
-    fetch(rootURL + `/recipe_ingredients/?recipe_id=${recipe_id}`)
+    fetch(rootURL + `/ingredients_list/?recipe_id=${recipe_id}`)
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {});
@@ -339,7 +339,7 @@ export const GlobalProvider = ({ children }) => {
         errors: state.errors,
         clearErrors,
         isFetchingRecipes: state.isFetchingRecipes,
-        isFetchingRecipeIngredients: state.isFetchingRecipeIngredients,
+        isFetchingRecipeList: state.isFetchingRecipeList,
         selectedWeek: state.selectedWeek,
         changeSelectedWeek,
         setWeeks,

@@ -65,21 +65,21 @@ export const AppReducer = (state, action) => {
         },
         isFetchingRecipes: false,
       };
-    case "FETCH_RECIPE_INGREDIENTS":
+    case "FETCH_INGREDIENTS_LIST":
       return {
         ...state,
-        isFetchingRecipeIngredients: true,
+        isFetchingIngredientsList: true,
       };
-    case "FETCH_RECIPE_INGREDIENTS_SUCCESS":
+    case "FETCH_INGREDIENTS_LIST_SUCCESS":
       return {
         ...state,
-        isFetchingRecipeIngredients: false,
+        isFetchingIngredientsList: false,
         curRecipeIngredients: action.payload,
       };
-    case "FETCH_RECIPE_INGREDIENTS_FAILURE":
+    case "FETCH_INGREDIENTS_LIST_FAILURE":
       return {
         ...state,
-        isFetchingRecipeIngredients: false,
+        isFetchingIngredientsList: false,
         errors: {
           ...state.errors,
           grid: action.payload,

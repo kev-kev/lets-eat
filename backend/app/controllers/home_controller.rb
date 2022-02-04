@@ -1,21 +1,9 @@
 class HomeController < ApplicationController
   def get_grocery_list
     weekly_recipes = Recipe.where("'#{Date.parse(params[:week])}' = ANY (weeks)")
-    weekly_recipe_ingredients = []
-    weekly_recipes.each do |recipe|
-      RecipeIngredient.where(recipe_id: recipe.id)
-        .each do |recipe_ingredient| 
-          weekly_recipe_ingredients << recipe_ingredient 
-        end
-    end
     weekly_ingredients = []
-    weekly_recipe_ingredients.each do |recipe_ingredient|
-      ingredient = Ingredient.find(recipe_ingredient.ingredient_id)
-      weekly_ingredients << {
-        count: recipe_ingredient[:count],
-        unit: ingredient[:unit],
-        name: ingredient[:name]
-      }
+    weekly_recipes.each do |recipe|
+      get_ingredients_by_recipe_id(weekly_ingredients,recipe.id)
     end
     grocery_list = {}
     weekly_ingredients.each do |weekly_ingredient|
@@ -37,11 +25,26 @@ class HomeController < ApplicationController
     }
   end
 
-  def get_ingredients_by_recipe
-    ingredients = Recipe.find(params[:recipe_id]).ingredients
+
+  def get_ingredients_list
+    ingredients = []
+    get_ingredients_by_recipe_id(ingredients, params[:recipe_id])
     render json: {
       ingredients: ingredients
     }
+  end
+
+  def get_ingredients_by_recipe_id(ingredients_arr, recipe_id)
+    recipe_ingredients = RecipeIngredient.where(recipe_id: params[:recipe_id])
+    recipe_ingredients.each do |recipe_ingredient|
+      ing = Ingredient.find(recipe_ingredient.ingredient_id)
+      ingredients_arr << {
+        count: recipe_ingredient[:count],
+        unit: ing[:unit],
+        name: ing[:name]
+      }
+    end
+    ingredients_arr
   end
 
 end
