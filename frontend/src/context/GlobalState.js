@@ -8,6 +8,7 @@ const initialState = {
   isSubmittingRecipe: false,
   isFetchingRecipes: false,
   isFetchingRecipeList: false,
+  isEditing: false,
   errors: {
     login: null,
     submit: null,
@@ -21,7 +22,6 @@ const initialState = {
   inboxRecipes: [],
   pendingRecipes: [],
   rejectedRecipes: [],
-  curRecipeIngredients: [],
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -54,16 +54,6 @@ export const GlobalProvider = ({ children }) => {
           payload: error,
         });
       });
-  };
-
-  const fetchRecipeIngredients = (recipe_id) => {
-    dispatch({
-      type: "FETCH_INGREDIENTS_LIST",
-    });
-    fetch(rootURL + `/ingredients_list/?recipe_id=${recipe_id}`)
-      .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {});
   };
 
   const filterAndSetRecipes = (recipes, user) => {
@@ -347,7 +337,6 @@ export const GlobalProvider = ({ children }) => {
         getGroceryList,
         groceryList: state.groceryList,
         fetchRecipes,
-        fetchRecipeIngredients,
         favoritedRecipes: state.favoritedRecipes,
         approvedRecipes: state.approvedRecipes,
         inboxRecipes: state.inboxRecipes,

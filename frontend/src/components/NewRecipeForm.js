@@ -33,9 +33,16 @@ const NewRecipeForm = (props) => {
     if (errors.submit) setErrorSnackbar(true);
   }, [errors.submit]);
 
+  useEffect(() => {
+    if (props.recipe && props.recipe.ingredients) {
+      setIngredients(props.recipe.ingredients);
+    }
+  }, []);
+
   const handleClose = () => {
     setErrorSnackbar(false);
     setSuccessSnackbar(false);
+    setIngredients([]);
     clearErrors();
   };
 
@@ -68,9 +75,6 @@ const NewRecipeForm = (props) => {
   };
 
   const renderIngredients = () => {
-    if (props.recipe && props.recipe.ingredients) {
-      setIngredients(props.recipe.ingredients);
-    }
     return ingredients.map((ingredientInput, index) => {
       return (
         <IngredientForm

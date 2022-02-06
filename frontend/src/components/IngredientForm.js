@@ -9,6 +9,7 @@ import {
 import { CloseRounded } from "@material-ui/icons/";
 
 const IngredientForm = (props) => {
+  // debugger;
   return (
     <Box display="flex">
       <TextField
@@ -26,7 +27,7 @@ const IngredientForm = (props) => {
         value={props.ingredientInput.unit}
         key={props.index + "unit"}
       >
-        <MenuItem value={"grams"}>Grams</MenuItem>
+        <MenuItem value={"gram"}>Grams</MenuItem>
         <MenuItem value={"kilograms"}>Kilograms</MenuItem>
         <MenuItem value={"ounces"}>Ounces</MenuItem>
         <MenuItem value={"pounds"}>Pounds</MenuItem>

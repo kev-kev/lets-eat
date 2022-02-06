@@ -65,26 +65,6 @@ export const AppReducer = (state, action) => {
         },
         isFetchingRecipes: false,
       };
-    case "FETCH_INGREDIENTS_LIST":
-      return {
-        ...state,
-        isFetchingIngredientsList: true,
-      };
-    case "FETCH_INGREDIENTS_LIST_SUCCESS":
-      return {
-        ...state,
-        isFetchingIngredientsList: false,
-        curRecipeIngredients: action.payload,
-      };
-    case "FETCH_INGREDIENTS_LIST_FAILURE":
-      return {
-        ...state,
-        isFetchingIngredientsList: false,
-        errors: {
-          ...state.errors,
-          grid: action.payload,
-        },
-      };
     case "SET_RECIPES":
       //eslint-disable-next-line
       switch (action.payload[0]) {

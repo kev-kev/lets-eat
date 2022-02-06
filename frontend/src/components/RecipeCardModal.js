@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import {
   Modal,
@@ -32,11 +32,11 @@ const CardModal = (props) => {
     } else {
       return (
         <>
-          <Typography variant="subtitle2">Ingredients:</Typography>
+          <Typography variant="subtitle1">Ingredients:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {props.recipe.ingredients}
+            {renderIngredientTypography()}
           </Typography>
-          <Typography variant="subtitle2">Notes:</Typography>
+          <Typography variant="subtitle1">Notes:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
             {props.recipe.notes}
           </Typography>
@@ -49,6 +49,16 @@ const CardModal = (props) => {
         </>
       );
     }
+  };
+
+  const renderIngredientTypography = () => {
+    return props.recipe.ingredients.map((ing) => {
+      return (
+        <>
+          {ing.name}: {ing.count} {ing.unit}
+        </>
+      );
+    });
   };
 
   const handleEditClick = () => {
