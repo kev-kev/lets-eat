@@ -25,15 +25,6 @@ class HomeController < ApplicationController
     }
   end
 
-
-  def get_ingredients_list
-    ingredients = []
-    get_ingredients_by_recipe_id(ingredients, params[:recipe_id])
-    render json: {
-      ingredients: ingredients
-    }
-  end
-
   def get_ingredients_by_recipe_id(ingredients_arr, recipe_id)
     recipe_ingredients = RecipeIngredient.where(recipe_id: params[:recipe_id])
     recipe_ingredients.each do |recipe_ingredient|

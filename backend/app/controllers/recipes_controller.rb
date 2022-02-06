@@ -62,7 +62,19 @@ class RecipesController < ApplicationController
         imgUrl: recipe.img_url,
         link: recipe.link,
         isFavorited: recipe.is_favorited,
-        weeks: recipe.weeks.map(&:iso8601)
+        weeks: recipe.weeks.map(&:iso8601),
+        ingredients: recipe.ingredients.map{|ingredient| format_ingredient(ingredient, recipe.id)}
+      }
+    end
+
+    def format_ingredient(ingredient, recipe_id)
+      {
+        name: ingredient.name,
+        unit: ingredient.unit,
+        count: RecipeIngredient.where(
+          ingredient_id: ingredient.id,
+          recipe_id: recipe_id
+        ).count
       }
     end
 end
