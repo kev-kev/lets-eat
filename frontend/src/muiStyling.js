@@ -110,7 +110,7 @@ export const modalStyle = makeStyles((theme) => ({
   },
 }));
 
-export const newRecipeFormStyle = makeStyles((theme) => ({
+export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",

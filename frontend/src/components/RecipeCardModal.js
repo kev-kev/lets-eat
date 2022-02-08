@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import {
   Modal,
@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { DeleteForeverRounded, EditRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
-import NewRecipeForm from "./NewRecipeForm";
+import RecipeForm from "./RecipeForm";
 
 const CardModal = (props) => {
   const classes = modalStyle();
@@ -25,7 +25,7 @@ const CardModal = (props) => {
     if (isEditing) {
       return (
         <>
-          <NewRecipeForm recipe={props.recipe} />
+          <RecipeForm recipe={props.recipe} />
           <Button onClick={() => setIsEditing(false)}>back</Button>
         </>
       );
@@ -76,6 +76,11 @@ const CardModal = (props) => {
       );
   };
 
+  const handleClose = () => {
+    setIsEditing(false);
+    props.onClose();
+  };
+
   const renderDeleteBtn = () => {
     if (props.type === "index" && !props.recipe.isFavorited)
       return (
@@ -115,7 +120,7 @@ const CardModal = (props) => {
       );
   };
   return (
-    <Modal open={props.shouldShowModal} onClose={props.onClose}>
+    <Modal open={props.shouldShowModal} onClose={handleClose}>
       <div className={classes.modal} mx="auto">
         <h2>{props.recipe.name}</h2>
         {renderCardModalBody()}

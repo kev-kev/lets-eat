@@ -95,6 +95,18 @@ export const AppReducer = (state, action) => {
           };
       }
       break;
+    case "EDIT_RECIPE_SUCCESS":
+      return {
+        ...state,
+      };
+    case "EDIT_RECIPE_FAILURE":
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          grid: action.payload,
+        },
+      };
     case "STATUS_UPDATE_SUCCESS":
       return {
         ...state,

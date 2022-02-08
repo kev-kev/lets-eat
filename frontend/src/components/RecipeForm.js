@@ -8,7 +8,7 @@ import {
   CircularProgress,
   Snackbar,
 } from "@material-ui/core/";
-import { newRecipeFormStyle } from "../muiStyling";
+import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Alert } from "@material-ui/lab/";
 import IngredientForm from "./IngredientForm";
@@ -16,9 +16,9 @@ import IngredientForm from "./IngredientForm";
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
-const NewRecipeForm = (props) => {
-  const classes = newRecipeFormStyle();
-  const { submitRecipe, isSubmittingRecipe, errors, clearErrors } =
+const RecipeForm = (props) => {
+  const classes = recipeFormStyle();
+  const { submitRecipe, isSubmittingRecipe, errors, clearErrors, editRecipe } =
     useContext(GlobalContext);
 
   const [title, setTitle] = useState("");
@@ -48,7 +48,7 @@ const NewRecipeForm = (props) => {
 
   const handleSubmit = (title, link) => {
     if (props.recipe) {
-      // fetch a put request to the recipe
+      editRecipe(props.recipe);
     }
     if (title === "" || link === "") {
       setSuccessSnackbar(false);
@@ -205,4 +205,4 @@ const NewRecipeForm = (props) => {
   }
 };
 
-export default NewRecipeForm;
+export default RecipeForm;

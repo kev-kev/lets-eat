@@ -1,3 +1,4 @@
+require 'pry'
 class RecipesController < ApplicationController
   def index
     recipes = Recipe.order(:id).map{|recipe| format_recipe(recipe)}
@@ -30,8 +31,10 @@ class RecipesController < ApplicationController
   end
 
   def update
+    binding.pry
     @recipe = Recipe.find(params[:id])
     if @recipe
+      # lookup and edit ingredients
       @recipe.update(recipe_params)
       render status: 200
     else

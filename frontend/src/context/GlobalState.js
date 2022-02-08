@@ -56,6 +56,27 @@ export const GlobalProvider = ({ children }) => {
       });
   };
 
+  const editRecipe = (recipe) => {
+    fetch(rootURL + `/recipes/${recipe.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(recipe),
+    })
+      .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        dispatch({
+          type: "EDIT_RECIPE_SUCCESS",
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "EDIT_RECIPE_FAILURE",
+          payload: error,
+        });
+      });
+  };
+
   const filterAndSetRecipes = (recipes, user) => {
     const approvedRecipes = [];
     const favoritedRecipes = [];
@@ -337,6 +358,7 @@ export const GlobalProvider = ({ children }) => {
         getGroceryList,
         groceryList: state.groceryList,
         fetchRecipes,
+        editRecipe,
         favoritedRecipes: state.favoritedRecipes,
         approvedRecipes: state.approvedRecipes,
         inboxRecipes: state.inboxRecipes,
