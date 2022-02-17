@@ -21,10 +21,10 @@ const RecipeForm = (props) => {
   const { submitRecipe, isSubmittingRecipe, errors, clearErrors, editRecipe } =
     useContext(GlobalContext);
 
-  const [title, setTitle] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
-  const [link, setLink] = useState("");
-  const [notes, setNotes] = useState("");
+  const [title, setTitle] = useState(props.recipe.title || "");
+  const [imgUrl, setImgUrl] = useState(props.recipe.imgUrl || "");
+  const [link, setLink] = useState(props.recipe.link || "");
+  const [notes, setNotes] = useState(props.recipe.notes || "");
   const [ingredients, setIngredients] = useState([]);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
@@ -46,15 +46,15 @@ const RecipeForm = (props) => {
     clearErrors();
   };
 
-  const handleSubmit = (title, link) => {
+  const handleSubmit = (name, link) => {
     if (props.recipe) {
-      editRecipe(props.recipe);
+      editRecipe(name, link, notes, imgUrl, ingredients, props.recipe.id);
     }
-    if (title === "" || link === "") {
+    if (name === "" || link === "") {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     } else {
-      submitRecipe(title, link, notes, imgUrl, ingredients);
+      submitRecipe(name, link, notes, imgUrl, ingredients);
     }
   };
 

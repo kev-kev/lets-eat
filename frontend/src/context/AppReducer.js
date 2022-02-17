@@ -96,8 +96,19 @@ export const AppReducer = (state, action) => {
       }
       break;
     case "EDIT_RECIPE_SUCCESS":
+      const updatedApprovedRecipes = [...state.approvedRecipes];
+      const recipeIndex = updatedApprovedRecipes.findIndex(
+        (recipe) => recipe.id === action.payload.id
+      );
+      updatedApprovedRecipes[recipeIndex].name = action.payload.name;
+      updatedApprovedRecipes[recipeIndex].link = action.payload.link;
+      updatedApprovedRecipes[recipeIndex].notes = action.payload.notes;
+      updatedApprovedRecipes[recipeIndex].imgUrl = action.payload.imgUrl;
+      updatedApprovedRecipes[recipeIndex].ingredients =
+        action.payload.ingredients;
       return {
         ...state,
+        approvedRecipes: updatedApprovedRecipes,
       };
     case "EDIT_RECIPE_FAILURE":
       return {

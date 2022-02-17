@@ -31,15 +31,29 @@ class RecipesController < ApplicationController
   end
 
   def update
-    binding.pry
     @recipe = Recipe.find(params[:id])
+    binding.pry
     if @recipe
-      # lookup and edit ingredients
-      @recipe.update(recipe_params)
-      render status: 200
+      ingredients = recipe_params[:ingredients]
+      ingredients.each do |ingredient|
+        new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient[:name], "unit" => ingredient[:unit]})
+        if new_ingredient.valid?
+          new_ingredient.save!
+          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
+          recipe_ingredient.save!
+        else
+          render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
+        end
+      end 
+      if @recipe.update(recipe_params.except(:ingredients))
+        render status: 200
+      else
+        render json: {error: "unable to update recipe"}, status: 400
+      end
     else
       render json: {error: "unable to update recipe"}, status: 400
     end
+    p @recipe.errors.full_messages
   end
 
   def destroy

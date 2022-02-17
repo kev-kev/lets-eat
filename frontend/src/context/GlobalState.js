@@ -56,17 +56,34 @@ export const GlobalProvider = ({ children }) => {
       });
   };
 
-  const editRecipe = (recipe) => {
-    fetch(rootURL + `/recipes/${recipe.id}`, {
+  const editRecipe = (name, link, notes, imgUrl, ingredients, id) => {
+    fetch(rootURL + `/recipes/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(recipe),
+      body: JSON.stringify({
+        recipe: {
+          name: name,
+          link: link,
+          notes: notes,
+          img_url: imgUrl,
+          ingredients: ingredients,
+          id: id,
+        },
+      }),
     })
       .then(handleErrors)
       .then((r) => r.json())
-      .then((data) => {
+      .then(() => {
         dispatch({
           type: "EDIT_RECIPE_SUCCESS",
+          payload: {
+            name: name,
+            link: link,
+            notes: notes,
+            imgUrl: imgUrl,
+            ingredients: ingredients,
+            id: id,
+          },
         });
       })
       .catch((error) => {
