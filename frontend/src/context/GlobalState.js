@@ -71,18 +71,20 @@ export const GlobalProvider = ({ children }) => {
         },
       }),
     })
-      .then(handleErrors)
-      .then((r) => r.json())
       .then(() => {
+        const updatedRecipes = [...state.approvedRecipes];
+        const recipeIndex = updatedRecipes.findIndex(
+          (recipe) => recipe.id === id
+        );
+        updatedRecipes[recipeIndex].name = name;
+        updatedRecipes[recipeIndex].link = link;
+        updatedRecipes[recipeIndex].notes = notes;
+        updatedRecipes[recipeIndex].imgUrl = imgUrl;
+        updatedRecipes[recipeIndex].ingredients = ingredients;
         dispatch({
           type: "EDIT_RECIPE_SUCCESS",
           payload: {
-            name: name,
-            link: link,
-            notes: notes,
-            imgUrl: imgUrl,
-            ingredients: ingredients,
-            id: id,
+            updatedRecipes: updatedRecipes,
           },
         });
       })

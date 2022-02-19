@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
@@ -89,9 +89,7 @@ export default function RecipeGrid(props) {
   };
 
   const renderGroceryListModal = () => {
-    if (weeklyRecipes.length > 0) {
-      return <GroceryListModal />;
-    }
+    if (weeklyRecipes.length > 0) return <GroceryListModal />;
   };
 
   if (isFetchingRecipes) {
