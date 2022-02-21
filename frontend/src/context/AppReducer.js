@@ -33,7 +33,7 @@ export const AppReducer = (state, action) => {
     case "SUBMIT_RECIPE_SUCCESS":
       return {
         ...state,
-        recipes: [...state.recipes, action.payload],
+        pendingRecipes: [...state.pendingRecipes, action.payload],
         isSubmittingRecipe: false,
       };
     case "SUBMIT_RECIPE_FAILURE":
@@ -53,7 +53,6 @@ export const AppReducer = (state, action) => {
     case "FETCH_RECIPES_SUCCESS":
       return {
         ...state,
-        recipes: action.payload.recipes,
         isFetchingRecipes: false,
       };
     case "FETCH_RECIPES_FAILURE":
@@ -122,7 +121,10 @@ export const AppReducer = (state, action) => {
         },
       };
     case "FAVORITE_UPDATE_SUCCESS":
-      updatedRecipe = findRecipeById(state.recipes, action.payload.recipe_id);
+      updatedRecipe = findRecipeById(
+        state.approvedRecipes,
+        action.payload.recipe_id
+      );
       updatedRecipe.isFavorited = action.payload.value;
       return {
         ...state,

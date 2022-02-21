@@ -35,7 +35,7 @@ class RecipesController < ApplicationController
     # binding.pry
     if @recipe
       ingredients = recipe_params[:ingredients]
-      ingredients.each do |ingredient|
+      ingredients && ingredients.each do |ingredient|
         new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient[:name], "unit" => ingredient[:unit]})
         if new_ingredient.valid?
           new_ingredient.save!

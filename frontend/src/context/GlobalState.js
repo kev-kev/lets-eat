@@ -34,6 +34,23 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
+  const getRecipesFromType = (type) => {
+    switch (
+      type //eslint-disable-line
+    ) {
+      case "approved":
+        return [...state.approvedRecipes];
+      case "favorited":
+        return [...state.favoritedRecipes];
+      case "inbox":
+        return [...state.inboxRecipes];
+      case "pending":
+        return [...state.pendingRecipes];
+      case "rejected":
+        return [...state.rejectedRecipes];
+    }
+  };
+
   const fetchRecipes = (user) => {
     dispatch({
       type: "FETCH_RECIPES",
@@ -45,7 +62,6 @@ export const GlobalProvider = ({ children }) => {
         filterAndSetRecipes(data.recipes, user);
         dispatch({
           type: "FETCH_RECIPES_SUCCESS",
-          payload: { recipes: data.recipes },
         });
       })
       .catch((error) => {
@@ -56,7 +72,7 @@ export const GlobalProvider = ({ children }) => {
       });
   };
 
-  const editRecipe = (name, link, notes, imgUrl, ingredients, id) => {
+  const editRecipe = (name, link, notes, imgUrl, ingredients, id, type) => {
     fetch(rootURL + `/recipes/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -71,8 +87,9 @@ export const GlobalProvider = ({ children }) => {
         },
       }),
     })
+      .then(handleErrors)
       .then(() => {
-        const updatedRecipes = [...state.approvedRecipes];
+        const updatedRecipes = getRecipesFromType(type);
         const recipeIndex = updatedRecipes.findIndex(
           (recipe) => recipe.id === id
         );
@@ -244,11 +261,9 @@ export const GlobalProvider = ({ children }) => {
       }),
     })
       .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
+      .then(() => {
         dispatch({
           type: "STATUS_UPDATE_SUCCESS",
-          payload: data.recipes,
         });
       })
       .catch((error) => {
