@@ -56,15 +56,15 @@ const RecipeForm = (props) => {
       setErrorSnackbar(true);
     } else {
       if (props.recipe)
-        editRecipe(
-          name,
-          link,
-          notes,
-          imgUrl,
-          ingredients,
-          props.recipe.id,
-          "approved"
-        );
+        editRecipe({
+          name: name,
+          link: link,
+          notes: notes,
+          imgUrl: imgUrl,
+          ingredients: ingredients,
+          id: props.recipe.id,
+          type: "approved",
+        });
       else submitRecipe(name, link, notes, imgUrl, ingredients);
     }
   };

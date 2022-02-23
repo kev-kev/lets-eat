@@ -67,10 +67,15 @@ export const AppReducer = (state, action) => {
     case "SET_RECIPES":
       //eslint-disable-next-line
       switch (action.payload[0]) {
-        case "approved":
+        case "weekly":
           return {
             ...state,
-            approvedRecipes: action.payload[1],
+            weeklyRecipes: action.payload[1],
+          };
+        case "other":
+          return {
+            ...state,
+            otherRecipes: action.payload[1],
           };
         case "favorited":
           return {

@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import { AppReducer } from "./AppReducer";
-import { startOfWeek } from "date-fns";
+import { startOfWeek, differenceInDays, parseISO } from "date-fns";
 
 const initialState = {
   user: null,
@@ -18,7 +18,8 @@ const initialState = {
   selectedWeek: startOfWeek(new Date()),
   groceryList: null,
   favoritedRecipes: [],
-  approvedRecipes: [],
+  weeklyRecipes: [],
+  otherRecipes: [],
   inboxRecipes: [],
   pendingRecipes: [],
   rejectedRecipes: [],
@@ -30,6 +31,12 @@ const handleErrors = (response) => {
   return response;
 };
 
+const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
+  return recipeWeeks.some(
+    (week) => differenceInDays(parseISO(week), selectedWeek) === 0
+  );
+};
+
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
@@ -38,8 +45,10 @@ export const GlobalProvider = ({ children }) => {
     switch (
       type //eslint-disable-line
     ) {
-      case "approved":
-        return [...state.approvedRecipes];
+      case "weekly":
+        return [...state.weeklyRecipes];
+      case "other":
+        return [...state.otherRecipes];
       case "favorited":
         return [...state.favoritedRecipes];
       case "inbox":
@@ -72,32 +81,19 @@ export const GlobalProvider = ({ children }) => {
       });
   };
 
-  const editRecipe = (name, link, notes, imgUrl, ingredients, id, type) => {
-    fetch(rootURL + `/recipes/${id}`, {
+  const editRecipe = (recipe) => {
+    fetch(rootURL + `/recipes/${recipe.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        recipe: {
-          name: name,
-          link: link,
-          notes: notes,
-          img_url: imgUrl,
-          ingredients: ingredients,
-          id: id,
-        },
-      }),
+      body: JSON.stringify(recipe),
     })
       .then(handleErrors)
       .then(() => {
-        const updatedRecipes = getRecipesFromType(type);
+        const updatedRecipes = getRecipesFromType(recipe.type);
         const recipeIndex = updatedRecipes.findIndex(
-          (recipe) => recipe.id === id
+          (target) => target.id === recipe.id
         );
-        updatedRecipes[recipeIndex].name = name;
-        updatedRecipes[recipeIndex].link = link;
-        updatedRecipes[recipeIndex].notes = notes;
-        updatedRecipes[recipeIndex].imgUrl = imgUrl;
-        updatedRecipes[recipeIndex].ingredients = ingredients;
+        updatedRecipes[recipeIndex] = recipe;
         dispatch({
           type: "EDIT_RECIPE_SUCCESS",
           payload: {
@@ -114,7 +110,8 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const filterAndSetRecipes = (recipes, user) => {
-    const approvedRecipes = [];
+    const weeklyRecipes = [];
+    const otherRecipes = [];
     const favoritedRecipes = [];
     const inboxRecipes = [];
     const pendingRecipes = [];
@@ -124,7 +121,9 @@ export const GlobalProvider = ({ children }) => {
       //eslint-disable-next-line
       switch (recipe.status) {
         case "approved":
-          approvedRecipes.push(recipe);
+          if (isWeeklyRecipe(recipe.weeks, state.selectedWeek))
+            weeklyRecipes.push(recipe);
+          else otherRecipes.push(recipe);
           if (recipe.isFavorited) favoritedRecipes.push(recipe);
           break;
         case "pending":
@@ -137,8 +136,10 @@ export const GlobalProvider = ({ children }) => {
           break;
       }
     });
+
     const allRecipes = [
-      ["approved", approvedRecipes],
+      ["weekly", weeklyRecipes],
+      ["other", otherRecipes],
       ["favorited", favoritedRecipes],
       ["inbox", inboxRecipes],
       ["pending", pendingRecipes],
@@ -313,7 +314,6 @@ export const GlobalProvider = ({ children }) => {
         recipe: {
           weeks: value,
         },
-        page: 1,
       }),
     })
       .then(handleErrors)
@@ -394,7 +394,8 @@ export const GlobalProvider = ({ children }) => {
         fetchRecipes,
         editRecipe,
         favoritedRecipes: state.favoritedRecipes,
-        approvedRecipes: state.approvedRecipes,
+        weeklyRecipes: state.weeklyRecipes,
+        otherRecipes: state.otherRecipes,
         inboxRecipes: state.inboxRecipes,
         pendingRecipes: state.pendingRecipes,
         rejectedRecipes: state.rejectedRecipes,

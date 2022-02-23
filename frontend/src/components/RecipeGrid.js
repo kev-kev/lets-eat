@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
-import { format, add, sub, differenceInDays, parseISO } from "date-fns";
+import { format, add, sub } from "date-fns";
 import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
 import { IconButton, Grid, CircularProgress } from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
@@ -17,7 +17,7 @@ const renderRecipeCards = (recipes, type) => {
         <RecipeCard
           type={type}
           recipe={recipe}
-          isWeeklyRecipe={isWeeklyRecipe}
+          // isWeeklyRecipe={isWeeklyRecipe}
         />
       </Grid>
     );
@@ -39,16 +39,11 @@ const renderGridContainer = (recipes, type) => {
   );
 };
 
-const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
-  return recipeWeeks.some(
-    (week) => differenceInDays(parseISO(week), selectedWeek) === 0
-  );
-};
-
 export default function RecipeGrid(props) {
   const classes = gridStyle();
   const {
-    approvedRecipes,
+    weeklyRecipes,
+    otherRecipes,
     inboxRecipes,
     pendingRecipes,
     rejectedRecipes,
@@ -62,15 +57,15 @@ export default function RecipeGrid(props) {
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(true);
 
-  const weeklyRecipes = approvedRecipes.filter((recipe) => {
-    return isWeeklyRecipe(recipe.weeks, selectedWeek);
-  });
+  // const weeklyRecipes = approvedRecipes.filter((recipe) => {
+  //   return isWeeklyRecipe(recipe.weeks, selectedWeek);
+  // });
 
-  const otherRecipes = approvedRecipes
-    .filter((recipe) => {
-      return !isWeeklyRecipe(recipe.weeks, selectedWeek);
-    })
-    .slice((page - 1) * RECIPES_PER_PAGE, page * RECIPES_PER_PAGE);
+  // const otherRecipes = approvedRecipes
+  //   .filter((recipe) => {
+  //     return !isWeeklyRecipe(recipe.weeks, selectedWeek);
+  //   })
+  //   .slice((page - 1) * RECIPES_PER_PAGE, page * RECIPES_PER_PAGE);
 
   const handleChangeWeek = (dir) => {
     dir === "back"
