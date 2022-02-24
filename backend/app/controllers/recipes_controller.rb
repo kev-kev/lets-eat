@@ -32,7 +32,7 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find(params[:id])
-    binding.pry
+    # binding.pry
     if @recipe
       ingredients = recipe_params[:ingredients]
       ingredients && ingredients.each do |ingredient|
@@ -42,7 +42,7 @@ class RecipesController < ApplicationController
           recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
           recipe_ingredient.save!
         else
-          render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
+          render json: {error: 'unable to update recipe! your ingredients are invalid 🥺👉👈'}, status: 400
         end
       end 
       if @recipe.update(recipe_params.except(:ingredients))
@@ -51,9 +51,9 @@ class RecipesController < ApplicationController
         render json: {error: "unable to update recipe"}, status: 400
       end
     else
-      render json: {error: "unable to update recipe"}, status: 400
+      render json: {error: "unable to update recipe, recipe could not be found"}, status: 400
     end
-    p @recipe.errors.full_messages
+   # p @recipe.errors.full_messages
   end
 
   def destroy
