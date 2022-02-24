@@ -100,7 +100,6 @@ export const AppReducer = (state, action) => {
       }
       break;
     case "EDIT_RECIPE_SUCCESS":
-      console.log(action.payload.type);
       if (action.payload.type === "weekly") {
         return {
           ...state,

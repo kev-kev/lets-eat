@@ -31,7 +31,12 @@ const RecipeCard = (props) => {
     return (
       <IconButton
         onClick={() => {
-          toggleFavorite(props.recipe.id, !props.recipe.isFavorited);
+          // toggleFavorite(props.recipe.id, !props.recipe.isFavorited);
+          // debugger;
+          editRecipe({
+            ...props.recipe,
+            isFavorited: !props.recipe.isFavorited,
+          });
         }}
       >
         {props.recipe.isFavorited ? (
