@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
@@ -14,11 +14,7 @@ const renderRecipeCards = (recipes, type) => {
   return recipes.map((recipe) => {
     return (
       <Grid item xs key={recipe.name + uuid()}>
-        <RecipeCard
-          type={type}
-          recipe={recipe}
-          // isWeeklyRecipe={isWeeklyRecipe}
-        />
+        <RecipeCard type={type} recipe={recipe} />
       </Grid>
     );
   });
@@ -57,15 +53,10 @@ export default function RecipeGrid(props) {
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(true);
 
-  // const weeklyRecipes = approvedRecipes.filter((recipe) => {
-  //   return isWeeklyRecipe(recipe.weeks, selectedWeek);
-  // });
-
-  // const otherRecipes = approvedRecipes
-  //   .filter((recipe) => {
-  //     return !isWeeklyRecipe(recipe.weeks, selectedWeek);
-  //   })
-  //   .slice((page - 1) * RECIPES_PER_PAGE, page * RECIPES_PER_PAGE);
+  const otherRecipesToDisplay = otherRecipes.slice(
+    (page - 1) * RECIPES_PER_PAGE,
+    page * RECIPES_PER_PAGE
+  );
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -103,10 +94,10 @@ export default function RecipeGrid(props) {
               <ChevronRightRounded color="primary" />
             </IconButton>
           </h2>
-          {renderGridContainer(weeklyRecipes, props.type)}
+          {renderGridContainer(weeklyRecipes, "weekly")}
           {renderGroceryListModal()}
           <h2>non-weekly recipes</h2>
-          {renderGridContainer(otherRecipes, props.type)}
+          {renderGridContainer(otherRecipesToDisplay, "index")}
           <div className={classes.pageNav}>
             {shouldShowBackBtn && (
               <IconButton onClick={() => handlePageClick("back")}>

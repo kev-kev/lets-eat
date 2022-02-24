@@ -42,9 +42,8 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   const getRecipesFromType = (type) => {
-    switch (
-      type //eslint-disable-line
-    ) {
+    //eslint-disable-next-line
+    switch (type) {
       case "weekly":
         return [...state.weeklyRecipes];
       case "other":
@@ -82,6 +81,9 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const editRecipe = (recipe) => {
+    const subType = isWeeklyRecipe(recipe.weeks, state.selectedWeek)
+      ? "weekly"
+      : "other";
     fetch(rootURL + `/recipes/${recipe.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -89,15 +91,17 @@ export const GlobalProvider = ({ children }) => {
     })
       .then(handleErrors)
       .then(() => {
-        const updatedRecipes = getRecipesFromType(recipe.type);
+        const updatedRecipes = getRecipesFromType(subType);
         const recipeIndex = updatedRecipes.findIndex(
           (target) => target.id === recipe.id
         );
         updatedRecipes[recipeIndex] = recipe;
+
         dispatch({
           type: "EDIT_RECIPE_SUCCESS",
           payload: {
             updatedRecipes: updatedRecipes,
+            type: subType,
           },
         });
       })

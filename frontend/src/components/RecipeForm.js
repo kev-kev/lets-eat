@@ -64,6 +64,7 @@ const RecipeForm = (props) => {
           ingredients: ingredients,
           id: props.recipe.id,
           type: "approved",
+          weeks: props.recipe.weeks,
         });
       else submitRecipe(name, link, notes, imgUrl, ingredients);
     }

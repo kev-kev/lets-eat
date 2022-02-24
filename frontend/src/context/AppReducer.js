@@ -100,10 +100,18 @@ export const AppReducer = (state, action) => {
       }
       break;
     case "EDIT_RECIPE_SUCCESS":
-      return {
-        ...state,
-        approvedRecipes: action.payload.updatedRecipes,
-      };
+      console.log(action.payload.type);
+      if (action.payload.type === "weekly") {
+        return {
+          ...state,
+          weeklyRecipes: action.payload.updatedRecipes,
+        };
+      } else {
+        return {
+          ...state,
+          otherRecipes: action.payload.updatedRecipes,
+        };
+      }
     case "EDIT_RECIPE_FAILURE":
       return {
         ...state,
@@ -144,7 +152,10 @@ export const AppReducer = (state, action) => {
         },
       };
     case "WEEKS_UPDATE_SUCCESS":
-      updatedRecipe = findRecipeById(state.recipes, action.payload.recipe_id);
+      updatedRecipe = findRecipeById(
+        [...state.weeklyRecipes, ...state.otherRecipes],
+        action.payload.recipe_id
+      );
       updatedRecipe.weeks = action.payload.value;
       return {
         ...state,
