@@ -151,15 +151,30 @@ export const AppReducer = (state, action) => {
         },
       };
     case "WEEKS_UPDATE_SUCCESS":
-      updatedRecipe = findRecipeById(
-        [...state.weeklyRecipes, ...state.otherRecipes],
-        action.payload.recipe_id
+      updatedRecipe = state.otherRecipes.find(
+        (recipe) => recipe.id === action.payload.recipe_id
       );
-      updatedRecipe.weeks = action.payload.value;
-      return {
-        ...state,
-        recipes: state.recipes,
-      };
+      if (updatedRecipe) {
+        const indexToRemove = state.otherRecipes.indexOf(updatedRecipe);
+        state.otherRecipes.splice(indexToRemove, 1);
+        return {
+          ...state,
+          weeklyRecipes: [...state.weeklyRecipes, updatedRecipe],
+        };
+      } else {
+        updatedRecipe = state.weeklyRecipes.find(
+          (recipe) => recipe.id === action.payload.recipe_id
+        );
+        const indexToRemove = state.weeklyRecipes.indexOf(updatedRecipe);
+        state.weeklyRecipes.splice(indexToRemove, 1);
+        const updatedOtherRecipes = [...state.otherRecipes, updatedRecipe].sort(
+          (a, b) => a.id - b.id
+        );
+        return {
+          ...state,
+          otherRecipes: updatedOtherRecipes,
+        };
+      }
     case "WEEKS_UPDATE_FAILURE":
       return {
         ...state,

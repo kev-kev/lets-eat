@@ -23,16 +23,13 @@ import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 const RecipeCard = (props) => {
   const classes = recipeCardStyle();
-  const { toggleFavorite, selectedWeek, editRecipe } =
-    useContext(GlobalContext);
+  const { setWeeks, selectedWeek, editRecipe } = useContext(GlobalContext);
   const [shouldShowModal, setShouldShowModal] = useState(false);
 
   const renderIndexCardBody = () => {
     return (
       <IconButton
         onClick={() => {
-          // toggleFavorite(props.recipe.id, !props.recipe.isFavorited);
-          // debugger;
           editRecipe({
             ...props.recipe,
             isFavorited: !props.recipe.isFavorited,
@@ -85,10 +82,10 @@ const RecipeCard = (props) => {
         <IconButton
           className={classes.addOrRemoveBtn}
           onClick={() => {
-            editRecipe({
-              ...props.recipe,
-              weeks: addOrRemoveWeek(props.recipe.weeks, selectedWeek),
-            });
+            setWeeks(
+              props.recipe.id,
+              addOrRemoveWeek(props.recipe.weeks, selectedWeek)
+            );
           }}
         >
           {props.type === "weekly" ? (

@@ -32,7 +32,6 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find(params[:id])
-    # binding.pry
     if @recipe
       ingredients = recipe_params[:ingredients]
       ingredients && ingredients.each do |ingredient|

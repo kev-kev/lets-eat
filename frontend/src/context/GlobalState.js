@@ -308,7 +308,7 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function setWeeks(recipe_id, value) {
+  function setWeeks(recipe_id, weeks) {
     fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
       headers: {
@@ -316,7 +316,7 @@ export const GlobalProvider = ({ children }) => {
       },
       body: JSON.stringify({
         recipe: {
-          weeks: value,
+          weeks: weeks,
         },
       }),
     })
@@ -325,7 +325,7 @@ export const GlobalProvider = ({ children }) => {
         if (r.status === 200)
           dispatch({
             type: "WEEKS_UPDATE_SUCCESS",
-            payload: { recipe_id, value },
+            payload: { recipe_id, weeks },
           });
       })
       .catch((error) => {
