@@ -19,11 +19,13 @@ import {
 } from "@material-ui/icons/";
 import { GlobalContext } from "../context/GlobalState";
 import { startOfWeek } from "date-fns";
+import { useHistory } from "react-router-dom";
 
 const Sidebar = () => {
   const classes = sidebarStyle();
   const { logoutUser, recipes, user, inboxRecipes, changeSelectedWeek } =
     useContext(GlobalContext);
+  let history = useHistory();
   const PLACEHOLDER_IMG_URL =
     "https://patriotpower.ogsd.net/wp-content/uploads/2018/03/Profile_Kirby.aead314d435d8e52d9a4e92a6f799c4eee08081e.jpg";
 
@@ -41,6 +43,11 @@ const Sidebar = () => {
 
   const handleResetWeek = () => {
     changeSelectedWeek(startOfWeek(new Date()));
+  };
+
+  const handleLogout = () => {
+    logoutUser();
+    history.push("/");
   };
 
   return (
@@ -75,7 +82,7 @@ const Sidebar = () => {
         </div>
 
         <div className={classes.sidebarBottom}>
-          <ListItem button onClick={logoutUser}>
+          <ListItem button onClick={handleLogout}>
             <ListItemIcon className={classes.sidebarItem}>
               <ExitToAppRounded />
             </ListItemIcon>
