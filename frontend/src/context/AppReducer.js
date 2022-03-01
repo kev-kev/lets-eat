@@ -120,29 +120,27 @@ export const AppReducer = (state, action) => {
         },
       };
     case "STATUS_UPDATE_SUCCESS":
-      return {
-        ...state,
-        recipes: action.payload,
-      };
-    case "STATUS_UPDATE_FAILURE":
-      return {
-        ...state,
-        errors: {
-          ...state.errors,
-          grid: action.payload,
-        },
-      };
-    case "FAVORITE_UPDATE_SUCCESS":
-      updatedRecipe = findRecipeById(
-        state.approvedRecipes,
-        action.payload.recipe_id
+      updatedRecipe = state.inboxRecipes.find(
+        (recipe) => recipe.id === action.payload.recipe_id
       );
-      updatedRecipe.isFavorited = action.payload.value;
-      return {
-        ...state,
-        recipes: state.recipes,
-      };
-    case "FAVORITE_UPDATE_FAILURE":
+      const indexToRemove = state.inboxRecipes.indexOf(updatedRecipe);
+      state.inboxRecipes.splice(indexToRemove, 1);
+      const updatedOtherRecipes = [...state.otherRecipes, updatedRecipe].sort(
+        (a, b) => a.id - b.id
+      );
+      if (action.payload === "approved") {
+        return {
+          ...state,
+          otherRecipes: updatedOtherRecipes,
+        };
+      } else {
+        return {
+          ...state,
+          rejectedRecipes: [...state.rejectedRecipes, updatedRecipe],
+        };
+      }
+
+    case "STATUS_UPDATE_FAILURE":
       return {
         ...state,
         errors: {

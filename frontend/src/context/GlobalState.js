@@ -269,6 +269,7 @@ export const GlobalProvider = ({ children }) => {
       .then(() => {
         dispatch({
           type: "STATUS_UPDATE_SUCCESS",
+          payload: { recipe_status, recipe_id },
         });
       })
       .catch((error) => {
