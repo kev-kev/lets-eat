@@ -51,7 +51,9 @@ export default function RecipeGrid(props) {
 
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
-  const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(true);
+  const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(
+    otherRecipes.length / RECIPES_PER_PAGE > 1
+  );
 
   const otherRecipesToDisplay = otherRecipes.slice(
     (page - 1) * RECIPES_PER_PAGE,
@@ -69,7 +71,7 @@ export default function RecipeGrid(props) {
     dir === "back" ? (nextPage -= 1) : (nextPage += 1);
     setPage(nextPage);
     nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
-    nextPage <= otherRecipes.length / RECIPES_PER_PAGE
+    nextPage < otherRecipes.length / RECIPES_PER_PAGE
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
   };
