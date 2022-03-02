@@ -212,7 +212,10 @@ export const GlobalProvider = ({ children }) => {
       .then((data) => {
         dispatch({
           type: "SUBMIT_RECIPE_SUCCESS",
-          payload: data.recipe,
+          payload: {
+            ...data.recipe,
+            submittedBy: state.user.username,
+          },
         });
       })
       .catch((error) => {
