@@ -19,7 +19,7 @@ const initialState = {
   groceryList: null,
   favoritedRecipes: [],
   weeklyRecipes: [],
-  otherRecipes: [],
+  approvedRecipes: [],
   inboxRecipes: [],
   pendingRecipes: [],
   rejectedRecipes: [],
@@ -46,8 +46,8 @@ export const GlobalProvider = ({ children }) => {
     switch (type) {
       case "weekly":
         return [...state.weeklyRecipes];
-      case "other":
-        return [...state.otherRecipes];
+      case "approved":
+        return [...state.approvedRecipes];
       case "favorited":
         return [...state.favoritedRecipes];
       case "inbox":
@@ -83,7 +83,7 @@ export const GlobalProvider = ({ children }) => {
   const editRecipe = (recipe) => {
     const subType = isWeeklyRecipe(recipe.weeks, state.selectedWeek)
       ? "weekly"
-      : "other";
+      : "approved";
     fetch(rootURL + `/recipes/${recipe.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -115,7 +115,7 @@ export const GlobalProvider = ({ children }) => {
 
   const filterAndSetRecipes = (recipes, user) => {
     const weeklyRecipes = [];
-    const otherRecipes = [];
+    const approvedRecipes = [];
     const favoritedRecipes = [];
     const inboxRecipes = [];
     const pendingRecipes = [];
@@ -127,7 +127,7 @@ export const GlobalProvider = ({ children }) => {
         case "approved":
           if (isWeeklyRecipe(recipe.weeks, state.selectedWeek))
             weeklyRecipes.push(recipe);
-          else otherRecipes.push(recipe);
+          else approvedRecipes.push(recipe);
           if (recipe.isFavorited) favoritedRecipes.push(recipe);
           break;
         case "pending":
@@ -143,7 +143,7 @@ export const GlobalProvider = ({ children }) => {
 
     const allRecipes = [
       ["weekly", weeklyRecipes],
-      ["other", otherRecipes],
+      ["approved", approvedRecipes],
       ["favorited", favoritedRecipes],
       ["inbox", inboxRecipes],
       ["pending", pendingRecipes],
@@ -403,7 +403,7 @@ export const GlobalProvider = ({ children }) => {
         editRecipe,
         favoritedRecipes: state.favoritedRecipes,
         weeklyRecipes: state.weeklyRecipes,
-        otherRecipes: state.otherRecipes,
+        approvedRecipes: state.approvedRecipes,
         inboxRecipes: state.inboxRecipes,
         pendingRecipes: state.pendingRecipes,
         rejectedRecipes: state.rejectedRecipes,

@@ -39,7 +39,7 @@ export default function RecipeGrid(props) {
   const classes = gridStyle();
   const {
     weeklyRecipes,
-    otherRecipes,
+    approvedRecipes,
     inboxRecipes,
     pendingRecipes,
     rejectedRecipes,
@@ -52,10 +52,10 @@ export default function RecipeGrid(props) {
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(
-    otherRecipes.length / RECIPES_PER_PAGE > 1
+    approvedRecipes.length / RECIPES_PER_PAGE > 1
   );
 
-  const otherRecipesToDisplay = otherRecipes.slice(
+  const approvedRecipesToDisplay = approvedRecipes.slice(
     (page - 1) * RECIPES_PER_PAGE,
     page * RECIPES_PER_PAGE
   );
@@ -71,7 +71,7 @@ export default function RecipeGrid(props) {
     dir === "back" ? (nextPage -= 1) : (nextPage += 1);
     setPage(nextPage);
     nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
-    nextPage < otherRecipes.length / RECIPES_PER_PAGE
+    nextPage < approvedRecipes.length / RECIPES_PER_PAGE
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
   };
@@ -99,7 +99,7 @@ export default function RecipeGrid(props) {
           {renderGridContainer(weeklyRecipes, "weekly")}
           {renderGroceryListModal()}
           <h2>non-weekly recipes</h2>
-          {renderGridContainer(otherRecipesToDisplay, "index")}
+          {renderGridContainer(approvedRecipesToDisplay, "index")}
           <div className={classes.pageNav}>
             {shouldShowBackBtn && (
               <IconButton onClick={() => handlePageClick("back")}>

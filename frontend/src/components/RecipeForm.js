@@ -55,6 +55,7 @@ const RecipeForm = (props) => {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     } else {
+      debugger;
       if (props.recipe)
         editRecipe({
           name: name,
@@ -65,6 +66,7 @@ const RecipeForm = (props) => {
           id: props.recipe.id,
           type: "approved",
           weeks: props.recipe.weeks,
+          status: props.recipe.status,
         });
       else submitRecipe(name, link, notes, imgUrl, ingredients);
     }

@@ -1,7 +1,3 @@
-const findRecipeById = (recipes, id) => {
-  return recipes.find((recipe) => recipe.id === id);
-};
-
 export const AppReducer = (state, action) => {
   let updatedRecipe;
   switch (action.type) {
@@ -72,10 +68,10 @@ export const AppReducer = (state, action) => {
             ...state,
             weeklyRecipes: action.payload[1],
           };
-        case "other":
+        case "approved":
           return {
             ...state,
-            otherRecipes: action.payload[1],
+            approvedRecipes: action.payload[1],
           };
         case "favorited":
           return {
@@ -108,7 +104,7 @@ export const AppReducer = (state, action) => {
       } else {
         return {
           ...state,
-          otherRecipes: action.payload.updatedRecipes,
+          approvedRecipes: action.payload.updatedRecipes,
         };
       }
     case "EDIT_RECIPE_FAILURE":
@@ -125,13 +121,14 @@ export const AppReducer = (state, action) => {
       );
       const indexToRemove = state.inboxRecipes.indexOf(updatedRecipe);
       state.inboxRecipes.splice(indexToRemove, 1);
-      const updatedOtherRecipes = [...state.otherRecipes, updatedRecipe].sort(
-        (a, b) => a.id - b.id
-      );
+      const updatedapprovedRecipes = [
+        ...state.approvedRecipes,
+        updatedRecipe,
+      ].sort((a, b) => a.id - b.id);
       if (action.payload === "approved") {
         return {
           ...state,
-          otherRecipes: updatedOtherRecipes,
+          approvedRecipes: updatedapprovedRecipes,
         };
       } else {
         return {
@@ -149,12 +146,12 @@ export const AppReducer = (state, action) => {
         },
       };
     case "WEEKS_UPDATE_SUCCESS":
-      updatedRecipe = state.otherRecipes.find(
+      updatedRecipe = state.approvedRecipes.find(
         (recipe) => recipe.id === action.payload.recipe_id
       );
       if (updatedRecipe) {
-        const indexToRemove = state.otherRecipes.indexOf(updatedRecipe);
-        state.otherRecipes.splice(indexToRemove, 1);
+        const indexToRemove = state.approvedRecipes.indexOf(updatedRecipe);
+        state.approvedRecipes.splice(indexToRemove, 1);
         return {
           ...state,
           weeklyRecipes: [...state.weeklyRecipes, updatedRecipe],
@@ -165,12 +162,13 @@ export const AppReducer = (state, action) => {
         );
         const indexToRemove = state.weeklyRecipes.indexOf(updatedRecipe);
         state.weeklyRecipes.splice(indexToRemove, 1);
-        const updatedOtherRecipes = [...state.otherRecipes, updatedRecipe].sort(
-          (a, b) => a.id - b.id
-        );
+        const updatedapprovedRecipes = [
+          ...state.approvedRecipes,
+          updatedRecipe,
+        ].sort((a, b) => a.id - b.id);
         return {
           ...state,
-          otherRecipes: updatedOtherRecipes,
+          approvedRecipes: updatedapprovedRecipes,
         };
       }
     case "WEEKS_UPDATE_FAILURE":
