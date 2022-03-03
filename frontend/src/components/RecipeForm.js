@@ -28,6 +28,7 @@ const RecipeForm = (props) => {
   const [ingredients, setIngredients] = useState([]);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(props.recipe);
 
   useEffect(() => {
     if (errors.submit) setErrorSnackbar(true);
@@ -50,6 +51,13 @@ const RecipeForm = (props) => {
     clearErrors();
   };
 
+  const checkIngChanges = () => {
+    props.recipe.ingredients.length === ingredients.length &&
+      props.recipe.ingredients.every(
+        (value, index) => value === ingredients[index]
+      );
+  };
+
   const handleSubmit = (name, link) => {
     if (name === "" || link === "") {
       setSuccessSnackbar(false);
@@ -57,16 +65,13 @@ const RecipeForm = (props) => {
     } else {
       if (props.recipe)
         editRecipe({
-          name: name,
+          ...props.recipe,
+          name: title,
           link: link,
           notes: notes,
           imgUrl: imgUrl,
           ingredients: ingredients,
-          id: props.recipe.id,
           type: "approved",
-          weeks: props.recipe.weeks,
-          status: props.recipe.status,
-          isFavorited: props.recipe.isFavorited,
         });
       else submitRecipe(name, link, notes, imgUrl, ingredients);
     }
@@ -76,16 +81,41 @@ const RecipeForm = (props) => {
     setIngredients([...ingredients, { name: "", count: 0, unit: "" }]);
   };
 
+  const handleDeleteIngredient = (index) => {
+    const updatedIngredients = [...ingredients];
+    updatedIngredients.splice(index, 1);
+    setIngredients(updatedIngredients);
+  };
+
   const setAttributeForIngredient = (index, attribute, value) => {
     const updatedIngredients = [...ingredients];
     updatedIngredients[index][attribute] = value;
     setIngredients(updatedIngredients);
   };
 
-  const handleDeleteIngredient = (index) => {
-    const updatedIngredients = [...ingredients];
-    updatedIngredients.splice(index, 1);
-    setIngredients(updatedIngredients);
+  const handleChange = (field, value) => {
+    switch (field) {
+      case "title":
+        setTitle(value);
+        if (value !== props.recipe.name) setDisableSubmit(false);
+        else setDisableSubmit(true);
+        break;
+      case "imgUrl":
+        setImgUrl(value);
+        if (value !== props.recipe.imgUrl) setDisableSubmit(false);
+        else setDisableSubmit(true);
+        break;
+      case "link":
+        setLink(value);
+        if (value !== props.recipe.link) setDisableSubmit(false);
+        else setDisableSubmit(true);
+        break;
+      case "notes":
+        setNotes(value);
+        if (value !== props.recipe.notes) setDisableSubmit(false);
+        else setDisableSubmit(true);
+        break;
+    }
   };
 
   const renderIngredients = () => {
@@ -146,7 +176,7 @@ const RecipeForm = (props) => {
               name="title"
               autoComplete="title"
               autoFocus
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => handleChange("title", e.target.value)}
               defaultValue={props.recipe && props.recipe.name}
             />
             <TextField
@@ -158,7 +188,7 @@ const RecipeForm = (props) => {
               type="imgUrl"
               id="imgUrl"
               autoComplete="current-imgUrl"
-              onChange={(e) => setImgUrl(e.target.value)}
+              onChange={(e) => handleChange("imgUrl", e.target.value)}
               defaultValue={props.recipe && props.recipe.imgUrl}
             />
             <TextField
@@ -171,7 +201,7 @@ const RecipeForm = (props) => {
               type="link"
               id="link"
               autoComplete="current-link"
-              onChange={(e) => setLink(e.target.value)}
+              onChange={(e) => handleChange("link", e.target.value)}
               defaultValue={props.recipe && props.recipe.link}
             />
             <Button
@@ -196,11 +226,12 @@ const RecipeForm = (props) => {
               type="notes"
               id="notes"
               autoComplete="notes"
-              onChange={(e) => setNotes(e.target.value)}
+              onChange={(e) => handleChange("notes", e.target.value)}
               defaultValue={props.recipe && props.recipe.notes}
             />
             <Button
               type="submit"
+              disabled={disableSubmit}
               fullWidth
               variant="contained"
               color="primary"
