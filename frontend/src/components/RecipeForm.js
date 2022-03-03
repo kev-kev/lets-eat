@@ -16,6 +16,11 @@ import IngredientForm from "./IngredientForm";
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
+const compareArrs = (arr1, arr2) => {
+  arr1.length === arr2.length &&
+    arr1.every((value, index) => value === arr2[index]);
+};
+
 const RecipeForm = (props) => {
   const classes = recipeFormStyle();
   const { submitRecipe, isSubmittingRecipe, errors, clearErrors, editRecipe } =
@@ -28,7 +33,7 @@ const RecipeForm = (props) => {
   const [ingredients, setIngredients] = useState([]);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
-  const [disableSubmit, setDisableSubmit] = useState(props.recipe);
+  const [disableSubmit, setDisableSubmit] = useState(!!props.recipe);
 
   useEffect(() => {
     if (errors.submit) setErrorSnackbar(true);
@@ -51,13 +56,6 @@ const RecipeForm = (props) => {
     clearErrors();
   };
 
-  const checkIngChanges = () => {
-    props.recipe.ingredients.length === ingredients.length &&
-      props.recipe.ingredients.every(
-        (value, index) => value === ingredients[index]
-      );
-  };
-
   const handleSubmit = (name, link) => {
     if (name === "" || link === "") {
       setSuccessSnackbar(false);
@@ -77,7 +75,13 @@ const RecipeForm = (props) => {
     }
   };
 
-  const handleAddIngredientInput = () => {
+  const checkIngredientArrs = () => {
+    if (compareArrs(props.recipe.ingredients, ingredients))
+      setDisableSubmit(true);
+    else setDisableSubmit(false);
+  };
+
+  const handleAddIngredient = () => {
     setIngredients([...ingredients, { name: "", count: 0, unit: "" }]);
   };
 
@@ -85,15 +89,20 @@ const RecipeForm = (props) => {
     const updatedIngredients = [...ingredients];
     updatedIngredients.splice(index, 1);
     setIngredients(updatedIngredients);
+    checkIngredientArrs();
   };
 
   const setAttributeForIngredient = (index, attribute, value) => {
     const updatedIngredients = [...ingredients];
     updatedIngredients[index][attribute] = value;
     setIngredients(updatedIngredients);
+    if (Object.values(updatedIngredients[index]).every((attr) => !!attr))
+      checkIngredientArrs();
+    else setDisableSubmit(true);
   };
 
   const handleChange = (field, value) => {
+    //eslint-disable-next-line
     switch (field) {
       case "title":
         setTitle(value);
@@ -177,7 +186,7 @@ const RecipeForm = (props) => {
               autoComplete="title"
               autoFocus
               onChange={(e) => handleChange("title", e.target.value)}
-              defaultValue={props.recipe && props.recipe.name}
+              defaultValue={props.recipe?.name}
             />
             <TextField
               variant="outlined"
@@ -189,7 +198,7 @@ const RecipeForm = (props) => {
               id="imgUrl"
               autoComplete="current-imgUrl"
               onChange={(e) => handleChange("imgUrl", e.target.value)}
-              defaultValue={props.recipe && props.recipe.imgUrl}
+              defaultValue={props.recipe?.imgUrl}
             />
             <TextField
               variant="outlined"
@@ -202,12 +211,12 @@ const RecipeForm = (props) => {
               id="link"
               autoComplete="current-link"
               onChange={(e) => handleChange("link", e.target.value)}
-              defaultValue={props.recipe && props.recipe.link}
+              defaultValue={props.recipe?.link}
             />
             <Button
               color="primary"
               variant="contained"
-              onClick={handleAddIngredientInput}
+              onClick={handleAddIngredient}
               className={classes.button}
             >
               New Ingredient
@@ -227,7 +236,7 @@ const RecipeForm = (props) => {
               id="notes"
               autoComplete="notes"
               onChange={(e) => handleChange("notes", e.target.value)}
-              defaultValue={props.recipe && props.recipe.notes}
+              defaultValue={props.recipe?.notes}
             />
             <Button
               type="submit"

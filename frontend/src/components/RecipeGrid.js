@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
@@ -51,9 +51,12 @@ export default function RecipeGrid(props) {
 
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
-  const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(
-    approvedRecipes.length / RECIPES_PER_PAGE > 1
-  );
+  const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(false);
+
+  useEffect(() => {
+    if (approvedRecipes.length / RECIPES_PER_PAGE > 1)
+      setShouldShowFwdBtn(true);
+  }, [approvedRecipes]);
 
   const approvedRecipesToDisplay = approvedRecipes.slice(
     (page - 1) * RECIPES_PER_PAGE,

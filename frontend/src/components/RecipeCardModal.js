@@ -15,6 +15,16 @@ import { DeleteForeverRounded, EditRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
 import RecipeForm from "./RecipeForm";
 
+const renderIngredientTypography = (ingredients) => {
+  return ingredients.map((ing) => {
+    return (
+      <>
+        {ing.name}: {ing.count} {ing.unit}
+      </>
+    );
+  });
+};
+
 const CardModal = (props) => {
   const classes = modalStyle();
   const { deleteRecipe } = useContext(GlobalContext);
@@ -34,7 +44,7 @@ const CardModal = (props) => {
         <>
           <Typography variant="subtitle1">Ingredients:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {renderIngredientTypography()}
+            {renderIngredientTypography(props.recipe.ingredients)}
           </Typography>
           <Typography variant="subtitle1">Notes:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
@@ -51,25 +61,11 @@ const CardModal = (props) => {
     }
   };
 
-  const renderIngredientTypography = () => {
-    return props.recipe.ingredients.map((ing) => {
-      return (
-        <>
-          {ing.name}: {ing.count} {ing.unit}
-        </>
-      );
-    });
-  };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
   const renderEditBtn = () => {
     if (props.recipe.status === "approved")
       return (
         <>
-          <IconButton onClick={handleEditClick}>
+          <IconButton onClick={setIsEditing(true)}>
             <EditRounded color="primary" />
           </IconButton>
         </>
@@ -119,6 +115,7 @@ const CardModal = (props) => {
         </>
       );
   };
+
   return (
     <Modal open={props.shouldShowModal} onClose={handleClose}>
       <div className={classes.modal} mx="auto">
