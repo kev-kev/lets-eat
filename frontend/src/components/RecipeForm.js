@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import {
   Button,
   CssBaseline,
@@ -7,7 +7,12 @@ import {
   Container,
   CircularProgress,
   Snackbar,
+  Box,
+  Select,
+  MenuItem,
+  IconButton,
 } from "@material-ui/core/";
+import { CloseRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Alert } from "@material-ui/lab/";
@@ -17,8 +22,10 @@ const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
 const compareArrs = (arr1, arr2) => {
-  arr1.length === arr2.length &&
-    arr1.every((value, index) => value === arr2[index]);
+  return (
+    arr1.length === arr2.length &&
+    arr1.every((value, index) => value === arr2[index])
+  );
 };
 
 const RecipeForm = (props) => {
@@ -30,10 +37,12 @@ const RecipeForm = (props) => {
   const [imgUrl, setImgUrl] = useState("");
   const [link, setLink] = useState("");
   const [notes, setNotes] = useState("");
-  const [ingredients, setIngredients] = useState([]);
+  const [formIngredients, setFormIngredients] = useState([]);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
-  const [disableSubmit, setDisableSubmit] = useState(!!props.recipe);
+  const [disableSubmit, setDisableSubmit] = useState(true);
+
+  const ingredientFormEl = useRef(null);
 
   useEffect(() => {
     if (errors.submit) setErrorSnackbar(true);
@@ -41,23 +50,29 @@ const RecipeForm = (props) => {
 
   useEffect(() => {
     if (props.recipe) {
-      setTitle(props.recipe.title);
+      setTitle(props.recipe.name);
       setImgUrl(props.recipe.imgUrl);
       setLink(props.recipe.link);
       setNotes(props.recipe.notes);
-      setIngredients(props.recipe.ingredients);
+      setFormIngredients(props.recipe.ingredients);
     }
   }, []);
+
+  const setAttributeForIngredient = (index, attribute, value) => {
+    const updatedIngredients = [...formIngredients];
+    updatedIngredients[index][attribute] = value;
+    setFormIngredients(updatedIngredients);
+  };
 
   const handleClose = () => {
     setErrorSnackbar(false);
     setSuccessSnackbar(false);
-    setIngredients([]);
+    setFormIngredients([]);
     clearErrors();
   };
 
-  const handleSubmit = (name, link) => {
-    if (name === "" || link === "") {
+  const handleSubmit = () => {
+    if (title === "" || link === "") {
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     } else {
@@ -68,81 +83,140 @@ const RecipeForm = (props) => {
           link: link,
           notes: notes,
           imgUrl: imgUrl,
-          ingredients: ingredients,
+          ingredients: formIngredients,
           type: "approved",
         });
-      else submitRecipe(name, link, notes, imgUrl, ingredients);
+      else submitRecipe(title, link, notes, imgUrl, formIngredients);
     }
   };
 
-  const checkIngredientArrs = () => {
-    if (compareArrs(props.recipe.ingredients, ingredients))
-      setDisableSubmit(true);
-    else setDisableSubmit(false);
-  };
-
   const handleAddIngredient = () => {
-    setIngredients([...ingredients, { name: "", count: 0, unit: "" }]);
+    setFormIngredients([...formIngredients, { name: "", count: 0, unit: "" }]);
   };
 
   const handleDeleteIngredient = (index) => {
-    const updatedIngredients = [...ingredients];
+    const updatedIngredients = [...formIngredients];
     updatedIngredients.splice(index, 1);
-    setIngredients(updatedIngredients);
-    checkIngredientArrs();
-  };
-
-  const setAttributeForIngredient = (index, attribute, value) => {
-    const updatedIngredients = [...ingredients];
-    updatedIngredients[index][attribute] = value;
-    setIngredients(updatedIngredients);
-    if (Object.values(updatedIngredients[index]).every((attr) => !!attr))
-      checkIngredientArrs();
-    else setDisableSubmit(true);
+    setFormIngredients(updatedIngredients);
   };
 
   const handleChange = (field, value) => {
     //eslint-disable-next-line
     switch (field) {
       case "title":
-        setTitle(value);
-        if (value !== props.recipe.name) setDisableSubmit(false);
-        else setDisableSubmit(true);
+        if (value !== props.recipe?.name) {
+          setDisableSubmit(false);
+          setTitle(value);
+        } else setDisableSubmit(true);
         break;
       case "imgUrl":
-        setImgUrl(value);
-        if (value !== props.recipe.imgUrl) setDisableSubmit(false);
-        else setDisableSubmit(true);
+        if (value !== props.recipe?.imgUrl) {
+          setDisableSubmit(false);
+          setImgUrl(value);
+        } else setDisableSubmit(true);
         break;
       case "link":
-        setLink(value);
-        if (value !== props.recipe.link) setDisableSubmit(false);
-        else setDisableSubmit(true);
+        if (value !== props.recipe?.link) {
+          setDisableSubmit(false);
+          setLink(value);
+        } else setDisableSubmit(true);
         break;
       case "notes":
-        setNotes(value);
-        if (value !== props.recipe.notes) setDisableSubmit(false);
-        else setDisableSubmit(true);
+        if (value !== props.recipe?.notes) {
+          setDisableSubmit(false);
+          setNotes(value);
+        } else setDisableSubmit(true);
         break;
     }
   };
 
   const renderIngredients = () => {
-    return ingredients.map((ingredientInput, index) => {
+    return formIngredients.map((ingredientInput, index) => {
       return (
-        <IngredientForm
-          ingredientInput={ingredientInput}
-          setName={(ingredientName) =>
-            setAttributeForIngredient(index, "name", ingredientName)
-          }
-          setCount={(count) => setAttributeForIngredient(index, "count", count)}
-          setUnit={(unit) => setAttributeForIngredient(index, "unit", unit)}
-          key={index}
-          index={index}
-          handleDeleteIngredient={() => handleDeleteIngredient(index)}
-        />
+        // <IngredientForm
+        //   ingredientInput={ingredientInput}
+        //   setName={(ingredientName) => {
+        //     setAttributeForIngredient(index, "name", ingredientName);
+        //   }}
+        //   setCount={(count) => setAttributeForIngredient(index, "count", count)}
+        //   setUnit={(unit) => setAttributeForIngredient(index, "unit", unit)}
+        //   key={"id- " + ingredientInput + index}
+        //   index={index}
+        //   handleDeleteIngredient={() => handleDeleteIngredient(index)}
+        // />
+        <form ref={ingredientFormEl}>
+          <Box display="flex" key={`id-${ingredientInput["name"]}${index}`}>
+            <TextField
+              type="number"
+              placeholder="quantity"
+              onChange={(e) => {
+                checkIngAttributeChanged(
+                  parseInt(e.target.value),
+                  "count",
+                  index
+                );
+              }}
+              defaultValue={ingredientInput.count}
+              inputProps={{ min: 0 }}
+              key={index + "count"}
+            />
+            <Select
+              labelId="select-label"
+              variant="filled"
+              onChange={(e) =>
+                checkIngAttributeChanged(e.target.value, "unit", index)
+              }
+              defaultValue={ingredientInput.unit}
+              key={index + "unit"}
+            >
+              <MenuItem value={"gram"}>Grams</MenuItem>
+              <MenuItem value={"kilograms"}>Kilograms</MenuItem>
+              <MenuItem value={"ounces"}>Ounces</MenuItem>
+              <MenuItem value={"pounds"}>Pounds</MenuItem>
+              <MenuItem value={"milliliters"}>Milliliters</MenuItem>
+              <MenuItem value={"liters"}>Liters</MenuItem>
+              <MenuItem value={"teaspoon"}>Teaspoons</MenuItem>
+              <MenuItem value={"tablespoon"}>Tablespoons</MenuItem>
+              <MenuItem value={"cup"}>Cups</MenuItem>
+              <MenuItem value={"pint"}>Pints</MenuItem>
+              <MenuItem value={"quart"}>Quarts</MenuItem>
+              <MenuItem value={"gallon"}>Gallons</MenuItem>
+            </Select>
+            <TextField
+              type="text"
+              placeholder="name"
+              onChange={(e) => {
+                checkIngAttributeChanged(e.target.value, "name", index);
+              }}
+              defaultValue={ingredientInput.name}
+              key={index + "name"}
+            />
+            <IconButton onClick={() => handleDeleteIngredient(index)}>
+              <CloseRounded color="primary" />
+            </IconButton>
+            {/* Testy Button for the weird props/ingredients change issue  */}
+            {/* <IconButton onClick={() => setTitle("YABABABA")}>
+              <CloseRounded color="secondary" />
+            </IconButton> */}
+          </Box>
+        </form>
       );
     });
+  };
+
+  const checkIngAttributeChanged = (
+    changedValue,
+    attribute,
+    ingredientIndex
+  ) => {
+    if (
+      props.recipe?.ingredients[ingredientIndex] &&
+      props.recipe.ingredients[ingredientIndex][attribute] !== changedValue
+    ) {
+      setDisableSubmit(false);
+    } else {
+      setDisableSubmit(true);
+    }
   };
 
   const renderFormHeader = () => {
@@ -247,7 +321,8 @@ const RecipeForm = (props) => {
               className={classes.submit + " " + classes.button}
               onClick={(e) => {
                 e.preventDefault();
-                handleSubmit(title, link);
+                handleSubmit();
+                console.log(e);
               }}
             >
               submit

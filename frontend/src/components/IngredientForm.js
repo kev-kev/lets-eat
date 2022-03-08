@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   MenuItem,
@@ -42,7 +42,9 @@ const IngredientForm = (props) => {
       <TextField
         type="text"
         placeholder="name"
-        onChange={(e) => props.setName(e.target.value)}
+        onChange={(e) => {
+          props.setName(e.target.value);
+        }}
         value={props.ingredientInput.name}
         key={props.index + "name"}
       />

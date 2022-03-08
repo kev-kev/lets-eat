@@ -38,7 +38,7 @@ class RecipesController < ApplicationController
         new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient[:name], "unit" => ingredient[:unit]})
         if new_ingredient.valid?
           new_ingredient.save!
-          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
+          recipe_ingredient = RecipeIngredient.find_or_create_by({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
           recipe_ingredient.save!
         else
           render json: {error: 'unable to update recipe! your ingredients are invalid 🥺👉👈'}, status: 400

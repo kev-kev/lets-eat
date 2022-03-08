@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import {
   Modal,
@@ -14,6 +14,7 @@ import {
 import { DeleteForeverRounded, EditRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
 import RecipeForm from "./RecipeForm";
+import { RecipeFormNew } from "./RecipeFormNew";
 
 const renderIngredientTypography = (ingredients) => {
   return ingredients.map((ing) => {
@@ -35,7 +36,8 @@ const CardModal = (props) => {
     if (isEditing) {
       return (
         <>
-          <RecipeForm recipe={props.recipe} />
+          <RecipeFormNew recipe={props.recipe} />
+          {/* <RecipeForm recipe={props.recipe} /> */}
           <Button onClick={() => setIsEditing(false)}>back</Button>
         </>
       );
@@ -65,7 +67,7 @@ const CardModal = (props) => {
     if (props.recipe.status === "approved")
       return (
         <>
-          <IconButton onClick={setIsEditing(true)}>
+          <IconButton onClick={() => setIsEditing(true)}>
             <EditRounded color="primary" />
           </IconButton>
         </>

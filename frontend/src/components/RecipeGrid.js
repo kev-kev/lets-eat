@@ -54,8 +54,9 @@ export default function RecipeGrid(props) {
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(false);
 
   useEffect(() => {
-    if (approvedRecipes.length / RECIPES_PER_PAGE > 1)
+    if (approvedRecipes.length / RECIPES_PER_PAGE > 1) {
       setShouldShowFwdBtn(true);
+    }
   }, [approvedRecipes]);
 
   const approvedRecipesToDisplay = approvedRecipes.slice(
