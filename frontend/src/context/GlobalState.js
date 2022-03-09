@@ -81,6 +81,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const editRecipe = (recipe) => {
+    console.log(recipe);
     const subType = isWeeklyRecipe(recipe.weeks, state.selectedWeek)
       ? "weekly"
       : "approved";

@@ -17,11 +17,12 @@ import RecipeForm from "./RecipeForm";
 import { RecipeFormNew } from "./RecipeFormNew";
 
 const renderIngredientTypography = (ingredients) => {
-  return ingredients.map((ing) => {
+  return ingredients.map((ing, i) => {
     return (
-      <>
-        {ing.name}: {ing.count} {ing.unit}
-      </>
+      <span key={i}>
+        - {ing.name}: {ing.count} {ing.unit}
+        <br />
+      </span>
     );
   });
 };
@@ -35,15 +36,15 @@ const CardModal = (props) => {
   const renderCardModalBody = () => {
     if (isEditing) {
       return (
-        <>
+        <div key={props.recipe.id}>
           <RecipeFormNew recipe={props.recipe} />
           {/* <RecipeForm recipe={props.recipe} /> */}
           <Button onClick={() => setIsEditing(false)}>back</Button>
-        </>
+        </div>
       );
     } else {
       return (
-        <>
+        <div key={props.recipe.id}>
           <Typography variant="subtitle1">Ingredients:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
             {renderIngredientTypography(props.recipe.ingredients)}
@@ -58,7 +59,7 @@ const CardModal = (props) => {
           </Typography>
           {renderEditBtn()}
           {renderDeleteBtn()}
-        </>
+        </div>
       );
     }
   };
@@ -66,11 +67,9 @@ const CardModal = (props) => {
   const renderEditBtn = () => {
     if (props.recipe.status === "approved")
       return (
-        <>
-          <IconButton onClick={() => setIsEditing(true)}>
-            <EditRounded color="primary" />
-          </IconButton>
-        </>
+        <IconButton onClick={() => setIsEditing(true)}>
+          <EditRounded color="primary" />
+        </IconButton>
       );
   };
 
@@ -82,7 +81,7 @@ const CardModal = (props) => {
   const renderDeleteBtn = () => {
     if (props.type === "index" && !props.recipe.isFavorited)
       return (
-        <>
+        <div key={props.recipe.id}>
           <IconButton onClick={() => setIsDialogOpen(true)}>
             <DeleteForeverRounded color="primary" />
           </IconButton>
@@ -114,7 +113,7 @@ const CardModal = (props) => {
               </Button>
             </DialogActions>
           </Dialog>
-        </>
+        </div>
       );
   };
 
