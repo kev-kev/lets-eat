@@ -17,9 +17,7 @@ class RecipesController < ApplicationController
       ingredients.each do |ingredient|
         new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient[:name], "unit" => ingredient[:unit]})
         if new_ingredient.valid?
-          new_ingredient.save!
-          recipe_ingredient = RecipeIngredient.new({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
-          recipe_ingredient.save!
+          recipe_ingredient = RecipeIngredient.find_or_create_by({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
         else
           render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
         end
@@ -31,19 +29,26 @@ class RecipesController < ApplicationController
   end
 
   def update
+    # binding.pry
     @recipe = Recipe.find(params[:id])
+
     if @recipe
-      ingredients = recipe_params[:ingredients]
-      ingredients && ingredients.each do |ingredient|
+
+#      @recipe.ingredients = nil
+      # Clear out all recipeingredients that have recipe id
+      old_recipe_ingredients = RecipeIngredient.where({"recipe_id" => @recipe[:id]}).destroy_all
+
+      recipe_params[:ingredients].each do |ingredient|
         new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient[:name], "unit" => ingredient[:unit]})
         if new_ingredient.valid?
-          new_ingredient.save!
-          recipe_ingredient = RecipeIngredient.find_or_create_by({"recipe_id"=> @recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
-          recipe_ingredient.save!
-        else
-          render json: {error: 'unable to update recipe! your ingredients are invalid 🥺👉👈'}, status: 400
+          recipe_ingredient = RecipeIngredient.create({
+            "recipe_id"=> @recipe[:id],
+            "ingredient_id"=> new_ingredient[:id],
+            "count"=>new_ingredient[:count]
+          })
         end
-      end 
+      end
+
       if @recipe.update(recipe_params.except(:ingredients))
         render status: 200
       else
