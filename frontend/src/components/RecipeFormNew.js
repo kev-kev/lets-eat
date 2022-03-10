@@ -18,6 +18,20 @@ import { GlobalContext } from "../context/GlobalState";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 
+const isSubmitDisabled = ({ name, link, imgUrl, ingredients }) => {
+  const hasEmptyIngredientInput = () => {
+    for (const ingredient of ingredients) {
+      if (Object.values(ingredient).some((value) => !value)) return true;
+    }
+    return false;
+  };
+  const hasEmptyInput = Object.values({ name, link, imgUrl }).some(
+    (value) => !value
+  );
+  console.log(hasEmptyIngredientInput(), hasEmptyInput);
+  return hasEmptyIngredientInput() || hasEmptyInput;
+};
+
 export const RecipeFormNew = ({ recipe }) => {
   const classes = recipeFormStyle();
   const { editRecipe } = useContext(GlobalContext);
@@ -34,6 +48,14 @@ export const RecipeFormNew = ({ recipe }) => {
         name: Yup.string().required("Required"),
         imgUrl: Yup.string().required("Required"),
         link: Yup.string().required("Required"),
+        notes: Yup.string(),
+        ingredients: Yup.array().of(
+          Yup.object({
+            name: Yup.string().required(),
+            unit: Yup.string().required(),
+            count: Yup.number().required().positive().integer(),
+          })
+        ),
       })}
       onSubmit={(values, { setSubmitting }) => {
         editRecipe({ ...recipe, ...values });
@@ -72,15 +94,23 @@ export const RecipeFormNew = ({ recipe }) => {
             name="ingredients"
             render={(arrayHelpers) => (
               <div>
-                {formik.values.ingredients.map((ingredient, index) => {
+                {formik.values.ingredients.map((_, index) => {
                   return (
                     <Box key={index}>
                       <Field
                         name={`ingredients[${index}].count`}
                         type="number"
-                        placeholder="quantity"
+                        placeholder="count"
                       />
                       <Field name={`ingredients[${index}].unit`} as="select">
+                        <option
+                          value=""
+                          disabled
+                          hidden
+                          style={{ color: "#000" }}
+                        >
+                          quantity
+                        </option>
                         <option value={"gram"}>Grams</option>
                         <option value={"kilograms"}>Kilograms</option>
                         <option value={"ounces"}>Ounces</option>
@@ -109,7 +139,7 @@ export const RecipeFormNew = ({ recipe }) => {
                   color="primary"
                   variant="contained"
                   onClick={() =>
-                    arrayHelpers.push({ name: "", unit: "", count: 1 })
+                    arrayHelpers.push({ name: "", unit: "", count: "" })
                   }
                   className={classes.button}
                 >
@@ -131,6 +161,7 @@ export const RecipeFormNew = ({ recipe }) => {
             variant="contained"
             color="primary"
             style={{ color: "white", fontWeight: "bolder" }}
+            disabled={isSubmitDisabled(formik.values)}
           >
             Edit Recipe
           </Button>
