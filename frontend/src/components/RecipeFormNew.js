@@ -28,7 +28,6 @@ const isSubmitDisabled = ({ name, link, imgUrl, ingredients }) => {
   const hasEmptyInput = Object.values({ name, link, imgUrl }).some(
     (value) => !value
   );
-  console.log(hasEmptyIngredientInput(), hasEmptyInput);
   return hasEmptyIngredientInput() || hasEmptyInput;
 };
 
