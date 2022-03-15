@@ -22,7 +22,7 @@ class RecipesController < ApplicationController
           render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
         end
       end
-      render json: {recipe: recipe}, status: 200
+      render status: 200
     else
       render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}, status: 400
     end
@@ -109,5 +109,5 @@ class RecipesController < ApplicationController
         end
       end
     end
-    
+
 end

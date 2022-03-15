@@ -38,7 +38,6 @@ const CardModal = (props) => {
       return (
         <div key={props.recipe.id}>
           <RecipeFormNew recipe={props.recipe} />
-          {/* <RecipeForm recipe={props.recipe} /> */}
           <Button onClick={() => setIsEditing(false)}>back</Button>
         </div>
       );

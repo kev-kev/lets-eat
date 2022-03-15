@@ -81,7 +81,6 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const editRecipe = (recipe) => {
-    console.log(recipe);
     const subType = isWeeklyRecipe(recipe.weeks, state.selectedWeek)
       ? "weekly"
       : "approved";
@@ -188,7 +187,7 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function submitRecipe(name, link, notes, imgUrl, ingredients) {
+  function submitRecipe({ name, link, notes, imgUrl, ingredients }) {
     dispatch({
       type: "SUBMITTING_RECIPE",
     });
@@ -199,22 +198,25 @@ export const GlobalProvider = ({ children }) => {
       },
       body: JSON.stringify({
         recipe: {
-          name: name,
-          link: link,
-          notes: notes,
+          name,
+          link,
+          notes,
           user_id: state.user.id,
           img_url: imgUrl,
-          ingredients: ingredients,
+          ingredients,
         },
       }),
     })
       .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
+      .then(() => {
         dispatch({
           type: "SUBMIT_RECIPE_SUCCESS",
           payload: {
-            ...data.recipe,
+            name,
+            link,
+            notes,
+            imgUrl,
+            ingredients,
             submittedBy: state.user.username,
           },
         });

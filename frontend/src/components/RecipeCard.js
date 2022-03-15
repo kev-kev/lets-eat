@@ -61,8 +61,6 @@ const RecipeCard = (props) => {
       );
     } else if (props.type === "index") {
       return renderIndexCardBody();
-    } else {
-      return;
     }
   };
 

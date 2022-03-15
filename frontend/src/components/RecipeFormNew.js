@@ -1,17 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import {
-  Button,
-  CssBaseline,
-  TextField,
-  Typography,
-  Container,
-  CircularProgress,
-  Snackbar,
-  Box,
-  Select,
-  MenuItem,
-  IconButton,
-} from "@material-ui/core/";
+import { Button, Box, IconButton } from "@material-ui/core/";
 import { CloseRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
@@ -33,15 +21,15 @@ const isSubmitDisabled = ({ name, link, imgUrl, ingredients }) => {
 
 export const RecipeFormNew = ({ recipe }) => {
   const classes = recipeFormStyle();
-  const { editRecipe } = useContext(GlobalContext);
+  const { editRecipe, submitRecipe } = useContext(GlobalContext);
   return (
     <Formik
       initialValues={{
-        name: recipe.name,
-        imgUrl: recipe.imgUrl,
-        link: recipe.link,
-        notes: recipe.notes,
-        ingredients: recipe.ingredients,
+        name: recipe?.name || "",
+        imgUrl: recipe?.imgUrl || "",
+        link: recipe?.link || "",
+        notes: recipe?.notes || "",
+        ingredients: recipe?.ingredients || [],
       }}
       validationSchema={Yup.object({
         name: Yup.string().required("Required"),
@@ -57,7 +45,8 @@ export const RecipeFormNew = ({ recipe }) => {
         ),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        editRecipe({ ...recipe, ...values });
+        if (recipe) editRecipe({ ...recipe, ...values });
+        else submitRecipe(values);
         setSubmitting(false);
       }}
     >
@@ -100,14 +89,10 @@ export const RecipeFormNew = ({ recipe }) => {
                         name={`ingredients[${index}].count`}
                         type="number"
                         placeholder="count"
+                        min="1"
                       />
                       <Field name={`ingredients[${index}].unit`} as="select">
-                        <option
-                          value=""
-                          disabled
-                          hidden
-                          style={{ color: "#000" }}
-                        >
+                        <option value="" disabled hidden>
                           quantity
                         </option>
                         <option value={"gram"}>Grams</option>

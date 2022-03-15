@@ -7,7 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import { homeStyle } from "../muiStyling";
 import RecipeGrid from "./RecipeGrid";
 import Title from "./Title";
-import RecipeForm from "./RecipeForm";
+import { RecipeFormNew } from "./RecipeFormNew";
 import LoginForm from "./LoginForm";
 
 const Home = () => {
@@ -27,7 +27,7 @@ const Home = () => {
           <Container maxWidth={false} className={classes.container}>
             <Switch>
               <Route path="/new">
-                <RecipeForm />
+                <RecipeFormNew />
               </Route>
               <Route path="/inbox">
                 <Title>Recipe Inbox</Title>
