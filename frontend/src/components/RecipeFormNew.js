@@ -127,7 +127,7 @@ export const RecipeFormNew = ({ recipe }) => {
                   }
                   className={classes.button}
                 >
-                  New Ingredient
+                  new ingredient
                 </Button>
               </div>
             )}
@@ -147,7 +147,7 @@ export const RecipeFormNew = ({ recipe }) => {
             style={{ color: "white", fontWeight: "bolder" }}
             disabled={isSubmitDisabled(formik.values)}
           >
-            Edit Recipe
+            {recipe ? "edit recipe" : "submit recipe"}
           </Button>
         </Form>
       )}

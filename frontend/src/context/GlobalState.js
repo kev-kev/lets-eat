@@ -171,7 +171,7 @@ export const GlobalProvider = ({ children }) => {
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
-        localStorage.setItem("token", data.jwt);
+        localStorage.setItem("token", data.token);
         dispatch({
           type: "LOGIN_SUCCESS",
           payload: {

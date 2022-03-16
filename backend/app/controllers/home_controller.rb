@@ -1,9 +1,11 @@
+require 'pry'
+
 class HomeController < ApplicationController
   def get_grocery_list
     weekly_recipes = Recipe.where("'#{Date.parse(params[:week])}' = ANY (weeks)")
     weekly_ingredients = []
     weekly_recipes.each do |recipe|
-      get_ingredients_by_recipe_id(weekly_ingredients,recipe.id)
+      get_ingredients_by_recipe_id(weekly_ingredients, recipe.id)
     end
     grocery_list = {}
     weekly_ingredients.each do |weekly_ingredient|
@@ -26,7 +28,7 @@ class HomeController < ApplicationController
   end
 
   def get_ingredients_by_recipe_id(ingredients_arr, recipe_id)
-    recipe_ingredients = RecipeIngredient.where(recipe_id: params[:recipe_id])
+    recipe_ingredients = RecipeIngredient.where(recipe_id: recipe_id)
     recipe_ingredients.each do |recipe_ingredient|
       ing = Ingredient.find(recipe_ingredient.ingredient_id)
       ingredients_arr << {
