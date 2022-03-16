@@ -31,7 +31,7 @@ class RecipesController < ApplicationController
   def update
     recipe = Recipe.find(params[:id])
     if recipe
-        update_recipe_ingredients(recipe, recipe_params[:ingredients])
+        recipe_params[:ingredients] && update_recipe_ingredients(recipe, recipe_params[:ingredients])
         if recipe.update(recipe_params.except(:ingredients))
           render status: 200
         else
