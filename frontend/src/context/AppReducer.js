@@ -195,7 +195,9 @@ export const AppReducer = (state, action) => {
     case "CHANGE_SELECTED_WEEK":
       return {
         ...state,
-        selectedWeek: action.payload,
+        selectedWeek: action.payload.week,
+        weeklyRecipes: action.payload.newWeeklyRecipes,
+        approvedRecipes: action.payload.newApprovedRecipes,
       };
     case "GET_GROCERY_LIST_SUCCESS":
       return {

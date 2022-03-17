@@ -31,12 +31,6 @@ const handleErrors = (response) => {
   return response;
 };
 
-const isWeeklyRecipe = (recipeWeeks, selectedWeek) => {
-  return recipeWeeks.some(
-    (week) => differenceInDays(parseISO(week), selectedWeek) === 0
-  );
-};
-
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
@@ -57,6 +51,12 @@ export const GlobalProvider = ({ children }) => {
       case "rejected":
         return [...state.rejectedRecipes];
     }
+  };
+
+  const isWeeklyRecipe = (recipeWeeks, newWeek = state.selectedWeek) => {
+    return recipeWeeks.some(
+      (week) => differenceInDays(parseISO(week), newWeek) === 0
+    );
   };
 
   const fetchRecipes = (user) => {
@@ -81,9 +81,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const editRecipe = (recipe) => {
-    const subType = isWeeklyRecipe(recipe.weeks, state.selectedWeek)
-      ? "weekly"
-      : "approved";
+    const subType = isWeeklyRecipe(recipe.weeks) ? "weekly" : "approved";
     fetch(rootURL + `/recipes/${recipe.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -125,8 +123,7 @@ export const GlobalProvider = ({ children }) => {
       //eslint-disable-next-line
       switch (recipe.status) {
         case "approved":
-          if (isWeeklyRecipe(recipe.weeks, state.selectedWeek))
-            weeklyRecipes.push(recipe);
+          if (isWeeklyRecipe(recipe.weeks)) weeklyRecipes.push(recipe);
           else approvedRecipes.push(recipe);
           if (recipe.isFavorited) favoritedRecipes.push(recipe);
           break;
@@ -362,9 +359,15 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function changeSelectedWeek(week) {
+    const newWeeklyRecipes = [];
+    const newApprovedRecipes = [];
+    [...state.approvedRecipes, ...state.weeklyRecipes].forEach((recipe) => {
+      if (isWeeklyRecipe(recipe.weeks, week)) newWeeklyRecipes.push(recipe);
+      else newApprovedRecipes.push(recipe);
+    });
     dispatch({
       type: "CHANGE_SELECTED_WEEK",
-      payload: week,
+      payload: { week, newWeeklyRecipes, newApprovedRecipes },
     });
   }
 
