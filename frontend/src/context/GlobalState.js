@@ -313,6 +313,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function setWeeks(recipe_id, weeks) {
+    console.log(weeks);
     fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
       headers: {
@@ -365,6 +366,7 @@ export const GlobalProvider = ({ children }) => {
       if (isWeeklyRecipe(recipe.weeks, week)) newWeeklyRecipes.push(recipe);
       else newApprovedRecipes.push(recipe);
     });
+    console.log(newWeeklyRecipes);
     dispatch({
       type: "CHANGE_SELECTED_WEEK",
       payload: { week, newWeeklyRecipes, newApprovedRecipes },

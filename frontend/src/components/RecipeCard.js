@@ -70,7 +70,9 @@ const RecipeCard = (props) => {
         return differenceInDays(parseISO(week), selectedWeek) !== 0;
       });
     } else {
-      return weeks.concat([formatISO(selectedWeek)]);
+      return weeks.concat([
+        formatISO(selectedWeek, { representation: "date" }),
+      ]);
     }
   };
 

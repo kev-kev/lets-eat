@@ -150,16 +150,22 @@ export const AppReducer = (state, action) => {
         (recipe) => recipe.id === action.payload.recipe_id
       );
       if (updatedRecipe) {
+        updatedRecipe.weeks = action.payload.weeks;
         const indexToRemove = state.approvedRecipes.indexOf(updatedRecipe);
         state.approvedRecipes.splice(indexToRemove, 1);
+        const updatedWeeklyRecipes = [
+          ...state.weeklyRecipes,
+          updatedRecipe,
+        ].sort((a, b) => a.id - b.id);
         return {
           ...state,
-          weeklyRecipes: [...state.weeklyRecipes, updatedRecipe],
+          weeklyRecipes: updatedWeeklyRecipes,
         };
       } else {
         updatedRecipe = state.weeklyRecipes.find(
           (recipe) => recipe.id === action.payload.recipe_id
         );
+        updatedRecipe.weeks = action.payload.weeks;
         const indexToRemove = state.weeklyRecipes.indexOf(updatedRecipe);
         state.weeklyRecipes.splice(indexToRemove, 1);
         const updatedapprovedRecipes = [
