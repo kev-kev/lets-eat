@@ -63,7 +63,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "FETCH_RECIPES",
     });
-    fetch(rootURL + `/recipes/`)
+    fetch(rootURL + `/recipes`)
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
@@ -188,7 +188,7 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "SUBMITTING_RECIPE",
     });
-    fetch(rootURL + "/submit/", {
+    fetch(rootURL + "/recipes/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -298,7 +298,7 @@ export const GlobalProvider = ({ children }) => {
     })
       .then(handleErrors)
       .then((r) => {
-        if (r.status === 200)
+        if (r.status === 204)
           dispatch({
             type: "FAVORITE_UPDATE_SUCCESS",
             payload: { recipe_id, value },
@@ -313,7 +313,6 @@ export const GlobalProvider = ({ children }) => {
   }
 
   function setWeeks(recipe_id, weeks) {
-    console.log(weeks);
     fetch(rootURL + `/recipes/${recipe_id}`, {
       method: "PATCH",
       headers: {
@@ -327,7 +326,7 @@ export const GlobalProvider = ({ children }) => {
     })
       .then(handleErrors)
       .then((r) => {
-        if (r.status === 200)
+        if (r.status === 204)
           dispatch({
             type: "WEEKS_UPDATE_SUCCESS",
             payload: { recipe_id, weeks },
@@ -366,7 +365,6 @@ export const GlobalProvider = ({ children }) => {
       if (isWeeklyRecipe(recipe.weeks, week)) newWeeklyRecipes.push(recipe);
       else newApprovedRecipes.push(recipe);
     });
-    console.log(newWeeklyRecipes);
     dispatch({
       type: "CHANGE_SELECTED_WEEK",
       payload: { week, newWeeklyRecipes, newApprovedRecipes },

@@ -2,12 +2,10 @@ require 'pry'
 class RecipesController < ApplicationController
   def index
     recipes = Recipe.order(:id).map{|recipe| format_recipe(recipe)}
-    render json: {
-      recipes: recipes
-    }
+    render json: {recipes: recipes}, status: 200
   end
 
-  def submit
+  def create
     recipe = Recipe.new(recipe_params.except(:ingredients))
     user = User.find(recipe_params[:user_id])
     recipe.user = user
@@ -22,7 +20,7 @@ class RecipesController < ApplicationController
           render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
         end
       end
-      render status: 200
+      render status: 201
     else
       render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}, status: 400
     end
@@ -33,7 +31,7 @@ class RecipesController < ApplicationController
     if recipe
         recipe_params[:ingredients] && update_recipe_ingredients(recipe, recipe_params[:ingredients])
         if recipe.update(recipe_params.except(:ingredients))
-          render status: 200
+          render status: 204
         else
           render json: {error: "unable to update recipe"}, status: 400
         end
@@ -44,7 +42,7 @@ class RecipesController < ApplicationController
 
   def destroy
     if Recipe.destroy(params[:id])
-      render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}, status: 200
+      render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}, status: 204
     else
       render json: { error: 'unable to delete recipe'}, status: 400
     end
