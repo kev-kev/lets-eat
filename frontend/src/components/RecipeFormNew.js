@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { Button, Box, IconButton } from "@material-ui/core/";
+import React, { useContext } from "react";
+import { Button, Box, IconButton, Paper } from "@material-ui/core/";
 import { CloseRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
@@ -51,105 +51,109 @@ export const RecipeFormNew = ({ recipe }) => {
       }}
     >
       {(formik) => (
-        <Form>
-          <Field
-            id="name"
-            name="name"
-            {...formik.getFieldProps("name")}
-            autoFocus
-            placeholder="Recipe Title"
-          />
-          <ErrorMessage name="name" />
-          <br />
-          <Field
-            id="imgUrl"
-            name="imgUrl"
-            {...formik.getFieldProps("imgUrl")}
-            placeholder="Image URL"
-          />
-          <ErrorMessage name="imgUrl" />
-          <br />
-          <Field
-            id="link"
-            name="link"
-            {...formik.getFieldProps("link")}
-            placeholder="Link to Recipe"
-          />
-          <ErrorMessage name="link" />
-          <br />
+        <Paper className={classes.paper}>
+          <Form className={classes.form}>
+            <div>
+              <Field
+                id="name"
+                name="name"
+                {...formik.getFieldProps("name")}
+                autoFocus
+                placeholder="Recipe Title"
+              />
+              <ErrorMessage name="name" />
+            </div>
+            <div>
+              <Field
+                id="imgUrl"
+                name="imgUrl"
+                {...formik.getFieldProps("imgUrl")}
+                placeholder="Image URL"
+              />
+              <ErrorMessage name="imgUrl" />
+            </div>
+            <div>
+              <Field
+                id="link"
+                name="link"
+                {...formik.getFieldProps("link")}
+                placeholder="Link to Recipe"
+              />
+              <ErrorMessage name="link" />
+            </div>
+            <FieldArray
+              name="ingredients"
+              render={(arrayHelpers) => (
+                <div>
+                  {formik.values.ingredients.map((_, index) => {
+                    return (
+                      <Box key={index}>
+                        <Field
+                          name={`ingredients[${index}].count`}
+                          type="number"
+                          placeholder="count"
+                          min="1"
+                        />
+                        <Field name={`ingredients[${index}].unit`} as="select">
+                          <option value="" disabled hidden>
+                            quantity
+                          </option>
+                          <option value={"gram"}>Grams</option>
+                          <option value={"kilograms"}>Kilograms</option>
+                          <option value={"ounces"}>Ounces</option>
+                          <option value={"pounds"}>Pounds</option>
+                          <option value={"milliliters"}>Milliliters</option>
+                          <option value={"liters"}>Liters</option>
+                          <option value={"teaspoon"}>Teaspoons</option>
+                          <option value={"tablespoon"}>Tablespoons</option>
+                          <option value={"cup"}>Cups</option>
+                          <option value={"pint"}>Pints</option>
+                          <option value={"quart"}>Quarts</option>
+                          <option value={"gallon"}>Gallons</option>
+                        </Field>
+                        <Field
+                          name={`ingredients[${index}].name`}
+                          placeholder="name"
+                        />
+                        <IconButton onClick={() => arrayHelpers.remove(index)}>
+                          <CloseRounded color="primary" />
+                        </IconButton>
+                      </Box>
+                    );
+                  })}
 
-          <FieldArray
-            name="ingredients"
-            render={(arrayHelpers) => (
-              <div>
-                {formik.values.ingredients.map((_, index) => {
-                  return (
-                    <Box key={index}>
-                      <Field
-                        name={`ingredients[${index}].count`}
-                        type="number"
-                        placeholder="count"
-                        min="1"
-                      />
-                      <Field name={`ingredients[${index}].unit`} as="select">
-                        <option value="" disabled hidden>
-                          quantity
-                        </option>
-                        <option value={"gram"}>Grams</option>
-                        <option value={"kilograms"}>Kilograms</option>
-                        <option value={"ounces"}>Ounces</option>
-                        <option value={"pounds"}>Pounds</option>
-                        <option value={"milliliters"}>Milliliters</option>
-                        <option value={"liters"}>Liters</option>
-                        <option value={"teaspoon"}>Teaspoons</option>
-                        <option value={"tablespoon"}>Tablespoons</option>
-                        <option value={"cup"}>Cups</option>
-                        <option value={"pint"}>Pints</option>
-                        <option value={"quart"}>Quarts</option>
-                        <option value={"gallon"}>Gallons</option>
-                      </Field>
-                      <Field
-                        name={`ingredients[${index}].name`}
-                        placeholder="name"
-                      />
-                      <IconButton onClick={() => arrayHelpers.remove(index)}>
-                        <CloseRounded color="primary" />
-                      </IconButton>
-                    </Box>
-                  );
-                })}
-
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={() =>
-                    arrayHelpers.push({ name: "", unit: "", count: "" })
-                  }
-                  className={classes.button}
-                >
-                  new ingredient
-                </Button>
-              </div>
-            )}
-          />
-          <Field
-            id="notes"
-            name="notes"
-            as="textarea"
-            {...formik.getFieldProps("notes")}
-            placeholder="Notes"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            style={{ color: "white", fontWeight: "bolder" }}
-            disabled={isSubmitDisabled(formik.values)}
-          >
-            {recipe ? "edit recipe" : "submit recipe"}
-          </Button>
-        </Form>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={() =>
+                      arrayHelpers.push({ name: "", unit: "", count: "" })
+                    }
+                    className={classes.button}
+                  >
+                    new ingredient
+                  </Button>
+                </div>
+              )}
+            />
+            <Field
+              id="notes"
+              name="notes"
+              as="textarea"
+              {...formik.getFieldProps("notes")}
+              placeholder="Notes"
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ color: "white", fontWeight: "bolder" }}
+              disabled={isSubmitDisabled(formik.values)}
+              className={classes.button}
+            >
+              {recipe ? "edit recipe" : "submit recipe"}
+            </Button>
+          </Form>
+        </Paper>
       )}
     </Formik>
   );

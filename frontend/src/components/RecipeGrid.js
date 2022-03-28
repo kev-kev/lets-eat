@@ -22,14 +22,7 @@ const renderRecipeCards = (recipes, type) => {
 
 const renderGridContainer = (recipes, type) => {
   return (
-    <Grid
-      wrap="wrap"
-      direction="row"
-      justifyContent="flex-start"
-      alignItems="flex-start"
-      spacing={1}
-      container
-    >
+    <Grid container spacing={1}>
       {renderRecipeCards(recipes, type)}
     </Grid>
   );

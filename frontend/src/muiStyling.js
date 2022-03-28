@@ -112,10 +112,7 @@ export const modalStyle = makeStyles((theme) => ({
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    margin: "10%",
   },
   kirby: {
     width: "auto",
@@ -124,7 +121,12 @@ export const recipeFormStyle = makeStyles((theme) => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
+    padding: "5vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
