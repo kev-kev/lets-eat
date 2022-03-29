@@ -53,9 +53,8 @@ const Home = () => {
         </main>
       </div>
     );
-  } else {
-    return <LoginForm />;
   }
+  return <LoginForm />;
 };
 
 export default Home;

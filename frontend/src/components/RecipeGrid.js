@@ -4,7 +4,12 @@ import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
 import { format, add, sub } from "date-fns";
 import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
-import { IconButton, Grid, CircularProgress } from "@material-ui/core";
+import {
+  IconButton,
+  Grid,
+  CircularProgress,
+  TextField,
+} from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
@@ -79,8 +84,10 @@ export default function RecipeGrid(props) {
 
   if (isFetchingRecipes) {
     return <CircularProgress className={classes.loading} />;
-  } else {
-    if (props.type === "index") {
+  }
+  //eslint-disable-next-line
+  switch (props.type) {
+    case "index":
       return (
         <>
           <h2>
@@ -112,19 +119,17 @@ export default function RecipeGrid(props) {
           </div>
         </>
       );
-    } else {
-      if (props.type === "inbox")
-        return (
-          <>
-            {renderGridContainer(inboxRecipes, "inbox")}
-            <h2>pending recipes</h2>
-            {renderGridContainer(pendingRecipes, "pending")}
-          </>
-        );
-      else if (props.type === "favorites")
-        return renderGridContainer(favoritedRecipes, props.type);
-      else if (props.type === "rejected")
-        return renderGridContainer(rejectedRecipes, "rejected");
-    }
+    case "inbox":
+      return (
+        <>
+          {renderGridContainer(inboxRecipes, "inbox")}
+          <h2>pending recipes</h2>
+          {renderGridContainer(pendingRecipes, "pending")}
+        </>
+      );
+    case "favorites":
+      return renderGridContainer(favoritedRecipes, props.type);
+    case "rejected":
+      return renderGridContainer(rejectedRecipes, "rejected");
   }
 }
