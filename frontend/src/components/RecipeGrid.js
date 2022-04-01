@@ -50,17 +50,13 @@ export default function RecipeGrid(props) {
   const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (approvedRecipes.length / RECIPES_PER_PAGE > 1) {
       setShouldShowFwdBtn(true);
     }
   }, [approvedRecipes]);
-
-  const approvedRecipesToDisplay = approvedRecipes.slice(
-    (page - 1) * RECIPES_PER_PAGE,
-    page * RECIPES_PER_PAGE
-  );
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -78,6 +74,26 @@ export default function RecipeGrid(props) {
       : setShouldShowFwdBtn(false);
   };
 
+  const filterRecipes = (value) => {
+    return approvedRecipes.filter((recipe) => {
+      return recipe.name.toLowerCase().includes(value.toLowerCase());
+    });
+  };
+
+  const renderApprovedRecipes = () => {
+    let approvedRecipesToDisplay = approvedRecipes;
+    if (searchTerm.length > 0) {
+      //setTimeout
+      approvedRecipesToDisplay = filterRecipes(searchTerm);
+    }
+    approvedRecipesToDisplay = approvedRecipesToDisplay.slice(
+      (page - 1) * RECIPES_PER_PAGE,
+      page * RECIPES_PER_PAGE
+    );
+    // debugger;
+    return renderGridContainer(approvedRecipesToDisplay, "index");
+  };
+
   const renderGroceryListModal = () => {
     if (weeklyRecipes.length > 0) return <GroceryListModal />;
   };
@@ -85,6 +101,7 @@ export default function RecipeGrid(props) {
   if (isFetchingRecipes) {
     return <CircularProgress className={classes.loading} />;
   }
+
   //eslint-disable-next-line
   switch (props.type) {
     case "index":
@@ -103,7 +120,12 @@ export default function RecipeGrid(props) {
           {renderGridContainer(weeklyRecipes, "weekly")}
           {renderGroceryListModal()}
           <h2>non-weekly recipes</h2>
-          {renderGridContainer(approvedRecipesToDisplay, "index")}
+          <TextField
+            placeholder="search for a recipe"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            variant="outlined"
+          />
+          {renderApprovedRecipes()}
           <div className={classes.pageNav}>
             {shouldShowBackBtn && (
               <IconButton onClick={() => handlePageClick("back")}>
