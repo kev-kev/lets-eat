@@ -73,6 +73,11 @@ export const AppReducer = (state, action) => {
             ...state,
             approvedRecipes: action.payload[1],
           };
+        case "index":
+          return {
+            ...state,
+            indexRecipes: action.payload[1],
+          };
         case "favorited":
           return {
             ...state,

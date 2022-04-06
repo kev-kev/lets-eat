@@ -23,6 +23,7 @@ const initialState = {
   inboxRecipes: [],
   pendingRecipes: [],
   rejectedRecipes: [],
+  indexRecipes: [],
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -111,6 +112,23 @@ export const GlobalProvider = ({ children }) => {
       });
   };
 
+  const setIndexRecipes = (term) => {
+    if (term.length < 1) {
+      dispatch({
+        type: "SET_RECIPES",
+        payload: ["index", state.approvedRecipes],
+      });
+    } else {
+      const filteredApprovedRecipes = state.approvedRecipes.filter((recipe) => {
+        return recipe.name.toLowerCase().includes(term.toLowerCase());
+      });
+      dispatch({
+        type: "SET_RECIPES",
+        payload: ["index", filteredApprovedRecipes],
+      });
+    }
+  };
+
   const filterAndSetRecipes = (recipes, user) => {
     const weeklyRecipes = [];
     const approvedRecipes = [];
@@ -141,6 +159,7 @@ export const GlobalProvider = ({ children }) => {
     const allRecipes = [
       ["weekly", weeklyRecipes],
       ["approved", approvedRecipes],
+      ["index", approvedRecipes],
       ["favorited", favoritedRecipes],
       ["inbox", inboxRecipes],
       ["pending", pendingRecipes],
@@ -413,6 +432,8 @@ export const GlobalProvider = ({ children }) => {
         inboxRecipes: state.inboxRecipes,
         pendingRecipes: state.pendingRecipes,
         rejectedRecipes: state.rejectedRecipes,
+        indexRecipes: state.indexRecipes,
+        setIndexRecipes,
       }}
     >
       {children}
