@@ -16,17 +16,9 @@ import { CloseRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Alert } from "@material-ui/lab/";
-import IngredientForm from "./IngredientForm";
 
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
 const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
-
-const compareArrs = (arr1, arr2) => {
-  return (
-    arr1.length === arr2.length &&
-    arr1.every((value, index) => value === arr2[index])
-  );
-};
 
 const RecipeForm = (props) => {
   const classes = recipeFormStyle();
@@ -133,17 +125,6 @@ const RecipeForm = (props) => {
   const renderIngredients = () => {
     return formIngredients.map((ingredientInput, index) => {
       return (
-        // <IngredientForm
-        //   ingredientInput={ingredientInput}
-        //   setName={(ingredientName) => {
-        //     setAttributeForIngredient(index, "name", ingredientName);
-        //   }}
-        //   setCount={(count) => setAttributeForIngredient(index, "count", count)}
-        //   setUnit={(unit) => setAttributeForIngredient(index, "unit", unit)}
-        //   key={"id- " + ingredientInput + index}
-        //   index={index}
-        //   handleDeleteIngredient={() => handleDeleteIngredient(index)}
-        // />
         <form ref={ingredientFormEl}>
           <Box display="flex" key={`id-${ingredientInput["name"]}${index}`}>
             <TextField
@@ -194,10 +175,6 @@ const RecipeForm = (props) => {
             <IconButton onClick={() => handleDeleteIngredient(index)}>
               <CloseRounded color="primary" />
             </IconButton>
-            {/* Testy Button for the weird props/ingredients change issue  */}
-            {/* <IconButton onClick={() => setTitle("YABABABA")}>
-              <CloseRounded color="secondary" />
-            </IconButton> */}
           </Box>
         </form>
       );
@@ -319,10 +296,8 @@ const RecipeForm = (props) => {
               variant="contained"
               color="primary"
               className={classes.submit + " " + classes.button}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 handleSubmit();
-                console.log(e);
               }}
             >
               submit
