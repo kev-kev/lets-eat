@@ -29,7 +29,7 @@ class RecipesController < ApplicationController
   def update
     recipe = Recipe.find(params[:id])
     if recipe
-        recipe_params[:ingredients] && update_recipe_ingredients(recipe, recipe_params[:ingredients])
+        update_recipe_ingredients(recipe, recipe_params[:ingredients]) if recipe_params[:ingredients]
         if recipe.update(recipe_params.except(:ingredients))
           render status: 204
         else
@@ -95,14 +95,19 @@ class RecipesController < ApplicationController
 
     def add_ingredients(new_ingredients, old_ingredients, recipe_id)
       new_ingredients.each do |ingredient|
-        unless old_ingredients.includes(ingredient)
+        unless old_ingredients.include?(ingredient)
           new_ingredient = Ingredient.find_or_create_by({"name"=> ingredient[:name], "unit" => ingredient[:unit]})
           if new_ingredient.valid?
             recipe_ingredient = RecipeIngredient.find_or_create_by({
               "recipe_id"=> recipe_id,
-              "ingredient_id"=> new_ingredient[:id],
-              "count"=>new_ingredient[:count]
+              "ingredient_id"=> new_ingredient[:id]
             })
+            if recipe_ingredient[:count] && ingredient[:count]
+              ing_count = recipe_ingredient[:count].to_i + ingredient[:count].to_i
+            else
+              ing_count = 1
+            end
+            recipe_ingredient.update(:count => ing_count)
           end
         end
       end

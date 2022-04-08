@@ -86,7 +86,17 @@ export const GlobalProvider = ({ children }) => {
     fetch(rootURL + `/recipes/${recipe.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(recipe),
+      body: JSON.stringify({
+        id: recipe.id,
+        name: recipe.name,
+        link: recipe.link,
+        status: recipe.status,
+        notes: recipe.notes,
+        user_id: recipe.user?.id,
+        img_url: recipe.imgUrl,
+        is_favorited: recipe.isFavorited,
+        ingredients: recipe.ingredients,
+      }),
     })
       .then(handleErrors)
       .then(() => {
