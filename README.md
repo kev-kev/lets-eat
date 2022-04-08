@@ -46,3 +46,5 @@ In another terminal window, navigate to the frontend folder and run:
 or if you are using yarn, run:
 
 `yarn start`
+
+.
