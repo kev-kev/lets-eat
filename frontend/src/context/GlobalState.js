@@ -212,7 +212,7 @@ export const GlobalProvider = ({ children }) => {
       });
       const username = localStorage.getItem("username");
       const id = localStorage.getItem("id");
-      if (username) {
+      if (username && id) {
         dispatch({
           type: "LOGIN_SUCCESS",
           payload: {
