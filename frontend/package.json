@@ -28,7 +28,8 @@
     "build": "react-scripts build",
     "heroku-postbuild": "npm run build",
     "test": "jest --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "cd ../; git subtree push --prefix=backend heroku-backend master; git subtree push --prefix=frontend heroku-frontend master"
   },
   "eslintConfig": {
     "extends": "react-app"

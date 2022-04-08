@@ -188,7 +188,8 @@ export const GlobalProvider = ({ children }) => {
       .then((r) => r.json())
       .then((data) => {
         localStorage.setItem("authToken", data.token);
-        localStorage.setItem("username", username);
+        localStorage.setItem("username", data.user.username);
+        localStorage.setItem("id", data.user.id);
         dispatch({
           type: "LOGIN_SUCCESS",
           payload: {
@@ -210,10 +211,16 @@ export const GlobalProvider = ({ children }) => {
         type: "LOGIN_USER",
       });
       const username = localStorage.getItem("username");
+      const id = localStorage.getItem("id");
       if (username) {
         dispatch({
           type: "LOGIN_SUCCESS",
-          payload: { user: username },
+          payload: {
+            user: {
+              username,
+              id,
+            },
+          },
         });
       } else {
         dispatch({
