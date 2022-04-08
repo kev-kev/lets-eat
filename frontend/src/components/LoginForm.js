@@ -50,8 +50,10 @@ const LoginForm = () => {
   }, [errors.login]);
 
   useEffect(() => {
-    persistentLogin();
-  }, [persistentLogin]);
+    if (!user) {
+      persistentLogin();
+    }
+  }, []);
 
   const renderLoadingOrForm = () => {
     if (isLoggingIn) {
@@ -111,7 +113,7 @@ const LoginForm = () => {
         <div className={classes.paper}>
           <Snackbar open={errorSnackbar} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
-              {errorMessage}
+              {`${errorMessage} ${errors.login}`}
             </Alert>
           </Snackbar>
           <img className={classes.kirby} src={LOGO} alt="Chef Kirby" />
