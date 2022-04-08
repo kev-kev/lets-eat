@@ -87,7 +87,7 @@ class RecipesController < ApplicationController
 
     def remove_ingredients(new_ingredients, old_ingredients)
       old_ingredients.each do |old_ingredient|
-        unless new_ingredients.includes(old_ingredient)
+        unless new_ingredients.include?(old_ingredient)
           old_ingredient.destroy!
         end
       end
