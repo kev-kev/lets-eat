@@ -187,15 +187,22 @@ export const GlobalProvider = ({ children }) => {
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("username", data.user.username);
-        localStorage.setItem("id", data.user.id);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: {
-            user: data.user,
-          },
-        });
+        if (data.error) {
+          dispatch({
+            type: "LOGIN_FAILURE",
+            payload: data.error,
+          });
+        } else {
+          localStorage.setItem("authToken", data.token);
+          localStorage.setItem("username", data.user?.username);
+          localStorage.setItem("id", data.user?.id);
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: {
+              user: data.user,
+            },
+          });
+        }
       })
       .catch((error) => {
         dispatch({
@@ -220,13 +227,6 @@ export const GlobalProvider = ({ children }) => {
               username,
               id,
             },
-          },
-        });
-      } else {
-        dispatch({
-          type: "LOGIN_FAILURE",
-          payload: {
-            error: "Something went wrong! Please try logging back in.",
           },
         });
       }
