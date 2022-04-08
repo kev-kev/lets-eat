@@ -11,7 +11,7 @@ export default function SearchBar() {
       setIndexRecipes(searchTerm);
     }, 1000);
     return () => clearTimeout(timeout);
-  }, [searchTerm]);
+  }, [searchTerm, setIndexRecipes]);
 
   return (
     <TextField

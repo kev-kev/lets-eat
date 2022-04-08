@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import { AppReducer } from "./AppReducer";
 import { startOfWeek, differenceInDays, parseISO } from "date-fns";
 
@@ -187,7 +187,8 @@ export const GlobalProvider = ({ children }) => {
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("username", username);
         dispatch({
           type: "LOGIN_SUCCESS",
           payload: {
@@ -201,6 +202,28 @@ export const GlobalProvider = ({ children }) => {
           payload: error,
         });
       });
+  }
+
+  function persistentLogin() {
+    if (localStorage.getItem("authToken")) {
+      dispatch({
+        type: "LOGIN_USER",
+      });
+      const username = localStorage.getItem("username");
+      if (username) {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: { user: username },
+        });
+      } else {
+        dispatch({
+          type: "LOGIN_FAILURE",
+          payload: {
+            error: "Something went wrong! Please try logging back in.",
+          },
+        });
+      }
+    }
   }
 
   function submitRecipe({ name, link, notes, imgUrl, ingredients }) {
@@ -434,6 +457,7 @@ export const GlobalProvider = ({ children }) => {
         rejectedRecipes: state.rejectedRecipes,
         indexRecipes: state.indexRecipes,
         setIndexRecipes,
+        persistentLogin,
       }}
     >
       {children}

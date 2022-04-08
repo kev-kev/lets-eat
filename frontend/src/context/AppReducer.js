@@ -224,6 +224,7 @@ export const AppReducer = (state, action) => {
         },
       };
     case "LOGOUT_USER":
+      localStorage.clear();
       return {
         ...state,
         user: null,

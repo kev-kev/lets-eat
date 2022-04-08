@@ -15,7 +15,7 @@ import { loginStyle } from "../muiStyling";
 
 const LoginForm = () => {
   const classes = loginStyle();
-  const { login, user, errors, clearErrors, isLoggingIn } =
+  const { login, persistentLogin, user, errors, clearErrors, isLoggingIn } =
     useContext(GlobalContext);
 
   const [username, setUsername] = useState("");
@@ -27,7 +27,7 @@ const LoginForm = () => {
   const LOGO = "https://lets-eat-imgs.s3.amazonaws.com/kirby_logo.png";
   const errorMessage = "Login Failed (っ´ω`)ﾉ (╥ω╥)";
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -48,6 +48,10 @@ const LoginForm = () => {
       setErrorSnackbar(true);
     }
   }, [errors.login]);
+
+  useEffect(() => {
+    persistentLogin();
+  }, [persistentLogin]);
 
   const renderLoadingOrForm = () => {
     if (isLoggingIn) {
@@ -98,7 +102,6 @@ const LoginForm = () => {
       );
     }
   };
-
   if (user) {
     return <Redirect to="/" />;
   } else {
