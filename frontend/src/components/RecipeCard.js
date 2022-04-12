@@ -66,7 +66,6 @@ const RecipeCard = (props) => {
 
   const addOrRemoveWeek = (weeks, selectedWeek) => {
     if (props.type === "weekly") {
-      debugger;
       return weeks.filter((week) => {
         return differenceInDays(parseISO(week), selectedWeek) !== 0;
       });
