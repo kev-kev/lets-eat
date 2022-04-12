@@ -126,7 +126,7 @@ export const GlobalProvider = ({ children }) => {
     if (term.length < 1) {
       dispatch({
         type: "SET_RECIPES",
-        payload: ["index", state.approvedRecipes],
+        payload: ["index", state.approvedRecipes.sort((a, b) => b.id - a.id)],
       });
     } else {
       const filteredApprovedRecipes = state.approvedRecipes.filter((recipe) => {
@@ -134,7 +134,7 @@ export const GlobalProvider = ({ children }) => {
       });
       dispatch({
         type: "SET_RECIPES",
-        payload: ["index", filteredApprovedRecipes],
+        payload: ["index", filteredApprovedRecipes.sort((a, b) => b.id - a.id)],
       });
     }
   };
@@ -424,6 +424,7 @@ export const GlobalProvider = ({ children }) => {
       if (isWeeklyRecipe(recipe.weeks, week)) newWeeklyRecipes.push(recipe);
       else newApprovedRecipes.push(recipe);
     });
+    // debugger;
     dispatch({
       type: "CHANGE_SELECTED_WEEK",
       payload: { week, newWeeklyRecipes, newApprovedRecipes },

@@ -62,41 +62,42 @@ export const AppReducer = (state, action) => {
       };
     case "SET_RECIPES":
       //eslint-disable-next-line
+      const sortedRecipes = action.payload[1].sort((a, b) => b.id - a.id);
       switch (action.payload[0]) {
         case "weekly":
           return {
             ...state,
-            weeklyRecipes: action.payload[1],
+            weeklyRecipes: sortedRecipes,
           };
         case "approved":
           return {
             ...state,
-            approvedRecipes: action.payload[1],
+            approvedRecipes: sortedRecipes,
           };
         case "index":
           return {
             ...state,
-            indexRecipes: action.payload[1],
+            indexRecipes: sortedRecipes,
           };
         case "favorited":
           return {
             ...state,
-            favoritedRecipes: action.payload[1],
+            favoritedRecipes: sortedRecipes,
           };
         case "inbox":
           return {
             ...state,
-            inboxRecipes: action.payload[1],
+            inboxRecipes: sortedRecipes,
           };
         case "pending":
           return {
             ...state,
-            pendingRecipes: action.payload[1],
+            pendingRecipes: sortedRecipes,
           };
         case "rejected":
           return {
             ...state,
-            rejectedRecipes: action.payload[1],
+            rejectedRecipes: sortedRecipes,
           };
       }
       break;
@@ -156,12 +157,12 @@ export const AppReducer = (state, action) => {
       );
       if (updatedRecipe) {
         updatedRecipe.weeks = action.payload.weeks;
-        const indexToRemove = state.approvedRecipes.indexOf(updatedRecipe);
-        state.approvedRecipes.splice(indexToRemove, 1);
+        const indexToRemove = state.indexRecipes.indexOf(updatedRecipe);
+        state.indexRecipes.splice(indexToRemove, 1);
         const updatedWeeklyRecipes = [
           ...state.weeklyRecipes,
           updatedRecipe,
-        ].sort((a, b) => a.id - b.id);
+        ].sort((a, b) => b.id - a.id);
         return {
           ...state,
           weeklyRecipes: updatedWeeklyRecipes,
@@ -173,13 +174,12 @@ export const AppReducer = (state, action) => {
         updatedRecipe.weeks = action.payload.weeks;
         const indexToRemove = state.weeklyRecipes.indexOf(updatedRecipe);
         state.weeklyRecipes.splice(indexToRemove, 1);
-        const updatedapprovedRecipes = [
-          ...state.approvedRecipes,
-          updatedRecipe,
-        ].sort((a, b) => a.id - b.id);
+        const updatedIndexRecipes = [...state.indexRecipes, updatedRecipe].sort(
+          (a, b) => b.id - a.id
+        );
         return {
           ...state,
-          approvedRecipes: updatedapprovedRecipes,
+          indexRecipes: updatedIndexRecipes,
         };
       }
     case "WEEKS_UPDATE_FAILURE":
@@ -208,7 +208,7 @@ export const AppReducer = (state, action) => {
         ...state,
         selectedWeek: action.payload.week,
         weeklyRecipes: action.payload.newWeeklyRecipes,
-        approvedRecipes: action.payload.newApprovedRecipes,
+        indexRecipes: action.payload.newApprovedRecipes,
       };
     case "GET_GROCERY_LIST_SUCCESS":
       return {
