@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const gridStyle = makeStyles((theme) => ({
-  loading: {
+  loading: {  
     margin: "40vh",
   },
   pageNav: {
@@ -13,7 +13,7 @@ export const gridStyle = makeStyles((theme) => ({
   button: {
     color: "white",
   },
-}));
+}), {index: 1});
 
 export const homeStyle = makeStyles((theme) => ({
   root: {
@@ -31,7 +31,7 @@ export const homeStyle = makeStyles((theme) => ({
     margin: 0,
     justifyContent: "center",
   },
-}));
+}), {index: 1});
 
 export const loginStyle = makeStyles((theme) => ({
   paper: {
@@ -55,7 +55,7 @@ export const loginStyle = makeStyles((theme) => ({
   loading: {
     margin: "20%",
   },
-}));
+}), {index: 1});
 
 export const recipeCardStyle = makeStyles((theme) => ({
   root: {
@@ -91,7 +91,7 @@ export const recipeCardStyle = makeStyles((theme) => ({
     height: 22,
     "font-size": "0.8rem",
   },
-}));
+}), {index: 1});
 
 export const modalStyle = makeStyles((theme) => ({
   modal: {
@@ -108,7 +108,7 @@ export const modalStyle = makeStyles((theme) => ({
   button: {
     color: "white",
   },
-}));
+}), {index: 1});
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
@@ -138,7 +138,7 @@ export const recipeFormStyle = makeStyles((theme) => ({
     color: "white",
     "font-weight": "bolder",
   },
-}));
+}), {index: 1});
 
 export const sidebarStyle = makeStyles((theme) => ({
   root: {
@@ -170,7 +170,7 @@ export const sidebarStyle = makeStyles((theme) => ({
     "padding-top": "15%",
     "padding-bottom": "30%",
   },
-}));
+}), {index: 1});
 
 export const voteBodyStyle = makeStyles((theme) => ({
   voteBox: {
@@ -178,4 +178,4 @@ export const voteBodyStyle = makeStyles((theme) => ({
     "justify-content": "center",
     "align-items": "center",
   },
-}));
+}), {index: 1});
