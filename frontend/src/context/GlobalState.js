@@ -424,7 +424,6 @@ export const GlobalProvider = ({ children }) => {
       if (isWeeklyRecipe(recipe.weeks, week)) newWeeklyRecipes.push(recipe);
       else newApprovedRecipes.push(recipe);
     });
-    // debugger;
     dispatch({
       type: "CHANGE_SELECTED_WEEK",
       payload: { week, newWeeklyRecipes, newApprovedRecipes },

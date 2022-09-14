@@ -152,6 +152,7 @@ export const AppReducer = (state, action) => {
         },
       };
     case "WEEKS_UPDATE_SUCCESS":
+      debugger
       updatedRecipe = state.approvedRecipes.find(
         (recipe) => recipe.id === action.payload.recipe_id
       );
