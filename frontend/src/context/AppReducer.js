@@ -125,21 +125,36 @@ export const AppReducer = (state, action) => {
       updatedRecipe = state.inboxRecipes.find(
         (recipe) => recipe.id === action.payload.recipe_id
       );
+      // On approve/reject we remove from the inbox
       const indexToRemove = state.inboxRecipes.indexOf(updatedRecipe);
-      state.inboxRecipes.splice(indexToRemove, 1);
-      const updatedapprovedRecipes = [
-        ...state.approvedRecipes,
-        updatedRecipe,
-      ].sort((a, b) => a.id - b.id);
-      if (action.payload === "approved") {
+      const updatedInboxRecipes = [
+        ...state.inboxRecipes.slice(0, indexToRemove),
+        ...state.inboxRecipes.slice(indexToRemove + 1)
+      ]
+      if (action.payload.recipe_status === "approved") {
+        const updatedIndexRecipes = [
+          ...state.indexRecipes,
+          updatedRecipe,
+        ].sort((a, b) => a.id - b.id);
+        const updatedApprovedRecipes = [
+          ...state.approvedRecipes,
+          updatedRecipe,
+        ].sort((a, b) => a.id - b.id);
         return {
           ...state,
-          approvedRecipes: updatedapprovedRecipes,
+          inboxRecipes: updatedInboxRecipes,
+          indexRecipes: updatedIndexRecipes,
+          approvedRecipes: updatedApprovedRecipes,
         };
       } else {
+        const updatedRejectedRecipes = [
+          ...state.rejectedRecipes,
+           updatedRecipe
+          ].sort((a, b) => b.id - a.id);
         return {
           ...state,
-          rejectedRecipes: [...state.rejectedRecipes, updatedRecipe],
+          inboxRecipes: updatedInboxRecipes,
+          rejectedRecipes: updatedRejectedRecipes,
         };
       }
 
