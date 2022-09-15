@@ -32,7 +32,6 @@ const renderGridContainer = (recipes, type) => {
 export default function RecipeGrid(props) {
   const classes = gridStyle();
   const {
-    approvedRecipes,
     weeklyRecipes,
     indexRecipes,
     inboxRecipes,
@@ -70,12 +69,12 @@ export default function RecipeGrid(props) {
       : setShouldShowFwdBtn(false);
   };
 
-  const renderApprovedRecipes = () => {
-    const approvedRecipePage = approvedRecipes.slice(
+  const renderIndexRecipes = () => {
+    const indexRecipePage = indexRecipes.slice(
       (page - 1) * RECIPES_PER_PAGE,
       page * RECIPES_PER_PAGE
     );
-    return renderGridContainer(approvedRecipePage, "index");
+    return renderGridContainer(indexRecipePage, "index");
   };
 
   const renderGroceryListModal = () => {
@@ -105,7 +104,7 @@ export default function RecipeGrid(props) {
           {renderGroceryListModal()}
           <h2>non-weekly recipes</h2>
           <SearchBar />
-          {renderApprovedRecipes()}
+          {renderIndexRecipes()}
           <div className={classes.pageNav}>
             {shouldShowBackBtn && (
               <IconButton onClick={() => handlePageClick("back")}>
