@@ -151,37 +151,43 @@ export const AppReducer = (state, action) => {
           grid: action.payload,
         },
       };
-    case "WEEKS_UPDATE_SUCCESS":
-      updatedRecipe = state.approvedRecipes.find(
-        (recipe) => recipe.id === action.payload.recipe_id
-      );
-      if (updatedRecipe) {
-        updatedRecipe.weeks = action.payload.weeks;
-        const indexToRemove = state.indexRecipes.indexOf(updatedRecipe);
-        state.indexRecipes.splice(indexToRemove, 1);
-        const updatedWeeklyRecipes = [
-          ...state.weeklyRecipes,
-          updatedRecipe,
-        ].sort((a, b) => b.id - a.id);
+    case "WEEKS_UPDATE_SUCCESS": {
+        let updatedWeeklyRecipes;
+        let updatedApprovedRecipes;
+        // Backend returned successful update with action.payload.recipe_id
+        const recipe = state.indexRecipes.find(recipe => recipe.id === action.payload.recipe_id);
+        const isInWeeklyRecipes = state.weeklyRecipes.find(recipe => recipe.id === action.payload.recipe_id);
+        if (!isInWeeklyRecipes) {
+          // Recipe got added to week
+          updatedWeeklyRecipes = [
+            ...state.weeklyRecipes,
+            recipe,
+          ].sort((a, b) => b.id - a.id);
+          // Remove from approved recipes
+          const indexToRemove = state.approvedRecipes.indexOf(recipe);
+          updatedApprovedRecipes = [
+            ...state.approvedRecipes.slice(0, indexToRemove),
+            ...state.approvedRecipes.slice(indexToRemove + 1)
+          ];
+        } else {
+          // Recipe got removed from week
+          const indexToRemove = state.weeklyRecipes.indexOf(recipe);
+          updatedWeeklyRecipes = [
+            ...state.weeklyRecipes.slice(0, indexToRemove),
+            ...state.weeklyRecipes.slice(indexToRemove + 1)
+          ];
+          // Add to approved recipes
+          updatedApprovedRecipes = [
+            ...state.approvedRecipes,
+            recipe,
+          ].sort((a, b) => b.id - a.id);
+        }
         return {
           ...state,
-          weeklyRecipes: updatedWeeklyRecipes,
+          approvedRecipes: updatedApprovedRecipes,
+          weeklyRecipes: updatedWeeklyRecipes
         };
-      } else {
-        updatedRecipe = state.weeklyRecipes.find(
-          (recipe) => recipe.id === action.payload.recipe_id
-        );
-        updatedRecipe.weeks = action.payload.weeks;
-        const indexToRemove = state.weeklyRecipes.indexOf(updatedRecipe);
-        state.weeklyRecipes.splice(indexToRemove, 1);
-        const updatedIndexRecipes = [...state.indexRecipes, updatedRecipe].sort(
-          (a, b) => b.id - a.id
-        );
-        return {
-          ...state,
-          indexRecipes: updatedIndexRecipes,
-        };
-      }
+    }
     case "WEEKS_UPDATE_FAILURE":
       return {
         ...state,

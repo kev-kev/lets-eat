@@ -32,6 +32,7 @@ const renderGridContainer = (recipes, type) => {
 export default function RecipeGrid(props) {
   const classes = gridStyle();
   const {
+    approvedRecipes,
     weeklyRecipes,
     indexRecipes,
     inboxRecipes,
@@ -70,11 +71,11 @@ export default function RecipeGrid(props) {
   };
 
   const renderApprovedRecipes = () => {
-    const indexRecipePage = indexRecipes.slice(
+    const approvedRecipePage = approvedRecipes.slice(
       (page - 1) * RECIPES_PER_PAGE,
       page * RECIPES_PER_PAGE
     );
-    return renderGridContainer(indexRecipePage, "index");
+    return renderGridContainer(approvedRecipePage, "index");
   };
 
   const renderGroceryListModal = () => {
