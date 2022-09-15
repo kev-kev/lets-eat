@@ -105,12 +105,13 @@ export const AppReducer = (state, action) => {
       if (action.payload.type === "weekly") {
         return {
           ...state,
-          weeklyRecipes: action.payload.updatedRecipes,
+          weeklyRecipes: action.payload.updatedWeeklyRecipes,
         };
       } else {
         return {
           ...state,
-          approvedRecipes: action.payload.updatedRecipes,
+          approvedRecipes: action.payload.updatedApprovedRecipes,
+          indexRecipes: action.payload.updatedIndexRecipes
         };
       }
     case "EDIT_RECIPE_FAILURE":

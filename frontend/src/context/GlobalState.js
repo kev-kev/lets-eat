@@ -40,17 +40,17 @@ export const GlobalProvider = ({ children }) => {
     //eslint-disable-next-line
     switch (type) {
       case "weekly":
-        return [...state.weeklyRecipes];
+        return state.weeklyRecipes
       case "approved":
-        return [...state.approvedRecipes];
+        return state.approvedRecipes
       case "favorited":
-        return [...state.favoritedRecipes];
+        return state.favoritedRecipes
       case "inbox":
-        return [...state.inboxRecipes];
+        return state.inboxRecipes
       case "pending":
-        return [...state.pendingRecipes];
+        return state.pendingRecipes
       case "rejected":
-        return [...state.rejectedRecipes];
+        return state.rejectedRecipes
     }
   };
 
@@ -100,19 +100,42 @@ export const GlobalProvider = ({ children }) => {
     })
       .then(handleErrors)
       .then(() => {
-        const updatedRecipes = getRecipesFromType(subType);
-        const recipeIndex = updatedRecipes.findIndex(
-          (target) => target.id === recipe.id
-        );
-        updatedRecipes[recipeIndex] = recipe;
+        if(isWeeklyRecipe(recipe.weeks)){
+          // update weeklyRecipe
+          const updatedWeeklyRecipes = state.weeklyRecipes
+          const recipeIndex = updatedWeeklyRecipes.findIndex(
+            (target) => target.id === recipe.id
+          );
+          updatedWeeklyRecipes[recipeIndex] = recipe;
+          dispatch({
+            type: "EDIT_RECIPE_SUCCESS",
+            payload: {
+              updatedWeeklyRecipes,
+              type: subType,
+            },
+          });
+        } else {
+          // update approved and index
+          const updatedApprovedRecipes = state.approvedRecipes;
+          let recipeIndex = updatedApprovedRecipes.findIndex(
+            (target) => target.id === recipe.id
+          );
+          updatedApprovedRecipes[recipeIndex] = recipe;
 
-        dispatch({
-          type: "EDIT_RECIPE_SUCCESS",
-          payload: {
-            updatedRecipes: updatedRecipes,
-            type: subType,
-          },
-        });
+          const updatedIndexRecipes = state.indexRecipes;
+          recipeIndex = updatedIndexRecipes.findIndex(
+            (target) => target.id === recipe.id
+          );
+          updatedIndexRecipes[recipeIndex] = recipe;
+          dispatch({
+            type: "EDIT_RECIPE_SUCCESS",
+            payload: {
+              updatedApprovedRecipes,
+              updatedIndexRecipes
+            },
+          });
+        }
+        
       })
       .catch((error) => {
         dispatch({
