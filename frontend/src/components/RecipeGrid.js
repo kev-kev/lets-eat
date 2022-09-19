@@ -5,7 +5,7 @@ import RecipeCard from "./RecipeCard";
 import SearchBar from "./SearchBar";
 import { format, add, sub } from "date-fns";
 import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
-import { IconButton, Grid, CircularProgress } from "@material-ui/core";
+import { IconButton, Grid, CircularProgress, Divider } from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
@@ -14,16 +14,16 @@ const RECIPES_PER_PAGE = 20;
 const renderRecipeCards = (recipes, type) => {
   return recipes.map((recipe) => {
     return (
-      <Grid item xs key={recipe.name + uuid()}>
+      <Grid item xs={6} md={4} lg={3} xl={2} key={recipe.name + uuid()}>
         <RecipeCard type={type} recipe={recipe} />
       </Grid>
     );
   });
 };
 
-const renderGridContainer = (recipes, type) => {
+const renderGridContainer = (recipes, type, classes) => {
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={2} className={classes.gridContainer} >
       {renderRecipeCards(recipes, type)}
     </Grid>
   );
@@ -74,7 +74,7 @@ export default function RecipeGrid(props) {
       (page - 1) * RECIPES_PER_PAGE,
       page * RECIPES_PER_PAGE
     );
-    return renderGridContainer(indexRecipePage, "index");
+    return renderGridContainer(indexRecipePage, "index", classes);
   };
 
   const renderGroceryListModal = () => {
@@ -89,48 +89,49 @@ export default function RecipeGrid(props) {
   switch (props.type) {
     case "index":
       return (
-        <>
-          <h2>
-            <IconButton onClick={() => handleChangeWeek("back")}>
-              <ChevronLeftRounded color="primary" />
-            </IconButton>
-            Week of: {format(selectedWeek, "LLL do")} -{" "}
-            {format(add(selectedWeek, { days: 6 }), "LLL do")}
-            <IconButton onClick={() => handleChangeWeek("fwd")}>
-              <ChevronRightRounded color="primary" />
-            </IconButton>
-          </h2>
-          {renderGridContainer(weeklyRecipes, "weekly")}
-          {renderGroceryListModal()}
-          <h2>non-weekly recipes</h2>
-          <SearchBar />
-          {renderIndexRecipes()}
-          <div className={classes.pageNav}>
-            {shouldShowBackBtn && (
-              <IconButton onClick={() => handlePageClick("back")}>
+        <div className={classes.root}>
+          <div className={classes.recipeGridSectionContainer}>
+            <h2 className={classes.sectionTitle}>
+              <IconButton onClick={() => handleChangeWeek("back")}>
                 <ChevronLeftRounded color="primary" />
               </IconButton>
-            )}
-            {page}
-            {shouldShowFwdBtn && (
-              <IconButton onClick={() => handlePageClick("fwd")}>
+              Week of: {format(selectedWeek, "LLL do")} -{" "}
+              {format(add(selectedWeek, { days: 6 }), "LLL do")}
+              <IconButton onClick={() => handleChangeWeek("fwd")}>
                 <ChevronRightRounded color="primary" />
               </IconButton>
-            )}
+            </h2>
+            {renderGridContainer(weeklyRecipes, "weekly", classes)}
+            {renderGroceryListModal()}
           </div>
-        </>
+          <Divider />
+          <div className={classes.recipeGridSectionContainer}>
+            <h2 className={classes.sectionTitle}>Other Recipes</h2>
+            <div className={classes.searchBar}><SearchBar /></div>
+            {renderIndexRecipes()}
+            <div className={classes.pageNav}>
+              <IconButton classes={!shouldShowBackBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("back")}>
+                <ChevronLeftRounded color="primary" />
+              </IconButton>
+              {page}
+              <IconButton classes={!shouldShowFwdBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("fwd")}>
+                <ChevronRightRounded color="primary" />
+              </IconButton>
+            </div>
+          </div>
+        </div>
       );
     case "inbox":
       return (
         <>
-          {renderGridContainer(inboxRecipes, "inbox")}
+          {renderGridContainer(inboxRecipes, props.type, classes)}
           <h2>pending recipes</h2>
-          {renderGridContainer(pendingRecipes, "pending")}
+          {renderGridContainer(pendingRecipes, "pending", classes)}
         </>
       );
     case "favorites":
-      return renderGridContainer(favoritedRecipes, props.type);
+      return renderGridContainer(favoritedRecipes, props.type, classes);
     case "rejected":
-      return renderGridContainer(rejectedRecipes, "rejected");
+      return renderGridContainer(rejectedRecipes, props.type, classes);
   }
 }

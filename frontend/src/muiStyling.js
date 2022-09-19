@@ -6,13 +6,30 @@ export const gridStyle = makeStyles((theme) => ({
   },
   pageNav: {
     display: "flex",
-    flexDirection: "row",
-    flexWrap: "no-wrap",
     justifyContent: "center",
+    alignItems: "center"
   },
   button: {
     color: "white",
   },
+  sectionTitle: {
+    "text-align": "center"
+  },
+  recipeGridSectionContainer: {
+    display: "flex",
+    "flex-direction": "column",
+    padding: "2% 2% 5% 5%"
+  },
+  gridContainer: {
+    marginTop: "10px",
+    marginBottom: "10px",
+  },
+  searchBar: {
+    alignSelf: "flex-start"
+  },
+  hideVisibility: {
+    visibility: "hidden"
+  }
 }), {index: 1});
 
 export const homeStyle = makeStyles((theme) => ({
@@ -26,10 +43,8 @@ export const homeStyle = makeStyles((theme) => ({
     padding: "1vh",
   },
   container: {
-    width: "100%",
     paddingBottom: theme.spacing(4),
     margin: 0,
-    justifyContent: "center",
   },
 }), {index: 1});
 
@@ -59,10 +74,7 @@ export const loginStyle = makeStyles((theme) => ({
 
 export const recipeCardStyle = makeStyles((theme) => ({
   root: {
-    width: 225,
     position: "relative",
-    margin: 10,
-    overflow: "hidden",
   },
   media: {
     height: 0,
@@ -83,14 +95,11 @@ export const recipeCardStyle = makeStyles((theme) => ({
     },
     border: "2px solid pink",
   },
-  badge: {
-    color: "white",
-    "font-weight": "bolder",
-    left: 45,
-    top: 25,
-    height: 22,
-    "font-size": "0.8rem",
-  },
+  title: {
+    "white-space": "nowrap",
+    overflow: "hidden",
+    "text-overflow": "ellipsis",
+  }
 }), {index: 1});
 
 export const modalStyle = makeStyles((theme) => ({
@@ -107,12 +116,16 @@ export const modalStyle = makeStyles((theme) => ({
   },
   button: {
     color: "white",
+    "align-self": "flex-end"
   },
 }), {index: 1});
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
-    margin: "10%",
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   kirby: {
     width: "auto",

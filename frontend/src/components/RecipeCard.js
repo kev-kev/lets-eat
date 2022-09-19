@@ -114,6 +114,7 @@ const RecipeCard = (props) => {
             color="textSecondary"
             component="h2"
             onClick={() => setShouldShowModal(true)}
+            className={classes.title}
           >
             {props.recipe.name}
           </Typography>

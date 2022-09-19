@@ -42,7 +42,7 @@ const Home = () => {
                 <RecipeGrid type="rejected" />
               </Route>
               <Route path="/">
-                <Title>Recipe Index</Title>
+                <Title>Let's Eat!</Title>
                 <RecipeGrid type="index" />
               </Route>
             </Switch>
