@@ -13,12 +13,12 @@ export const gridStyle = makeStyles((theme) => ({
     color: "white",
   },
   sectionTitle: {
-    "text-align": "center"
+    textAlign: "center",
   },
   recipeGridSectionContainer: {
     display: "flex",
-    "flex-direction": "column",
-    padding: "2% 2% 5% 5%"
+    flexDirection: "column",
+    padding: "0% 2% 5% 5%"
   },
   gridContainer: {
     marginTop: "10px",
@@ -47,6 +47,12 @@ export const homeStyle = makeStyles((theme) => ({
     margin: 0,
   },
 }), {index: 1});
+
+export const titleStyle = makeStyles((theme) => ({
+  pageTitle: {
+    paddingTop: theme.spacing(2)
+  }
+}));
 
 export const loginStyle = makeStyles((theme) => ({
   paper: {
@@ -84,21 +90,21 @@ export const recipeCardStyle = makeStyles((theme) => ({
     position: "absolute",
     top: "6px",
     right: "6px",
-    "background-color": "white",
+    backgroundColor: "white",
     "&:hover": {
-      "background-color": "#eee",
+      backgroundColor: "#eee",
     },
     width: "25px",
     height: "25px",
     "& svg": {
-      "font-size": "1rem",
+      fontSize: "1rem",
     },
     border: "2px solid pink",
   },
   title: {
-    "white-space": "nowrap",
+    whiteSpace: "nowrap",
     overflow: "hidden",
-    "text-overflow": "ellipsis",
+    textOverflow: "ellipsis",
   }
 }), {index: 1});
 
@@ -116,79 +122,105 @@ export const modalStyle = makeStyles((theme) => ({
   },
   button: {
     color: "white",
-    "align-self": "flex-end"
+    alignSelf: "flex-end"
   },
 }), {index: 1});
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
+    display: "flex",
+    justifyContent: "center",
+    height: "70vh",
+    alignItems: "center"
+  },
+  // kirby: {
+  //   width: "auto",
+  //   height: theme.spacing(12),
+  //   margin: "20px",
+  // },
+  formContainer: {
+    width: "60%",
+  },
+  mainForm: {
+    // padding: "5vh",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-  },
-  kirby: {
-    width: "auto",
-    height: theme.spacing(12),
-    margin: "20px",
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(2),
-    padding: "5vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  loading: {
-    justifyContent: "center",
+    justifyContent: "center"
   },
   button: {
-    color: "white",
-    "font-weight": "bolder",
+    fontWeight: "bolder",
+    width: "auto",
   },
+  // fieldContainer: {
+  //   margin: theme.spacing(1) 
+  // },
+  field: {
+    margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px`
+  },
+  specialField: {
+    width: "6rem",
+  },
+  // error: {
+  //   alignSelf: "flex-end",
+  // },
+  ingredientFormContainer: {
+    marginTop: theme.spacing(1), 
+    display: "flex",
+    marginBottom: theme.spacing(1)
+  },
+  ingField:{
+    // margin: theme.spacing(1),
+  },
+  submit: {
+    color: "white",
+    fontWeight: "bolder",
+  },
+  submitContainer: {
+    display: "flex",
+    flexDirection: "row-reverse"
+  },
+  formControl: {
+    margin: `0 ${theme.spacing(1)}px`
+  }
 }), {index: 1});
 
 export const sidebarStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
-    "background-color": "#fff",
+    backgroundColor: "#fff",
     height: "100vh",
-    "border-right": "1px solid #eee",
+    borderRight: "1px solid #eee",
   },
   list: {
     display: "flex",
     padding: "0",
-    "flex-direction": "column",
+    flexDirection: "column",
   },
   sidebarItem: {
-    "justify-content": "center",
+    justifyContent: "center",
     padding: "10px 0",
   },
   sidebarBottom: {
-    "margin-top": "auto",
+    marginTop: "auto",
     display: "flex",
-    "flex-direction": "column",
-    "align-items": "center",
+    flexDirection: "column",
+    alignItems: "center",
   },
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
   userAvatar: {
-    "padding-top": "15%",
-    "padding-bottom": "30%",
+    paddingTop: "15%",
+    paddingBottom: "30%",
   },
 }), {index: 1});
 
 export const voteBodyStyle = makeStyles((theme) => ({
   voteBox: {
     display: "flex",
-    "justify-content": "center",
-    "align-items": "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }), {index: 1});

@@ -27,22 +27,23 @@ const Home = () => {
           <Container maxWidth={false} className={classes.container}>
             <Switch>
               <Route path="/new">
+                <Title className={classes.pageTitle}>New Recipe</Title>
                 <RecipeFormNew />
               </Route>
               <Route path="/inbox">
-                <Title>Recipe Inbox</Title>
+                <Title className={classes.pageTitle}>Inbox</Title>
                 <RecipeGrid type="inbox" />
               </Route>
               <Route path="/favorites">
-                <Title>Favorite Recipes</Title>
+                <Title className={classes.pageTitle}>Favorites</Title>
                 <RecipeGrid type="favorites" />
               </Route>
               <Route path="/rejected">
-                <Title>Rejected Recipes</Title>
+                <Title className={classes.pageTitle}>Rejected</Title>
                 <RecipeGrid type="rejected" />
               </Route>
               <Route path="/">
-                <Title>Let's Eat!</Title>
+                <Title className={classes.pageTitle}>Let's Eat!</Title>
                 <RecipeGrid type="index" />
               </Route>
             </Switch>

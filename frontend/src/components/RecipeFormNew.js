@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Button, Box, IconButton, Paper, TextField, Select } from "@material-ui/core/";
-import { CloseRounded } from "@material-ui/icons/";
+import { Button, Box, IconButton, Paper, TextField, Select, MenuItem, InputLabel, FormControl } from "@material-ui/core/";
+import { CloseRounded, AddRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
-import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import { useFormik } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
+
 
 
 const isSubmitDisabled = ({ name, link, imgUrl, ingredients }) => {
@@ -22,7 +22,7 @@ const isSubmitDisabled = ({ name, link, imgUrl, ingredients }) => {
 };
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Required"),
+  name: Yup.string().required("Required"),  
   imgUrl: Yup.string().required("Required"),
   link: Yup.string().required("Required"),
   notes: Yup.string(),
@@ -40,7 +40,6 @@ const validationSchema = Yup.object({
 export const RecipeFormNew = ({ recipe }) => {
   const classes = recipeFormStyle();
   const { editRecipe, submitRecipe } = useContext(GlobalContext);
-
   
   return (
    <Formik
@@ -51,19 +50,7 @@ export const RecipeFormNew = ({ recipe }) => {
       notes: recipe?.notes || "",
       ingredients: recipe?.ingredients || [],
     }}
-    validationSchema={Yup.object({
-      name: Yup.string().required("Required"),
-      imgUrl: Yup.string().required("Required"),
-      link: Yup.string().required("Required"),
-      notes: Yup.string(),
-      ingredients: Yup.array().of(
-        Yup.object({
-          name: Yup.string().required(),
-          unit: Yup.string().required(),
-          count: Yup.number().required().positive().integer(),
-        })
-      ),
-    })}
+    validationSchema={validationSchema}
     onSubmit={(values, { setSubmitting }) => {
       if (recipe) editRecipe({ ...recipe, ...values });
       else submitRecipe(values);
@@ -72,106 +59,134 @@ export const RecipeFormNew = ({ recipe }) => {
   >
     {(formik) => (
       <Paper className={classes.paper}>
-        <Form className={classes.form}>
-          <div>
-            <TextField
-              id="name"
-              name="name"
-              {...formik.getFieldProps("name")}
-              autoFocus
-              placeholder="Recipe Title"
-            />
-            <ErrorMessage name="name" />
-          </div>
-          <div>
-            <TextField
-              id="imgUrl"
-              name="imgUrl"
-              {...formik.getFieldProps("imgUrl")}
-              placeholder="Image URL"
-            />
-            <ErrorMessage name="imgUrl" />
-          </div>
-          <div>
-            <TextField
-              id="link"
-              name="link"
-              {...formik.getFieldProps("link")}
-              placeholder="Link to Recipe"
-            />
-            <ErrorMessage name="link" />
-          </div>
-          <FieldArray
-            name="ingredients"
-            render={(arrayHelpers) => (
-              <div>
-                {formik.values.ingredients.map((_, index) => {
-                  return (
-                    <Box key={index}>
-                      <TextField
-                        name={`ingredients[${index}].count`}
-                        type="number"
-                        placeholder="count"
-                        min="1"
-                      />
-                      <Select name={`ingredients[${index}].unit`} as="select">
-                        <option value="" disabled hidden>
-                          quantity
-                        </option>
-                        <option value={"gram"}>Grams</option>
-                        <option value={"kilograms"}>Kilograms</option>
-                        <option value={"ounces"}>Ounces</option>
-                        <option value={"pounds"}>Pounds</option>
-                        <option value={"milliliters"}>Milliliters</option>
-                        <option value={"liters"}>Liters</option>
-                        <option value={"teaspoon"}>Teaspoons</option>
-                        <option value={"tablespoon"}>Tablespoons</option>
-                        <option value={"cup"}>Cups</option>
-                        <option value={"pint"}>Pints</option>
-                        <option value={"quart"}>Quarts</option>
-                        <option value={"gallon"}>Gallons</option>
-                      </Select>
-                      <TextField
-                        name={`ingredients[${index}].name`}
-                        placeholder="name"
-                      />
-                      <IconButton onClick={() => arrayHelpers.remove(index)}>
-                        <CloseRounded color="primary" />
-                      </IconButton>
-                    </Box>
-                  );
-                })}
+        <Form className={classes.formContainer}>
+            <div className={classes.mainForm}>
+             <TextField
+                className={classes.field}
+                id="name"
+                name="name"
+                label="Recipe Title*"
+                {...formik.getFieldProps("name")}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.field}
+                name="imgUrl"
+                {...formik.getFieldProps("imgUrl")}
+                error={formik.touched.imgUrl && Boolean(formik.errors.imgUrl)}
+                helperText={formik.touched.imgUrl && formik.errors.imgUrl}
+                label="Image URL*"
+                variant="outlined"
+              />
+              <TextField
+                className={classes.field}
+                id="link"
+                name="link"
+                error={formik.touched.link && Boolean(formik.errors.link)}
+                helperText={formik.touched.link && formik.errors.link}
+                {...formik.getFieldProps("link")}
+                label="Link to Recipe*"
+                variant="outlined"
+              />
+              <TextField
+                className={classes.field}
+                id="notes"
+                name="notes"
+                multiline
+                {...formik.getFieldProps("notes")}
+                label="Notes"
+                variant="outlined"
+              />
+            </div>
+            <div className={classes.ingForm}>
+              <FieldArray
+                name="ingredients"
+                render={(arrayHelpers) => (
+                  <>
+                    {formik.values.ingredients.map((_, index) => {
+                      return (
+                        <Box key={index} className={classes.ingredientFormContainer}>
+                          <TextField
+                            labelId="count-label"
+                            className={classes.ingField + ' ' + classes.specialField}
+                            name={`ingredients[${index}].count`}
+                            type="number"
+                            label="Count"
+                            InputProps={{
+                              inputProps: { 
+                                  max: 9999, min: 1
+                              }
+                            }}
+                            variant="outlined"
+                            {...formik.getFieldProps(`ingredients[${index}].count`)}
+                          />
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              select 
+                              label="Unit"
+                              // labelId="measurement-select-label"
+                              className={classes.ingField + ' ' + classes.specialField}
+                              name={`ingredients[${index}].unit`} 
+                              variant="outlined"
+                              {...formik.getFieldProps(`ingredients[${index}].unit`)}
+                            >
+                              <MenuItem value={"gram"}>Grams</MenuItem>
+                              <MenuItem value={"kilograms"}>Kilograms</MenuItem>
+                              <MenuItem value={"ounces"}>Ounces</MenuItem>
+                              <MenuItem value={"pounds"}>Pounds</MenuItem>
+                              <MenuItem value={"milliliters"}>Milliliters</MenuItem>
+                              <MenuItem value={"liters"}>Liters</MenuItem>
+                              <MenuItem value={"teaspoon"}>Teaspoons</MenuItem>
+                              <MenuItem value={"tablespoon"}>Tablespoons</MenuItem>
+                              <MenuItem value={"cup"}>Cups</MenuItem>
+                              <MenuItem value={"pint"}>Pints</MenuItem>
+                              <MenuItem value={"quart"}>Quarts</MenuItem>
+                              <MenuItem value={"gallon"}>Gallons</MenuItem>
+                            </TextField>
+                          </FormControl>
+                          <TextField
+                            className={classes.ingField}
+                            name={`ingredients[${index}].name`}
+                            variant="outlined"
+                            label="Name"
+                            {...formik.getFieldProps(`ingredients[${index}].name`)}
+                          />
+                          <IconButton onClick={() => arrayHelpers.remove(index)}>
+                            <CloseRounded color="primary"/>
+                          </IconButton>
+                        </Box>
+                      );
+                    })}
 
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={() =>
-                    arrayHelpers.push({ name: "", unit: "", count: "" })
-                  }
-                  className={classes.button}
-                >
-                  new ingredient
-                </Button>
-              </div>
-            )}
-          />
-          <TextField
-            id="notes"
-            name="notes"
-            as="textarea"
-            {...formik.getFieldProps("notes")}
-            placeholder="Notes"
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{ color: "white", fontWeight: "bolder" }}
-            disabled={isSubmitDisabled(formik.values)}
-            className={classes.button}
-          >
-            {recipe ? "edit recipe" : "submit recipe"}
-          </Button>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      size="medium"
+                      onClick={() =>
+                        arrayHelpers.push({ name: "", unit: "", count: "" })
+                      }
+                      className={classes.button}
+                      startIcon={<AddRounded/>}
+                    >
+                      Add Ingredient
+                    </Button>
+                  </>
+                )}
+              />
+            </div>
+          <div className={classes.submitContainer}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isSubmitDisabled(formik.values)}
+              className={classes.button + ' ' + classes.submit}
+            >
+              {recipe ? "Edit Recipe" : "Submit Recipe"}
+            </Button>
+          </div>
         </Form>
       </Paper>
     )}
