@@ -62,32 +62,35 @@ export const RecipeFormNew = ({ recipe }) => {
         <Form className={classes.formContainer}>
             <div className={classes.mainForm}>
              <TextField
+                required
                 className={classes.field}
                 id="name"
                 name="name"
-                label="Recipe Title*"
+                label="Recipe Title"
                 {...formik.getFieldProps("name")}
                 error={formik.touched.name && Boolean(formik.errors.name)}
                 helperText={formik.touched.name && formik.errors.name}
                 variant="outlined"
               />
               <TextField
+                required
                 className={classes.field}
                 name="imgUrl"
                 {...formik.getFieldProps("imgUrl")}
                 error={formik.touched.imgUrl && Boolean(formik.errors.imgUrl)}
                 helperText={formik.touched.imgUrl && formik.errors.imgUrl}
-                label="Image URL*"
+                label="Image URL"
                 variant="outlined"
               />
               <TextField
+                required
                 className={classes.field}
                 id="link"
                 name="link"
                 error={formik.touched.link && Boolean(formik.errors.link)}
                 helperText={formik.touched.link && formik.errors.link}
                 {...formik.getFieldProps("link")}
-                label="Link to Recipe*"
+                label="Link to Recipe"
                 variant="outlined"
               />
               <TextField
@@ -109,6 +112,7 @@ export const RecipeFormNew = ({ recipe }) => {
                       return (
                         <Box key={index} className={classes.ingredientFormContainer}>
                           <TextField
+                            required
                             labelId="count-label"
                             className={classes.ingField + ' ' + classes.specialField}
                             name={`ingredients[${index}].count`}
@@ -124,6 +128,7 @@ export const RecipeFormNew = ({ recipe }) => {
                           />
                           <FormControl className={classes.formControl}>
                             <TextField
+                              required
                               select 
                               label="Unit"
                               // labelId="measurement-select-label"
@@ -147,6 +152,7 @@ export const RecipeFormNew = ({ recipe }) => {
                             </TextField>
                           </FormControl>
                           <TextField
+                            required
                             className={classes.ingField}
                             name={`ingredients[${index}].name`}
                             variant="outlined"

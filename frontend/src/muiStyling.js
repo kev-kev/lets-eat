@@ -152,18 +152,12 @@ export const recipeFormStyle = makeStyles((theme) => ({
     fontWeight: "bolder",
     width: "auto",
   },
-  // fieldContainer: {
-  //   margin: theme.spacing(1) 
-  // },
   field: {
     margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px`
   },
   specialField: {
     width: "6rem",
   },
-  // error: {
-  //   alignSelf: "flex-end",
-  // },
   ingredientFormContainer: {
     marginTop: theme.spacing(1), 
     display: "flex",
