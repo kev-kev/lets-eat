@@ -3,7 +3,7 @@ import { Button, Box, IconButton, Paper, TextField, Select, MenuItem, InputLabel
 import { CloseRounded, AddRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form, FieldArray, FastField } from "formik";
 import * as Yup from "yup";
 
 
@@ -61,7 +61,8 @@ export const RecipeFormNew = ({ recipe }) => {
       <Paper className={classes.paper}>
         <Form className={classes.formContainer}>
             <div className={classes.mainForm}>
-             <TextField
+             <FastField
+                component={TextField}
                 required
                 className={classes.field}
                 id="name"
@@ -72,17 +73,20 @@ export const RecipeFormNew = ({ recipe }) => {
                 helperText={formik.touched.name && formik.errors.name}
                 variant="outlined"
               />
-              <TextField
+              <FastField
+                component={TextField}
                 required
                 className={classes.field}
                 name="imgUrl"
+                id="imgUrl"
                 {...formik.getFieldProps("imgUrl")}
                 error={formik.touched.imgUrl && Boolean(formik.errors.imgUrl)}
                 helperText={formik.touched.imgUrl && formik.errors.imgUrl}
                 label="Image URL"
                 variant="outlined"
               />
-              <TextField
+              <FastField
+                component={TextField}
                 required
                 className={classes.field}
                 id="link"
@@ -93,7 +97,8 @@ export const RecipeFormNew = ({ recipe }) => {
                 label="Link to Recipe"
                 variant="outlined"
               />
-              <TextField
+              <FastField
+                component={TextField}
                 className={classes.field}
                 id="notes"
                 name="notes"
@@ -111,9 +116,10 @@ export const RecipeFormNew = ({ recipe }) => {
                     {formik.values.ingredients.map((_, index) => {
                       return (
                         <Box key={index} className={classes.ingredientFormContainer}>
-                          <TextField
+                          <FastField
+                            component={TextField}
+                            id={`ingredients[${index}].count`}
                             required
-                            labelId="count-label"
                             className={classes.ingField + ' ' + classes.specialField}
                             name={`ingredients[${index}].count`}
                             type="number"
@@ -127,13 +133,15 @@ export const RecipeFormNew = ({ recipe }) => {
                             {...formik.getFieldProps(`ingredients[${index}].count`)}
                           />
                           <FormControl className={classes.formControl}>
-                            <TextField
+                            <FastField
+                              component={TextField}
                               required
                               select 
                               label="Unit"
                               // labelId="measurement-select-label"
                               className={classes.ingField + ' ' + classes.specialField}
                               name={`ingredients[${index}].unit`} 
+                              id={`ingredients[${index}].unit`} 
                               variant="outlined"
                               {...formik.getFieldProps(`ingredients[${index}].unit`)}
                             >
@@ -149,14 +157,16 @@ export const RecipeFormNew = ({ recipe }) => {
                               <MenuItem value={"pint"}>Pints</MenuItem>
                               <MenuItem value={"quart"}>Quarts</MenuItem>
                               <MenuItem value={"gallon"}>Gallons</MenuItem>
-                            </TextField>
+                            </FastField>
                           </FormControl>
-                          <TextField
+                          <FastField
                             required
                             className={classes.ingField}
                             name={`ingredients[${index}].name`}
+                            id={`ingredients[${index}].name`}
                             variant="outlined"
                             label="Name"
+                            component={TextField}
                             {...formik.getFieldProps(`ingredients[${index}].name`)}
                           />
                           <IconButton onClick={() => arrayHelpers.remove(index)}>
