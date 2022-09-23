@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Box, IconButton, Paper, TextField, Select, MenuItem, InputLabel, FormControl } from "@material-ui/core/";
 import { CloseRounded, AddRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Formik, Form, FieldArray, FastField } from "formik";
 import * as Yup from "yup";
-
-
 
 const isSubmitDisabled = ({ name, link, imgUrl, ingredients }) => {
   const hasEmptyIngredientInput = () => {
@@ -58,7 +56,7 @@ export const RecipeFormNew = ({ recipe }) => {
     }}
   >
     {(formik) => (
-      <Paper className={classes.paper}>
+      <div className={classes.paper}>
         <Form className={classes.formContainer}>
             <div className={classes.mainForm}>
              <FastField
@@ -69,7 +67,7 @@ export const RecipeFormNew = ({ recipe }) => {
                 name="name"
                 label="Recipe Title"
                 {...formik.getFieldProps("name")}
-                error={formik.touched.name && Boolean(formik.errors.name)}
+                error={formik.touched.name && !!formik.errors.name}
                 helperText={formik.touched.name && formik.errors.name}
                 variant="outlined"
               />
@@ -80,7 +78,7 @@ export const RecipeFormNew = ({ recipe }) => {
                 name="imgUrl"
                 id="imgUrl"
                 {...formik.getFieldProps("imgUrl")}
-                error={formik.touched.imgUrl && Boolean(formik.errors.imgUrl)}
+                error={formik.touched.imgUrl && !!formik.errors.imgUrl}
                 helperText={formik.touched.imgUrl && formik.errors.imgUrl}
                 label="Image URL"
                 variant="outlined"
@@ -91,7 +89,7 @@ export const RecipeFormNew = ({ recipe }) => {
                 className={classes.field}
                 id="link"
                 name="link"
-                error={formik.touched.link && Boolean(formik.errors.link)}
+                error={formik.touched.link && !!formik.errors.link}
                 helperText={formik.touched.link && formik.errors.link}
                 {...formik.getFieldProps("link")}
                 label="Link to Recipe"
@@ -115,34 +113,26 @@ export const RecipeFormNew = ({ recipe }) => {
                   <>
                     {formik.values.ingredients.map((_, index) => {
                       return (
-                        <Box key={index} className={classes.ingredientFormContainer}>
-                          <FastField
-                            component={TextField}
+                        <div key={index} className={classes.ingredientFormContainer}>
+                          <TextField
                             id={`ingredients[${index}].count`}
                             required
-                            className={classes.ingField + ' ' + classes.specialField}
+                            className={classes.ingField + ' ' + classes.numInput}
                             name={`ingredients[${index}].count`}
                             type="number"
                             label="Count"
-                            InputProps={{
-                              inputProps: { 
-                                  max: 9999, min: 1
-                              }
-                            }}
                             variant="outlined"
                             {...formik.getFieldProps(`ingredients[${index}].count`)}
                           />
                           <FormControl className={classes.formControl}>
-                            <FastField
-                              component={TextField}
+                            <TextField
+                              variant="outlined"
                               required
                               select 
                               label="Unit"
-                              // labelId="measurement-select-label"
-                              className={classes.ingField + ' ' + classes.specialField}
+                              className={classes.ingField + ' ' + classes.unitSelect}
                               name={`ingredients[${index}].unit`} 
                               id={`ingredients[${index}].unit`} 
-                              variant="outlined"
                               {...formik.getFieldProps(`ingredients[${index}].unit`)}
                             >
                               <MenuItem value={"gram"}>Grams</MenuItem>
@@ -157,7 +147,7 @@ export const RecipeFormNew = ({ recipe }) => {
                               <MenuItem value={"pint"}>Pints</MenuItem>
                               <MenuItem value={"quart"}>Quarts</MenuItem>
                               <MenuItem value={"gallon"}>Gallons</MenuItem>
-                            </FastField>
+                            </TextField>
                           </FormControl>
                           <FastField
                             required
@@ -172,7 +162,7 @@ export const RecipeFormNew = ({ recipe }) => {
                           <IconButton onClick={() => arrayHelpers.remove(index)}>
                             <CloseRounded color="primary"/>
                           </IconButton>
-                        </Box>
+                        </div>
                       );
                     })}
 
@@ -204,7 +194,7 @@ export const RecipeFormNew = ({ recipe }) => {
             </Button>
           </div>
         </Form>
-      </Paper>
+      </div>
     )}
   </Formik>
   );

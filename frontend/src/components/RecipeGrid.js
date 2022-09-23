@@ -124,14 +124,26 @@ export default function RecipeGrid(props) {
     case "inbox":
       return (
         <>
-          {renderGridContainer(inboxRecipes, props.type, classes)}
+          <div className={classes.recipeGridSectionContainer}>
+            {renderGridContainer(inboxRecipes, props.type, classes)}
+          </div>
           <h2>pending recipes</h2>
-          {renderGridContainer(pendingRecipes, "pending", classes)}
+          <div className={classes.recipeGridSectionContainer}>
+            {renderGridContainer(pendingRecipes, "pending", classes)}
+          </div>
         </>
       );
     case "favorites":
-      return renderGridContainer(favoritedRecipes, props.type, classes);
+      return (
+        <div className={classes.recipeGridSectionContainer}>
+          {renderGridContainer(favoritedRecipes, props.type, classes)}
+        </div>
+      )
     case "rejected":
-      return renderGridContainer(rejectedRecipes, props.type, classes);
+      return (
+        <div className={classes.recipeGridSectionContainer}>
+          {renderGridContainer(rejectedRecipes, props.type, classes)}
+        </div>
+      )
   }
 }

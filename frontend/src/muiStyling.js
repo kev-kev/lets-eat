@@ -18,7 +18,7 @@ export const gridStyle = makeStyles((theme) => ({
   recipeGridSectionContainer: {
     display: "flex",
     flexDirection: "column",
-    padding: "0% 2% 5% 5%"
+    padding: "0% 2% 5% 2%"
   },
   gridContainer: {
     marginTop: "10px",
@@ -50,7 +50,8 @@ export const homeStyle = makeStyles((theme) => ({
 
 export const titleStyle = makeStyles((theme) => ({
   pageTitle: {
-    paddingTop: theme.spacing(2)
+    paddingTop: theme.spacing(2),
+    textAlign: "center",
   }
 }));
 
@@ -128,11 +129,9 @@ export const modalStyle = makeStyles((theme) => ({
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(10),
     display: "flex",
-    justifyContent: "center",
-    height: "70vh",
-    alignItems: "center"
+    justifyContent: "center",    
   },
   // kirby: {
   //   width: "auto",
@@ -141,6 +140,8 @@ export const recipeFormStyle = makeStyles((theme) => ({
   // },
   formContainer: {
     width: "60%",
+    // marginTop: theme.spacing(4),
+    
   },
   mainForm: {
     // padding: "5vh",
@@ -155,7 +156,10 @@ export const recipeFormStyle = makeStyles((theme) => ({
   field: {
     margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px`
   },
-  specialField: {
+  unitSelect: {
+    width: "6rem",
+  },
+  numInput: {
     width: "6rem",
   },
   ingredientFormContainer: {
