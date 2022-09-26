@@ -14,11 +14,12 @@ export const gridStyle = makeStyles((theme) => ({
   },
   sectionTitle: {
     textAlign: "center",
+    margin: "0px"
   },
   recipeGridSectionContainer: {
     display: "flex",
     flexDirection: "column",
-    padding: "0% 2% 5% 2%"
+    padding: "0% 2% 0% 2%"
   },
   gridContainer: {
     marginTop: "10px",
@@ -29,6 +30,9 @@ export const gridStyle = makeStyles((theme) => ({
   },
   hideVisibility: {
     visibility: "hidden"
+  },
+  divider: {
+    margin: "1rem 0rem"
   }
 }), {index: 1});
 
@@ -111,7 +115,7 @@ export const recipeCardStyle = makeStyles((theme) => ({
 
 export const modalStyle = makeStyles((theme) => ({
   modal: {
-    width: 400,
+    // width: 400,
     backgroundColor: theme.palette.secondary.light,
     border: "2px solid #000",
     boxShadow: 2,

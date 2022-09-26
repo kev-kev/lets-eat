@@ -37,6 +37,7 @@ const CardModal = (props) => {
     if (isEditing) {
       return (
         <div key={props.recipe.id}>
+          {/* add modal prop to form? */}
           <RecipeFormNew recipe={props.recipe} />
           <Button onClick={() => setIsEditing(false)}>back</Button>
         </div>

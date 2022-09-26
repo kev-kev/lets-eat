@@ -21,14 +21,14 @@ const isSubmitDisabled = ({ name, link, imgUrl, ingredients }) => {
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),  
-  imgUrl: Yup.string().required("Required"),
-  link: Yup.string().required("Required"),
+  imgUrl: Yup.string(),
+  link: Yup.string(),
   notes: Yup.string(),
   ingredients: Yup.array().of(
     Yup.object({
       name: Yup.string().required(),
-      unit: Yup.string().required(),
-      count: Yup.number().required().positive().integer(),
+      unit: Yup.string(),
+      count: Yup.number().positive().integer(),
     })
   ),
 });
@@ -73,7 +73,6 @@ export const RecipeFormNew = ({ recipe }) => {
               />
               <FastField
                 component={TextField}
-                required
                 className={classes.field}
                 name="imgUrl"
                 id="imgUrl"
@@ -85,7 +84,6 @@ export const RecipeFormNew = ({ recipe }) => {
               />
               <FastField
                 component={TextField}
-                required
                 className={classes.field}
                 id="link"
                 name="link"
@@ -116,7 +114,6 @@ export const RecipeFormNew = ({ recipe }) => {
                         <div key={index} className={classes.ingredientFormContainer}>
                           <TextField
                             id={`ingredients[${index}].count`}
-                            required
                             className={classes.ingField + ' ' + classes.numInput}
                             name={`ingredients[${index}].count`}
                             type="number"
@@ -127,7 +124,6 @@ export const RecipeFormNew = ({ recipe }) => {
                           <FormControl className={classes.formControl}>
                             <TextField
                               variant="outlined"
-                              required
                               select 
                               label="Unit"
                               className={classes.ingField + ' ' + classes.unitSelect}

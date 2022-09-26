@@ -89,7 +89,7 @@ export default function RecipeGrid(props) {
   switch (props.type) {
     case "index":
       return (
-        <div className={classes.root}>
+        <>
           <div className={classes.recipeGridSectionContainer}>
             <h2 className={classes.sectionTitle}>
               <IconButton onClick={() => handleChangeWeek("back")}>
@@ -104,7 +104,7 @@ export default function RecipeGrid(props) {
             {renderGridContainer(weeklyRecipes, "weekly", classes)}
             {renderGroceryListModal()}
           </div>
-          <Divider />
+          <Divider className={classes.divider} />
           <div className={classes.recipeGridSectionContainer}>
             <h2 className={classes.sectionTitle}>Other Recipes</h2>
             <div className={classes.searchBar}><SearchBar /></div>
@@ -119,15 +119,17 @@ export default function RecipeGrid(props) {
               </IconButton>
             </div>
           </div>
-        </div>
+        </>
       );
     case "inbox":
       return (
         <>
+          <h2 className={classes.sectionTitle}>Pending Recipes</h2>
           <div className={classes.recipeGridSectionContainer}>
             {renderGridContainer(inboxRecipes, props.type, classes)}
           </div>
-          <h2>pending recipes</h2>
+          <Divider className={classes.divider}/>
+          <h2 className={classes.sectionTitle}>Your Submitted Recipes</h2>
           <div className={classes.recipeGridSectionContainer}>
             {renderGridContainer(pendingRecipes, "pending", classes)}
           </div>
