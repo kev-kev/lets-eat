@@ -13,16 +13,14 @@ import {
 } from "@material-ui/core";
 import { DeleteForeverRounded, EditRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
-import RecipeForm from "./RecipeForm";
 import { RecipeFormNew } from "./RecipeFormNew";
 
 const renderIngredientTypography = (ingredients) => {
   return ingredients.map((ing, i) => {
     return (
-      <span key={i}>
+      <div key={i}>
         - {ing.name}: {ing.count} {ing.unit}
-        <br />
-      </span>
+      </div>
     );
   });
 };
@@ -37,9 +35,8 @@ const CardModal = (props) => {
     if (isEditing) {
       return (
         <div key={props.recipe.id}>
-          {/* add modal prop to form? */}
-          <RecipeFormNew recipe={props.recipe} />
-          <Button onClick={() => setIsEditing(false)}>back</Button>
+          <RecipeFormNew recipe={props.recipe} modal/>
+          <Button onClick={() => setIsEditing(false)}>Back</Button>
         </div>
       );
     } else {
@@ -55,7 +52,7 @@ const CardModal = (props) => {
           </Typography>
           <br />
           <Typography variant="caption">
-            submitted by: {props.recipe.submittedBy}
+            Submitted by: {props.recipe.submittedBy}
           </Typography>
           {renderEditBtn()}
           {renderDeleteBtn()}
@@ -89,7 +86,7 @@ const CardModal = (props) => {
             <DialogTitle>{"Delete Recipe?"}</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                recipe will be deleted forever.
+                Recipe will be deleted forever.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -99,7 +96,7 @@ const CardModal = (props) => {
                 autoFocus
                 onClick={() => setIsDialogOpen(false)}
               >
-                nevermind...
+                Nevermind...
               </Button>
               <Button
                 color="primary"
@@ -109,7 +106,7 @@ const CardModal = (props) => {
                   setIsDialogOpen(false);
                 }}
               >
-                delete
+                Delete
               </Button>
             </DialogActions>
           </Dialog>
@@ -117,10 +114,20 @@ const CardModal = (props) => {
       );
   };
 
+  const getModalClass = () => {
+    let res = classes.modalContent;
+    if(isEditing) res += ` ${classes.modalForm}`
+    return res;
+  }
   return (
-    <Modal open={props.shouldShowModal} onClose={handleClose}>
-      <div className={classes.modal} mx="auto">
-        <h2>{props.recipe.name}</h2>
+    <Modal 
+      open={props.shouldShowModal} 
+      onClose={handleClose} 
+      aria-labelledby="modal-title"
+class
+    >
+      <div className={getModalClass()}>
+        <h2 id="modal-title" className={classes.modalTitle}>{props.recipe.name}</h2>
         {renderCardModalBody()}
       </div>
     </Modal>

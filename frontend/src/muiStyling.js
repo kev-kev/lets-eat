@@ -49,7 +49,16 @@ export const homeStyle = makeStyles((theme) => ({
   container: {
     paddingBottom: theme.spacing(4),
     margin: 0,
+    display: "flex",
+    flexDirection: "column",
+    height: "100vh",
   },
+  mainContent: {
+    flexGrow: 1,
+  },
+  copyright: {
+    alignSelf: "flex-end",
+  }
 }), {index: 1});
 
 export const titleStyle = makeStyles((theme) => ({
@@ -114,26 +123,35 @@ export const recipeCardStyle = makeStyles((theme) => ({
 }), {index: 1});
 
 export const modalStyle = makeStyles((theme) => ({
-  modal: {
-    // width: 400,
+  modalContent: {
     backgroundColor: theme.palette.secondary.light,
-    border: "2px solid #000",
-    boxShadow: 2,
-    padding: theme.spacing(2, 4, 3),
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    padding: theme.spacing(6, 6),
+    overflow: "scroll",
+    // border: "2px solid #000",
+    // boxShadow: "2",
+    minWidth: "40%"
+  },
+  modalForm: {
+    maxHeight: "70%",
+    width: "80%",
   },
   button: {
     color: "white",
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
+    fontWeight: "bolder"
   },
+  modalTitle: {
+    textAlign: "center"
+  }
 }), {index: 1});
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(2),
     display: "flex",
     justifyContent: "center",    
   },
@@ -144,11 +162,8 @@ export const recipeFormStyle = makeStyles((theme) => ({
   // },
   formContainer: {
     width: "60%",
-    // marginTop: theme.spacing(4),
-    
   },
   mainForm: {
-    // padding: "5vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center"
@@ -158,7 +173,8 @@ export const recipeFormStyle = makeStyles((theme) => ({
     width: "auto",
   },
   field: {
-    margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px`
+    // margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px`
+    margin: theme.spacing(1, 0, 1)
   },
   unitSelect: {
     width: "6rem",
@@ -169,7 +185,8 @@ export const recipeFormStyle = makeStyles((theme) => ({
   ingredientFormContainer: {
     marginTop: theme.spacing(1), 
     display: "flex",
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    alignItems: "center"
   },
   ingField:{
     // margin: theme.spacing(1),
@@ -177,13 +194,18 @@ export const recipeFormStyle = makeStyles((theme) => ({
   submit: {
     color: "white",
     fontWeight: "bolder",
+    marginTop: theme.spacing(1),
   },
   submitContainer: {
     display: "flex",
     flexDirection: "row-reverse"
   },
   formControl: {
-    margin: `0 ${theme.spacing(1)}px`
+    margin: theme.spacing(0, 1)
+  },
+  loading: {
+    alignSelf: "center",
+    justifySelf: "center"
   }
 }), {index: 1});
 

@@ -28,29 +28,37 @@ const Home = () => {
             <Switch>
               <Route path="/new">
                 <Title className={classes.pageTitle}>New Recipe</Title>
-                <RecipeFormNew />
+                <div className={classes.mainContent}>
+                  <RecipeFormNew />
+                </div>
               </Route>
               <Route path="/inbox">
                 <Title className={classes.pageTitle}>Inbox</Title>
-                <RecipeGrid type="inbox" />
+                <div className={classes.mainContent}>
+                  <RecipeGrid type="inbox" />
+                </div>
               </Route>
               <Route path="/favorites">
                 <Title className={classes.pageTitle}>Favorites</Title>
-                <RecipeGrid type="favorites" />
+                <div className={classes.mainContent}>
+                  <RecipeGrid type="favorites" />
+                </div>
               </Route>
               <Route path="/rejected">
                 <Title className={classes.pageTitle}>Rejected</Title>
-                <RecipeGrid type="rejected" />
+                <div className={classes.mainContent}>
+                  <RecipeGrid type="rejected" />
+                </div>
               </Route>
               <Route path="/">
                 <Title className={classes.pageTitle}>Let's Eat!</Title>
-                <RecipeGrid type="index" />
+                <div className={classes.mainContent}>
+                  <RecipeGrid type="index" />
+                </div>
               </Route>
             </Switch>
+            <Copyright className={classes.copyright} />
           </Container>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
         </main>
       </div>
     );
