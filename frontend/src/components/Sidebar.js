@@ -26,8 +26,6 @@ const Sidebar = () => {
   const { logoutUser, recipes, user, inboxRecipes, changeSelectedWeek } =
     useContext(GlobalContext);
   let history = useHistory();
-  const PLACEHOLDER_IMG_URL =
-    "https://patriotpower.ogsd.net/wp-content/uploads/2018/03/Profile_Kirby.aead314d435d8e52d9a4e92a6f799c4eee08081e.jpg";
 
   const renderInboxBadge = () => {
     if (inboxRecipes.length > 0) {
@@ -95,15 +93,14 @@ const Sidebar = () => {
             key={"user-icon"}
             className={classes.userAvatar}
           >
-            <ListItemIcon>
+            <ListItemIcon className={classes.sidebarItem}>
               <Avatar
-                alt="user"
-                src={PLACEHOLDER_IMG_URL}
-                className={classes.large}
+                alt={user.username}
+                src={"/assets/avatar.png"}
+                className={classes.avatar}
               />
             </ListItemIcon>
           </ListItem>
-          <ListItem>{user.username}</ListItem>
         </div>
       </List>
     </div>

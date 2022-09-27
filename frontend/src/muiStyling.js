@@ -231,13 +231,15 @@ export const sidebarStyle = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+  avatar: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+    backgroundColor: theme.palette.primary.main,
+    fontWeight: "bolder"
   },
   userAvatar: {
-    paddingTop: "15%",
-    paddingBottom: "30%",
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(3),
   },
 }), {index: 1});
 
