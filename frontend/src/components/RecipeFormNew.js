@@ -1,24 +1,26 @@
-import React, { useContext, useState, useEffect, createRef } from "react";
-import { Button, IconButton, TextField, MenuItem, FormControl, CircularProgress, Snackbar } from "@material-ui/core/";
-import { Alert } from "@material-ui/lab/";
+import React, { useContext } from "react";
+import { Button, IconButton, TextField, MenuItem, FormControl, CircularProgress, } from "@material-ui/core/";
 import { CloseRounded, AddRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Formik, Form, FieldArray, FastField } from "formik";
 import * as Yup from "yup";
 
-const isSubmitDisabled = (name, ingredients) => {
+const isSubmitDisabled = (values, recipe) => {
+  const changedFields = () => {
+    if(!recipe) return false;
+    for (const key of Object.keys(values)){
+      if(recipe[key] !== values[key]) return true;
+    }
+  }
   const hasEmptyIngredientInput = () => {
-    for (const ingredient of ingredients) {
+    for (const ingredient of values.ingredients) {
       if(ingredient.name.length === 0) return true;
     }
     return false;
   }
-  return hasEmptyIngredientInput() || name.length === 0;
+  return hasEmptyIngredientInput() || values.name.length === 0 || !changedFields();
 };
-
-const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
-const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),  
@@ -36,41 +38,12 @@ const validationSchema = Yup.object({
 
 export const RecipeFormNew = ({ recipe }) => {
   const classes = recipeFormStyle();
-  const { editRecipe, submitRecipe, isSubmittingRecipe, errors, clearErrors } = useContext(GlobalContext);
-  const [successSnackbar, setSuccessSnackbar] = useState(false);
-  const [errorSnackbar, setErrorSnackbar] = useState(false);
-  const snackbarRef = createRef();
-  
-  useEffect(() => {
-    if (errors.submit) setErrorSnackbar(true);
-  }, [errors.submit]);
-
-  useEffect(() => {
-    if(isSubmittingRecipe && Object.values(errors).every(error => !error))
-      setSuccessSnackbar(true);
-  }, [isSubmittingRecipe])
-
-  const handleSnackbarClose = () => {
-    setErrorSnackbar(false);
-    setSuccessSnackbar(false);
-    clearErrors();
-  };
+  const { editRecipe, submitRecipe, isSubmittingRecipe, } = useContext(GlobalContext);
 
   if (isSubmittingRecipe) {
     return <CircularProgress className={classes.loading} />
   } else {
     return (
-    <>
-      {/* <Snackbar open={errorSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
-        <Alert onClose={handleSnackbarClose} severity="error">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
-      <Snackbar open={successSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
-        <Alert onClose={handleSnackbarClose} severity="success">
-          {successMessage}
-        </Alert>
-      </Snackbar> */}
       <Formik
         initialValues={{
           name: recipe?.name || "",
@@ -214,7 +187,7 @@ export const RecipeFormNew = ({ recipe }) => {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  disabled={isSubmitDisabled(formik.values.name, formik.values.ingredients)}
+                  disabled={isSubmitDisabled(formik.values, recipe)}
                   className={classes.button + ' ' + classes.submit}
                 >
                   {recipe ? "Edit Recipe" : "Submit Recipe"}
@@ -224,7 +197,6 @@ export const RecipeFormNew = ({ recipe }) => {
           </div>
         )}
       </Formik>
-    </>
     );
   }
  };

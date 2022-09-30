@@ -129,7 +129,7 @@ export const modalStyle = makeStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    padding: theme.spacing(6, 6),
+    padding: theme.spacing(2, 6),
     overflow: "scroll",
     // border: "2px solid #000",
     // boxShadow: "2",
@@ -146,6 +146,9 @@ export const modalStyle = makeStyles((theme) => ({
   },
   modalTitle: {
     textAlign: "center"
+  },
+  backArrow: {
+    // color: theme.palette.primary.dark
   }
 }), {index: 1});
 

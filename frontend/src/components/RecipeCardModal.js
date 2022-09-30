@@ -11,7 +11,7 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { DeleteForeverRounded, EditRounded } from "@material-ui/icons";
+import { DeleteForeverRounded, EditRounded, ArrowBackRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
 import { RecipeFormNew } from "./RecipeFormNew";
 
@@ -29,14 +29,19 @@ const CardModal = (props) => {
   const classes = modalStyle();
   const { openRecipeId, deleteRecipe } = useContext(GlobalContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [shouldShowEditForm, setShouldShowEditForm] = useState(false);
 
   const renderCardModalBody = () => {
-    if (isEditing) {
+    if (shouldShowEditForm) {
       return (
         <div key={props.recipe.id}>
           <RecipeFormNew recipe={props.recipe} modal/>
-          <Button onClick={() => setIsEditing(false)}>Back</Button>
+          <Button 
+            onClick={() => setShouldShowEditForm(false)}
+            startIcon={<ArrowBackRounded color="primary.light" className={classes.backArrow}/>}
+          >
+            Back
+          </Button>
         </div>
       );
     } else {
@@ -64,14 +69,14 @@ const CardModal = (props) => {
   const renderEditButton = () => {
     if (props.recipe.status === "approved")
       return (
-        <IconButton onClick={() => setIsEditing(true)}>
+        <IconButton onClick={() => setShouldShowEditForm(true)}>
           <EditRounded color="primary" />
         </IconButton>
       );
   };
 
   const handleClose = () => {
-    setIsEditing(false);
+    setShouldShowEditForm(false);
     props.onClose();
   };
 
@@ -116,7 +121,7 @@ const CardModal = (props) => {
 
   const getModalClass = () => {
     let res = classes.modalContent;
-    if(isEditing) res += ` ${classes.modalForm}`
+    if(shouldShowEditForm) res += ` ${classes.modalForm}`
     return res;
   }
   return (
