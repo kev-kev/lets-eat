@@ -25,6 +25,8 @@ const initialState = {
   rejectedRecipes: [],
   indexRecipes: [],
   openRecipeId: null,
+  showSuccessSnackbar: false,
+  showErrorSnackbar: false,
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -36,24 +38,6 @@ const handleErrors = (response) => {
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-
-  const getRecipesFromType = (type) => {
-    //eslint-disable-next-line
-    switch (type) {
-      case "weekly":
-        return state.weeklyRecipes
-      case "approved":
-        return state.approvedRecipes
-      case "favorited":
-        return state.favoritedRecipes
-      case "inbox":
-        return state.inboxRecipes
-      case "pending":
-        return state.pendingRecipes
-      case "rejected":
-        return state.rejectedRecipes
-    }
-  };
 
   const isWeeklyRecipe = (recipeWeeks, newWeek = state.selectedWeek) => {
     return recipeWeeks.some(
@@ -83,7 +67,6 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const editRecipe = (recipe) => {
-    // debugger
     dispatch({
       type: "EDITING_RECIPE",
     });
@@ -119,6 +102,7 @@ export const GlobalProvider = ({ children }) => {
               type: subType,
             },
           });
+          setShowSnackbar("success");
         } else {
           // update approved and index
           const updatedApprovedRecipes = state.approvedRecipes;
@@ -304,8 +288,10 @@ export const GlobalProvider = ({ children }) => {
             submittedBy: state.user.username,
           },
         });
+        setShowSnackbar("success")
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "SUBMIT_RECIPE_FAILURE",
           payload: error,
@@ -336,6 +322,7 @@ export const GlobalProvider = ({ children }) => {
         });
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "DELETE_RECIPE_FAILURE",
           payload: error,
@@ -363,6 +350,7 @@ export const GlobalProvider = ({ children }) => {
         });
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "STATUS_UPDATE_FAILURE",
           payload: error,
@@ -392,6 +380,7 @@ export const GlobalProvider = ({ children }) => {
           });
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "FAVORITE_UPDATE_FAILURE",
           payload: error,
@@ -420,6 +409,7 @@ export const GlobalProvider = ({ children }) => {
           });
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "WEEKS_UPDATE_FAILURE",
           payload: error,
@@ -438,6 +428,7 @@ export const GlobalProvider = ({ children }) => {
         });
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "GET_GROCERY_LIST_FAILURE",
           payload: error,
@@ -462,7 +453,14 @@ export const GlobalProvider = ({ children }) => {
     dispatch({
       type: "SET_OPEN_RECIPE_ID",
       payload: id
-    })
+    });
+  }
+
+  const setShowSnackbar = (type, bool = true) => {
+    dispatch({
+      type: "SET_SHOW_SNACKBAR",
+      payload: { type, bool }
+    });
   }
 
   function logoutUser() {
@@ -512,7 +510,10 @@ export const GlobalProvider = ({ children }) => {
         setIndexRecipes,
         persistentLogin,
         openRecipeId: state.openRecipeId,
-        setOpenRecipeId
+        setOpenRecipeId,
+        setShowSnackbar,
+        showSuccessSnackbar: state.showSuccessSnackbar,
+        showErrorSnackbar: state.showErrorSnackbar,
       }}
     >
       {children}

@@ -8,7 +8,7 @@ import { Switch, Route } from "react-router-dom";
 import { homeStyle } from "../muiStyling";
 import RecipeGrid from "./RecipeGrid";
 import Title from "./Title";
-import { RecipeFormNew } from "./RecipeFormNew";
+import { RecipeForm } from "./RecipeForm";
 import LoginForm from "./LoginForm";
 
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
@@ -17,29 +17,15 @@ const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 
 const Home = () => {
   const classes = homeStyle();
-  const { user, fetchRecipes, errors, isSubmittingRecipe, clearErrors, isEditingRecipe } = useContext(GlobalContext);
-  
-  const [successSnackbar, setSuccessSnackbar] = useState(false);
-  const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const { user, fetchRecipes, clearErrors, showErrorSnackbar, showSuccessSnackbar, setShowSnackbar } = useContext(GlobalContext);
   const snackbarRef = createRef();
 
   useEffect(() => {
     user && fetchRecipes(user);
   }, [user]); //eslint-disable-line
 
-  useEffect(() => {
-    if (Object.values(errors).some(error => error)) setErrorSnackbar(true);
-  }, [errors]);
-
-  useEffect(() => {
-    if((isSubmittingRecipe || isEditingRecipe) && Object.values(errors).every(error => !error)){
-      setSuccessSnackbar(true);
-    }
-  }, [isSubmittingRecipe, isEditingRecipe])
-
-  const handleSnackbarClose = () => {
-    setErrorSnackbar(false);
-    setSuccessSnackbar(false);
+  const handleSnackbarClose = (type) => {
+    setShowSnackbar(type, false);
     clearErrors();
   };
 
@@ -54,7 +40,7 @@ const Home = () => {
               <Route path="/new">
                 <Title className={classes.pageTitle}>New Recipe</Title>
                 <div className={classes.mainContent}>
-                  <RecipeFormNew />
+                  <RecipeForm />
                 </div>
               </Route>
               <Route path="/inbox">
@@ -83,13 +69,15 @@ const Home = () => {
               </Route>
             </Switch>
             <Portal>
-              <Snackbar open={errorSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
-                <Alert onClose={handleSnackbarClose} severity="error">
+              <Snackbar open={showErrorSnackbar} onClose={() => handleSnackbarClose("error")} ref={snackbarRef}>
+                <Alert onClose={() => handleSnackbarClose("error")} severity="error">
                   {errorMessage}
                 </Alert>
               </Snackbar>
-              <Snackbar open={successSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
-                <Alert onClose={handleSnackbarClose} severity="success">
+            </Portal>
+            <Portal>
+              <Snackbar open={showSuccessSnackbar} onClose={() => handleSnackbarClose("success")} ref={snackbarRef}>
+                <Alert onClose={() => handleSnackbarClose("success")} severity="success">
                   {successMessage}
                 </Alert>
               </Snackbar>

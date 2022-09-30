@@ -282,7 +282,19 @@ export const AppReducer = (state, action) => {
       return {
         ...state,
         openRecipeId: action.payload
-      }
+      };
+    case "SET_SHOW_SNACKBAR":
+      if(action.payload.type === "error"){
+        return {
+          ...state,
+          showErrorSnackbar: action.payload.bool
+        }
+      } else {
+        return {
+          ...state,
+          showSuccessSnackbar: action.payload.bool
+        }
+      };
     case "LOGOUT_USER":
       localStorage.clear();
       return {

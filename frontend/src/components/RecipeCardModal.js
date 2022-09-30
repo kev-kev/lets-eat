@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { DeleteForeverRounded, EditRounded, ArrowBackRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
-import { RecipeFormNew } from "./RecipeFormNew";
+import { RecipeForm } from "./RecipeForm";
 
 const renderIngredientTypography = (ingredients) => {
   return ingredients.map((ing, i) => {
@@ -35,7 +35,7 @@ const CardModal = (props) => {
     if (shouldShowEditForm) {
       return (
         <div key={props.recipe.id}>
-          <RecipeFormNew recipe={props.recipe} modal/>
+          <RecipeForm recipe={props.recipe} modal/>
           <Button 
             onClick={() => setShouldShowEditForm(false)}
             startIcon={<ArrowBackRounded color="primary.light" className={classes.backArrow}/>}
