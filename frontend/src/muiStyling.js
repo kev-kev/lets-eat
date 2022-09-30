@@ -95,6 +95,7 @@ export const loginStyle = makeStyles((theme) => ({
 export const recipeCardStyle = makeStyles((theme) => ({
   root: {
     position: "relative",
+    borderRadius: "5%"
   },
   media: {
     height: 0,

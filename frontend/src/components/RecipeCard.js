@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import RecipeVoteBody from "./RecipeVoteBody";
 import RecipeCardModal from "./RecipeCardModal";
@@ -24,6 +24,7 @@ import { differenceInDays, formatISO, parseISO } from "date-fns";
 const RecipeCard = (props) => {
   const classes = recipeCardStyle();
   const { setWeeks, selectedWeek, editRecipe, setOpenRecipeId } = useContext(GlobalContext);
+  const [raised, setRaised] = useState(false);
 
   const renderIndexCardBody = () => {
     return (
@@ -98,7 +99,12 @@ const RecipeCard = (props) => {
 
   return (
     <>
-      <Card className={classes.root}>
+      <Card 
+        className={classes.root}
+        raised={raised}
+        onMouseOver={() => setRaised(true)}
+        onMouseOut={() => setRaised(false)}
+      >
         {renderAddOrRemoveBtn()}
         <CardMedia
           className={classes.media}
