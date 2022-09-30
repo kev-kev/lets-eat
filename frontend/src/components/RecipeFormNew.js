@@ -19,7 +19,7 @@ const isSubmitDisabled = (values, recipe) => {
     }
     return false;
   }
-  return hasEmptyIngredientInput() || values.name.length === 0 || !changedFields();
+  return hasEmptyIngredientInput() || values.name.length === 0 || (recipe && !changedFields());
 };
 
 const validationSchema = Yup.object({
