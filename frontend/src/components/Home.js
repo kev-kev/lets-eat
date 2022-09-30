@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from "react";
-import { Box, Container, CssBaseline } from "@material-ui/core";
+import React, { useContext, useEffect, useState, createRef } from "react";
+import { Container, CssBaseline, Snackbar, Portal } from "@material-ui/core";
+import { Alert } from "@material-ui/lab/";
 import Sidebar from "./Sidebar";
 import Copyright from "./Copyright";
 import { GlobalContext } from "../context/GlobalState";
@@ -10,13 +11,37 @@ import Title from "./Title";
 import { RecipeFormNew } from "./RecipeFormNew";
 import LoginForm from "./LoginForm";
 
+const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
+const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
+
+
 const Home = () => {
   const classes = homeStyle();
-  const { user, fetchRecipes } = useContext(GlobalContext);
+  const { user, fetchRecipes, errors, isSubmittingRecipe, clearErrors, isEditingRecipe } = useContext(GlobalContext);
+  
+  const [successSnackbar, setSuccessSnackbar] = useState(false);
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const snackbarRef = createRef();
 
   useEffect(() => {
     user && fetchRecipes(user);
   }, [user]); //eslint-disable-line
+
+  useEffect(() => {
+    if (Object.values(errors).some(error => error)) setErrorSnackbar(true);
+  }, [errors]);
+
+  useEffect(() => {
+    if((isSubmittingRecipe || isEditingRecipe) && Object.values(errors).every(error => !error)){
+      setSuccessSnackbar(true);
+    }
+  }, [isSubmittingRecipe, isEditingRecipe])
+
+  const handleSnackbarClose = () => {
+    setErrorSnackbar(false);
+    setSuccessSnackbar(false);
+    clearErrors();
+  };
 
   if (user) {
     return (
@@ -57,6 +82,18 @@ const Home = () => {
                 </div>
               </Route>
             </Switch>
+            <Portal>
+              <Snackbar open={errorSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
+                <Alert onClose={handleSnackbarClose} severity="error">
+                  {errorMessage}
+                </Alert>
+              </Snackbar>
+              <Snackbar open={successSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
+                <Alert onClose={handleSnackbarClose} severity="success">
+                  {successMessage}
+                </Alert>
+              </Snackbar>
+            </Portal>
             <Copyright className={classes.copyright} />
           </Container>
         </main>

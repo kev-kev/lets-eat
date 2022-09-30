@@ -8,7 +8,7 @@ const initialState = {
   isSubmittingRecipe: false,
   isFetchingRecipes: false,
   isFetchingRecipeList: false,
-  isEditing: false,
+  isEditingRecipe: false,
   errors: {
     login: null,
     submit: null,
@@ -63,7 +63,7 @@ export const GlobalProvider = ({ children }) => {
 
   const fetchRecipes = (user) => {
     dispatch({
-      type: "FETCH_RECIPES",
+      type: "FETCHING_RECIPES",
     });
     fetch(rootURL + `/recipes`)
       .then(handleErrors)
@@ -83,6 +83,10 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const editRecipe = (recipe) => {
+    // debugger
+    dispatch({
+      type: "EDITING_RECIPE",
+    });
     const subType = isWeeklyRecipe(recipe.weeks) ? "weekly" : "approved";
     fetch(rootURL + `/recipes/${recipe.id}`, {
       method: "PUT",
@@ -497,6 +501,7 @@ export const GlobalProvider = ({ children }) => {
         groceryList: state.groceryList,
         fetchRecipes,
         editRecipe,
+        isEditingRecipe: state.isEditingRecipe,
         favoritedRecipes: state.favoritedRecipes,
         weeklyRecipes: state.weeklyRecipes,
         approvedRecipes: state.approvedRecipes,

@@ -40,6 +40,7 @@ export const RecipeFormNew = ({ recipe }) => {
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const snackbarRef = createRef();
+  
   useEffect(() => {
     if (errors.submit) setErrorSnackbar(true);
   }, [errors.submit]);
@@ -60,7 +61,7 @@ export const RecipeFormNew = ({ recipe }) => {
   } else {
     return (
     <>
-      <Snackbar open={errorSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
+      {/* <Snackbar open={errorSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
         <Alert onClose={handleSnackbarClose} severity="error">
           {errorMessage}
         </Alert>
@@ -69,7 +70,7 @@ export const RecipeFormNew = ({ recipe }) => {
         <Alert onClose={handleSnackbarClose} severity="success">
           {successMessage}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
       <Formik
         initialValues={{
           name: recipe?.name || "",

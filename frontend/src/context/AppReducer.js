@@ -41,7 +41,7 @@ export const AppReducer = (state, action) => {
         },
         isSubmittingRecipe: false,
       };
-    case "FETCH_RECIPES":
+    case "FETCHING_RECIPES":
       return {
         ...state,
         isFetchingRecipes: true,
@@ -101,15 +101,22 @@ export const AppReducer = (state, action) => {
           };
       }
       break;
+    case "EDITING_RECIPE":
+      return {
+        ...state,
+        isEditingRecipe: true
+      };
     case "EDIT_RECIPE_SUCCESS":
       if (action.payload.type === "weekly") {
         return {
           ...state,
+          isEditingRecipe: false,
           weeklyRecipes: action.payload.updatedWeeklyRecipes,
         };
       } else {
         return {
           ...state,
+          isEditingRecipe: false,
           approvedRecipes: action.payload.updatedApprovedRecipes,
           indexRecipes: action.payload.updatedIndexRecipes
         };
@@ -117,6 +124,7 @@ export const AppReducer = (state, action) => {
     case "EDIT_RECIPE_FAILURE":
       return {
         ...state,
+        isEditingRecipe: false,
         errors: {
           ...state.errors,
           grid: action.payload,
