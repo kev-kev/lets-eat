@@ -47,7 +47,6 @@ export const homeStyle = makeStyles((theme) => ({
     padding: "1vh",
   },
   container: {
-    paddingBottom: theme.spacing(4),
     margin: 0,
     display: "flex",
     flexDirection: "column",
@@ -57,7 +56,8 @@ export const homeStyle = makeStyles((theme) => ({
     flexGrow: 1,
   },
   copyright: {
-    alignSelf: "flex-end",
+    justifySelf: "flex-end",
+    paddingBottom: "1rem"
   }
 }), {index: 1});
 

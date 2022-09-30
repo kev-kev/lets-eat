@@ -14,7 +14,14 @@ const RECIPES_PER_PAGE = 20;
 const renderRecipeCards = (recipes, type) => {
   return recipes.map((recipe) => {
     return (
-      <Grid item xs={6} md={4} lg={3} xl={2} key={recipe.name + uuid()}>
+      <Grid
+        item
+        xs={6}
+        md={4}
+        lg={3}
+        xl={2}
+        key={recipe.name + uuid()}
+      >
         <RecipeCard type={type} recipe={recipe} />
       </Grid>
     );
@@ -23,7 +30,11 @@ const renderRecipeCards = (recipes, type) => {
 
 const renderGridContainer = (recipes, type, classes) => {
   return (
-    <Grid container spacing={2} className={classes.gridContainer} >
+    <Grid
+      container
+      spacing={2}
+      className={classes.gridContainer} 
+    >
       {renderRecipeCards(recipes, type)}
     </Grid>
   );

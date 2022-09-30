@@ -94,7 +94,7 @@ const Home = () => {
                 </Alert>
               </Snackbar>
             </Portal>
-            <Copyright className={classes.copyright} />
+            <Copyright copyrightClass={classes.copyright} />
           </Container>
         </main>
       </div>

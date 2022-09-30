@@ -20,14 +20,13 @@ import {
 import { GlobalContext } from "../context/GlobalState";
 import { startOfWeek } from "date-fns";
 import { useHistory } from "react-router-dom";
+import avatar from "../assets/avatar.png"
 
 const Sidebar = () => {
   const classes = sidebarStyle();
   const { logoutUser, recipes, user, inboxRecipes, changeSelectedWeek } =
     useContext(GlobalContext);
   let history = useHistory();
-  const PLACEHOLDER_IMG_URL =
-    "https://patriotpower.ogsd.net/wp-content/uploads/2018/03/Profile_Kirby.aead314d435d8e52d9a4e92a6f799c4eee08081e.jpg";
 
   const renderInboxBadge = () => {
     if (inboxRecipes.length > 0) {
@@ -98,12 +97,11 @@ const Sidebar = () => {
             <ListItemIcon>
               <Avatar
                 alt="user"
-                src={PLACEHOLDER_IMG_URL}
+                src={avatar}
                 className={classes.large}
               />
             </ListItemIcon>
           </ListItem>
-          <ListItem>{user.username}</ListItem>
         </div>
       </List>
     </div>
