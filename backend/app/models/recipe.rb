@@ -3,7 +3,6 @@ class Recipe < ApplicationRecord
   has_many :recipe_ingredient
   has_many :ingredients, through: :recipe_ingredient
 
-  validates :link, presence: true
   validates :name, presence: true
   validate :can_only_be_favorited_if_approved
 

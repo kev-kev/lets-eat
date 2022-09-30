@@ -27,7 +27,7 @@ const renderIngredientTypography = (ingredients) => {
 
 const CardModal = (props) => {
   const classes = modalStyle();
-  const { deleteRecipe } = useContext(GlobalContext);
+  const { openRecipeId, deleteRecipe } = useContext(GlobalContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -54,14 +54,14 @@ const CardModal = (props) => {
           <Typography variant="caption">
             Submitted by: {props.recipe.submittedBy}
           </Typography>
-          {renderEditBtn()}
-          {renderDeleteBtn()}
+          {renderEditButton()}
+          {renderDeleteButton()}
         </div>
       );
     }
   };
 
-  const renderEditBtn = () => {
+  const renderEditButton = () => {
     if (props.recipe.status === "approved")
       return (
         <IconButton onClick={() => setIsEditing(true)}>
@@ -75,7 +75,7 @@ const CardModal = (props) => {
     props.onClose();
   };
 
-  const renderDeleteBtn = () => {
+  const renderDeleteButton = () => {
     if (props.type === "index" && !props.recipe.isFavorited)
       return (
         <div key={props.recipe.id}>
@@ -121,10 +121,9 @@ const CardModal = (props) => {
   }
   return (
     <Modal 
-      open={props.shouldShowModal} 
+      open={props.recipe.id === openRecipeId} 
       onClose={handleClose} 
       aria-labelledby="modal-title"
-class
     >
       <div className={getModalClass()}>
         <h2 id="modal-title" className={classes.modalTitle}>{props.recipe.name}</h2>

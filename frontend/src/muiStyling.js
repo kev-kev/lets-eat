@@ -186,7 +186,7 @@ export const recipeFormStyle = makeStyles((theme) => ({
     marginTop: theme.spacing(1), 
     display: "flex",
     marginBottom: theme.spacing(1),
-    alignItems: "center"
+    alignItems: "center",    
   },
   ingField:{
     // margin: theme.spacing(1),

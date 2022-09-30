@@ -269,6 +269,11 @@ export const AppReducer = (state, action) => {
           grid: action.payload,
         },
       };
+    case "SET_OPEN_RECIPE_ID":
+      return {
+        ...state,
+        openRecipeId: action.payload
+      }
     case "LOGOUT_USER":
       localStorage.clear();
       return {

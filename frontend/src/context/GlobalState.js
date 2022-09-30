@@ -24,6 +24,7 @@ const initialState = {
   pendingRecipes: [],
   rejectedRecipes: [],
   indexRecipes: [],
+  openRecipeId: null,
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -453,6 +454,13 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  const setOpenRecipeId = (id) => {
+    dispatch({
+      type: "SET_OPEN_RECIPE_ID",
+      payload: id
+    })
+  }
+
   function logoutUser() {
     dispatch({
       type: "LOGOUT_USER",
@@ -498,6 +506,8 @@ export const GlobalProvider = ({ children }) => {
         indexRecipes: state.indexRecipes,
         setIndexRecipes,
         persistentLogin,
+        openRecipeId: state.openRecipeId,
+        setOpenRecipeId
       }}
     >
       {children}

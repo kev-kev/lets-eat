@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, createRef } from "react";
 import { Button, IconButton, TextField, MenuItem, FormControl, CircularProgress, Snackbar } from "@material-ui/core/";
 import { Alert } from "@material-ui/lab/";
 import { CloseRounded, AddRounded } from "@material-ui/icons/";
@@ -7,23 +7,14 @@ import { GlobalContext } from "../context/GlobalState";
 import { Formik, Form, FieldArray, FastField } from "formik";
 import * as Yup from "yup";
 
-const isSubmitDisabled = ({ name, ingredients }) => {
-  // const hasEmptyIngredientInput = () => {
-  //   for (const ingredient of ingredients) {
-  //     if (Object.values(ingredient).some((value) => !value)) return true;
-  //   }
-  //   return false;
-  // };
+const isSubmitDisabled = (name, ingredients) => {
   const hasEmptyIngredientInput = () => {
     for (const ingredient of ingredients) {
       if(ingredient.name.length === 0) return true;
     }
     return false;
   }
-  const hasEmptyInput = Object.values({ name }).some(
-    (value) => !value
-  );
-  return hasEmptyIngredientInput() || hasEmptyInput;
+  return hasEmptyIngredientInput() || name.length === 0;
 };
 
 const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
@@ -48,10 +39,15 @@ export const RecipeFormNew = ({ recipe }) => {
   const { editRecipe, submitRecipe, isSubmittingRecipe, errors, clearErrors } = useContext(GlobalContext);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
-
+  const snackbarRef = createRef();
   useEffect(() => {
     if (errors.submit) setErrorSnackbar(true);
   }, [errors.submit]);
+
+  useEffect(() => {
+    if(isSubmittingRecipe && Object.values(errors).every(error => !error))
+      setSuccessSnackbar(true);
+  }, [isSubmittingRecipe])
 
   const handleSnackbarClose = () => {
     setErrorSnackbar(false);
@@ -64,12 +60,12 @@ export const RecipeFormNew = ({ recipe }) => {
   } else {
     return (
     <>
-      <Snackbar open={errorSnackbar} onClose={handleSnackbarClose}>
+      <Snackbar open={errorSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
         <Alert onClose={handleSnackbarClose} severity="error">
           {errorMessage}
         </Alert>
       </Snackbar>
-      <Snackbar open={successSnackbar} onClose={handleSnackbarClose}>
+      <Snackbar open={successSnackbar} onClose={handleSnackbarClose} ref={snackbarRef}>
         <Alert onClose={handleSnackbarClose} severity="success">
           {successMessage}
         </Alert>
@@ -111,8 +107,6 @@ export const RecipeFormNew = ({ recipe }) => {
                     name="imgUrl"
                     id="imgUrl"
                     {...formik.getFieldProps("imgUrl")}
-                    // error={formik.touched.imgUrl && !!formik.errors.imgUrl}
-                    // helperText={formik.touched.imgUrl && formik.errors.imgUrl}
                     label="Image URL"
                     variant="outlined"
                   />
@@ -121,8 +115,6 @@ export const RecipeFormNew = ({ recipe }) => {
                     className={classes.field}
                     id="link"
                     name="link"
-                    // error={formik.touched.link && !!formik.errors.link}
-                    // helperText={formik.touched.link && formik.errors.link}
                     {...formik.getFieldProps("link")}
                     label="Link to Recipe"
                     variant="outlined"
@@ -221,7 +213,7 @@ export const RecipeFormNew = ({ recipe }) => {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  disabled={isSubmitDisabled(formik.values)}
+                  disabled={isSubmitDisabled(formik.values.name, formik.values.ingredients)}
                   className={classes.button + ' ' + classes.submit}
                 >
                   {recipe ? "Edit Recipe" : "Submit Recipe"}

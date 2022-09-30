@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import RecipeVoteBody from "./RecipeVoteBody";
 import RecipeCardModal from "./RecipeCardModal";
@@ -23,8 +23,7 @@ import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 const RecipeCard = (props) => {
   const classes = recipeCardStyle();
-  const { setWeeks, selectedWeek, editRecipe } = useContext(GlobalContext);
-  const [shouldShowModal, setShouldShowModal] = useState(false);
+  const { setWeeks, selectedWeek, editRecipe, setOpenRecipeId } = useContext(GlobalContext);
 
   const renderIndexCardBody = () => {
     return (
@@ -105,7 +104,7 @@ const RecipeCard = (props) => {
           className={classes.media}
           image={props.recipe.imgUrl}
           title={props.recipe.name}
-          onClick={() => setShouldShowModal(true)}
+          onClick={() => setOpenRecipeId(props.recipe.id)}
         />
 
         <CardContent>
@@ -113,7 +112,7 @@ const RecipeCard = (props) => {
             variant="body2"
             color="textSecondary"
             component="h2"
-            onClick={() => setShouldShowModal(true)}
+            onClick={() => setOpenRecipeId(props.recipe.id)}
             className={classes.title}
           >
             {props.recipe.name}
@@ -125,7 +124,7 @@ const RecipeCard = (props) => {
             <OpenInNewRounded color="primary" />
           </IconButton>
           <IconButton
-            onClick={() => setShouldShowModal(true)}
+            onClick={() => setOpenRecipeId(props.recipe.id)}
             aria-label="show more"
           >
             <MoreHoriz color="primary" />
@@ -136,10 +135,7 @@ const RecipeCard = (props) => {
         key={props.recipe.id}
         recipe={props.recipe}
         type={props.type}
-        shouldShowModal={shouldShowModal}
-        onClose={() => {
-          setShouldShowModal(false);
-        }}
+        onClose={() => {setOpenRecipeId(null)}}
       />
     </>
   );
