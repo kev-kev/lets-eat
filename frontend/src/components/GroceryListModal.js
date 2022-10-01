@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import { Modal, Button } from "@material-ui/core";
+import { Modal, Button, Typography } from "@material-ui/core";
 import { ShoppingBasketRounded } from "@material-ui/icons/";
 import pluralize from "pluralize";
 import { modalStyle } from "../muiStyling";
@@ -44,8 +44,8 @@ const GroceryListModal = () => {
         color="primary"
         onClick={() => handleGetGroceryList()}
         className={classes.button}
+        style={{alignSelf: "flex-end"}}
         startIcon={<ShoppingBasketRounded />}
-        style={{ fontWeight: "bolder" }}
       >
         get grocery list
       </Button>
@@ -55,8 +55,8 @@ const GroceryListModal = () => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div className={classes.modal} mx="auto">
-          <h2 id="simple-modal-title">Grocery List</h2>
+        <div className={classes.modalContent} mx="auto">
+        <Typography variant="h3" className={classes.modalTitle}>Grocery List</Typography>
           <div id="simple-modal-description">{renderGroceryListBody()}</div>
         </div>
       </Modal>

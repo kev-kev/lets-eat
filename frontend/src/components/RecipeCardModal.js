@@ -15,15 +15,33 @@ import { DeleteForeverRounded, EditRounded, ArrowBackRounded } from "@material-u
 import { modalStyle } from "../muiStyling";
 import { RecipeForm } from "./RecipeForm";
 
-const renderIngredientTypography = (ingredients) => {
-  return ingredients.map((ing, i) => {
+const renderIngredientTypography = (ingredients, classes) => {
+  if(ingredients.length > 0){
+    return ingredients.map((ing, i) => {
+      return (
+        <Typography key={i} variant="body2" className={classes.ingredientTypography}>
+          - {ing.name}: {ing.count} {ing.unit}
+       </Typography>
+      );
+    });
+  } else {
     return (
-      <div key={i}>
-        - {ing.name}: {ing.count} {ing.unit}
-      </div>
-    );
-  });
+      <Typography variant="body2" className={classes.ingredientTypography}>
+        none, add some now
+      </Typography>
+    )
+  }
 };
+
+const renderNotes = (notes, classes) => {
+  if(notes.trim().length === 0){
+    return (
+      <Typography variant="body2" className={classes.ingredientTypography}>
+        no notes have been added yet!
+      </Typography>
+    )
+  }
+}
 
 const CardModal = (props) => {
   const classes = modalStyle();
@@ -38,7 +56,7 @@ const CardModal = (props) => {
           <RecipeForm recipe={props.recipe} modal/>
           <Button 
             onClick={() => setShouldShowEditForm(false)}
-            startIcon={<ArrowBackRounded color="primary.light" className={classes.backArrow}/>}
+            startIcon={<ArrowBackRounded className={classes.backArrow}/>}
           >
             Back
           </Button>
@@ -47,17 +65,16 @@ const CardModal = (props) => {
     } else {
       return (
         <div key={props.recipe.id}>
-          <Typography variant="subtitle1">Ingredients:</Typography>
-          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {renderIngredientTypography(props.recipe.ingredients)}
+          <Typography variant="caption" className={classes.submittedBy}>
+            Submitted by: {props.recipe.submittedBy}
           </Typography>
+          <Typography variant="subtitle1">Ingredients:</Typography>
+          <div className={classes.ingredientContainer}>
+            {renderIngredientTypography(props.recipe.ingredients, classes)}
+          </div>
           <Typography variant="subtitle1">Notes:</Typography>
           <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-            {props.recipe.notes}
-          </Typography>
-          <br />
-          <Typography variant="caption">
-            Submitted by: {props.recipe.submittedBy}
+            {renderNotes(props.recipe.notes, classes)}
           </Typography>
           {renderEditButton()}
           {renderDeleteButton()}
@@ -69,9 +86,16 @@ const CardModal = (props) => {
   const renderEditButton = () => {
     if (props.recipe.status === "approved")
       return (
-        <IconButton onClick={() => setShouldShowEditForm(true)}>
-          <EditRounded color="primary" />
-        </IconButton>
+        <div className={classes.buttonContainer}>
+          <Button 
+            onClick={() => setShouldShowEditForm(true)}
+            startIcon={<EditRounded />}
+            variant={"contained"}
+            className={classes.editButton + ' ' + classes.button}
+          >
+            Edit Recipe
+          </Button>
+        </div>
       );
   };
 

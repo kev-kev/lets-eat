@@ -142,14 +142,28 @@ export const modalStyle = makeStyles((theme) => ({
   },
   button: {
     color: "white",
-    alignSelf: "flex-end",
     fontWeight: "bolder"
+  },
+  editButton: {
+    color: theme.palette.secondary.light,
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark
+    }
   },
   modalTitle: {
     textAlign: "center"
   },
   backArrow: {
-    // color: theme.palette.primary.dark
+    // color: theme.palette.primary.main
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row-reverse",
+    paddingTop: theme.spacing(2)
+  },
+  ingredientTypography: {
+    marginLeft: theme.spacing(1)
   }
 }), {index: 1});
 
