@@ -95,7 +95,7 @@ export const loginStyle = makeStyles((theme) => ({
 export const recipeCardStyle = makeStyles((theme) => ({
   root: {
     position: "relative",
-    borderRadius: "5%"
+    borderRadius: "5%",
   },
   media: {
     height: 0,
@@ -130,21 +130,21 @@ export const modalStyle = makeStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    padding: theme.spacing(2, 6),
+    padding: theme.spacing(2, 6, 3),
     overflow: "scroll",
-    // border: "2px solid #000",
-    // boxShadow: "2",
+    border: "2px solid #aaa",
+    borderRadius: "3%",
     minWidth: "40%"
   },
-  modalForm: {
-    maxHeight: "70%",
+  modalFormContainer: {
+    maxHeight: "85%",
     width: "80%",
   },
   button: {
     color: "white",
     fontWeight: "bolder"
   },
-  editButton: {
+  editButton: { 
     color: theme.palette.secondary.light,
     backgroundColor: theme.palette.primary.main,
     '&:hover': {
@@ -163,6 +163,20 @@ export const modalStyle = makeStyles((theme) => ({
     paddingTop: theme.spacing(2)
   },
   ingredientTypography: {
+    marginLeft: theme.spacing(1)
+  },
+  deleteContainer: {
+
+  },
+  deleteTypography: {
+    margin: theme.spacing(1)
+  },
+  deleteButtonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: theme.spacing(3, 0, 1)
+  },
+  noteTypography: {
     marginLeft: theme.spacing(1)
   }
 }), {index: 1});
