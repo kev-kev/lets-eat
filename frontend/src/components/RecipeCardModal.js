@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import {
   Modal,
@@ -27,7 +27,7 @@ const renderIngredientTypography = (ingredients, classes) => {
   }
 };
 
-const renderNotes = (notes, classes) => {
+const renderNotes = (notes) => {
   if(notes?.trim().length === 0){
     return (
         "no notes have been added yet!"
@@ -39,24 +39,23 @@ const renderNotes = (notes, classes) => {
 
 const CardModal = (props) => {
   const classes = modalStyle();
-  const { openRecipeId, deleteRecipe } = useContext(GlobalContext);
-  const [shouldShowDelete, setShouldShowDelete] = useState(false);
-  const [shouldShowEdit, setShouldShowEdit] = useState(false);
+  const { openRecipeId, deleteRecipe, setOpenRecipeId, showEditForm, setShowEditForm } = useContext(GlobalContext);
+  const [showDelete, setShowDelete] = useState(false);
 
   const renderCardModalBody = () => {
-    if (shouldShowEdit) {
+    if (showEditForm) {
       return (
         <div key={props.recipe.id}>
           <RecipeForm recipe={props.recipe} modal/>
           <Button 
-            onClick={() => setShouldShowEdit(false)}
+            onClick={() => setShowEditForm(false)}
             startIcon={<ArrowBackRounded className={classes.backArrow}/>}
           >
             Back
           </Button>
         </div>
       );
-    } else if (shouldShowDelete) {
+    } else if (showDelete) {
       return(
         <div className={classes.deleteContainer}>
           <Typography variant={"body1"} className={classes.deleteTypography}>Delete Recipe?</Typography>
@@ -68,7 +67,7 @@ const CardModal = (props) => {
                 variant="contained"
                 autoFocus
                 startIcon={<ArrowBackRounded className={classes.backArrow}/>}
-                onClick={() => setShouldShowDelete(false)}
+                onClick={() => setShowDelete(false)}
               >
                 Nevermind...
               </Button>
@@ -78,7 +77,7 @@ const CardModal = (props) => {
                 variant="contained"
                 onClick={() => {
                   deleteRecipe(props.recipe.id);
-                  setShouldShowDelete(false);
+                  setShowDelete(false);
                 }}
                 startIcon={<DeleteForeverRounded/>}
               >
@@ -90,17 +89,19 @@ const CardModal = (props) => {
     } else {
       return (
         <div key={props.recipe.id}>
-          <Typography variant="caption" className={classes.submittedBy}>
-            Submitted by: {props.recipe.submittedBy}
-          </Typography>
           <Typography variant="subtitle1">Ingredients:</Typography>
           <div className={classes.ingredientContainer}>
             {renderIngredientTypography(props.recipe.ingredients, classes)}
           </div>
           <Typography variant="subtitle1">Notes:</Typography>
           <Typography variant="body2" className={classes.noteTypography}>
-            {renderNotes(props.recipe.notes, classes)}
+            {renderNotes(props.recipe.notes)}
           </Typography>
+          <div className={classes.submittedBy}>
+            <Typography variant="caption" className={classes.submittedByTypography}>
+              Submitted by: {props.recipe.submittedBy}
+            </Typography>
+          </div>
           {renderEditButton()}
           {renderDeleteButton()}
         </div>
@@ -113,7 +114,7 @@ const CardModal = (props) => {
       return (
         <div className={classes.buttonContainer}>
           <Button 
-            onClick={() => setShouldShowEdit(true)}
+            onClick={() => setShowEditForm()}
             startIcon={<EditRounded />}
             variant={"contained"}
             className={classes.editButton + ' ' + classes.button}
@@ -125,8 +126,7 @@ const CardModal = (props) => {
   };
 
   const handleClose = () => {
-    setShouldShowEdit(false);
-    props.onClose();
+    setOpenRecipeId(null)
   };
 
   const renderDeleteButton = () => {
@@ -134,7 +134,7 @@ const CardModal = (props) => {
       return (
           <Button
             startIcon={<DeleteForeverRounded/>}
-            onClick={() => setShouldShowDelete(true)}
+            onClick={() => setShowDelete(true)}
             variant="outlined"
             color="primary"
             size="small"
@@ -146,8 +146,8 @@ const CardModal = (props) => {
 
   const getModalClass = () => {
     let res = classes.modalContent;
-    if(shouldShowEdit) res += ` ${classes.modalFormContainer}`
-    else if(shouldShowDelete) res += ` ${classes.deleteContainer}`
+    if(showEditForm) res += ` ${classes.modalFormContainer}`
+    else if(showDelete) res += ` ${classes.deleteContainer}`
     return res;
   }
   return (

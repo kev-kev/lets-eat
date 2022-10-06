@@ -58,7 +58,7 @@ export const homeStyle = makeStyles((theme) => ({
   copyright: {
     justifySelf: "flex-end",
     paddingBottom: "1rem"
-  }
+  },
 }), {index: 1});
 
 export const titleStyle = makeStyles((theme) => ({
@@ -152,10 +152,10 @@ export const modalStyle = makeStyles((theme) => ({
     }
   },
   modalTitle: {
-    textAlign: "center"
+    textAlign: "center",
+    marginBottom: 0
   },
   backArrow: {
-    // color: theme.palette.primary.main
   },
   buttonContainer: {
     display: "flex",
@@ -178,7 +178,16 @@ export const modalStyle = makeStyles((theme) => ({
   },
   noteTypography: {
     marginLeft: theme.spacing(1)
-  }
+  },
+  submittedBy: {
+    paddingTop: theme.spacing(2),
+  },
+  submittedByTypography: {
+    fontStyle: "italic",
+  },
+  modalHeader: {
+    marginBottom: theme.spacing(1)
+  },
 }), {index: 1});
 
 export const recipeFormStyle = makeStyles((theme) => ({
@@ -187,11 +196,6 @@ export const recipeFormStyle = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",    
   },
-  // kirby: {
-  //   width: "auto",
-  //   height: theme.spacing(12),
-  //   margin: "20px",
-  // },
   formContainer: {
     width: "60%",
   },
@@ -221,7 +225,6 @@ export const recipeFormStyle = makeStyles((theme) => ({
     alignItems: "center",    
   },
   ingField:{
-    // margin: theme.spacing(1),
   },
   submit: {
     color: "white",
@@ -236,8 +239,11 @@ export const recipeFormStyle = makeStyles((theme) => ({
     margin: theme.spacing(0, 1)
   },
   loading: {
-    alignSelf: "center",
-    justifySelf: "center"
+    position: "absolute",
+    margin: "auto",
+    bottom: "0px",
+    top: "0px",
+    left: "50%",
   }
 }), {index: 1});
 

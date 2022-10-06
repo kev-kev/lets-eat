@@ -27,6 +27,8 @@ const initialState = {
   openRecipeId: null,
   showSuccessSnackbar: false,
   showErrorSnackbar: false,
+  showEditForm: false,
+  submitClicked: false,
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -67,9 +69,6 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const editRecipe = (recipe) => {
-    dispatch({
-      type: "EDITING_RECIPE",
-    });
     const subType = isWeeklyRecipe(recipe.weeks) ? "weekly" : "approved";
     fetch(rootURL + `/recipes/${recipe.id}`, {
       method: "PUT",
@@ -102,7 +101,6 @@ export const GlobalProvider = ({ children }) => {
               type: subType,
             },
           });
-          setShowSnackbar("success");
         } else {
           // update approved and index
           const updatedApprovedRecipes = state.approvedRecipes;
@@ -124,9 +122,11 @@ export const GlobalProvider = ({ children }) => {
             },
           });
         }
-        
+        setShowSnackbar("success");
+        setShowEditForm(false);
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "EDIT_RECIPE_FAILURE",
           payload: error,
@@ -209,24 +209,18 @@ export const GlobalProvider = ({ children }) => {
       .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
-        if (data.error) {
-          dispatch({
-            type: "LOGIN_FAILURE",
-            payload: data.error,
-          });
-        } else {
-          localStorage.setItem("authToken", data.token);
-          localStorage.setItem("username", data.user?.username);
-          localStorage.setItem("id", data.user?.id);
-          dispatch({
-            type: "LOGIN_SUCCESS",
-            payload: {
-              user: data.user,
-            },
-          });
-        }
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("username", data.user?.username);
+        localStorage.setItem("id", data.user?.id);
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            user: data.user,
+          },
+        });
       })
       .catch((error) => {
+        setShowSnackbar("error");
         dispatch({
           type: "LOGIN_FAILURE",
           payload: error,
@@ -456,10 +450,24 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
-  const setShowSnackbar = (type, bool = true) => {
+  const setShowSnackbar = (type, bool=true) => {
     dispatch({
       type: "SET_SHOW_SNACKBAR",
       payload: { type, bool }
+    });
+  }
+
+  const setShowEditForm = (bool=true) => {
+    dispatch({
+      type: "SET_SHOW_EDIT_FORM",
+      payload: bool
+    });
+  }
+
+  const setSubmitClicked = (bool=true) => {
+    dispatch({
+      type: "SET_SUBMIT_CLICKED",
+      payload: bool,
     });
   }
 
@@ -514,6 +522,11 @@ export const GlobalProvider = ({ children }) => {
         setShowSnackbar,
         showSuccessSnackbar: state.showSuccessSnackbar,
         showErrorSnackbar: state.showErrorSnackbar,
+        showEditForm: state.showEditForm,
+        setShowEditForm,
+        submitClicked: state.submitClicked,
+        setSubmitClicked
+
       }}
     >
       {children}

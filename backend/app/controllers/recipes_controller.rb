@@ -75,7 +75,7 @@ class RecipesController < ApplicationController
         count: RecipeIngredient.where(
           ingredient_id: ingredient.id,
           recipe_id: recipe_id
-        ).count
+        )[0][:count]
       }
     end
 
@@ -105,7 +105,7 @@ class RecipesController < ApplicationController
             if recipe_ingredient[:count] && ingredient[:count]
               ing_count = recipe_ingredient[:count].to_i + ingredient[:count].to_i
             else
-              ing_count = 1
+              ing_count = ""
             end
             recipe_ingredient.update(:count => ing_count)
           end

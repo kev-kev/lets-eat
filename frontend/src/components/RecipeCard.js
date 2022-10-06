@@ -141,7 +141,6 @@ const RecipeCard = (props) => {
         key={props.recipe.id}
         recipe={props.recipe}
         type={props.type}
-        onClose={() => {setOpenRecipeId(null)}}
       />
     </>
   );

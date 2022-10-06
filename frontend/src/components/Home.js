@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, createRef } from "react";
-import { Container, CssBaseline, Snackbar, Portal } from "@material-ui/core";
+import { Container, CssBaseline, Snackbar, Portal, CircularProgress } from "@material-ui/core";
 import { Alert } from "@material-ui/lab/";
 import Sidebar from "./Sidebar";
 import Copyright from "./Copyright";
@@ -18,7 +18,8 @@ const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
 const Home = () => {
   const classes = homeStyle();
   const { user, fetchRecipes, clearErrors, showErrorSnackbar, showSuccessSnackbar, setShowSnackbar } = useContext(GlobalContext);
-  const snackbarRef = createRef();
+  const successRef = createRef();
+  const errorRef = createRef();
 
   useEffect(() => {
     user && fetchRecipes(user);
@@ -30,6 +31,7 @@ const Home = () => {
   };
 
   if (user) {
+    
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -69,14 +71,14 @@ const Home = () => {
               </Route>
             </Switch>
             <Portal>
-              <Snackbar open={showErrorSnackbar} onClose={() => handleSnackbarClose("error")} ref={snackbarRef}>
+              <Snackbar open={showErrorSnackbar} onClose={() => handleSnackbarClose("error")} ref={errorRef}>
                 <Alert onClose={() => handleSnackbarClose("error")} severity="error">
                   {errorMessage}
                 </Alert>
               </Snackbar>
             </Portal>
             <Portal>
-              <Snackbar open={showSuccessSnackbar} onClose={() => handleSnackbarClose("success")} ref={snackbarRef}>
+              <Snackbar open={showSuccessSnackbar} onClose={() => handleSnackbarClose("success")} ref={successRef}>
                 <Alert onClose={() => handleSnackbarClose("success")} severity="success">
                   {successMessage}
                 </Alert>

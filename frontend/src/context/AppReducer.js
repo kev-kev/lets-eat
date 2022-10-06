@@ -295,6 +295,16 @@ export const AppReducer = (state, action) => {
           showSuccessSnackbar: action.payload.bool
         }
       };
+    case "SET_SHOW_EDIT_FORM":
+      return {
+        ...state,
+        showEditForm: action.payload
+      };
+    case "SET_SUBMIT_CLICKED":
+      return {
+        ...state,
+        submitClicked: action.payload
+      }
     case "LOGOUT_USER":
       localStorage.clear();
       return {
