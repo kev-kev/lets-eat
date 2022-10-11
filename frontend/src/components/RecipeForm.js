@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, IconButton, TextField, MenuItem, FormControl, CircularProgress, } from "@material-ui/core/";
 import { CloseRounded, AddRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
@@ -40,6 +40,19 @@ export const RecipeForm = ({ recipe }) => {
   const classes = recipeFormStyle();
   const { editRecipe, submitRecipe, isSubmittingRecipe, isEditingRecipe } = useContext(GlobalContext);
   const [submitDisabled, setSubmitDisabled] = useState(false);
+  const [buttonText, setButtonText] = useState("");
+
+  useEffect(() => {
+    if(recipe) setButtonText("Edit")
+    else setButtonText("Submit")
+  }, [])
+
+  useEffect(() => {
+    if(!isSubmittingRecipe && !isEditingRecipe){
+      if(recipe) setButtonText("Edit")
+      else setButtonText("Submit")
+    }
+  }, [isSubmittingRecipe, isEditingRecipe])
 
   const renderSubmitButton = (values) => {
     return(
@@ -51,29 +64,26 @@ export const RecipeForm = ({ recipe }) => {
           disabled={isSubmitDisabled(values, recipe) || submitDisabled}
           className={classes.button + ' ' + classes.submit}
         >
-          {getButtonText()}
+          {buttonText}
         </Button>
       </div>
     )
   }
 
-  const getButtonText = () => {
-    if(submitDisabled){
-      return "Submitting..."
-    } else if(recipe){
-      return "Edit Recipe"
-    } else return "Submit Recipe"
-  }
 
-  const handleFormSubmit = (values, setSubmitting) => {
-    setSubmitDisabled(true)
+  const handleFormSubmit = (values, setSubmitting, resetForm) => {
+    setButtonText("Submitting")
+    setSubmitDisabled(true);
       if (recipe) {
         editRecipe({ ...recipe, ...values });
       } else {
-        submitRecipe(values);
+        submitRecipe(values)
+        setSubmitDisabled(false);
         setSubmitting(false);
+        resetForm();
       }
   }
+
 
   return (
     <Formik
@@ -85,7 +95,7 @@ export const RecipeForm = ({ recipe }) => {
         ingredients: recipe?.ingredients || [],
       }}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => handleFormSubmit(values, setSubmitting)}
+      onSubmit={(values, { setSubmitting, resetForm }) => handleFormSubmit(values, setSubmitting, resetForm)}
     >
       {(formik) => (
         <div className={recipe ? "" : classes.paper}>
@@ -100,7 +110,6 @@ export const RecipeForm = ({ recipe }) => {
                   label="Recipe Title"
                   {...formik.getFieldProps("name")}
                   error={formik.touched.name && !!formik.errors.name}
-                  helperText={formik.touched.name && formik.errors.name}
                   variant="outlined"
                 />
                 <FastField
@@ -178,7 +187,6 @@ export const RecipeForm = ({ recipe }) => {
                             <FastField
                               required
                               error={formik.touched.ingredients?.[index]?.name && !!formik.errors.ingredients?.[index]?.name}
-                              // helperText={formik.touched.ingredients?.[index]?.name && formik.errors.ingredients?.[index]?.name}
                               className={classes.ingField}
                               name={`ingredients[${index}].name`}
                               id={`ingredients[${index}].name`}
