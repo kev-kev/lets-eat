@@ -221,6 +221,7 @@ export const recipeFormStyle = makeStyles((theme) => ({
   ingredientFormContainer: {
     marginTop: theme.spacing(1), 
     display: "flex",
+    flexWrap: "wrap",
     marginBottom: theme.spacing(1),
     alignItems: "center",    
   },
