@@ -92,7 +92,7 @@ export const RecipeForm = ({ recipe }) => {
           <Form className={recipe ? "" : classes.formContainer}>
             <div className={classes.mainForm}>
               <FastField
-                  component={TextField}
+                  as={TextField}
                   required
                   className={classes.field}
                   id="name"
@@ -141,7 +141,7 @@ export const RecipeForm = ({ recipe }) => {
                         return (
                           <div key={index} className={classes.ingredientFormContainer}>
                             <FastField
-                              component={TextField}
+                              as={TextField}
                               id={`ingredients[${index}].count`}
                               className={classes.ingField + ' ' + classes.numInput}
                               name={`ingredients[${index}].count`}
@@ -152,9 +152,9 @@ export const RecipeForm = ({ recipe }) => {
                             />
                             <FormControl className={classes.formControl}>
                               <FastField
-                                component={TextField}
+                                as={TextField}
                                 variant="outlined"
-                                select 
+                                select
                                 label="Unit"
                                 className={classes.ingField + ' ' + classes.unitSelect}
                                 name={`ingredients[${index}].unit`} 
@@ -178,13 +178,13 @@ export const RecipeForm = ({ recipe }) => {
                             <FastField
                               required
                               error={formik.touched.ingredients?.[index]?.name && !!formik.errors.ingredients?.[index]?.name}
-                              helperText={formik.touched.ingredients?.[index]?.name && formik.errors.ingredients?.[index]?.name}
+                              // helperText={formik.touched.ingredients?.[index]?.name && formik.errors.ingredients?.[index]?.name}
                               className={classes.ingField}
                               name={`ingredients[${index}].name`}
                               id={`ingredients[${index}].name`}
                               variant="outlined"
                               label="Name"
-                              component={TextField}
+                              as={TextField}
                               {...formik.getFieldProps(`ingredients[${index}].name`)}
                             />
                             <IconButton onClick={() => arrayHelpers.remove(index)}>
