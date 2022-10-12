@@ -93,7 +93,11 @@ export default function RecipeGrid(props) {
   };
 
   if (isFetchingRecipes) {
-    return <CircularProgress className={classes.loading} />;
+    return(
+    <div className={classes.loadingContainer}>
+      <CircularProgress className={classes.loading} />;
+    </div>
+    )
   }
 
   //eslint-disable-next-line

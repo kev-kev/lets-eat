@@ -1,8 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const gridStyle = makeStyles((theme) => ({
-  loading: {  
-    margin: "40vh",
+  loadingContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: "20vh"
   },
   pageNav: {
     display: "flex",
@@ -88,7 +90,7 @@ export const loginStyle = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   loading: {
-    margin: "20%",
+    margin: "20vh",
   },
 }), {index: 1});
 
@@ -239,13 +241,7 @@ export const recipeFormStyle = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(0, 1)
   },
-  loading: {
-    position: "absolute",
-    margin: "auto",
-    bottom: "0px",
-    top: "0px",
-    left: "50%",
-  }
+
 }), {index: 1});
 
 export const sidebarStyle = makeStyles((theme) => ({
