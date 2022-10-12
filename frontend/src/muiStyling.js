@@ -136,7 +136,7 @@ export const modalStyle = makeStyles((theme) => ({
     overflow: "scroll",
     border: "2px solid #aaa",
     borderRadius: "3%",
-    minWidth: "40%"
+    minWidth: "40%",
   },
   modalFormContainer: {
     maxHeight: "85%",

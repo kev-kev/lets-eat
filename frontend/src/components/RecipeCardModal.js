@@ -39,7 +39,7 @@ const renderNotes = (notes) => {
 
 const CardModal = (props) => {
   const classes = modalStyle();
-  const { openRecipeId, deleteRecipe, setOpenRecipeId, showEditForm, setShowEditForm } = useContext(GlobalContext);
+  const { openRecipeId, deleteRecipe, setOpenRecipeId, showEditForm, setShowEditForm, user } = useContext(GlobalContext);
   const [showDelete, setShowDelete] = useState(false);
 
   const renderCardModalBody = () => {
@@ -110,7 +110,7 @@ const CardModal = (props) => {
   };
 
   const renderEditButton = () => {
-    if (props.recipe.status === "approved")
+    if (props.recipe.status === "approved" || props.recipe.submittedBy === user.username){
       return (
         <div className={classes.buttonContainer}>
           <Button 
@@ -123,24 +123,26 @@ const CardModal = (props) => {
           </Button>
         </div>
       );
+    }
   };
 
   const handleClose = () => {
-    setOpenRecipeId(null)
+    setOpenRecipeId(null);
+    setShowEditForm(false);
   };
 
   const renderDeleteButton = () => {
     if (props.type === "index" && !props.recipe.isFavorited)
       return (
-          <Button
-            startIcon={<DeleteForeverRounded/>}
-            onClick={() => setShowDelete(true)}
-            variant="outlined"
-            color="primary"
-            size="small"
-          >
-            Delete Recipe
-          </Button>
+        <Button
+          startIcon={<DeleteForeverRounded/>}
+          onClick={() => setShowDelete(true)}
+          variant="outlined"
+          color="primary"
+          size="small"
+        >
+          Delete Recipe
+        </Button>
       );
   };
 
