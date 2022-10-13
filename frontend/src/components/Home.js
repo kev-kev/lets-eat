@@ -11,13 +11,9 @@ import Title from "./Title";
 import { RecipeForm } from "./RecipeForm";
 import LoginForm from "./LoginForm";
 
-const successMessage = "ヽ(*・ω・)ﾉ   Recipe Submitted!   ～('▽^人)";
-const errorMessage = "Submission Failed (っ´ω`)ﾉ (╥ω╥)";
-
-
 const Home = () => {
   const classes = homeStyle();
-  const { user, fetchRecipes, clearErrors, showErrorSnackbar, showSuccessSnackbar, setShowSnackbar } = useContext(GlobalContext);
+  const { user, fetchRecipes, clearErrors, showErrorSnackbar, showSuccessSnackbar, setShowSnackbar, snackbarMessage } = useContext(GlobalContext);
   const successRef = createRef();
   const errorRef = createRef();
 
@@ -73,14 +69,14 @@ const Home = () => {
             <Portal>
               <Snackbar open={showErrorSnackbar} onClose={() => handleSnackbarClose("error")} ref={errorRef}>
                 <Alert onClose={() => handleSnackbarClose("error")} severity="error">
-                  {errorMessage}
+                  {snackbarMessage}
                 </Alert>
               </Snackbar>
             </Portal>
             <Portal>
               <Snackbar open={showSuccessSnackbar} onClose={() => handleSnackbarClose("success")} ref={successRef}>
                 <Alert onClose={() => handleSnackbarClose("success")} severity="success">
-                  {successMessage}
+                  {snackbarMessage}
                 </Alert>
               </Snackbar>
             </Portal>

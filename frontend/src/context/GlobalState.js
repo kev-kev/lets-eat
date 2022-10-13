@@ -29,6 +29,7 @@ const initialState = {
   showErrorSnackbar: false,
   showEditForm: false,
   submitClicked: false,
+  snackbarMessage: "",
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -123,10 +124,12 @@ export const GlobalProvider = ({ children }) => {
           });
         }
         setShowSnackbar("success");
+        setSnackbarMessage("Recipe updated");
         setShowEditForm(false);
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error);
         dispatch({
           type: "EDIT_RECIPE_FAILURE",
           payload: error,
@@ -221,6 +224,7 @@ export const GlobalProvider = ({ children }) => {
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error);
         dispatch({
           type: "LOGIN_FAILURE",
           payload: error,
@@ -282,10 +286,12 @@ export const GlobalProvider = ({ children }) => {
             submittedBy: state.user.username,
           },
         });
-        setShowSnackbar("success")
+        setShowSnackbar("success");
+        setSnackbarMessage("Recipe successfully submitted");
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error);
         dispatch({
           type: "SUBMIT_RECIPE_FAILURE",
           payload: error,
@@ -311,10 +317,12 @@ export const GlobalProvider = ({ children }) => {
           type: "DELETE_RECIPE_SUCCESS",
           payload: {recipeId, type}
         });
-        setShowSnackbar("success")
+        setShowSnackbar("success");
+        setSnackbarMessage("Recipe has been deleted");
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error);
         dispatch({
           type: "DELETE_RECIPE_FAILURE",
           payload: error,
@@ -341,9 +349,11 @@ export const GlobalProvider = ({ children }) => {
           payload: { recipe_status, recipeId },
         });
         setShowSnackbar("success");
+        setSnackbarMessage("Recipe updated");
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error);
         dispatch({
           type: "STATUS_UPDATE_FAILURE",
           payload: error,
@@ -374,6 +384,7 @@ export const GlobalProvider = ({ children }) => {
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error);
         dispatch({
           type: "FAVORITE_UPDATE_FAILURE",
           payload: error,
@@ -403,6 +414,7 @@ export const GlobalProvider = ({ children }) => {
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error)
         dispatch({
           type: "WEEKS_UPDATE_FAILURE",
           payload: error,
@@ -422,6 +434,7 @@ export const GlobalProvider = ({ children }) => {
       })
       .catch((error) => {
         setShowSnackbar("error");
+        setSnackbarMessage(error);
         dispatch({
           type: "GET_GROCERY_LIST_FAILURE",
           payload: error,
@@ -444,7 +457,7 @@ export const GlobalProvider = ({ children }) => {
 
   const setOpenRecipeId = (id) => {
     dispatch({
-      type: "SET_OPEN_recipeId",
+      type: "SET_OPEN_RECIPE_ID",
       payload: id
     });
   }
@@ -468,6 +481,13 @@ export const GlobalProvider = ({ children }) => {
       type: "SET_SUBMIT_CLICKED",
       payload: bool,
     });
+  }
+
+  const setSnackbarMessage = (msg) => {
+    dispatch({
+      type: "SET_SNACKBAR_MESSAGE",
+      payload: msg
+    })
   }
 
   function logoutUser() {
@@ -524,7 +544,9 @@ export const GlobalProvider = ({ children }) => {
         showEditForm: state.showEditForm,
         setShowEditForm,
         submitClicked: state.submitClicked,
-        setSubmitClicked
+        setSubmitClicked,
+        snackbarMessage: state.snackbarMessage,
+        setSnackbarMessage
 
       }}
     >

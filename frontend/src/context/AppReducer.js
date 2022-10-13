@@ -294,7 +294,7 @@ export const AppReducer = (state, action) => {
           grid: action.payload,
         },
       };
-    case "SET_OPEN_recipeId":
+    case "SET_OPEN_RECIPE_ID":
       return {
         ...state,
         openRecipeId: action.payload
@@ -308,9 +308,14 @@ export const AppReducer = (state, action) => {
       } else {
         return {
           ...state,
-          showSuccessSnackbar: action.payload.bool
+          showSuccessSnackbar: action.payload.bool,
         }
       };
+    case "SET_SNACKBAR_MESSAGE": 
+      return {
+        ...state,
+        snackbarMessage: action.payload
+      }
     case "SET_SHOW_EDIT_FORM":
       return {
         ...state,
