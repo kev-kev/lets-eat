@@ -45,18 +45,12 @@ const RecipeCard = (props) => {
     );
   };
 
-  const handleAcceptRecipe = () => {};
-
-  const handleRejectRecipe = () => {};
-
   const renderCardBody = () => {
     if (props.type === "inbox") {
       return (
         <RecipeVoteBody
           id={props.recipe.id}
           className={classes.voteBody}
-          onAccept={() => handleAcceptRecipe()}
-          onReject={() => handleRejectRecipe()}
         />
       );
     } else if (props.type === "index") {

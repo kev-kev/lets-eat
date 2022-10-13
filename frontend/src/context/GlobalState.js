@@ -293,27 +293,25 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function deleteRecipe(recipe_id) {
-    fetch(rootURL + `/recipes/${recipe_id}`, {
+  function deleteRecipe(recipeId, type) {
+    fetch(rootURL + `/recipes/${recipeId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         recipe: {
-          id: recipe_id,
+          id: recipeId,
         },
       }),
     })
       .then(handleErrors)
-      .then((r) => r.json())
-      .then((data) => {
+      .then(() => {
         dispatch({
           type: "DELETE_RECIPE_SUCCESS",
-          payload: data.recipes.filter(
-            (recipe) => recipe.status === "approved"
-          ),
+          payload: {recipeId, type}
         });
+        setShowSnackbar("success")
       })
       .catch((error) => {
         setShowSnackbar("error");
@@ -324,8 +322,8 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function changeRecipeStatus(recipe_id, recipe_status) {
-    fetch(rootURL + `/recipes/${recipe_id}/`, {
+  function changeRecipeStatus(recipeId, recipe_status) {
+    fetch(rootURL + `/recipes/${recipeId}/`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -340,8 +338,9 @@ export const GlobalProvider = ({ children }) => {
       .then(() => {
         dispatch({
           type: "STATUS_UPDATE_SUCCESS",
-          payload: { recipe_status, recipe_id },
+          payload: { recipe_status, recipeId },
         });
+        setShowSnackbar("success");
       })
       .catch((error) => {
         setShowSnackbar("error");
@@ -352,8 +351,8 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function toggleFavorite(recipe_id, value) {
-    fetch(rootURL + `/recipes/${recipe_id}`, {
+  function toggleFavorite(recipeId, value) {
+    fetch(rootURL + `/recipes/${recipeId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -361,7 +360,7 @@ export const GlobalProvider = ({ children }) => {
       body: JSON.stringify({
         recipe: {
           is_favorited: value,
-          id: recipe_id,
+          id: recipeId,
         },
       }),
     })
@@ -370,7 +369,7 @@ export const GlobalProvider = ({ children }) => {
         if (r.status === 204)
           dispatch({
             type: "FAVORITE_UPDATE_SUCCESS",
-            payload: { recipe_id, value },
+            payload: { recipeId, value },
           });
       })
       .catch((error) => {
@@ -382,8 +381,8 @@ export const GlobalProvider = ({ children }) => {
       });
   }
 
-  function setWeeks(recipe_id, weeks) {
-    fetch(rootURL + `/recipes/${recipe_id}`, {
+  function setWeeks(recipeId, weeks) {
+    fetch(rootURL + `/recipes/${recipeId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -399,7 +398,7 @@ export const GlobalProvider = ({ children }) => {
         if (r.status === 204)
           dispatch({
             type: "WEEKS_UPDATE_SUCCESS",
-            payload: { recipe_id, weeks },
+            payload: { recipeId, weeks },
           });
       })
       .catch((error) => {
@@ -445,7 +444,7 @@ export const GlobalProvider = ({ children }) => {
 
   const setOpenRecipeId = (id) => {
     dispatch({
-      type: "SET_OPEN_RECIPE_ID",
+      type: "SET_OPEN_recipeId",
       payload: id
     });
   }

@@ -1,5 +1,14 @@
 export const AppReducer = (state, action) => {
-  let updatedRecipe;
+  const removeRecipeFromArr = (arr, recipeId) => {
+    const recipeToDelete = arr.find(recipe => {
+      return recipe.id === recipeId;
+    })
+    const index = arr.indexOf(recipeToDelete);
+    return [
+      ...arr.slice(0, index),
+      ...arr.slice(index+1)
+    ]
+  }
   switch (action.type) {
     case "LOGIN_USER":
       return {
@@ -131,8 +140,8 @@ export const AppReducer = (state, action) => {
         },
       };
     case "STATUS_UPDATE_SUCCESS":
-      updatedRecipe = state.inboxRecipes.find(
-        (recipe) => recipe.id === action.payload.recipe_id
+      const updatedRecipe = state.inboxRecipes.find(
+        (recipe) => recipe.id === action.payload.recipeId
       );
       // On approve/reject we remove from the inbox
       const indexToRemove = state.inboxRecipes.indexOf(updatedRecipe);
@@ -178,13 +187,13 @@ export const AppReducer = (state, action) => {
 
     case "WEEKS_UPDATE_SUCCESS": {
       let recipe, isInWeeklyRecipes, updatedWeeklyRecipes, updatedApprovedRecipes, updatedIndexRecipes;
-      // Backend returned successful update with action.payload.recipe_id
+      // Backend returned successful update with action.payload.recipeId
       // Find the recipe in state so we can use it
       // Is it in index?
-      recipe = state.indexRecipes.find(recipe => recipe.id === action.payload.recipe_id);
+      recipe = state.indexRecipes.find(recipe => recipe.id === action.payload.recipeId);
       if (!recipe) {
         // Look in weekly if it's not in index
-        recipe = state.weeklyRecipes.find(recipe => recipe.id === action.payload.recipe_id);
+        recipe = state.weeklyRecipes.find(recipe => recipe.id === action.payload.recipeId);
         if (recipe) {
           isInWeeklyRecipes = true;
         } else {
@@ -246,10 +255,17 @@ export const AppReducer = (state, action) => {
         },
       };
     case "DELETE_RECIPE_SUCCESS":
-      return {
-        ...state,
-        approvedRecipes: action.payload,
-      };
+      if(action.payload.type === "pending"){
+        return {
+          ...state,
+          pendingRecipes: removeRecipeFromArr(state.pendingRecipes, action.payload.recipeId),
+        }
+      } else if(action.payload.type === "index") {
+        return {
+          ...state,
+          indexRecipes: removeRecipeFromArr(state.indexRecipes, action.payload.recipeId),
+        } 
+      } 
     case "DELETE_RECIPE_FAILURE":
       return {
         ...state,
@@ -278,7 +294,7 @@ export const AppReducer = (state, action) => {
           grid: action.payload,
         },
       };
-    case "SET_OPEN_RECIPE_ID":
+    case "SET_OPEN_recipeId":
       return {
         ...state,
         openRecipeId: action.payload

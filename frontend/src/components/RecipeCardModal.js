@@ -46,7 +46,7 @@ const CardModal = (props) => {
     if (showEditForm) {
       return (
         <div key={props.recipe.id}>
-          <RecipeForm recipe={props.recipe} modal/>
+          <RecipeForm recipe={props.recipe}/>
           <Button 
             onClick={() => setShowEditForm(false)}
             startIcon={<ArrowBackRounded className={classes.backArrow}/>}
@@ -76,8 +76,9 @@ const CardModal = (props) => {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                  deleteRecipe(props.recipe.id);
+                  deleteRecipe(props.recipe.id, props.type);
                   setShowDelete(false);
+                  setOpenRecipeId(null);
                 }}
                 startIcon={<DeleteForeverRounded/>}
               >
@@ -132,7 +133,7 @@ const CardModal = (props) => {
   };
 
   const renderDeleteButton = () => {
-    if (props.type === "index" && !props.recipe.isFavorited)
+    if ((props.type === "index" && !props.recipe.isFavorited) || (props.type === "pending" && props.recipe.submittedBy === user.username))
       return (
         <Button
           startIcon={<DeleteForeverRounded/>}
