@@ -1,14 +1,15 @@
+const removeRecipeFromArr = (arr, recipeId) => {
+  const recipeToDelete = arr.find(recipe => {
+    return recipe.id === recipeId;
+  })
+  const index = arr.indexOf(recipeToDelete);
+  return [
+    ...arr.slice(0, index),
+    ...arr.slice(index+1)
+  ]
+}
+
 export const AppReducer = (state, action) => {
-  const removeRecipeFromArr = (arr, recipeId) => {
-    const recipeToDelete = arr.find(recipe => {
-      return recipe.id === recipeId;
-    })
-    const index = arr.indexOf(recipeToDelete);
-    return [
-      ...arr.slice(0, index),
-      ...arr.slice(index+1)
-    ]
-  }
   switch (action.type) {
     case "LOGIN_USER":
       return {
@@ -143,12 +144,12 @@ export const AppReducer = (state, action) => {
       const updatedRecipe = state.inboxRecipes.find(
         (recipe) => recipe.id === action.payload.recipeId
       );
-      // On approve/reject we remove from the inbox
       const indexToRemove = state.inboxRecipes.indexOf(updatedRecipe);
       const updatedInboxRecipes = [
-        ...state.inboxRecipes.slice(0, indexToRemove),
-        ...state.inboxRecipes.slice(indexToRemove + 1)
-      ]
+          ...state.inboxRecipes.slice(0, indexToRemove),
+          ...state.inboxRecipes.slice(indexToRemove + 1)
+        ]
+        // On approve/reject we remove from the inbox
       if (action.payload.recipe_status === "approved") {
         const updatedIndexRecipes = [
           ...state.indexRecipes,
@@ -210,17 +211,9 @@ export const AppReducer = (state, action) => {
           recipe,
         ].sort((a, b) => b.id - a.id);
         // Remove from approved recipes
-        const indexToRemoveFromApproved = state.approvedRecipes.indexOf(recipe);
-        updatedApprovedRecipes = [
-          ...state.approvedRecipes.slice(0, indexToRemoveFromApproved),
-          ...state.approvedRecipes.slice(indexToRemoveFromApproved + 1)
-        ];
+        updatedApprovedRecipes = removeRecipeFromArr(state.approvedRecipes, recipe.id)
         // Remove from index recipes
-        const indexToRemoveFromIndex = state.indexRecipes.indexOf(recipe);
-        updatedIndexRecipes = [
-          ...state.indexRecipes.slice(0, indexToRemoveFromIndex),
-          ...state.indexRecipes.slice(indexToRemoveFromIndex + 1)
-        ];
+        updatedIndexRecipes = removeRecipeFromArr(state.indexRecipes, recipe.id)
       } else {
         // Recipe got removed from week
         const indexToRemove = state.weeklyRecipes.indexOf(recipe);
