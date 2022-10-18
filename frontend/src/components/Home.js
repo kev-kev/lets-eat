@@ -69,7 +69,7 @@ const Home = () => {
             <Portal>
               <Snackbar open={showErrorSnackbar} onClose={() => handleSnackbarClose("error")} ref={errorRef}>
                 <Alert onClose={() => handleSnackbarClose("error")} severity="error">
-                  {snackbarMessage}
+                  {snackbarMessage || "Something went wrong. Please try again."}
                 </Alert>
               </Snackbar>
             </Portal>

@@ -33,11 +33,6 @@ const initialState = {
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
-const handleErrors = (response) => {
-  if (!response.ok) throw Error(response.statusText);
-  return response;
-};
-
 export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
@@ -48,25 +43,42 @@ export const GlobalProvider = ({ children }) => {
     );
   };
 
+
+const handleErrors = async (response, errorType) => {
+  const resObj = await response.json();
+  if (!response.ok) {
+    if (resObj.error) {
+      setShowSnackbar("error");
+      setSnackbarMessage(resObj.error);
+      dispatch({
+        type: errorType,
+        payload: resObj.error,
+      });
+    } else {
+      // Error occurred without message
+      setShowSnackbar("error");
+      setSnackbarMessage("Oops something went wrong! Please try again.");
+    }
+  } else {
+    return resObj;
+  }
+};
+
+
   const fetchRecipes = (user) => {
     dispatch({
       type: "FETCHING_RECIPES",
     });
     fetch(rootURL + `/recipes`)
-      .then(handleErrors)
-      .then((r) => r.json())
+      .then(r => handleErrors(r, "FETCH_RECIPES_FAILURE"))
       .then((data) => {
-        filterAndSetRecipes(data.recipes, user);
-        dispatch({
-          type: "FETCH_RECIPES_SUCCESS",
-        });
+        if (data) {
+          filterAndSetRecipes(data.recipes, user);
+          dispatch({
+            type: "FETCH_RECIPES_SUCCESS",
+          });
+        }
       })
-      .catch((error) => {
-        dispatch({
-          type: "FETCH_RECIPES_FAILURE",
-          payload: error,
-        });
-      });
   };
 
   const editRecipe = (recipe) => {
@@ -86,8 +98,11 @@ export const GlobalProvider = ({ children }) => {
         ingredients: recipe.ingredients,
       }),
     })
-      .then(handleErrors)
-      .then(() => {
+    .then((r) => {
+      return handleErrors(r, "EDIT_RECIPE_FAILURE");
+    })
+    .then((data) => {
+      if (data) {
         if(isWeeklyRecipe(recipe.weeks)){
           // update weeklyRecipe
           const updatedWeeklyRecipes = state.weeklyRecipes
@@ -109,7 +124,6 @@ export const GlobalProvider = ({ children }) => {
             (target) => target.id === recipe.id
           );
           updatedApprovedRecipes[recipeIndex] = recipe;
-
           const updatedIndexRecipes = state.indexRecipes;
           recipeIndex = updatedIndexRecipes.findIndex(
             (target) => target.id === recipe.id
@@ -126,15 +140,8 @@ export const GlobalProvider = ({ children }) => {
         setShowSnackbar("success");
         setSnackbarMessage("Recipe updated");
         setShowEditForm(false);
-      })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error);
-        dispatch({
-          type: "EDIT_RECIPE_FAILURE",
-          payload: error,
-        });
-      });
+      }
+    })
   };
 
   const setIndexRecipes = (term) => {
@@ -209,28 +216,38 @@ export const GlobalProvider = ({ children }) => {
       },
       body: JSON.stringify({ user: { username, password } }),
     })
-      .then(handleErrors)
       .then((r) => r.json())
       .then((data) => {
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("username", data.user?.username);
-        localStorage.setItem("id", data.user?.id);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: {
-            user: data.user,
-          },
-        });
+        if (data.error){
+          setShowSnackbar("error");
+          setSnackbarMessage(data.error);
+          dispatch({
+            type: "LOGIN_FAILURE",
+            payload: data.error,
+          });
+        } else {
+          localStorage.setItem("authToken", data.token);
+          localStorage.setItem("username", data.user?.username);
+          localStorage.setItem("id", data.user?.id);
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: {
+              user: data.user,
+            },
+          });
+        }
       })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error);
-        dispatch({
-          type: "LOGIN_FAILURE",
-          payload: error,
-        });
-      });
-  }
+    }
+      // .catch((error) => {
+      //   debugger
+      //   setShowSnackbar("error");
+      //   setSnackbarMessage(error);
+      //   dispatch({
+      //     type: "LOGIN_FAILURE",
+      //     payload: error,
+      //   });
+      // });
+
 
   function persistentLogin() {
     if (localStorage.getItem("authToken")) {
@@ -273,30 +290,40 @@ export const GlobalProvider = ({ children }) => {
         },
       }),
     })
-      .then(handleErrors)
-      .then(() => {
-        dispatch({
-          type: "SUBMIT_RECIPE_SUCCESS",
-          payload: {
-            name,
-            link,
-            notes,
-            imgUrl,
-            ingredients,
-            submittedBy: state.user.username,
-          },
-        });
-        setShowSnackbar("success");
-        setSnackbarMessage("Recipe successfully submitted");
+      // .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        if(data.error){
+          setShowSnackbar("error");
+          setSnackbarMessage(data.error);
+          dispatch({
+            type: "SUBMIT_RECIPE_FAILURE",
+            payload: data.error,
+          });
+        } else {
+          dispatch({
+            type: "SUBMIT_RECIPE_SUCCESS",
+            payload: {
+              name,
+              link,
+              notes,
+              imgUrl,
+              ingredients,
+              submittedBy: state.user.username,
+            },
+          });
+          setShowSnackbar("success");
+          setSnackbarMessage("Recipe successfully submitted");
+        }
       })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error);
-        dispatch({
-          type: "SUBMIT_RECIPE_FAILURE",
-          payload: error,
-        });
-      });
+      // .catch((error) => {
+      //   setShowSnackbar("error");
+      //   setSnackbarMessage(error);
+      //   dispatch({
+      //     type: "SUBMIT_RECIPE_FAILURE",
+      //     payload: error,
+      //   });
+      // });
   }
 
   function deleteRecipe(recipeId, type) {
@@ -311,23 +338,33 @@ export const GlobalProvider = ({ children }) => {
         },
       }),
     })
-      .then(handleErrors)
-      .then(() => {
-        dispatch({
-          type: "DELETE_RECIPE_SUCCESS",
-          payload: {recipeId, type}
-        });
-        setShowSnackbar("success");
-        setSnackbarMessage("Recipe has been deleted");
+      // .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        if(data.error){
+          setShowSnackbar("error");
+          setSnackbarMessage(data.error);
+          dispatch({
+            type: "DELETE_RECIPE_FAILURE",
+            payload: data.error,
+          });
+        } else {
+          dispatch({
+            type: "DELETE_RECIPE_SUCCESS",
+            payload: {recipeId, type}
+          });
+          setShowSnackbar("success");
+          setSnackbarMessage("Recipe has been deleted");
+        }
       })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error);
-        dispatch({
-          type: "DELETE_RECIPE_FAILURE",
-          payload: error,
-        });
-      });
+      // .catch((error) => {
+      //   setShowSnackbar("error");
+      //   setSnackbarMessage(error);
+      //   dispatch({
+      //     type: "DELETE_RECIPE_FAILURE",
+      //     payload: error,
+      //   });
+      // });
   }
 
   function changeRecipeStatus(recipeId, recipe_status) {
@@ -342,54 +379,33 @@ export const GlobalProvider = ({ children }) => {
         },
       }),
     })
-      .then(handleErrors)
-      .then(() => {
-        dispatch({
-          type: "STATUS_UPDATE_SUCCESS",
-          payload: { recipe_status, recipeId },
-        });
-        setShowSnackbar("success");
-        setSnackbarMessage("Recipe updated");
-      })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error);
-        dispatch({
-          type: "STATUS_UPDATE_FAILURE",
-          payload: error,
-        });
-      });
-  }
-
-  function toggleFavorite(recipeId, value) {
-    fetch(rootURL + `/recipes/${recipeId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        recipe: {
-          is_favorited: value,
-          id: recipeId,
-        },
-      }),
-    })
-      .then(handleErrors)
-      .then((r) => {
-        if (r.status === 204)
+      // .then(handleErrors)
+      .then((r) => r.json())
+      .then((data) => {
+        if(data.error){
+          setShowSnackbar("error");
+          setSnackbarMessage(data.error);
           dispatch({
-            type: "FAVORITE_UPDATE_SUCCESS",
-            payload: { recipeId, value },
+            type: "STATUS_UPDATE_FAILURE",
+            payload: data.error,
           });
+        } else {
+          dispatch({
+            type: "STATUS_UPDATE_SUCCESS",
+            payload: { recipe_status, recipeId },
+          });
+          setShowSnackbar("success");
+          setSnackbarMessage("Recipe updated");
+        }
       })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error);
-        dispatch({
-          type: "FAVORITE_UPDATE_FAILURE",
-          payload: error,
-        });
-      });
+      // .catch((error) => {
+      //   setShowSnackbar("error");
+      //   setSnackbarMessage(error);
+      //   dispatch({
+      //     type: "STATUS_UPDATE_FAILURE",
+      //     payload: error,
+      //   });
+      // });
   }
 
   function setWeeks(recipeId, weeks) {
@@ -404,42 +420,28 @@ export const GlobalProvider = ({ children }) => {
         },
       }),
     })
-      .then(handleErrors)
-      .then((r) => {
-        if (r.status === 204)
+      .then((r) => handleErrors(r, "WEEKS_UPDATE_FAILURE"))
+      .then((resObj) => {
+        if (resObj) {
           dispatch({
             type: "WEEKS_UPDATE_SUCCESS",
             payload: { recipeId, weeks },
           });
+        }
       })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error)
-        dispatch({
-          type: "WEEKS_UPDATE_FAILURE",
-          payload: error,
-        });
-      });
   }
 
   function getGroceryList() {
     fetch(rootURL + `/grocery_list/?week=${state.selectedWeek}`)
-      .then(handleErrors)
-      .then((r) => r.json())
+      .then((r) => handleErrors(r, "GET_GROCERY_LIST_FAILURE"))
       .then((data) => {
-        dispatch({
-          type: "GET_GROCERY_LIST_SUCCESS",
-          payload: data.groceryList,
-        });
+        if (data) {
+          dispatch({
+            type: "GET_GROCERY_LIST_SUCCESS",
+            payload: data.groceryList,
+          });  
+        }
       })
-      .catch((error) => {
-        setShowSnackbar("error");
-        setSnackbarMessage(error);
-        dispatch({
-          type: "GET_GROCERY_LIST_FAILURE",
-          payload: error,
-        });
-      });
   }
 
   function changeSelectedWeek(week) {
@@ -521,7 +523,6 @@ export const GlobalProvider = ({ children }) => {
         selectedWeek: state.selectedWeek,
         changeSelectedWeek,
         setWeeks,
-        toggleFavorite,
         getGroceryList,
         groceryList: state.groceryList,
         fetchRecipes,

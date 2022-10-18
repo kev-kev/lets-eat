@@ -20,7 +20,7 @@ class RecipesController < ApplicationController
           render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
         end
       end
-      render status: 201
+      render json: {}, status: 201
     else
       render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}, status: 400
     end
@@ -31,7 +31,7 @@ class RecipesController < ApplicationController
     if recipe
         update_recipe_ingredients(recipe, recipe_params[:ingredients]) if recipe_params[:ingredients]
         if recipe.update(recipe_params.except(:ingredients))
-          render status: 204
+          render json: {}, status: 200
         else
           render json: {error: "unable to update recipe"}, status: 400
         end

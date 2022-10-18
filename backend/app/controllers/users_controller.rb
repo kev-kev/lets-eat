@@ -5,7 +5,7 @@ class UsersController < ApplicationController
       token = encode_token({user_id: @user.id})
       render json: {user: @user, token: token}
     else
-      render json: {error: 'uWu oh no! your username or password is invalid 🥺👉👈'}
+      render json: {error: 'Something went wrong! Please try again.'}, status: 400
     end
   end
 
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       token = encode_token({user_id: @user.id})
       render json: {user: @user, token: token}, status: :accepted
     else
-      render json: {error: 'uWu oh no! your username or password is invalid 🥺👉👈'}
+      render json: {error: 'Username or password is invalid.'}, status: 401
     end
   end
 
