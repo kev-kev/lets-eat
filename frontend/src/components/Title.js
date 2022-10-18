@@ -9,7 +9,6 @@ const Title = (props) => {
   return (
     <Typography 
       className={classes.pageTitle}
-      component="h1" 
       variant="h3" 
       color="primary" 
       gutterBottom

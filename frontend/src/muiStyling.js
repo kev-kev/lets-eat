@@ -92,8 +92,12 @@ export const loginStyle = makeStyles((theme) => ({
     fontWeight: "bolder"
   },
   loading: {
-    margin: "20vh",
+    marginTop: theme.spacing(5)
   },
+  pageTitle: {
+    textAlign: "center",
+    margin: theme.spacing(5, 0, 0)
+  }
 }), {index: 1});
 
 export const recipeCardStyle = makeStyles((theme) => ({

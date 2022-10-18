@@ -12,6 +12,7 @@ import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
 import { Alert } from "@material-ui/lab/";
 import { loginStyle } from "../muiStyling";
+import Title from "./Title"
 
 const LoginForm = () => {
   const classes = loginStyle();
@@ -96,7 +97,7 @@ const LoginForm = () => {
               login(username, password);
             }}
           >
-            let's eat!
+            Let's Eat!
           </Button>
         </form>
       );
@@ -107,6 +108,13 @@ const LoginForm = () => {
   } else {
     return (
       <Container component="main" maxWidth={"xs"}>
+        <Typography 
+          className={classes.pageTitle}
+          variant="h2"
+          color="primary"
+        >
+          Let's Eat!
+        </Typography>
         <CssBaseline />
         <div className={classes.paper}>
           <Snackbar open={errorSnackbar} onClose={handleClose}>
@@ -116,7 +124,7 @@ const LoginForm = () => {
           </Snackbar>
           <img className={classes.kirby} src={LOGO} alt="Chef Kirby" />
           <Typography component="h1" variant="h5">
-            sign in to view recipes
+            Sign in to view recipes
           </Typography>
           {renderLoadingOrForm()}
         </div>
