@@ -103,7 +103,7 @@ export const loginStyle = makeStyles((theme) => ({
 export const recipeCardStyle = makeStyles((theme) => ({
   root: {
     position: "relative",
-    borderRadius: "5%",
+    borderRadius: "1rem",
   },
   media: {
     height: 0,
@@ -141,7 +141,7 @@ export const modalStyle = makeStyles((theme) => ({
     padding: theme.spacing(2, 6, 3),
     overflow: "scroll",
     border: "2px solid #aaa",
-    borderRadius: "3%",
+    borderRadius: "1rem",
     minWidth: "40%",
   },
   modalFormContainer: {

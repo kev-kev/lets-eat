@@ -98,9 +98,7 @@ const handleErrors = async (response, errorType) => {
         ingredients: recipe.ingredients,
       }),
     })
-    .then((r) => {
-      return handleErrors(r, "EDIT_RECIPE_FAILURE");
-    })
+    .then((r) => handleErrors(r, "EDIT_RECIPE_FAILURE"))
     .then((data) => {
       if (data) {
         if(isWeeklyRecipe(recipe.weeks)){
@@ -216,16 +214,9 @@ const handleErrors = async (response, errorType) => {
       },
       body: JSON.stringify({ user: { username, password } }),
     })
-      .then((r) => r.json())
+      .then((r) => handleErrors(r, "LOGIN_FAILURE"))
       .then((data) => {
-        if (data.error){
-          setShowSnackbar("error");
-          setSnackbarMessage(data.error);
-          dispatch({
-            type: "LOGIN_FAILURE",
-            payload: data.error,
-          });
-        } else {
+        if (data) {
           localStorage.setItem("authToken", data.token);
           localStorage.setItem("username", data.user?.username);
           localStorage.setItem("id", data.user?.id);
@@ -238,15 +229,6 @@ const handleErrors = async (response, errorType) => {
         }
       })
     }
-      // .catch((error) => {
-      //   debugger
-      //   setShowSnackbar("error");
-      //   setSnackbarMessage(error);
-      //   dispatch({
-      //     type: "LOGIN_FAILURE",
-      //     payload: error,
-      //   });
-      // });
 
 
   function persistentLogin() {
@@ -290,17 +272,9 @@ const handleErrors = async (response, errorType) => {
         },
       }),
     })
-      // .then(handleErrors)
-      .then((r) => r.json())
+      .then(r => handleErrors(r, "SUBMIT_RECIPE_FAILURE"))
       .then((data) => {
-        if(data.error){
-          setShowSnackbar("error");
-          setSnackbarMessage(data.error);
-          dispatch({
-            type: "SUBMIT_RECIPE_FAILURE",
-            payload: data.error,
-          });
-        } else {
+        if (data) {
           dispatch({
             type: "SUBMIT_RECIPE_SUCCESS",
             payload: {
@@ -316,14 +290,6 @@ const handleErrors = async (response, errorType) => {
           setSnackbarMessage("Recipe successfully submitted");
         }
       })
-      // .catch((error) => {
-      //   setShowSnackbar("error");
-      //   setSnackbarMessage(error);
-      //   dispatch({
-      //     type: "SUBMIT_RECIPE_FAILURE",
-      //     payload: error,
-      //   });
-      // });
   }
 
   function deleteRecipe(recipeId, type) {
@@ -338,17 +304,9 @@ const handleErrors = async (response, errorType) => {
         },
       }),
     })
-      // .then(handleErrors)
-      .then((r) => r.json())
+      .then((r) => handleErrors(r, "DELETE_RECIPE_FAILURE"))
       .then((data) => {
-        if(data.error){
-          setShowSnackbar("error");
-          setSnackbarMessage(data.error);
-          dispatch({
-            type: "DELETE_RECIPE_FAILURE",
-            payload: data.error,
-          });
-        } else {
+        if (data) {
           dispatch({
             type: "DELETE_RECIPE_SUCCESS",
             payload: {recipeId, type}
@@ -357,14 +315,6 @@ const handleErrors = async (response, errorType) => {
           setSnackbarMessage("Recipe has been deleted");
         }
       })
-      // .catch((error) => {
-      //   setShowSnackbar("error");
-      //   setSnackbarMessage(error);
-      //   dispatch({
-      //     type: "DELETE_RECIPE_FAILURE",
-      //     payload: error,
-      //   });
-      // });
   }
 
   function changeRecipeStatus(recipeId, recipe_status) {
@@ -379,17 +329,9 @@ const handleErrors = async (response, errorType) => {
         },
       }),
     })
-      // .then(handleErrors)
-      .then((r) => r.json())
+      .then((r) => handleErrors(r, "STATUS_UPDATE_FAILURE"))
       .then((data) => {
-        if(data.error){
-          setShowSnackbar("error");
-          setSnackbarMessage(data.error);
-          dispatch({
-            type: "STATUS_UPDATE_FAILURE",
-            payload: data.error,
-          });
-        } else {
+        if (data) {
           dispatch({
             type: "STATUS_UPDATE_SUCCESS",
             payload: { recipe_status, recipeId },
@@ -398,14 +340,6 @@ const handleErrors = async (response, errorType) => {
           setSnackbarMessage("Recipe updated");
         }
       })
-      // .catch((error) => {
-      //   setShowSnackbar("error");
-      //   setSnackbarMessage(error);
-      //   dispatch({
-      //     type: "STATUS_UPDATE_FAILURE",
-      //     payload: error,
-      //   });
-      // });
   }
 
   function setWeeks(recipeId, weeks) {

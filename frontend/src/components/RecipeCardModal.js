@@ -4,6 +4,8 @@ import {
   Modal,
   Button,
   Typography,
+  Fade,
+  Backdrop
 } from "@material-ui/core";
 import { DeleteForeverRounded, EditRounded, ArrowBackRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
@@ -158,11 +160,18 @@ const CardModal = (props) => {
       open={props.recipe.id === openRecipeId} 
       onClose={handleClose} 
       aria-labelledby="modal-title"
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
     >
-      <div className={getModalClass()}>
-        <h2 id="modal-title" className={classes.modalTitle}>{props.recipe.name}</h2>
-        {renderCardModalBody()}
-      </div>
+      <Fade in={props.recipe.id === openRecipeId}>
+        <div className={getModalClass()}>
+          <h2 id="modal-title" className={classes.modalTitle}>{props.recipe.name}</h2>
+          {renderCardModalBody()}
+        </div>
+      </Fade>
     </Modal>
   );
 };
