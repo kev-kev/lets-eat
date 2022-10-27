@@ -26,12 +26,13 @@ const GroceryListModal = () => {
             {amount.count} {pluralize(amount.unit, amount.count)}
           </span>
         )
+      } else if (amount.count) {
+        return (
+          <span key={amount.count + uuid()}>
+            {amount.count}
+          </span>
+        );  
       }
-      return (
-        <span key={amount.count + uuid()}>
-          {amount.count}
-        </span>
-      );
     });
   };
 

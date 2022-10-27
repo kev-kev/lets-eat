@@ -102,7 +102,7 @@ class RecipesController < ApplicationController
               "recipe_id"=> recipe_id,
               "ingredient_id"=> new_ingredient[:id]
             })
-            if recipe_ingredient[:count] && ingredient[:count]
+            if recipe_ingredient[:count] || ingredient[:count]
               ing_count = recipe_ingredient[:count].to_i + ingredient[:count].to_i
             else
               ing_count = ""
