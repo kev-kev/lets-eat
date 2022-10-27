@@ -32,7 +32,8 @@ const renderRecipeCards = (recipes, type, className) => {
     return (
       <Grid
         item
-        xs={6}
+        xs={12}
+        sm={6}
         md={4}
         lg={3}
         xl={2}
@@ -111,12 +112,12 @@ export default function RecipeGrid(props) {
   const renderPageNav = () => {
     return (
       <div className={classes.pageNav}>
-        <IconButton classes={!shouldShowBackBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("back")}>
-          <ChevronLeftRounded color="primary" />
+        <IconButton disabled={!shouldShowBackBtn} onClick={() => handlePageClick("back")}>
+          <ChevronLeftRounded color={shouldShowBackBtn ? "primary" : "grey"} />
         </IconButton>
         {page}
-        <IconButton classes={!shouldShowFwdBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("fwd")}>
-          <ChevronRightRounded color="primary" />
+        <IconButton disabled={!shouldShowFwdBtn} onClick={() => handlePageClick("fwd")}>
+          <ChevronRightRounded color={shouldShowFwdBtn ? "primary" : "grey"} />
         </IconButton>
       </div>
     )
