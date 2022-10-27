@@ -16,7 +16,7 @@ const renderIngredientTypography = (ingredients, classes) => {
     return ingredients.map((ing, i) => {
       return (
         <Typography key={i} variant="body2" className={classes.ingredientTypography}>
-          - {ing.name}: {ing.count} {ing.unit}
+          - {ing.name} {ing.count || (ing.count && ing.unit) ? ":" : ""} {ing.count} {ing.unit}
        </Typography>
       );
     });
