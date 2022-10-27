@@ -22,15 +22,15 @@ const GroceryListModal = () => {
     return amounts.map((amount) => {
       if (amount.unit && amount.count) {
         return (
-          <span key={amount.unit + uuid()}>
+          <Typography variant="body2" display="inline" key={amount.unit + uuid()}>
             {amount.count} {pluralize(amount.unit, amount.count)}
-          </span>
+          </Typography>
         )
       } else if (amount.count) {
         return (
-          <span key={amount.count + uuid()}>
+          <Typography variant="body2" display="inline" key={amount.count + uuid()}>
             {amount.count}
-          </span>
+          </Typography>
         );  
       }
     });

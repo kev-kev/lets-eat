@@ -135,7 +135,7 @@ export default function RecipeGrid(props) {
       return (
         <>
           <div className={classes.recipeGridSectionContainer}>
-            <h2 className={classes.sectionTitle}>
+            <Typography variant="h5" className={classes.sectionTitle}>
               <IconButton onClick={() => handleChangeWeek("back")}>
                 <ChevronLeftRounded color="primary" />
               </IconButton>
@@ -144,13 +144,13 @@ export default function RecipeGrid(props) {
               <IconButton onClick={() => handleChangeWeek("fwd")}>
                 <ChevronRightRounded color="primary" />
               </IconButton>
-            </h2>
+            </Typography>
             {renderGridContainer(weeklyRecipes, "weekly", classes)}
             {renderGroceryListModal()}
           </div>
           <Divider className={classes.divider} />
           <div className={classes.recipeGridSectionContainer}>
-            <h2 className={classes.sectionTitle}>Other Recipes</h2>
+            <Typography variant="h5" className={classes.sectionTitle}>Other Recipes</Typography>
             <div className={classes.searchBar}><SearchBar /></div>
             {renderIndexRecipes()}
             {renderPageNav()}
@@ -160,12 +160,12 @@ export default function RecipeGrid(props) {
     case "inbox":
       return (
         <>
-          <h2 className={classes.sectionTitle}>Pending Recipes</h2>
+          <Typography variant="h5" className={classes.sectionTitle}>Pending Recipes</Typography>
           <div className={classes.recipeGridSectionContainer}>
             {renderGridContainer(inboxRecipes, props.type, classes)}
           </div>
           <Divider className={classes.divider}/>
-          <h2 className={classes.sectionTitle}>Your Submitted Recipes</h2>
+          <Typography variant="h5" className={classes.sectionTitle}>Your Submitted Recipes</Typography>
           <div className={classes.recipeGridSectionContainer}>
             {renderGridContainer(pendingRecipes, "pending", classes)}
           </div>
