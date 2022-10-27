@@ -381,9 +381,13 @@ const handleErrors = async (response, errorType) => {
   function changeSelectedWeek(week) {
     const newWeeklyRecipes = [];
     const newApprovedRecipes = [];
-    [...state.approvedRecipes, ...state.weeklyRecipes].forEach((recipe) => {
-      if (isWeeklyRecipe(recipe.weeks, week)) newWeeklyRecipes.push(recipe);
-      else newApprovedRecipes.push(recipe);
+    const indexRecipes = [...state.approvedRecipes, ...state.weeklyRecipes]
+    indexRecipes.forEach((recipe) => {
+      if (isWeeklyRecipe(recipe.weeks, week)) {
+        newWeeklyRecipes.push(recipe);
+      } else {
+        newApprovedRecipes.push(recipe);
+      }
     });
     dispatch({
       type: "CHANGE_SELECTED_WEEK",

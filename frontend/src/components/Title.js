@@ -9,9 +9,8 @@ const Title = (props) => {
   return (
     <Typography 
       className={classes.pageTitle}
-      variant="h3" 
+      variant="h2" 
       color="primary" 
-      gutterBottom
       >
       {props.children}
     </Typography>

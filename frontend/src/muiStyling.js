@@ -16,7 +16,7 @@ export const gridStyle = makeStyles((theme) => ({
   },
   sectionTitle: {
     textAlign: "center",
-    margin: "0px"
+    padding: theme.spacing(3, 0, 2)
   },
   recipeGridSectionContainer: {
     display: "flex",
@@ -39,7 +39,7 @@ export const gridStyle = makeStyles((theme) => ({
   emptyMessage: {
     width: "100%",
     color: "gray",
-    padding: theme.spacing(7, 0, 10)
+    padding: theme.spacing(7, 0)
   }
 }), {index: 1});
 
@@ -70,7 +70,7 @@ export const homeStyle = makeStyles((theme) => ({
 
 export const titleStyle = makeStyles((theme) => ({
   pageTitle: {
-    paddingTop: theme.spacing(2),
+    padding: theme.spacing(3, 0),
     textAlign: "center",
   }
 }));
