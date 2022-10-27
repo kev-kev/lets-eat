@@ -21,7 +21,7 @@ const GroceryListModal = () => {
   const renderAmountsList = (amounts) => {
     return amounts.map((amount) => {
       return (
-        <span key={amount.unit}>
+        <span key={amount.unit + uuid()}>
           {amount.count} {pluralize(amount.unit, amount.count)}
         </span>
       );
@@ -41,17 +41,17 @@ const GroceryListModal = () => {
 
   const renderGroceryListBody = () => {
     let res = [
-      <>
+      <React.Fragment key="your-recipes-title">
         <Typography>
           Your recipes this week:
         </Typography>
         {getWeeklyRecipeNames()}
-      </>
+      </React.Fragment>
     ]
     
     if (groceryList) {  
       res.push(
-      <Typography>
+      <Typography key="your-grocery-list-title">
         Your grocery list:
       </Typography>
       )
@@ -64,14 +64,14 @@ const GroceryListModal = () => {
       });
       if(hasRecipeWithEmptyIngs){
         res.push(
-          <Typography varaint="subtitle">
+          <Typography varaint="subtitle" key="ingredients-subtitle">
             You have one or more recipes without any ingredients listed, so this list may be incomplete!
           </Typography>
         )
       }
     } else {
       res.push(
-        <Typography>
+        <Typography key="ingredients-empty">
           Your haven't added any ingredients to your weekly recipes yet...
         </Typography>
       )
