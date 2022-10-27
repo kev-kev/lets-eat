@@ -20,9 +20,16 @@ const GroceryListModal = () => {
 
   const renderAmountsList = (amounts) => {
     return amounts.map((amount) => {
+      if (amount.unit && amount.count) {
+        return (
+          <span key={amount.unit + uuid()}>
+            {amount.count} {pluralize(amount.unit, amount.count)}
+          </span>
+        )
+      }
       return (
-        <span key={amount.unit + uuid()}>
-          {amount.count} {pluralize(amount.unit, amount.count)}
+        <span key={amount.count + uuid()}>
+          {amount.count}
         </span>
       );
     });
@@ -42,7 +49,7 @@ const GroceryListModal = () => {
   const renderGroceryListBody = () => {
     let res = [
       <React.Fragment key="your-recipes-title">
-        <Typography>
+        <Typography variant="h6">
           Your recipes this week:
         </Typography>
         {getWeeklyRecipeNames()}
@@ -51,7 +58,7 @@ const GroceryListModal = () => {
     
     if (groceryList) {  
       res.push(
-      <Typography key="your-grocery-list-title">
+      <Typography variant="h6" key="your-grocery-list-title">
         Your grocery list:
       </Typography>
       )
