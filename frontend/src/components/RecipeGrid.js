@@ -36,7 +36,7 @@ const renderRecipeCards = (recipes, type, className) => {
         sm={6}
         md={4}
         lg={3}
-        xl={2}
+        xl={3}
         key={recipe.name + uuid()}
       >
         <RecipeCard type={type} recipe={recipe} />
