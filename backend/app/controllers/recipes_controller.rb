@@ -42,9 +42,9 @@ class RecipesController < ApplicationController
 
   def destroy
     if Recipe.destroy(params[:id])
-      render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}, status: 204
+      render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}, status: 200
     else
-      render json: { error: 'unable to delete recipe'}, status: 400
+      render json: {error: 'unable to delete recipe'}, status: 400
     end
   end
 
