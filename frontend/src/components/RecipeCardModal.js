@@ -15,14 +15,14 @@ const renderIngredientTypography = (ingredients, classes) => {
   if(ingredients.length > 0){
     return ingredients.map((ing, i) => {
       return (
-        <Typography key={i} variant="body2" className={classes.ingredientTypography}>
+        <Typography key={i} className={classes.ingredientTypography}>
           - {ing.name} {ing.count || (ing.count && ing.unit) ? ":" : ""} {ing.count} {(ing.unit && ing.count) && ing.unit}
        </Typography>
       );
     });
   } else {
     return (
-      <Typography variant="body2" className={classes.ingredientTypography}>
+      <Typography className={classes.ingredientTypography}>
         none, add some now
       </Typography>
     )
@@ -97,7 +97,7 @@ const CardModal = (props) => {
             {renderIngredientTypography(props.recipe.ingredients, classes)}
           </div>
           <Typography variant="h6">Notes:</Typography>
-          <Typography variant="body2" className={classes.noteTypography}>
+          <Typography className={classes.noteTypography}>
             {renderNotes(props.recipe.notes)}
           </Typography>
           <div className={classes.submittedBy}>
