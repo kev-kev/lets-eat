@@ -4,11 +4,14 @@ import { Modal, Button, Typography } from "@material-ui/core";
 import { ShoppingBasketRounded } from "@material-ui/icons/";
 import pluralize from "pluralize";
 import { modalStyle } from "../muiStyling";
+import uuid from "react-uuid";
+
 
 const GroceryListModal = () => {
   const classes = modalStyle();
-  const { getGroceryList, groceryList } = useContext(GlobalContext);
+  const { getGroceryList, groceryList, weeklyRecipes } = useContext(GlobalContext);
   const [shouldShowModal, setShouldShowModal] = useState(false);
+  const [hasRecipeWithEmptyIngs, setHasRecipeWithEmptyIngs] = useState(false);
 
   const handleGetGroceryList = () => {
     getGroceryList();
@@ -25,16 +28,55 @@ const GroceryListModal = () => {
     });
   };
 
+  const getWeeklyRecipeNames = () => {
+    return weeklyRecipes.map((recipe) => {
+      if(recipe.ingredients.length === 0 && !hasRecipeWithEmptyIngs) setHasRecipeWithEmptyIngs(true);
+      return(
+        <Typography key={recipe.id}>
+         - {recipe.name}
+        </Typography>
+      ) 
+    })
+  }
+
   const renderGroceryListBody = () => {
-    if (groceryList) {
-      return Object.entries(groceryList).map(([name, amounts]) => {
-        return (
-          <div>
-            {name}: {renderAmountsList(amounts)}
-          </div>
+    let res = [
+      <>
+        <Typography>
+          Your recipes this week:
+        </Typography>
+        {getWeeklyRecipeNames()}
+      </>
+    ]
+    
+    if (groceryList) {  
+      res.push(
+      <Typography>
+        Your grocery list:
+      </Typography>
+      )
+      Object.entries(groceryList).map(([name, amounts]) => {
+        res.push(
+          <Typography key={name + uuid()}>
+            - {name}{amounts.some(amount => amount.count || (amount.count && amount.unit)) ? ": " : " " }{renderAmountsList(amounts)}
+          </Typography>
         );
       });
+      if(hasRecipeWithEmptyIngs){
+        res.push(
+          <Typography varaint="subtitle">
+            You have one or more recipes without any ingredients listed, so this list may be incomplete!
+          </Typography>
+        )
+      }
+    } else {
+      res.push(
+        <Typography>
+          Your haven't added any ingredients to your weekly recipes yet...
+        </Typography>
+      )
     }
+    return res;
   };
 
   return (

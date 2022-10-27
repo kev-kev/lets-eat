@@ -13,7 +13,7 @@ class HomeController < ApplicationController
         ingredient_counts_units = grocery_list[weekly_ingredient[:name]]
         ingredient_counts_units.each do |counts_unit| 
           if counts_unit[:unit] == weekly_ingredient[:unit]
-            counts_unit[:count] += weekly_ingredient[:count]
+            counts_unit[:count] += weekly_ingredient[:count] if counts_unit[:count]
           else
             grocery_list[weekly_ingredient[:name]] << {count: weekly_ingredient[:count], unit: weekly_ingredient[:unit]}
           end

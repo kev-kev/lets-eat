@@ -168,7 +168,7 @@ const CardModal = (props) => {
     >
       <Fade in={props.recipe.id === openRecipeId}>
         <div className={getModalClass()}>
-          <h2 id="modal-title" className={classes.modalTitle}>{props.recipe.name}</h2>
+          <Typography variant="h5" id="modal-title" className={classes.modalTitle}>{props.recipe.name}</Typography>
           {renderCardModalBody()}
         </div>
       </Fade>
