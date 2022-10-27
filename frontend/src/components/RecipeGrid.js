@@ -5,13 +5,27 @@ import RecipeCard from "./RecipeCard";
 import SearchBar from "./SearchBar";
 import { format, add, sub } from "date-fns";
 import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
-import { IconButton, Grid, CircularProgress, Divider } from "@material-ui/core";
+import { IconButton, Grid, CircularProgress, Divider, Typography } from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
 const RECIPES_PER_PAGE = 20;
+const EMPTY_GRID_STR = {
+  inbox: "There's nothing here D:",
+  favorites: "There's nothing here D:",
+  rejected: "There's nothing here D:",
+  weekly: "There's nothing here D:",
+  index: "There's nothing here D:",
+}
 
 const renderRecipeCards = (recipes, type) => {
+  if (recipes.length === 0){
+    return(
+      <Typography>
+        {EMPTY_GRID_STR[type]}
+      </Typography>
+    )
+  }
   return recipes.map((recipe) => {
     return (
       <Grid
