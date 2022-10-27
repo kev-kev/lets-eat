@@ -153,6 +153,7 @@ export const RecipeForm = ({ recipe }) => {
                                 id={`ingredients[${index}]_unit`} 
                                 {...formik.getFieldProps(`ingredients[${index}].unit`)}
                               >
+                                <MenuItem value="">None</MenuItem> 
                                 <MenuItem value={"gram"}>Grams</MenuItem>
                                 <MenuItem value={"kilograms"}>Kilograms</MenuItem>
                                 <MenuItem value={"ounces"}>Ounces</MenuItem>
