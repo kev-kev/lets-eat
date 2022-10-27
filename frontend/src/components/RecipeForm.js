@@ -4,7 +4,6 @@ import { CloseRounded, AddRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Formik, Form, FieldArray, FastField } from "formik";
-import * as Yup from "yup";
 
 const isSubmitDisabled = (values, recipe) => {
   const changedFields = () => {
@@ -21,20 +20,6 @@ const isSubmitDisabled = (values, recipe) => {
   }
   return hasEmptyIngredientInput() || values.name.length === 0 || (recipe && !changedFields());
 };
-
-const validationSchema = Yup.object({
-  name: Yup.string().required("Required"),  
-  imgUrl: Yup.string(),
-  link: Yup.string(),
-  notes: Yup.string(),
-  ingredients: Yup.array().of(
-    Yup.object({
-      name: Yup.string().required("Required"),
-      unit: Yup.string(),
-      count: Yup.number().positive().integer(),
-    })
-  ),
-});
 
 export const RecipeForm = ({ recipe }) => {
   const classes = recipeFormStyle();
@@ -84,7 +69,6 @@ export const RecipeForm = ({ recipe }) => {
       }
   }
 
-
   return (
     <Formik
       initialValues={{
@@ -94,7 +78,6 @@ export const RecipeForm = ({ recipe }) => {
         notes: recipe?.notes || "",
         ingredients: recipe?.ingredients || [],
       }}
-      validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => handleFormSubmit(values, setSubmitting, resetForm)}
     >
       {(formik) => (
@@ -166,8 +149,8 @@ export const RecipeForm = ({ recipe }) => {
                                 select
                                 label="Unit"
                                 className={classes.ingField + ' ' + classes.unitSelect}
-                                name={`ingredients[${index}].unit`} 
-                                id={`ingredients[${index}].unit`} 
+                                name={`ingredients[${index}]_unit`} 
+                                id={`ingredients[${index}]_unit`} 
                                 {...formik.getFieldProps(`ingredients[${index}].unit`)}
                               >
                                 <MenuItem value={"gram"}>Grams</MenuItem>
