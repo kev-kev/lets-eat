@@ -35,6 +35,11 @@ export const gridStyle = makeStyles((theme) => ({
   },
   divider: {
     margin: "1rem 0rem"
+  },
+  emptyMessage: {
+    width: "100%",
+    color: "gray",
+    padding: theme.spacing(7, 0, 10)
   }
 }), {index: 1});
 

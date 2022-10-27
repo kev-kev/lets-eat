@@ -4,24 +4,25 @@ import uuid from "react-uuid";
 import RecipeCard from "./RecipeCard";
 import SearchBar from "./SearchBar";
 import { format, add, sub } from "date-fns";
-import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons/";
+import { ChevronRightRounded, ChevronLeftRounded, MoodBadRounded } from "@material-ui/icons/";
 import { IconButton, Grid, CircularProgress, Divider, Typography } from "@material-ui/core";
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
 const RECIPES_PER_PAGE = 20;
 const EMPTY_GRID_STR = {
-  inbox: "There's nothing here D:",
-  favorites: "There's nothing here D:",
-  rejected: "There's nothing here D:",
-  weekly: "There's nothing here D:",
-  index: "There's nothing here D:",
+  inbox: "Your inbox is empty...",
+  favorites: "You haven't favorited any recipes yet...",
+  rejected: "There's nothing here...",
+  weekly: "No weekly recipes... Add some below!",
+  index: "There's nothing here...",
 }
 
-const renderRecipeCards = (recipes, type) => {
+const renderRecipeCards = (recipes, type, className) => {
   if (recipes.length === 0){
     return(
-      <Typography>
+      <Typography variant="subtitle1" align="center" className={className} style={{width: "100%", color: "gray"}}>
+        <MoodBadRounded color="primary"/> <br/>
         {EMPTY_GRID_STR[type]}
       </Typography>
     )
@@ -49,7 +50,7 @@ const renderGridContainer = (recipes, type, classes) => {
       spacing={2}
       className={classes.gridContainer} 
     >
-      {renderRecipeCards(recipes, type)}
+      {renderRecipeCards(recipes, type, classes.emptyMessage)}
     </Grid>
   );
 };
