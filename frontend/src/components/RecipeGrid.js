@@ -16,6 +16,7 @@ const EMPTY_GRID_STR = {
   rejected: "There's nothing here...",
   weekly: "No weekly recipes... Add some below!",
   index: "There's nothing here...",
+  pending: "There's nothing here..."
 }
 
 const renderRecipeCards = (recipes, type, className) => {
@@ -107,6 +108,19 @@ export default function RecipeGrid(props) {
     if (weeklyRecipes.length > 0) return <GroceryListModal />;
   };
 
+  const renderPageNav = () => {
+    return (
+      <div className={classes.pageNav}>
+        <IconButton classes={!shouldShowBackBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("back")}>
+          <ChevronLeftRounded color="primary" />
+        </IconButton>
+        {page}
+        <IconButton classes={!shouldShowFwdBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("fwd")}>
+          <ChevronRightRounded color="primary" />
+        </IconButton>
+      </div>
+    )
+  }
   if (isFetchingRecipes) {
     return(
     <div className={classes.loadingContainer}>
@@ -139,15 +153,7 @@ export default function RecipeGrid(props) {
             <h2 className={classes.sectionTitle}>Other Recipes</h2>
             <div className={classes.searchBar}><SearchBar /></div>
             {renderIndexRecipes()}
-            <div className={classes.pageNav}>
-              <IconButton classes={!shouldShowBackBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("back")}>
-                <ChevronLeftRounded color="primary" />
-              </IconButton>
-              {page}
-              <IconButton classes={!shouldShowFwdBtn ? {root: classes.hideVisibility} : {}} onClick={() => handlePageClick("fwd")}>
-                <ChevronRightRounded color="primary" />
-              </IconButton>
-            </div>
+            {renderPageNav()}
           </div>
         </>
       );
