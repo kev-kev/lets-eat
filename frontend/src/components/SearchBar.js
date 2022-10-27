@@ -8,7 +8,6 @@ export default function SearchBar() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       setIndexRecipes(searchTerm);
     }, 1000);
     return () => {

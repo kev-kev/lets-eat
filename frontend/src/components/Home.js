@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState, createRef } from "react";
-import { Container, CssBaseline, Snackbar, Portal, CircularProgress } from "@material-ui/core";
+import React, { useContext, useEffect, createRef } from "react";
+import { Container, CssBaseline, Snackbar, Portal } from "@material-ui/core";
 import { Alert } from "@material-ui/lab/";
 import Sidebar from "./Sidebar";
 import Copyright from "./Copyright";

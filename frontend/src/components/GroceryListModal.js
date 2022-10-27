@@ -31,7 +31,9 @@ const GroceryListModal = () => {
           <Typography variant="body2" display="inline" key={amount.count + uuid()}>
             {amount.count}
           </Typography>
-        );  
+        );
+      } else {
+        return "";
       }
     });
   };
@@ -64,9 +66,12 @@ const GroceryListModal = () => {
       </Typography>
       )
       Object.entries(groceryList).map(([name, amounts]) => {
-        res.push(
+        return res.push(
           <Typography key={name + uuid()}>
-            - {name}{amounts.some(amount => amount.count || (amount.count && amount.unit)) ? ": " : " " }{renderAmountsList(amounts)}
+            - {name}{amounts.some(amount => {
+                if (amount.count || (amount.count && amount.unit)) { return ": "; } else { return " "; } })
+              }
+              {renderAmountsList(amounts)}
           </Typography>
         );
       });

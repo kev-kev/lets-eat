@@ -109,8 +109,11 @@ export const AppReducer = (state, action) => {
             ...state,
             rejectedRecipes: sortedRecipes,
           };
+        default: 
+          return {
+            ...state
+          };
       }
-      break;
     case "EDITING_RECIPE":
       return {
         ...state,
@@ -258,7 +261,8 @@ export const AppReducer = (state, action) => {
           ...state,
           indexRecipes: removeRecipeFromArr(state.indexRecipes, action.payload.recipeId),
         } 
-      } 
+      }
+      break;
     case "DELETE_RECIPE_FAILURE":
       return {
         ...state,

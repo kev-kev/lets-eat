@@ -12,7 +12,6 @@ import { GlobalContext } from "../context/GlobalState";
 import { Redirect } from "react-router-dom";
 import { Alert } from "@material-ui/lab/";
 import { loginStyle } from "../muiStyling";
-import Title from "./Title"
 
 const LoginForm = () => {
   const classes = loginStyle();
@@ -54,7 +53,7 @@ const LoginForm = () => {
     if (!user) {
       persistentLogin();
     }
-  }, []);
+  }, [user, persistentLogin]);
 
   const renderLoadingOrForm = () => {
     if (isLoggingIn) {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, IconButton, TextField, MenuItem, FormControl, CircularProgress, } from "@material-ui/core/";
+import { Button, IconButton, TextField, MenuItem, FormControl } from "@material-ui/core/";
 import { CloseRounded, AddRounded } from "@material-ui/icons/";
 import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
@@ -30,14 +30,14 @@ export const RecipeForm = ({ recipe }) => {
   useEffect(() => {
     if(recipe) setButtonText("Edit")
     else setButtonText("Submit")
-  }, [])
+  }, [recipe])
 
   useEffect(() => {
     if(!isSubmittingRecipe && !isEditingRecipe){
       if(recipe) setButtonText("Edit")
       else setButtonText("Submit")
     }
-  }, [isSubmittingRecipe, isEditingRecipe])
+  }, [isSubmittingRecipe, isEditingRecipe, recipe])
 
   const renderSubmitButton = (values) => {
     return(
