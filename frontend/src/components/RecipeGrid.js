@@ -65,7 +65,6 @@ export default function RecipeGrid(props) {
     inboxRecipes,
     pendingRecipes,
     rejectedRecipes,
-    favoritedRecipes,
     selectedWeek,
     changeSelectedWeek,
     isFetchingRecipes,
@@ -175,7 +174,7 @@ export default function RecipeGrid(props) {
     case "favorites":
       return (
         <div className={classes.recipeGridSectionContainer}>
-          {renderGridContainer(favoritedRecipes, props.type, classes)}
+          {renderGridContainer(indexRecipes.filter(recipe => recipe.isFavorited), props.type, classes)}
         </div>
       )
     case "rejected":

@@ -17,7 +17,6 @@ const initialState = {
   },
   selectedWeek: startOfWeek(new Date()),
   groceryList: null,
-  favoritedRecipes: [],
   weeklyRecipes: [],
   approvedRecipes: [],
   inboxRecipes: [],
@@ -162,7 +161,6 @@ const handleErrors = async (response, errorType) => {
   const filterAndSetRecipes = (recipes, user) => {
     const weeklyRecipes = [];
     const approvedRecipes = [];
-    const favoritedRecipes = [];
     const inboxRecipes = [];
     const pendingRecipes = [];
     const rejectedRecipes = [];
@@ -173,7 +171,6 @@ const handleErrors = async (response, errorType) => {
         case "approved":
           if (isWeeklyRecipe(recipe.weeks)) weeklyRecipes.push(recipe);
           else approvedRecipes.push(recipe);
-          if (recipe.isFavorited) favoritedRecipes.push(recipe);
           break;
         case "pending":
           recipe.submittedBy === user.username
@@ -190,7 +187,6 @@ const handleErrors = async (response, errorType) => {
       ["weekly", weeklyRecipes],
       ["approved", approvedRecipes],
       ["index", approvedRecipes],
-      ["favorited", favoritedRecipes],
       ["inbox", inboxRecipes],
       ["pending", pendingRecipes],
       ["rejected", rejectedRecipes],
@@ -466,7 +462,6 @@ const handleErrors = async (response, errorType) => {
         fetchRecipes,
         editRecipe,
         isEditingRecipe: state.isEditingRecipe,
-        favoritedRecipes: state.favoritedRecipes,
         weeklyRecipes: state.weeklyRecipes,
         approvedRecipes: state.approvedRecipes,
         inboxRecipes: state.inboxRecipes,
