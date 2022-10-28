@@ -53,7 +53,7 @@ if ENV["IS_DEMO"]
       user_id: rand(1..2),
       status: random_status,
       is_favorited: is_favorited,
-      weeks:[Date.today.sunday.advance(weeks: rand(1..12)).iso8601]
+      weeks: rand(1..5) == 1 ? [Date.today.sunday.advance(weeks: rand(1..12)).iso8601] : []
     )
   end
   10.times do
