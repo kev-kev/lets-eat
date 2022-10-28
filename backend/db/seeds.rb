@@ -35,14 +35,24 @@ end
 
 if ENV["IS_DEMO"]
   puts "Demo Seed Running"
+  random_status = rand(0..2)
+  if (rand(1..5) == 1)
+    if (random_status == 1)
+      is_favorited = true
+    else
+      is_favorited = false
+    end
+  else
+    is_favorited = false
+  end
   60.times do 
     Recipe.create!(
       name: Faker::Food.dish,
       link: 'www.example.com',
       notes: Faker::Food.description,
       user_id: rand(1..2),
-      status: rand(0..2),
-      is_favorited: rand(1..5) === 1 ? true : false,
+      status: random_status,
+      is_favorited: is_favorited,
       weeks:[Date.today.sunday.advance(weeks: rand(1..12)).iso8601]
     )
   end
