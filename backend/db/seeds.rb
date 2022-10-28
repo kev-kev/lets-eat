@@ -41,7 +41,7 @@ if ENV["IS_DEMO"]
       link: 'www.example.com',
       notes: Faker::Food.description,
       user_id: rand(1..2),
-      status: 1,
+      status: rand(0..2),
       is_favorited: rand(1..5) === 1 ? true : false,
       weeks:[Date.today.sunday.advance(weeks: rand(1..12)).iso8601]
     )
