@@ -133,6 +133,9 @@ export const recipeCardStyle = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+  },
+  hideVisibility: {
+    visibility: "hidden"
   }
 }), {index: 1});
 

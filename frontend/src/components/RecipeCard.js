@@ -120,9 +120,16 @@ const RecipeCard = (props) => {
         </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>
           {renderCardBody()}
-          <IconButton href={props.recipe.link}>
-            <OpenInNewRounded color="primary" />
-          </IconButton>
+          {
+            props.recipe.link && (
+              <IconButton 
+                href={props.recipe.link}
+                target="_blank"
+              >
+                <OpenInNewRounded color="primary" />
+              </IconButton>
+            )
+          }
           <IconButton
             onClick={() => setOpenRecipeId(props.recipe.id)}
             aria-label="show more"
