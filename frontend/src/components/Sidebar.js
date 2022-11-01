@@ -7,6 +7,7 @@ import {
   Avatar,
   Divider,
   Badge,
+  useMediaQuery,
 } from "@material-ui/core/";
 import { Link } from "react-router-dom";
 import {
@@ -27,6 +28,7 @@ const Sidebar = () => {
   const { logoutUser, recipes, user, inboxRecipes, changeSelectedWeek } =
     useContext(GlobalContext);
   let history = useHistory();
+  
 
   const renderInboxBadge = () => {
     if (inboxRecipes.length > 0) {
@@ -63,14 +65,14 @@ const Sidebar = () => {
               {renderInboxBadge(recipes, user)}
             </ListItemIcon>
           </ListItem>
-          <ListItem button component={Link} to="/favorites">
-            <ListItemIcon className={classes.sidebarItem}>
-              <FavoriteBorder />
-            </ListItemIcon>
-          </ListItem>
           <ListItem button component={Link} to="/new">
             <ListItemIcon className={classes.sidebarItem}>
               <AddCircleOutline />
+            </ListItemIcon>
+          </ListItem>
+          <ListItem button component={Link} to="/favorites">
+            <ListItemIcon className={classes.sidebarItem}>
+              <FavoriteBorder />
             </ListItemIcon>
           </ListItem>
           <ListItem button component={Link} to="/rejected">

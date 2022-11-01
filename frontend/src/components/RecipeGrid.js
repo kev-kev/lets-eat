@@ -112,11 +112,11 @@ export default function RecipeGrid(props) {
     return (
       <div className={classes.pageNav}>
         <IconButton disabled={!shouldShowBackBtn} onClick={() => handlePageClick("back")}>
-          <ChevronLeftRounded color={shouldShowBackBtn ? "primary" : "grey"} />
+          <ChevronLeftRounded color={shouldShowBackBtn ? "primary" : "disabled"} />
         </IconButton>
         {page}
         <IconButton disabled={!shouldShowFwdBtn} onClick={() => handlePageClick("fwd")}>
-          <ChevronRightRounded color={shouldShowFwdBtn ? "primary" : "grey"} />
+          <ChevronRightRounded color={shouldShowFwdBtn ? "primary" : "disabled"} />
         </IconButton>
       </div>
     )

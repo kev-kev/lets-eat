@@ -297,3 +297,18 @@ export const voteBodyStyle = makeStyles((theme) => ({
     alignItems: "center",
   },
 }), {index: 1});
+
+export const topnavStyle = makeStyles((theme) => ({
+  appBar: {
+    color: "white"
+  },
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}), {index: 1});

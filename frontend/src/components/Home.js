@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, createRef } from "react";
-import { Container, CssBaseline, Snackbar, Portal } from "@material-ui/core";
+import { Container, CssBaseline, Snackbar, Portal, useMediaQuery } from "@material-ui/core";
 import { Alert } from "@material-ui/lab/";
 import Sidebar from "./Sidebar";
 import Copyright from "./Copyright";
@@ -10,12 +10,22 @@ import RecipeGrid from "./RecipeGrid";
 import Title from "./Title";
 import { RecipeForm } from "./RecipeForm";
 import LoginForm from "./LoginForm";
+import Topnav from "./Topnav"
 
 const Home = () => {
   const classes = homeStyle();
-  const { user, fetchRecipes, clearErrors, showErrorSnackbar, showSuccessSnackbar, setShowSnackbar, snackbarMessage } = useContext(GlobalContext);
+  const { 
+    user,
+    fetchRecipes,
+    clearErrors,
+    showErrorSnackbar,
+    showSuccessSnackbar,
+    setShowSnackbar,
+    snackbarMessage
+  } = useContext(GlobalContext);
   const successRef = createRef();
   const errorRef = createRef();
+  const mobile = useMediaQuery('(max-width:600px)')
 
   useEffect(() => {
     user && fetchRecipes(user);
@@ -27,11 +37,10 @@ const Home = () => {
   };
 
   if (user) {
-    
     return (
-      <div className={classes.root}>
+      <div className={mobile ? "" : classes.root}>
         <CssBaseline />
-        <Sidebar />
+        {mobile ? <Topnav /> : <Sidebar />}
         <main className={classes.content}>
           <Container maxWidth={false} className={classes.container}>
             <Switch>
