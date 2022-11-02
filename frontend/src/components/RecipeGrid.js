@@ -77,6 +77,8 @@ export default function RecipeGrid(props) {
   useEffect(() => {
     if (indexRecipes.length / RECIPES_PER_PAGE > 1) {
       setShouldShowFwdBtn(true);
+    } else {
+      setShouldShowFwdBtn(false);
     }
   }, [indexRecipes]);
 
