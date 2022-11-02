@@ -25,7 +25,7 @@ import avatar from "../assets/avatar.png"
 
 const Sidebar = () => {
   const classes = sidebarStyle();
-  const { logoutUser, recipes, user, inboxRecipes, changeSelectedWeek } =
+  const { logoutUser, inboxRecipes, changeSelectedWeek } =
     useContext(GlobalContext);
   let history = useHistory();
 

@@ -155,6 +155,9 @@ export const modalStyle = makeStyles((theme) => ({
     border: "2px solid #aaa",
     borderRadius: "1rem",
     minWidth: "40%",
+    ["@media (max-width:600px)"]: {
+      width: '100%',
+    },
   },
   modalFormContainer: {
     maxHeight: "85%",
@@ -304,7 +307,8 @@ export const voteBodyStyle = makeStyles((theme) => ({
 
 export const topnavStyle = makeStyles((theme) => ({
   appBar: {
-    color: "white"
+    color: "white",
+    boxShadow: "none"
   },
   root: {
     flexGrow: 1,
@@ -314,5 +318,8 @@ export const topnavStyle = makeStyles((theme) => ({
   },
   menuItem: {
     width: "40vw"
+  },
+  menuInbox: {
+    color: theme.palette.primary.main,
   }
 }), {index: 1});

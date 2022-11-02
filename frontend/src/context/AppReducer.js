@@ -195,8 +195,6 @@ export const AppReducer = (state, action) => {
         recipe = state.weeklyRecipes.find(recipe => recipe.id === action.payload.recipeId);
         if (recipe) {
           isInWeeklyRecipes = true;
-        } else {
-          console.error("RECIPE NOT FOUND IN INDEX OR WEEKLY");
         }
       } else {
         // We found it in the index recipes so it's not a weekly recipe
