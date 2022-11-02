@@ -8,7 +8,7 @@ import {
   MenuItem,
   Badge
 } from "@material-ui/core/";
-import { Menu as MenuIcon } from '@material-ui/icons';
+import { Menu as MenuIcon, MailOutlineRounded as MailIcon } from '@material-ui/icons';
 import { topnavStyle } from "../muiStyling"
 import { GlobalContext } from "../context/GlobalState";
 
@@ -62,12 +62,12 @@ export default function MenuAppBar() {
                 Home
               </MenuItem>
               <MenuItem
-                className={inboxRecipes.length > 0 ? `${classes.menuItem} ${classes.menuInbox}` : classes.menuItem }
                 onClick={handleClose}
                 component={Link}
                 to="/inbox"
               >
-                Inbox
+                Inbox 
+                &nbsp;{inboxRecipes.length > 0 && <MailIcon color="primary" style={{ fontSize: "1rem", marginTop: "2px" }} />}
               </MenuItem>
               <MenuItem
                 className={classes.menuItem}

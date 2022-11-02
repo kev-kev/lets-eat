@@ -66,11 +66,9 @@ const GroceryListModal = () => {
       </Typography>
       )
       Object.entries(groceryList).map(([name, amounts]) => {
-        return res.push(
+        res.push(
           <Typography key={name + uuid()}>
-            - {name}{amounts.some(amount => {
-                if (amount.count || (amount.count && amount.unit)) { return ": "; } else { return " "; } })
-              }
+            - {name}{amounts.some(amount => amount.count || (amount.count && amount.unit)) ? ": " : " " }
               {renderAmountsList(amounts)}
           </Typography>
         );

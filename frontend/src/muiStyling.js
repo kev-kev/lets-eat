@@ -162,6 +162,9 @@ export const modalStyle = makeStyles((theme) => ({
   modalFormContainer: {
     maxHeight: "85%",
     width: "80%",
+    ["@media (max-width:600px)"]: {
+      width: '100%',
+    },
   },
   button: {
     color: "white",
@@ -221,6 +224,9 @@ export const recipeFormStyle = makeStyles((theme) => ({
   },
   formContainer: {
     width: "60%",
+    ["@media (max-width:600px)"]: {
+      width: '100%',
+    },
   },
   mainForm: {
     display: "flex",
@@ -249,6 +255,7 @@ export const recipeFormStyle = makeStyles((theme) => ({
     alignItems: "center",    
   },
   ingField:{
+    marginTop: "10px"
   },
   submit: {
     color: "white",

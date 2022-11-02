@@ -55,8 +55,8 @@ class RecipesController < ApplicationController
 
     def format_recipe(recipe)
       {
-        submittedBy: recipe.user.username,
-        name: recipe.name,
+        submittedBy: recipe.user.username.titleize,
+        name: recipe.name.titleize,
         status: recipe.status,
         notes: recipe.notes,
         id: recipe.id,
@@ -70,7 +70,7 @@ class RecipesController < ApplicationController
 
     def format_ingredient(ingredient, recipe_id)
       {
-        name: ingredient.name,
+        name: ingredient.name.titleize,
         unit: ingredient.unit,
         count: RecipeIngredient.where(
           ingredient_id: ingredient.id,
