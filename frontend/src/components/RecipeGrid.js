@@ -135,7 +135,7 @@ export default function RecipeGrid(props) {
       return (
         <>
           <div className={classes.recipeGridSectionContainer}>
-            <Typography variant="h5" className={classes.sectionTitle}>
+            <Typography variant="h5" className={props.mobile ? classes.mobileTypography + ' ' + classes.sectionTitle : classes.sectionTitle}>
               <IconButton onClick={() => handleChangeWeek("back")}>
                 <ChevronLeftRounded color="primary" />
               </IconButton>

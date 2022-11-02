@@ -9,7 +9,7 @@ const Title = (props) => {
   return (
     <Typography 
       className={classes.pageTitle}
-      variant="h2" 
+      variant="h3" 
       color="primary" 
       >
       {props.children}

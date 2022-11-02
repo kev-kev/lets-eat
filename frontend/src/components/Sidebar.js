@@ -28,19 +28,6 @@ const Sidebar = () => {
   const { logoutUser, recipes, user, inboxRecipes, changeSelectedWeek } =
     useContext(GlobalContext);
   let history = useHistory();
-  
-
-  const renderInboxBadge = () => {
-    if (inboxRecipes.length > 0) {
-      return (
-        <Badge color="primary" variant="dot">
-          <MailOutline />
-        </Badge>
-      );
-    } else {
-      return <MailOutline />;
-    }
-  };
 
   const handleResetWeek = () => {
     changeSelectedWeek(startOfWeek(new Date()));
@@ -62,7 +49,9 @@ const Sidebar = () => {
           </ListItem>
           <ListItem button component={Link} to="/inbox">
             <ListItemIcon className={classes.sidebarItem}>
-              {renderInboxBadge(recipes, user)}
+            <Badge color="primary" variant="dot" invisible={inboxRecipes.length === 0}>
+              <MailOutline />
+            </Badge>
             </ListItemIcon>
           </ListItem>
           <ListItem button component={Link} to="/new">

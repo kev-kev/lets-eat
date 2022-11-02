@@ -42,15 +42,19 @@ export default function MenuAppBar() {
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            className={classes.menu}
           >
             <MenuItem
+              className={classes.menuItem}
               onClick={handleClose}
               component={Link}
               to="/"
+
             >
               Home
             </MenuItem>
             <MenuItem
+              className={classes.menuItem}
               onClick={handleClose}
               component={Link}
               to="/inbox"
@@ -58,6 +62,7 @@ export default function MenuAppBar() {
               Inbox
             </MenuItem>
             <MenuItem
+              className={classes.menuItem}
               onClick={handleClose}
               component={Link}
               to="/new"
@@ -65,6 +70,7 @@ export default function MenuAppBar() {
               New
             </MenuItem>
             <MenuItem
+              className={classes.menuItem}
               onClick={handleClose}
               component={Link}
               to="/favorites"
@@ -72,6 +78,7 @@ export default function MenuAppBar() {
               Favorites
             </MenuItem>
             <MenuItem
+              className={classes.menuItem}
               onClick={handleClose}
               component={Link}
               to="/rejected"

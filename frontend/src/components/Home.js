@@ -71,7 +71,7 @@ const Home = () => {
               <Route path="/">
                 <Title className={classes.pageTitle}>Let's Eat!</Title>
                 <div className={classes.mainContent}>
-                  <RecipeGrid type="index" />
+                  <RecipeGrid type="index" mobile={mobile}/>
                 </div>
               </Route>
             </Switch>
