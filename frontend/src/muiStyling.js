@@ -152,7 +152,6 @@ export const modalStyle = makeStyles((theme) => ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     padding: theme.spacing(2, 6, 3),
-    overflow: "scroll",
     border: "2px solid #aaa",
     borderRadius: "1rem",
     minWidth: "40%",
@@ -161,6 +160,7 @@ export const modalStyle = makeStyles((theme) => ({
     },
   },
   modalFormContainer: {
+    overflow: "auto",
     maxHeight: "85%",
     width: "80%",
     ["@media (max-width:600px)"]: { // eslint-disable-line
