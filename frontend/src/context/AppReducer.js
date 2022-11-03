@@ -202,10 +202,12 @@ export const AppReducer = (state, action) => {
       }
       if (!isInWeeklyRecipes) {
         // Recipe got added to week
+        recipe.weeks = action.payload.weeks;        
         updatedWeeklyRecipes = [
           ...state.weeklyRecipes,
           recipe,
         ].sort((a, b) => b.id - a.id);
+
         // Remove from approved recipes
         updatedApprovedRecipes = removeRecipeFromArr(state.approvedRecipes, recipe.id)
         // Remove from index recipes
@@ -213,6 +215,9 @@ export const AppReducer = (state, action) => {
       } else {
         // Recipe got removed from week
         const indexToRemove = state.weeklyRecipes.indexOf(recipe);
+
+        // Remove the current week from the recipe's week array
+        
         updatedWeeklyRecipes = [
           ...state.weeklyRecipes.slice(0, indexToRemove),
           ...state.weeklyRecipes.slice(indexToRemove + 1)
