@@ -2,7 +2,6 @@ import React, { useContext, useEffect, createRef } from "react";
 import { Container, CssBaseline, Snackbar, Portal, useMediaQuery } from "@material-ui/core";
 import { Alert } from "@material-ui/lab/";
 import Sidebar from "./Sidebar";
-import Copyright from "./Copyright";
 import { GlobalContext } from "../context/GlobalState";
 import { Switch, Route } from "react-router-dom";
 import { homeStyle } from "../muiStyling";
@@ -89,7 +88,6 @@ const Home = () => {
                 </Alert>
               </Snackbar>
             </Portal>
-            <Copyright copyrightClass={classes.copyright} />
           </Container>
         </main>
       </div>

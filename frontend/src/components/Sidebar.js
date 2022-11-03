@@ -7,7 +7,6 @@ import {
   Avatar,
   Divider,
   Badge,
-  useMediaQuery,
 } from "@material-ui/core/";
 import { Link } from "react-router-dom";
 import {
@@ -70,7 +69,6 @@ const Sidebar = () => {
             </ListItemIcon>
           </ListItem>
         </div>
-
         <div className={classes.sidebarBottom}>
           <ListItem button onClick={handleLogout}>
             <ListItemIcon className={classes.sidebarItem}>
@@ -89,7 +87,7 @@ const Sidebar = () => {
               <Avatar
                 alt="user"
                 src={avatar}
-                className={classes.large}
+                className={classes.avatarImg}
               />
             </ListItemIcon>
           </ListItem>

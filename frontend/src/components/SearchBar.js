@@ -13,7 +13,7 @@ export default function SearchBar() {
     return () => {
       clearTimeout(timeout);
     };
-  }, [searchTerm]);
+  }, [searchTerm, setIndexRecipes]);
 
   return (
     <TextField

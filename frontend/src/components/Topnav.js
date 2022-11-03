@@ -6,11 +6,13 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Badge
+  Badge,
+  Avatar
 } from "@material-ui/core/";
 import { Menu as MenuIcon, MailOutlineRounded as MailIcon } from '@material-ui/icons';
 import { topnavStyle } from "../muiStyling"
 import { GlobalContext } from "../context/GlobalState";
+import avatar from "../assets/avatar.png"
 
 export default function MenuAppBar() {
   const classes = topnavStyle();
@@ -28,7 +30,7 @@ export default function MenuAppBar() {
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className={classes.toolBar}>
           <IconButton 
             edge="start"
             className={classes.menuButton}
@@ -95,6 +97,11 @@ export default function MenuAppBar() {
               </MenuItem>
             </div>
           </Menu>
+          <Avatar
+                alt="user"
+                src={avatar}
+                className={classes.large}
+              />
         </Toolbar>
       </AppBar>
     </div>

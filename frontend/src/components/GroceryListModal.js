@@ -65,7 +65,7 @@ const GroceryListModal = () => {
         Your grocery list:
       </Typography>
       )
-      Object.entries(groceryList).map(([name, amounts]) => {
+      Object.entries(groceryList).forEach(([name, amounts]) => {
         res.push(
           <Typography key={name + uuid()}>
             - {name}{amounts.some(amount => amount.count || (amount.count && amount.unit)) ? ": " : " " }

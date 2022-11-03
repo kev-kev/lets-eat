@@ -152,7 +152,7 @@ export default function RecipeGrid(props) {
           </div>
           <Divider className={classes.divider} />
           <div className={classes.recipeGridSectionContainer}>
-            <Typography variant="h5" className={classes.sectionTitle}>Other Recipes</Typography>
+            <Typography variant="h5" className={classes.sectionTitle}>Recipe Collection</Typography>
             <div className={classes.searchBar}><SearchBar /></div>
             {renderIndexRecipes()}
             {renderPageNav()}

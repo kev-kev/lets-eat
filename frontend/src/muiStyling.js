@@ -9,7 +9,8 @@ export const gridStyle = makeStyles((theme) => ({
   pageNav: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: theme.spacing(2)
   },
   button: {
     color: "white",
@@ -35,7 +36,7 @@ export const gridStyle = makeStyles((theme) => ({
     visibility: "hidden"
   },
   divider: {
-    margin: "1rem 0rem"
+    margin: theme.spacing(3, 0, 1)
   },
   emptyMessage: {
     width: "100%",
@@ -43,7 +44,7 @@ export const gridStyle = makeStyles((theme) => ({
     padding: theme.spacing(7, 0)
   },
   mobileTypography: {
-    fontSize: 14
+    fontSize: 16
   }
 }), {index: 1});
 
@@ -155,14 +156,14 @@ export const modalStyle = makeStyles((theme) => ({
     border: "2px solid #aaa",
     borderRadius: "1rem",
     minWidth: "40%",
-    ["@media (max-width:600px)"]: {
+    ["@media (max-width:600px)"]: { // eslint-disable-line
       width: '100%',
     },
   },
   modalFormContainer: {
     maxHeight: "85%",
     width: "80%",
-    ["@media (max-width:600px)"]: {
+    ["@media (max-width:600px)"]: { // eslint-disable-line
       width: '100%',
     },
   },
@@ -218,13 +219,13 @@ export const modalStyle = makeStyles((theme) => ({
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(6),
     display: "flex",
     justifyContent: "center",    
   },
   formContainer: {
     width: "60%",
-    ["@media (max-width:600px)"]: {
+    ["@media (max-width:600px)"]: { // eslint-disable-line
       width: '100%',
     },
   },
@@ -294,7 +295,7 @@ export const sidebarStyle = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  large: {
+  avatarImg: {
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
@@ -315,7 +316,11 @@ export const voteBodyStyle = makeStyles((theme) => ({
 export const topnavStyle = makeStyles((theme) => ({
   appBar: {
     color: "white",
-    boxShadow: "none"
+    boxShadow: "none",
+  },
+  toolBar: {
+    display: "flex",
+    justifyContent: "space-between"
   },
   root: {
     flexGrow: 1,
