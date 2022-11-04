@@ -258,6 +258,7 @@ export const AppReducer = (state, action) => {
         return {
           ...state,
           indexRecipes: removeRecipeFromArr(state.indexRecipes, action.payload.recipeId),
+          approvedRecipes: removeRecipeFromArr(state.approvedRecipes, action.payload.recipeId)
         } 
       }
       break;

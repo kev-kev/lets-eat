@@ -55,7 +55,7 @@ class RecipesController < ApplicationController
 
     def format_recipe(recipe)
       {
-        submittedBy: recipe.user.username.titleize,
+        submittedBy: recipe.user.username,
         name: recipe.name.titleize,
         status: recipe.status,
         notes: recipe.notes,

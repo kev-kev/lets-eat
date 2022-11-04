@@ -53,7 +53,7 @@ const RecipeCard = (props) => {
           className={classes.voteBody}
         />
       );
-    } else if (props.type === "index") {
+    } else if (props.type === "index" || props.type === "weekly") {
       return renderIndexCardBody();
     }
   };

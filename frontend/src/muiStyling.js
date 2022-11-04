@@ -75,7 +75,7 @@ export const homeStyle = makeStyles((theme) => ({
 
 export const titleStyle = makeStyles((theme) => ({
   pageTitle: {
-    padding: theme.spacing(3, 0, 0),
+    paddingTop: theme.spacing(4),
     textAlign: "center",
   }
 }));
@@ -219,12 +219,12 @@ export const modalStyle = makeStyles((theme) => ({
 
 export const recipeFormStyle = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(10),
     display: "flex",
     justifyContent: "center",    
   },
   formContainer: {
-    width: "60%",
+    width: "40%",
     ["@media (max-width:600px)"]: { // eslint-disable-line
       width: '100%',
     },
