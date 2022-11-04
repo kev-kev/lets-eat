@@ -44,7 +44,7 @@ export const gridStyle = makeStyles((theme) => ({
     padding: theme.spacing(7, 0)
   },
   mobileTypography: {
-    fontSize: 16
+    fontSize: 15
   }
 }), {index: 1});
 

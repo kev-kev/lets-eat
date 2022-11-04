@@ -7,7 +7,6 @@ const initialState = {
   isLoggingIn: false,
   isSubmittingRecipe: false,
   isFetchingRecipes: false,
-  isFetchingRecipeList: false,
   isEditingRecipe: false,
   errors: {
     login: null,
@@ -17,6 +16,7 @@ const initialState = {
   },
   selectedWeek: startOfWeek(new Date()),
   groceryList: null,
+  isFetchingGroceryList: false,
   weeklyRecipes: [],
   approvedRecipes: [],
   inboxRecipes: [],
@@ -362,6 +362,9 @@ const handleErrors = async (response, errorType) => {
   }
 
   function getGroceryList() {
+    dispatch({
+      type: "GETTING_GROCERY_LIST",
+    })
     fetch(rootURL + `/grocery_list/?week=${state.selectedWeek}`)
       .then((r) => handleErrors(r, "GET_GROCERY_LIST_FAILURE"))
       .then((data) => {
@@ -453,12 +456,12 @@ const handleErrors = async (response, errorType) => {
         errors: state.errors,
         clearErrors,
         isFetchingRecipes: state.isFetchingRecipes,
-        isFetchingRecipeList: state.isFetchingRecipeList,
         selectedWeek: state.selectedWeek,
         changeSelectedWeek,
         setWeeks,
         getGroceryList,
         groceryList: state.groceryList,
+        isFetchingGroceryList: state.isFetchingGroceryList,
         fetchRecipes,
         editRecipe,
         isEditingRecipe: state.isEditingRecipe,

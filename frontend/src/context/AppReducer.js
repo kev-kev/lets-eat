@@ -277,10 +277,16 @@ export const AppReducer = (state, action) => {
         indexRecipes: action.payload.newApprovedRecipes,
         approvedRecipes: action.payload.newApprovedRecipes
       };
+    case "GETTING_GROCERY_LIST":
+      return {
+        ...state,
+        isFetchingGroceryList: true
+      }
     case "GET_GROCERY_LIST_SUCCESS":
       return {
         ...state,
         groceryList: action.payload,
+        isFetchingGroceryList: false
       };
     case "GET_GROCERY_LIST_FAILURE":
       return {
@@ -289,6 +295,7 @@ export const AppReducer = (state, action) => {
           ...state.errors,
           grid: action.payload,
         },
+        isFetchingGroceryList: false
       };
     case "SET_OPEN_RECIPE_ID":
       return {

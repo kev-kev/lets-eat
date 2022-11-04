@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TextField } from "@material-ui/core";
 import { GlobalContext } from "../context/GlobalState";
 
-export default function SearchBar() {
+export default function SearchBar({mobile}) {
   const { setIndexRecipes } = useContext(GlobalContext);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -13,7 +13,7 @@ export default function SearchBar() {
     return () => {
       clearTimeout(timeout);
     };
-  }, [searchTerm]);
+  }, [searchTerm]); // eslint-disable-line
 
   return (
     <TextField
@@ -21,6 +21,7 @@ export default function SearchBar() {
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
       variant="outlined"
+      size="small"
     />
   );
 }

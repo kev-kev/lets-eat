@@ -6,36 +6,35 @@ import pluralize from "pluralize";
 import { modalStyle } from "../muiStyling";
 import uuid from "react-uuid";
 
+const renderAmountsList = (amounts) => {
+  return amounts.map((amount) => {
+    if (amount.unit && amount.count) {
+      return (
+        <Typography variant="body2" display="inline" key={amount.unit + uuid()}>
+          {amount.count} {pluralize(amount.unit, amount.count)}
+        </Typography>
+      )
+    } else if (amount.count) {
+      return (
+        <Typography variant="body2" display="inline" key={amount.count + uuid()}>
+          {amount.count}
+        </Typography>
+      );
+    } else {
+      return "";
+    }
+  });
+};
 
 const GroceryListModal = () => {
   const classes = modalStyle();
-  const { getGroceryList, groceryList, weeklyRecipes } = useContext(GlobalContext);
+  const { getGroceryList, groceryList, weeklyRecipes, isFetchingGroceryList } = useContext(GlobalContext);
   const [shouldShowModal, setShouldShowModal] = useState(false);
   const [hasRecipeWithEmptyIngs, setHasRecipeWithEmptyIngs] = useState(false);
 
   const handleGetGroceryList = () => {
     getGroceryList();
     setShouldShowModal(true);
-  };
-
-  const renderAmountsList = (amounts) => {
-    return amounts.map((amount) => {
-      if (amount.unit && amount.count) {
-        return (
-          <Typography variant="body2" display="inline" key={amount.unit + uuid()}>
-            {amount.count} {pluralize(amount.unit, amount.count)}
-          </Typography>
-        )
-      } else if (amount.count) {
-        return (
-          <Typography variant="body2" display="inline" key={amount.count + uuid()}>
-            {amount.count}
-          </Typography>
-        );
-      } else {
-        return "";
-      }
-    });
   };
 
   const getWeeklyRecipeNames = () => {
@@ -99,20 +98,23 @@ const GroceryListModal = () => {
         className={classes.button}
         style={{alignSelf: "flex-end"}}
         startIcon={<ShoppingBasketRounded />}
+        disabled={isFetchingGroceryList}
       >
-        get grocery list
+        {isFetchingGroceryList ? "getting..." : "get grocery list"}
       </Button>
-      <Modal
-        open={shouldShowModal}
-        onClose={() => setShouldShowModal(false)}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <div className={classes.modalContent} mx="auto">
-        <Typography variant="h3" className={classes.modalTitle}>Grocery List</Typography>
-          <div id="simple-modal-description">{renderGroceryListBody()}</div>
-        </div>
-      </Modal>
+      {!isFetchingGroceryList &&
+        <Modal
+          open={shouldShowModal}
+          onClose={() => setShouldShowModal(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div className={classes.modalContent} mx="auto">
+          <Typography variant="h3" className={classes.modalTitle}>Grocery List</Typography>
+            <div id="simple-modal-description">{renderGroceryListBody()}</div>
+          </div>
+        </Modal>
+      }
     </>
   );
 };
