@@ -214,10 +214,11 @@ export const AppReducer = (state, action) => {
         updatedIndexRecipes = removeRecipeFromArr(state.indexRecipes, recipe.id)
       } else {
         // Recipe got removed from week
+        // Remove week from recipe
+        recipe.weeks = action.payload.weeks;
         const indexToRemove = state.weeklyRecipes.indexOf(recipe);
 
         // Remove the current week from the recipe's week array
-        
         updatedWeeklyRecipes = [
           ...state.weeklyRecipes.slice(0, indexToRemove),
           ...state.weeklyRecipes.slice(indexToRemove + 1)

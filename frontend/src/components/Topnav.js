@@ -19,13 +19,18 @@ export default function MenuAppBar() {
   const { inboxRecipes } = useContext(GlobalContext)
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
+  const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handleItemClick = () => {
+    document.querySelector("main").scrollTo(0,0);
+    setAnchorEl(null);
+  }
 
   return (
     <div className={classes.root}>
@@ -36,7 +41,7 @@ export default function MenuAppBar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
-            onClick={handleClick}
+            onClick={handleMenuClick}
           >
             <Badge 
               color="secondary"
@@ -51,20 +56,20 @@ export default function MenuAppBar() {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            onClose={handleMenuClose}
             className={classes.menu}
           >
             <div className={classes.menuItemContainer}>
               <MenuItem
                 className={classes.menuItem}
-                onClick={handleClose}
+                onClick={handleItemClick}
                 component={Link}
                 to="/"
               >
                 Home
               </MenuItem>
               <MenuItem
-                onClick={handleClose}
+                onClick={handleItemClick}
                 component={Link}
                 to="/inbox"
               >
@@ -73,7 +78,7 @@ export default function MenuAppBar() {
               </MenuItem>
               <MenuItem
                 className={classes.menuItem}
-                onClick={handleClose}
+                onClick={handleItemClick}
                 component={Link}
                 to="/new"
               >
@@ -81,7 +86,7 @@ export default function MenuAppBar() {
               </MenuItem>
               <MenuItem
                 className={classes.menuItem}
-                onClick={handleClose}
+                onClick={handleItemClick}
                 component={Link}
                 to="/favorites"
               >
@@ -89,7 +94,7 @@ export default function MenuAppBar() {
               </MenuItem>
               <MenuItem
                 className={classes.menuItem}
-                onClick={handleClose}
+                onClick={handleItemClick}
                 component={Link}
                 to="/rejected"
               >

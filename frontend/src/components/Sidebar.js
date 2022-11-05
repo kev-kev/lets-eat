@@ -37,33 +37,37 @@ const Sidebar = () => {
     history.push("/");
   };
 
+  const handleClick = () => {
+    document.querySelector("main").scrollTo(0,0);
+  }
+
   return (
     <div className={classes.root}>
       <List className={classes.list}>
         <div onClick={handleResetWeek}>
-          <ListItem button component={Link} to="/">
+          <ListItem button component={Link} to="/" onClick={handleClick}>
             <ListItemIcon className={classes.sidebarItem}>
               <HomeOutlined />
             </ListItemIcon>
           </ListItem>
-          <ListItem button component={Link} to="/inbox">
+          <ListItem button component={Link} to="/inbox" onClick={handleClick}>
             <ListItemIcon className={classes.sidebarItem}>
             <Badge color="primary" variant="dot" invisible={inboxRecipes.length === 0}>
               <MailOutline />
             </Badge>
             </ListItemIcon>
           </ListItem>
-          <ListItem button component={Link} to="/new">
+          <ListItem button component={Link} to="/new" onClick={handleClick}>
             <ListItemIcon className={classes.sidebarItem}>
               <AddCircleOutline />
             </ListItemIcon>
           </ListItem>
-          <ListItem button component={Link} to="/favorites">
+          <ListItem button component={Link} to="/favorites" onClick={handleClick}>
             <ListItemIcon className={classes.sidebarItem}>
               <FavoriteBorder />
             </ListItemIcon>
           </ListItem>
-          <ListItem button component={Link} to="/rejected">
+          <ListItem button component={Link} to="/rejected" onClick={handleClick}>
             <ListItemIcon className={classes.sidebarItem}>
               <DeleteOutlineRounded />
             </ListItemIcon>
