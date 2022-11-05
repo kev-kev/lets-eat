@@ -10,15 +10,11 @@ const renderAmountsList = (amounts) => {
   return amounts.map((amount) => {
     if (amount.unit && amount.count) {
       return (
-        <Typography variant="body2" display="inline" key={amount.unit + uuid()}>
-          {amount.count} {pluralize(amount.unit, amount.count)}
-        </Typography>
+        `${amount.count} ${pluralize(amount.unit, amount.count)}`
       )
     } else if (amount.count) {
       return (
-        <Typography variant="body2" display="inline" key={amount.count + uuid()}>
-          {amount.count}
-        </Typography>
+          amount.count
       );
     } else {
       return "";
@@ -67,7 +63,7 @@ const GroceryListModal = () => {
       Object.entries(groceryList).forEach(([name, amounts]) => {
         res.push(
           <Typography key={name + uuid()}>
-            - {name}{amounts.some(amount => amount.count || (amount.count && amount.unit)) ? ": " : " " }
+            -{name}{amounts.some(amount => amount.count || (amount.count && amount.unit))?": ":" "}
               {renderAmountsList(amounts)}
           </Typography>
         );

@@ -155,11 +155,11 @@ export const RecipeForm = ({ recipe }) => {
                               >
                                 <MenuItem value="">None</MenuItem> 
                                 <MenuItem value={"gram"}>Grams</MenuItem>
-                                <MenuItem value={"kilograms"}>Kilograms</MenuItem>
-                                <MenuItem value={"ounces"}>Ounces</MenuItem>
-                                <MenuItem value={"pounds"}>Pounds</MenuItem>
-                                <MenuItem value={"milliliters"}>Milliliters</MenuItem>
-                                <MenuItem value={"liters"}>Liters</MenuItem>
+                                <MenuItem value={"kilogram"}>Kilograms</MenuItem>
+                                <MenuItem value={"ounce"}>Ounces</MenuItem>
+                                <MenuItem value={"pound"}>Pounds</MenuItem>
+                                <MenuItem value={"milliliter"}>Milliliters</MenuItem>
+                                <MenuItem value={"liter"}>Liters</MenuItem>
                                 <MenuItem value={"teaspoon"}>Teaspoons</MenuItem>
                                 <MenuItem value={"tablespoon"}>Tablespoons</MenuItem>
                                 <MenuItem value={"cup"}>Cups</MenuItem>
