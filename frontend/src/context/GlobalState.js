@@ -29,6 +29,7 @@ const initialState = {
   showEditForm: false,
   submitClicked: false,
   snackbarMessage: "",
+  hasRecipeWithEmptyIngs: false
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -43,26 +44,25 @@ export const GlobalProvider = ({ children }) => {
   };
 
 
-const handleErrors = async (response, errorType) => {
-  const resObj = await response.json();
-  if (!response.ok) {
-    if (resObj.error) {
-      setShowSnackbar("error");
-      setSnackbarMessage(resObj.error);
-      dispatch({
-        type: errorType,
-        payload: resObj.error,
-      });
+  const handleErrors = async (response, errorType) => {
+    const resObj = await response.json();
+    if (!response.ok) {
+      if (resObj.error) {
+        setShowSnackbar("error");
+        setSnackbarMessage(resObj.error);
+        dispatch({
+          type: errorType,
+          payload: resObj.error,
+        });
+      } else {
+        // Error occurred without message
+        setShowSnackbar("error");
+        setSnackbarMessage("Oops something went wrong! Please try again.");
+      }
     } else {
-      // Error occurred without message
-      setShowSnackbar("error");
-      setSnackbarMessage("Oops something went wrong! Please try again.");
+      return resObj;
     }
-  } else {
-    return resObj;
-  }
-};
-
+  };
 
   const fetchRecipes = (user) => {
     dispatch({
@@ -225,7 +225,6 @@ const handleErrors = async (response, errorType) => {
         }
       })
     }
-
 
   function persistentLogin() {
     if (localStorage.getItem("authToken")) {
@@ -429,6 +428,13 @@ const handleErrors = async (response, errorType) => {
     })
   }
 
+  const setHasRecipeWithEmptyIngs = (bool) => {
+    dispatch({
+      type: "SET_HAS_RECIPE_WITH_EMPTY_INGS",
+      payload: bool
+    })
+  }
+
   function logoutUser() {
     dispatch({
       type: "LOGOUT_USER",
@@ -483,8 +489,9 @@ const handleErrors = async (response, errorType) => {
         submitClicked: state.submitClicked,
         setSubmitClicked,
         snackbarMessage: state.snackbarMessage,
-        setSnackbarMessage
-
+        setSnackbarMessage,
+        hasRecipeWithEmptyIngs: state.hasRecipeWithEmptyIngs,
+        setHasRecipeWithEmptyIngs
       }}
     >
       {children}

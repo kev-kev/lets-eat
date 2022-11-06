@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { Modal, Button, Typography } from "@material-ui/core";
 import { ShoppingBasketRounded } from "@material-ui/icons/";
@@ -24,21 +24,51 @@ const renderAmountsList = (amounts) => {
 
 const GroceryListModal = () => {
   const classes = modalStyle();
-  const { getGroceryList, groceryList, weeklyRecipes, isFetchingGroceryList } = useContext(GlobalContext);
+  const { 
+    getGroceryList,
+    groceryList,
+    weeklyRecipes,
+    isFetchingGroceryList,
+    // hasRecipeWithEmptyIngs,
+    // setHasRecipeWithEmptyIngs
+   } = useContext(GlobalContext);
   const [shouldShowModal, setShouldShowModal] = useState(false);
   const [hasRecipeWithEmptyIngs, setHasRecipeWithEmptyIngs] = useState(false);
 
-  const handleGetGroceryList = () => {
+  // useEffect(() => {
+  //   console.log("weekly recipes updated");
+  //   const hasEmpty = weeklyRecipes.some((recipe) => {
+  //     return recipe.ingredients.length === 0;
+  //   });
+  //   if(hasEmpty && !hasRecipeWithEmptyIngs){
+  //     setHasRecipeWithEmptyIngs(true);
+  //   } else if(!hasEmpty && hasRecipeWithEmptyIngs) {
+  //     setHasRecipeWithEmptyIngs(false);
+  //   }
+  // }, [weeklyRecipes])
+
+  useEffect(() => {
+    console.log(hasRecipeWithEmptyIngs)
+  }, [hasRecipeWithEmptyIngs])
+
+  const handleGetGroceryListClick = () => {
+    const hasEmpty = weeklyRecipes.some((recipe) => {
+      return recipe.ingredients.length === 0;
+    });
+    if(hasEmpty){
+      setHasRecipeWithEmptyIngs(true);
+    } else {
+      setHasRecipeWithEmptyIngs(false);
+    }
     getGroceryList();
     setShouldShowModal(true);
   };
 
   const getWeeklyRecipeNames = () => {
     return weeklyRecipes.map((recipe) => {
-      if(recipe.ingredients.length === 0 && !hasRecipeWithEmptyIngs) setHasRecipeWithEmptyIngs(true);
       return(
         <Typography key={recipe.id}>
-         - {recipe.name}
+         - {recipe.name[0].toUpperCase() + recipe.name.slice(1)}
         </Typography>
       ) 
     })
@@ -63,14 +93,14 @@ const GroceryListModal = () => {
       Object.entries(groceryList).forEach(([name, amounts]) => {
         res.push(
           <Typography key={name + uuid()}>
-            -{name}{amounts.some(amount => amount.count || (amount.count && amount.unit))?": ":" "}
+            -{name[0].toUpperCase() + name.slice(1)}{amounts.some(amount => amount.count || (amount.count && amount.unit))?": ":" "}
               {renderAmountsList(amounts)}
           </Typography>
         );
       });
       if(hasRecipeWithEmptyIngs){
         res.push(
-          <Typography varaint="subtitle" key="ingredients-subtitle">
+          <Typography varaint="caption" key="ingredients-subtitle">
             You have one or more recipes without any ingredients listed, so this list may be incomplete!
           </Typography>
         )
@@ -90,7 +120,7 @@ const GroceryListModal = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => handleGetGroceryList()}
+        onClick={() => handleGetGroceryListClick()}
         className={classes.button}
         style={{alignSelf: "flex-end"}}
         startIcon={<ShoppingBasketRounded />}

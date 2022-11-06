@@ -115,7 +115,7 @@ const RecipeCard = (props) => {
             onClick={() => setOpenRecipeId(props.recipe.id)}
             className={classes.title}
           >
-            {props.recipe.name}
+            {props.recipe.name[0].toUpperCase() + props.recipe.name.slice(1)}
           </Typography>
         </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>

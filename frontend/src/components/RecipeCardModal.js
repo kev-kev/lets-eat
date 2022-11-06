@@ -10,13 +10,14 @@ import {
 import { DeleteForeverRounded, EditRounded, ArrowBackRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
 import { RecipeForm } from "./RecipeForm";
+import pluralize from "pluralize";
 
 const renderIngredientTypography = (ingredients, classes) => {
   if(ingredients.length > 0){
     return ingredients.map((ing, i) => {
       return (
         <Typography key={i} className={classes.ingredientTypography}>
-          - {ing.name}{ing.count || (ing.count && ing.unit) ? ":" : ""} {ing.count} {(ing.unit && ing.count) && ing.unit}
+          - {ing.name[0].toUpperCase() + ing.name.slice(1)}{ing.count || (ing.count && ing.unit) ? ":" : ""} {ing.count} {(ing.unit && ing.count) && pluralize(ing.unit, ing.count)}
        </Typography>
       );
     });
