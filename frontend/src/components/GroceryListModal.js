@@ -59,7 +59,7 @@ const GroceryListModal = () => {
   const getGroceryListIngredientsMarkup = (groceryList) => {
     const groceryListItems = Object.entries(groceryList);
     return (
-      <div className={classes.groceryListBodyItems}>
+      <div className={classes.groceryListBodyItems} key={uuid()}>
       {groceryListItems.map(([name, amounts]) => (
         <Typography key={name + uuid()}>
           -{name[0].toUpperCase() + name.slice(1)}{amounts.some(amount => amount.count || (amount.count && amount.unit))?": ":" "}
