@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { Modal, Button, Typography } from "@material-ui/core";
 import { ShoppingBasketRounded } from "@material-ui/icons/";

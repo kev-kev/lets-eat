@@ -1,4 +1,3 @@
-require 'pry'
 class RecipesController < ApplicationController
   def index
     recipes = Recipe.order(:id).map{|recipe| format_recipe(recipe)}

@@ -106,8 +106,8 @@ const CardModal = (props) => {
   const renderNotes = (notes) => {
     if(notes?.trim().length === 0){
       return (
-        <Typography className={classes.noteTypography} style={{ fontStyle: "italic" }} variant="body2">no notes have been added yet!</Typography>
-      )
+        <Typography className={classes.noteTypography} style={{ fontStyle: "italic" }} variant="body2">none</Typography>
+      );
     } else {
       return(
         <Typography className={classes.noteTypography}>{notes}</Typography>
