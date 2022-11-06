@@ -23,22 +23,14 @@ const renderIngredientTypography = (ingredients, classes) => {
     });
   } else {
     return (
-      <Typography className={classes.ingredientTypography}>
-        none, add some now
+      <Typography className={classes.ingredientTypography} style={{ fontStyle: 'italic' }} variant="body2">
+        none, add some by editing this recipe
       </Typography>
     )
   }
 };
 
-const renderNotes = (notes) => {
-  if(notes?.trim().length === 0){
-    return (
-        "no notes have been added yet!"
-    )
-  } else {
-    return notes;
-  }
-}
+
 
 const CardModal = (props) => {
   const classes = modalStyle();
@@ -98,9 +90,7 @@ const CardModal = (props) => {
             {renderIngredientTypography(props.recipe.ingredients, classes)}
           </div>
           <Typography variant="h6">Notes:</Typography>
-          <Typography className={classes.noteTypography}>
-            {renderNotes(props.recipe.notes)}
-          </Typography>
+          {renderNotes(props.recipe.notes)}
           <div className={classes.submittedBy}>
             <Typography variant="caption" className={classes.submittedByTypography}>
               Submitted by: {props.recipe.submittedBy}
@@ -112,6 +102,18 @@ const CardModal = (props) => {
       );
     }
   };
+
+  const renderNotes = (notes) => {
+    if(notes?.trim().length === 0){
+      return (
+        <Typography className={classes.noteTypography} style={{ fontStyle: "italic" }} variant="body2">no notes have been added yet!</Typography>
+      )
+    } else {
+      return(
+        <Typography className={classes.noteTypography}>{notes}</Typography>
+      ); 
+    }
+  }
 
   const renderEditButton = () => {
     if (props.recipe.status === "approved" || props.recipe.submittedBy === user.username){
