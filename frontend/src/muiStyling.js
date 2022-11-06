@@ -157,7 +157,12 @@ export const modalStyle = makeStyles((theme) => ({
     minWidth: "40%",
     ["@media (max-width:600px)"]: { // eslint-disable-line
       width: '100%',
+      minHeight: "50%",
     },
+    minHeight: "30%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
   },
   modalFormContainer: {
     overflow: "auto",
@@ -180,7 +185,6 @@ export const modalStyle = makeStyles((theme) => ({
   },
   modalTitle: {
     textAlign: "center",
-    marginBottom: 0
   },
   backArrow: {
   },
@@ -215,6 +219,14 @@ export const modalStyle = makeStyles((theme) => ({
   modalHeader: {
     marginBottom: theme.spacing(1)
   },
+  groceryModalBody: {
+    display: "flex",
+    height: "100%",
+    flexDirection: "column",
+  },
+  groceryListBodyItems: {
+    flexGrow: "2"
+  }
 }), {index: 1});
 
 export const recipeFormStyle = makeStyles((theme) => ({

@@ -29,27 +29,9 @@ const GroceryListModal = () => {
     groceryList,
     weeklyRecipes,
     isFetchingGroceryList,
-    // hasRecipeWithEmptyIngs,
-    // setHasRecipeWithEmptyIngs
    } = useContext(GlobalContext);
   const [shouldShowModal, setShouldShowModal] = useState(false);
   const [hasRecipeWithEmptyIngs, setHasRecipeWithEmptyIngs] = useState(false);
-
-  // useEffect(() => {
-  //   console.log("weekly recipes updated");
-  //   const hasEmpty = weeklyRecipes.some((recipe) => {
-  //     return recipe.ingredients.length === 0;
-  //   });
-  //   if(hasEmpty && !hasRecipeWithEmptyIngs){
-  //     setHasRecipeWithEmptyIngs(true);
-  //   } else if(!hasEmpty && hasRecipeWithEmptyIngs) {
-  //     setHasRecipeWithEmptyIngs(false);
-  //   }
-  // }, [weeklyRecipes])
-
-  useEffect(() => {
-    console.log(hasRecipeWithEmptyIngs)
-  }, [hasRecipeWithEmptyIngs])
 
   const handleGetGroceryListClick = () => {
     const hasEmpty = weeklyRecipes.some((recipe) => {
@@ -74,33 +56,45 @@ const GroceryListModal = () => {
     })
   }
 
+  const getGroceryListIngredientsMarkup = (groceryList) => {
+    const groceryListItems = Object.entries(groceryList);
+    return (
+      <div className={classes.groceryListBodyItems}>
+      {groceryListItems.map(([name, amounts]) => (
+        <Typography key={name + uuid()}>
+          -{name[0].toUpperCase() + name.slice(1)}{amounts.some(amount => amount.count || (amount.count && amount.unit))?": ":" "}
+            {renderAmountsList(amounts)}
+        </Typography>))
+      }
+      </div>
+    );
+  }
+
   const renderGroceryListBody = () => {
     let res = [
       <React.Fragment key="your-recipes-title">
         <Typography variant="h6">
           Your recipes this week:
         </Typography>
-        {getWeeklyRecipeNames()}
+        <div className={classes.groceryListBodyItems}>
+          {getWeeklyRecipeNames()}
+        </div>
       </React.Fragment>
     ]
     
-    if (groceryList) {  
-      res.push(
-      <Typography variant="h6" key="your-grocery-list-title">
-        Your grocery list:
-      </Typography>
-      )
-      Object.entries(groceryList).forEach(([name, amounts]) => {
+    if (groceryList) {
+      const hasNoIngredients = weeklyRecipes.every(recipe => recipe.ingredients.length === 0)
+      if(!hasNoIngredients){
         res.push(
-          <Typography key={name + uuid()}>
-            -{name[0].toUpperCase() + name.slice(1)}{amounts.some(amount => amount.count || (amount.count && amount.unit))?": ":" "}
-              {renderAmountsList(amounts)}
+          <Typography variant="h6" key="your-grocery-list-title">
+            Your grocery list:
           </Typography>
-        );
-      });
+        )
+      }
+      res.push(getGroceryListIngredientsMarkup(groceryList));
       if(hasRecipeWithEmptyIngs){
         res.push(
-          <Typography varaint="caption" key="ingredients-subtitle">
+          <Typography variant="caption" key="ingredients-subtitle" className={classes.emptyIngNotice}>
             You have one or more recipes without any ingredients listed, so this list may be incomplete!
           </Typography>
         )
@@ -137,7 +131,7 @@ const GroceryListModal = () => {
         >
           <div className={classes.modalContent} mx="auto">
           <Typography variant="h3" className={classes.modalTitle}>Grocery List</Typography>
-            <div id="simple-modal-description">{renderGroceryListBody()}</div>
+          {renderGroceryListBody()}
           </div>
         </Modal>
       }

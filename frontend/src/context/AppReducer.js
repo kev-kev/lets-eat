@@ -331,11 +331,6 @@ export const AppReducer = (state, action) => {
         ...state,
         submitClicked: action.payload
       };
-    case "SET_HAS_RECIPE_WITH_EMPTY_INGS":
-      return {
-        ...state,
-        hasRecipeWithEmptyIngs: action.payload
-      };
     case "LOGOUT_USER":
       localStorage.clear();
       return {

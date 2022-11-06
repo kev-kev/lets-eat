@@ -29,7 +29,6 @@ const initialState = {
   showEditForm: false,
   submitClicked: false,
   snackbarMessage: "",
-  hasRecipeWithEmptyIngs: false
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -428,13 +427,6 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
-  const setHasRecipeWithEmptyIngs = (bool) => {
-    dispatch({
-      type: "SET_HAS_RECIPE_WITH_EMPTY_INGS",
-      payload: bool
-    })
-  }
-
   function logoutUser() {
     dispatch({
       type: "LOGOUT_USER",
@@ -490,8 +482,6 @@ export const GlobalProvider = ({ children }) => {
         setSubmitClicked,
         snackbarMessage: state.snackbarMessage,
         setSnackbarMessage,
-        hasRecipeWithEmptyIngs: state.hasRecipeWithEmptyIngs,
-        setHasRecipeWithEmptyIngs
       }}
     >
       {children}
