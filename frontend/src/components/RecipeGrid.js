@@ -114,7 +114,11 @@ export default function RecipeGrid(props) {
 
   useEffect(() => {
     setPage(1);
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    page === 1 && setShouldShowBackBtn(false);
+  }, [page]);
 
   const handleChangeWeek = (dir) => {
     dir === "back"
