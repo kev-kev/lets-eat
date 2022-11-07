@@ -84,7 +84,6 @@ export const AppReducer = (state, action) => {
             approvedRecipes: sortedRecipes,
           };
         case "index":
-          console.log(sortedRecipes)
           return {
             ...state,
             indexRecipes: sortedRecipes,

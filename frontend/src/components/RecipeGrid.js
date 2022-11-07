@@ -9,7 +9,7 @@ import { IconButton, Grid, CircularProgress, Divider, Typography } from "@materi
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
-const RECIPES_PER_PAGE = 12;
+const RECIPES_PER_PAGE = 3;
 const EMPTY_GRID_STR = {
   inbox: "Your inbox is empty...",
   favorites: "You haven't favorited any recipes yet...",
@@ -90,7 +90,7 @@ export default function RecipeGrid(props) {
         setShouldShowFwdBtn(false)
       }
     }
-  }, [indexRecipes]);
+  }, [indexRecipes, props.type]);
 
   useEffect(() => {
     if (props.type === "inbox") {
@@ -100,7 +100,7 @@ export default function RecipeGrid(props) {
         setShouldShowFwdBtn(false);
       }  
     }
-  }, [pendingRecipes]);
+  }, [pendingRecipes, props.type]);
 
   useEffect(() => {
     if (props.type === "rejected") {
@@ -110,15 +110,19 @@ export default function RecipeGrid(props) {
         setShouldShowFwdBtn(false);
       }  
     }
-  }, [rejectedRecipes]);
+  }, [rejectedRecipes, props.type]);
 
   useEffect(() => {
     setPage(1);
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     page === 1 && setShouldShowBackBtn(false);
   }, [page]);
+
+  useEffect(() => {
+    setPageNavBtns(page, weeklyRecipes)
+  }, [weeklyRecipes])
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -130,11 +134,15 @@ export default function RecipeGrid(props) {
     let nextPage = page;
     dir === "back" ? (nextPage -= 1) : (nextPage += 1);
     setPage(nextPage);
-    nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
-    nextPage < recipes.length / RECIPES_PER_PAGE
+    setPageNavBtns(nextPage, recipes);
+  };
+
+  const setPageNavBtns = (page, recipes) => {
+    page > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
+    page < recipes.length / RECIPES_PER_PAGE
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
-  };
+  }
 
   const renderRecipes = (recipes, type) => {
     const recipePage = recipes.slice(
