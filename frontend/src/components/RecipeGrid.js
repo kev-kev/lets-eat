@@ -9,7 +9,7 @@ import { IconButton, Grid, CircularProgress, Divider, Typography } from "@materi
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
-const RECIPES_PER_PAGE = 12;
+const RECIPES_PER_PAGE = 2;
 const EMPTY_GRID_STR = {
   inbox: "Your inbox is empty...",
   favorites: "You haven't favorited any recipes yet...",
@@ -121,7 +121,7 @@ export default function RecipeGrid(props) {
   }, [page]);
 
   useEffect(() => {
-    setPageNavBtns(page, indexRecipes)
+    if(props.type === "index") setPageNavBtns(page, indexRecipes)
   }, [indexRecipes, page])
 
   const handleChangeWeek = (dir) => {
