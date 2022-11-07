@@ -122,7 +122,7 @@ export default function RecipeGrid(props) {
 
   useEffect(() => {
     setPageNavBtns(page, indexRecipes)
-  }, [indexRecipes])
+  }, [indexRecipes, page])
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -157,7 +157,7 @@ export default function RecipeGrid(props) {
   };
 
   const renderPageNav = (recipes) => {
-    if(recipes.length > RECIPES_PER_PAGE || recipes.length === RECIPES_PER_PAGE && page !== 1){
+    if(recipes.length > RECIPES_PER_PAGE || (recipes.length === RECIPES_PER_PAGE && page !== 1)){
       return (
         <div className={classes.pageNav}>
           <IconButton disabled={!shouldShowBackBtn} onClick={() => handlePageClick("back", recipes)}>

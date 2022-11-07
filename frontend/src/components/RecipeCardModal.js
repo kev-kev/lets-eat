@@ -30,8 +30,6 @@ const renderIngredientTypography = (ingredients, classes) => {
   }
 };
 
-
-
 const CardModal = (props) => {
   const classes = modalStyle();
   const { openRecipeId, deleteRecipe, setOpenRecipeId, showEditForm, setShowEditForm, user } = useContext(GlobalContext);
