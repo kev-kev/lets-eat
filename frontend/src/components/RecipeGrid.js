@@ -83,7 +83,7 @@ export default function RecipeGrid(props) {
         setShouldShowFwdBtn(false);
       }  
     } else if(props.type === "favorite") {
-      const favs = indexRecipes.filter(recipe => recipe.isFavorited);
+      const favs = [...weeklyRecipes, ...indexRecipes].filter(recipe => recipe.isFavorited);
       if(favs.length / RECIPES_PER_PAGE >1) {
         setShouldShowFwdBtn(true);
       } else {
@@ -224,8 +224,8 @@ export default function RecipeGrid(props) {
     case "favorites":
       return (
         <div className={classes.recipeGridSectionContainer}>
-          {renderRecipes(indexRecipes.filter(recipe => recipe.isFavorited), "favorites")}
-          {renderPageNav(indexRecipes.filter(recipe => recipe.isFavorited))}
+          {renderRecipes([...weeklyRecipes, ...indexRecipes].filter(recipe => recipe.isFavorited), "favorites")}
+          {renderPageNav([...weeklyRecipes, ...indexRecipes].filter(recipe => recipe.isFavorited))}
         </div>
       )
     case "rejected":
