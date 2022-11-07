@@ -140,6 +140,57 @@ export const GlobalProvider = ({ children }) => {
     })
   };
 
+  const toggleFavorite = (recipe) => {
+    const subType = isWeeklyRecipe(recipe.weeks) ? "weekly" : "approved";
+    fetch(rootURL + `/recipes/${recipe.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: recipe.id,
+        is_favorited: recipe.isFavorited,
+      }),
+    })
+    .then((r) => handleErrors(r, "FAVORITE_RECIPE_FAILURE"))
+    .then((data) => {
+      if (data) {
+        if(isWeeklyRecipe(recipe.weeks)){
+          // update weeklyRecipe
+          const updatedWeeklyRecipes = state.weeklyRecipes
+          const recipeIndex = updatedWeeklyRecipes.findIndex(
+            (target) => target.id === recipe.id
+          );
+          updatedWeeklyRecipes[recipeIndex] = recipe;
+          dispatch({
+            type: "FAVORITE_RECIPE_SUCCESS",
+            payload: {
+              updatedWeeklyRecipes,
+              type: subType,
+            },
+          });
+        } else {
+          // update approved and index
+          const updatedApprovedRecipes = state.approvedRecipes;
+          let recipeIndex = updatedApprovedRecipes.findIndex(
+            (target) => target.id === recipe.id
+          );
+          updatedApprovedRecipes[recipeIndex] = recipe;
+          const updatedIndexRecipes = state.indexRecipes;
+          recipeIndex = updatedIndexRecipes.findIndex(
+            (target) => target.id === recipe.id
+          );
+          updatedIndexRecipes[recipeIndex] = recipe;
+          dispatch({
+            type: "FAVORITE_RECIPE_SUCCESS",
+            payload: {
+              updatedApprovedRecipes,
+              updatedIndexRecipes
+            },
+          });
+        }
+      }
+    })
+  }
+
   const setIndexRecipes = (term) => {
     if (term.length < 1) {
       dispatch({
@@ -482,6 +533,7 @@ export const GlobalProvider = ({ children }) => {
         setSubmitClicked,
         snackbarMessage: state.snackbarMessage,
         setSnackbarMessage,
+        toggleFavorite
       }}
     >
       {children}

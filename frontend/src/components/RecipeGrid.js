@@ -75,12 +75,41 @@ export default function RecipeGrid(props) {
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(false);
 
   useEffect(() => {
-    if (indexRecipes.length / RECIPES_PER_PAGE > 1) {
-      setShouldShowFwdBtn(true);
-    } else {
-      setShouldShowFwdBtn(false);
+    if (props.type === "index") {
+      if (indexRecipes.length / RECIPES_PER_PAGE > 1) {
+        setShouldShowFwdBtn(true);
+      } else {
+        setShouldShowFwdBtn(false);
+      }  
+    } else if(props.type === "favorite") {
+      const favs = indexRecipes.filter(recipe => recipe.isFavorited);
+      if(favs.length / RECIPES_PER_PAGE >1) {
+        setShouldShowFwdBtn(true);
+      } else {
+        setShouldShowFwdBtn(false)
+      }
     }
   }, [indexRecipes]);
+
+  useEffect(() => {
+    if (props.type === "inbox") {
+      if (pendingRecipes.length / RECIPES_PER_PAGE > 1) {
+        setShouldShowFwdBtn(true);
+      } else {
+        setShouldShowFwdBtn(false);
+      }  
+    }
+  }, [pendingRecipes]);
+
+  useEffect(() => {
+    if (props.type === "rejected") {
+      if (rejectedRecipes.length / RECIPES_PER_PAGE > 1) {
+        setShouldShowFwdBtn(true);
+      } else {
+        setShouldShowFwdBtn(false);
+      }  
+    }
+  }, [rejectedRecipes]);
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -88,40 +117,42 @@ export default function RecipeGrid(props) {
       : changeSelectedWeek(add(selectedWeek, { days: 7 }));
   };
 
-  const handlePageClick = (dir) => {
+  const handlePageClick = (dir, recipes) => {
     let nextPage = page;
     dir === "back" ? (nextPage -= 1) : (nextPage += 1);
     setPage(nextPage);
     nextPage > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
-    nextPage < indexRecipes.length / RECIPES_PER_PAGE
+    nextPage < recipes.length / RECIPES_PER_PAGE
       ? setShouldShowFwdBtn(true)
       : setShouldShowFwdBtn(false);
   };
 
-  const renderIndexRecipes = () => {
-    const indexRecipePage = indexRecipes.slice(
+  const renderRecipes = (recipes, type) => {
+    const recipePage = recipes.slice(
       (page - 1) * RECIPES_PER_PAGE,
       page * RECIPES_PER_PAGE
     );
-    return renderGridContainer(indexRecipePage, "index", classes);
+    return renderGridContainer(recipePage, type, classes);
   };
 
   const renderGroceryListModal = () => {
     if (weeklyRecipes.length > 0) return <GroceryListModal />;
   };
 
-  const renderPageNav = () => {
-    return (
-      <div className={classes.pageNav}>
-        <IconButton disabled={!shouldShowBackBtn} onClick={() => handlePageClick("back")}>
-          <ChevronLeftRounded color={shouldShowBackBtn ? "primary" : "disabled"} />
-        </IconButton>
-        {page}
-        <IconButton disabled={!shouldShowFwdBtn} onClick={() => handlePageClick("fwd")}>
-          <ChevronRightRounded color={shouldShowFwdBtn ? "primary" : "disabled"} />
-        </IconButton>
-      </div>
-    )
+  const renderPageNav = (recipes) => {
+    if(recipes.length > RECIPES_PER_PAGE){
+      return (
+        <div className={classes.pageNav}>
+          <IconButton disabled={!shouldShowBackBtn} onClick={() => handlePageClick("back", recipes)}>
+            <ChevronLeftRounded color={shouldShowBackBtn ? "primary" : "disabled"} />
+          </IconButton>
+          {page}
+          <IconButton disabled={!shouldShowFwdBtn} onClick={() => handlePageClick("fwd", recipes)}>
+            <ChevronRightRounded color={shouldShowFwdBtn ? "primary" : "disabled"} />
+          </IconButton>
+        </div>
+      )
+    }
   }
   if (isFetchingRecipes) {
     return(
@@ -154,35 +185,37 @@ export default function RecipeGrid(props) {
           <div className={classes.recipeGridSectionContainer}>
             <Typography variant="h5" className={classes.sectionTitle}>Recipe Collection</Typography>
             <div className={classes.searchBar}><SearchBar /></div>
-            {renderIndexRecipes()}
-            {renderPageNav()}
+            {renderRecipes(indexRecipes, "index")}
+            {renderPageNav(indexRecipes)}
           </div>
         </>
       );
     case "inbox":
       return (
         <>
-          <Typography variant="h5" className={classes.sectionTitle}>Pending Recipes</Typography>
           <div className={classes.recipeGridSectionContainer}>
-            {renderGridContainer(inboxRecipes, props.type, classes)}
+            {renderGridContainer(inboxRecipes, "inbox", classes)}
           </div>
           <Divider className={classes.divider}/>
           <Typography variant="h5" className={classes.sectionTitle}>Your Submitted Recipes</Typography>
           <div className={classes.recipeGridSectionContainer}>
-            {renderGridContainer(pendingRecipes, "pending", classes)}
+            {renderRecipes(pendingRecipes, "pending")}
+            {renderPageNav(pendingRecipes)}
           </div>
         </>
       );
     case "favorites":
       return (
         <div className={classes.recipeGridSectionContainer}>
-          {renderGridContainer(indexRecipes.filter(recipe => recipe.isFavorited), props.type, classes)}
+          {renderRecipes(indexRecipes.filter(recipe => recipe.isFavorited, "favorites"))}
+          {renderPageNav(indexRecipes.filter(recipe => recipe.isFavorited))}
         </div>
       )
     case "rejected":
       return (
         <div className={classes.recipeGridSectionContainer}>
-          {renderGridContainer(rejectedRecipes, props.type, classes)}
+          {renderRecipes(rejectedRecipes, "rejected")}
+          {renderPageNav(rejectedRecipes)}
         </div>
       )
   }

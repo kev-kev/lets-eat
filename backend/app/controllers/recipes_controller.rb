@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   def index
-    recipes = Recipe.order(:id).map{|recipe| format_recipe(recipe)}
+    recipes = Recipe.order(:id).reverse_order.map{|recipe| format_recipe(recipe)}
     render json: {recipes: recipes}, status: 200
   end
 
@@ -16,12 +16,12 @@ class RecipesController < ApplicationController
         if new_ingredient.valid?
           recipe_ingredient = RecipeIngredient.find_or_create_by({"recipe_id"=> recipe[:id], "ingredient_id"=> new_ingredient[:id], "count"=>ingredient[:count]})
         else
-          render json: {error: 'uh oh! your ingredients are invalid 🥺👉👈'}, status: 400
+          render json: {error: 'Uh oh! Your ingredients are invalid'}, status: 400
         end
       end
       render json: {}, status: 201
     else
-      render json: {error: 'uh oh! your recipe is invalid 🥺👉👈'}, status: 400
+      render json: {error: 'Uh oh! Your recipe is invalid'}, status: 400
     end
   end
 
@@ -32,10 +32,10 @@ class RecipesController < ApplicationController
         if recipe.update(recipe_params.except(:ingredients))
           render json: {}, status: 200
         else
-          render json: {error: "unable to update recipe"}, status: 400
+          render json: {error: "Unable to update recipe"}, status: 400
         end
     else
-      render json: {error: "unable to update recipe, recipe could not be found"}, status: 400
+      render json: {error: "Unable to update recipe, recipe could not be found"}, status: 400
     end
   end
 
@@ -43,7 +43,7 @@ class RecipesController < ApplicationController
     if Recipe.destroy(params[:id])
       render json: {recipes: Recipe.order(:created_at).map{ |recipe| format_recipe(recipe) }}, status: 200
     else
-      render json: {error: 'unable to delete recipe'}, status: 400
+      render json: {error: 'Unable to delete recipe'}, status: 400
     end
   end
 

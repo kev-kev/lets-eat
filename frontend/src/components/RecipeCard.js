@@ -23,14 +23,14 @@ import { differenceInDays, formatISO, parseISO } from "date-fns";
 
 const RecipeCard = (props) => {
   const classes = recipeCardStyle();
-  const { setWeeks, selectedWeek, editRecipe, setOpenRecipeId } = useContext(GlobalContext);
+  const { setWeeks, selectedWeek, setOpenRecipeId, toggleFavorite } = useContext(GlobalContext);
   const [raised, setRaised] = useState(false);
 
   const renderIndexCardBody = () => {
     return (
       <IconButton
         onClick={() => {
-          editRecipe({
+          toggleFavorite({
             ...props.recipe,
             isFavorited: !props.recipe.isFavorited,
           });

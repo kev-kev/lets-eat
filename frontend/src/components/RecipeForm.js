@@ -5,6 +5,14 @@ import { recipeFormStyle } from "../muiStyling";
 import { GlobalContext } from "../context/GlobalState";
 import { Formik, Form, FieldArray, FastField } from "formik";
 
+const DEFAULT_IMG_URLS = [
+  "https://lets-eat-imgs.s3.amazonaws.com/recipe_1.jpg",
+  "https://lets-eat-imgs.s3.amazonaws.com/recipe_2.png",
+  "https://lets-eat-imgs.s3.amazonaws.com/recipe_3.jpeg",
+  "https://lets-eat-imgs.s3.amazonaws.com/recipe_4.jpeg",
+  "https://lets-eat-imgs.s3.amazonaws.com/recipe_5.jpeg",
+];
+
 const isSubmitDisabled = (values, recipe) => {
   const changedFields = () => {
     if(!recipe) return false;
@@ -55,8 +63,11 @@ export const RecipeForm = ({ recipe }) => {
     )
   }
 
-
   const handleFormSubmit = (values, setSubmitting, resetForm) => {
+    if(!values.imgUrl.trim()){
+      const defaultImgUrl = DEFAULT_IMG_URLS[Math.floor(Math.random()*DEFAULT_IMG_URLS.length)];
+      values.imgUrl = defaultImgUrl;
+    }
     setButtonText("Submitting")
     setSubmitDisabled(true);
       if (recipe) {

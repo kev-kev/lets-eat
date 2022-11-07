@@ -71,7 +71,6 @@ export const AppReducer = (state, action) => {
         isFetchingRecipes: false,
       };
     case "SET_RECIPES":
-      //eslint-disable-next-line
       const sortedRecipes = action.payload[1].sort((a, b) => b.id - a.id);
       switch (action.payload[0]) {
         case "weekly":
@@ -152,11 +151,11 @@ export const AppReducer = (state, action) => {
         const updatedIndexRecipes = [
           ...state.indexRecipes,
           updatedRecipe,
-        ].sort((a, b) => a.id - b.id);
+        ].sort((a, b) => b.id - a.id);
         const updatedApprovedRecipes = [
           ...state.approvedRecipes,
           updatedRecipe,
-        ].sort((a, b) => a.id - b.id);
+        ].sort((a, b) => b.id - a.id);
         return {
           ...state,
           inboxRecipes: updatedInboxRecipes,
@@ -330,6 +329,27 @@ export const AppReducer = (state, action) => {
       return {
         ...state,
         submitClicked: action.payload
+      };
+    case "FAVORITE_RECIPE_SUCCESS":
+      if (action.payload.type === "weekly") {
+        return {
+          ...state,
+          weeklyRecipes: action.payload.updatedWeeklyRecipes,
+        };
+      } else {
+        return {
+          ...state,
+          approvedRecipes: action.payload.updatedApprovedRecipes,
+          indexRecipes: action.payload.updatedIndexRecipes
+        };
+      };
+    case "FAVORITE_RECIPE_FAILURE":
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          grid: action.payload,
+        },
       };
     case "LOGOUT_USER":
       localStorage.clear();
