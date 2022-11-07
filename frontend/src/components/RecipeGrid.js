@@ -20,6 +20,7 @@ const EMPTY_GRID_STR = {
 }
 
 const renderRecipeCards = (recipes, type, className) => {
+  console.log(type)
   if (recipes.length === 0){
     return(
       <Typography variant="subtitle1" align="center" className={className} style={{width: "100%", color: "gray"}}>
@@ -121,8 +122,8 @@ export default function RecipeGrid(props) {
   }, [page]);
 
   useEffect(() => {
-    setPageNavBtns(page, weeklyRecipes)
-  }, [weeklyRecipes])
+    setPageNavBtns(page, indexRecipes)
+  }, [indexRecipes])
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -224,7 +225,7 @@ export default function RecipeGrid(props) {
     case "favorites":
       return (
         <div className={classes.recipeGridSectionContainer}>
-          {renderRecipes(indexRecipes.filter(recipe => recipe.isFavorited, "favorites"))}
+          {renderRecipes(indexRecipes.filter(recipe => recipe.isFavorited), "favorites")}
           {renderPageNav(indexRecipes.filter(recipe => recipe.isFavorited))}
         </div>
       )
