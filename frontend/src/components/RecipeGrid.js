@@ -9,7 +9,7 @@ import { IconButton, Grid, CircularProgress, Divider, Typography } from "@materi
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
-const RECIPES_PER_PAGE = 3;
+const RECIPES_PER_PAGE = 12;
 const EMPTY_GRID_STR = {
   inbox: "Your inbox is empty...",
   favorites: "You haven't favorited any recipes yet...",
@@ -20,7 +20,6 @@ const EMPTY_GRID_STR = {
 }
 
 const renderRecipeCards = (recipes, type, className) => {
-  console.log(type)
   if (recipes.length === 0){
     return(
       <Typography variant="subtitle1" align="center" className={className} style={{width: "100%", color: "gray"}}>
@@ -158,7 +157,7 @@ export default function RecipeGrid(props) {
   };
 
   const renderPageNav = (recipes) => {
-    if(recipes.length > RECIPES_PER_PAGE){
+    if(recipes.length > RECIPES_PER_PAGE || recipes.length === RECIPES_PER_PAGE && page !== 1){
       return (
         <div className={classes.pageNav}>
           <IconButton disabled={!shouldShowBackBtn} onClick={() => handlePageClick("back", recipes)}>
