@@ -68,9 +68,10 @@ export default function RecipeGrid(props) {
     selectedWeek,
     changeSelectedWeek,
     isFetchingRecipes,
+    page,
+    setPage
   } = useContext(GlobalContext);
 
-  const [page, setPage] = useState(1);
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(false);
 
@@ -110,6 +111,10 @@ export default function RecipeGrid(props) {
       }  
     }
   }, [rejectedRecipes]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [])
 
   const handleChangeWeek = (dir) => {
     dir === "back"

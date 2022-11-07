@@ -29,6 +29,7 @@ const initialState = {
   showEditForm: false,
   submitClicked: false,
   snackbarMessage: "",
+  page: 1
 };
 const rootURL = process.env.REACT_APP_API_URL;
 
@@ -195,7 +196,7 @@ export const GlobalProvider = ({ children }) => {
     if (term.length < 1) {
       dispatch({
         type: "SET_RECIPES",
-        payload: ["index", state.approvedRecipes.sort((a, b) => b.id - a.id)],
+        payload: ["index", state.approvedRecipes],
       });
     } else {
       const filteredApprovedRecipes = state.approvedRecipes.filter((recipe) => {
@@ -203,7 +204,7 @@ export const GlobalProvider = ({ children }) => {
       });
       dispatch({
         type: "SET_RECIPES",
-        payload: ["index", filteredApprovedRecipes.sort((a, b) => b.id - a.id)],
+        payload: ["index", filteredApprovedRecipes],
       });
     }
   };
@@ -249,7 +250,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  function loginUser(username, password) {
+  const loginUser = (username, password) => {
     dispatch({
       type: "LOGIN_USER",
     });
@@ -276,7 +277,7 @@ export const GlobalProvider = ({ children }) => {
       })
     }
 
-  function persistentLogin() {
+  const persistentLogin = () => {
     if (localStorage.getItem("authToken")) {
       dispatch({
         type: "LOGIN_USER",
@@ -297,7 +298,7 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  function submitRecipe({ name, link, notes, imgUrl, ingredients }) {
+  const submitRecipe = ({ name, link, notes, imgUrl, ingredients }) => {
     dispatch({
       type: "SUBMITTING_RECIPE",
     });
@@ -337,7 +338,7 @@ export const GlobalProvider = ({ children }) => {
       })
   }
 
-  function deleteRecipe(recipeId, type) {
+  const deleteRecipe = (recipeId, type) => {
     fetch(rootURL + `/recipes/${recipeId}`, {
       method: "DELETE",
       headers: {
@@ -362,7 +363,7 @@ export const GlobalProvider = ({ children }) => {
       })
   }
 
-  function changeRecipeStatus(recipeId, recipe_status) {
+  const changeRecipeStatus = (recipeId, recipe_status) => {
     fetch(rootURL + `/recipes/${recipeId}/`, {
       method: "PATCH",
       headers: {
@@ -387,7 +388,7 @@ export const GlobalProvider = ({ children }) => {
       })
   }
 
-  function setWeeks(recipeId, weeks) {
+  const setWeeks = (recipeId, weeks) => {
     fetch(rootURL + `/recipes/${recipeId}`, {
       method: "PATCH",
       headers: {
@@ -410,7 +411,7 @@ export const GlobalProvider = ({ children }) => {
       })
   }
 
-  function getGroceryList() {
+  const getGroceryList = () => {
     dispatch({
       type: "GETTING_GROCERY_LIST",
     })
@@ -426,7 +427,7 @@ export const GlobalProvider = ({ children }) => {
       })
   }
 
-  function changeSelectedWeek(week) {
+  const changeSelectedWeek = (week) => {
     const newWeeklyRecipes = [];
     const newApprovedRecipes = [];
     const indexRecipes = [...state.approvedRecipes, ...state.weeklyRecipes]
@@ -478,13 +479,20 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
-  function logoutUser() {
+  const setPage = (num) => {
+    dispatch({
+      type: "SET_PAGE",
+      payload: num
+    })
+  }
+
+  const logoutUser = () => {
     dispatch({
       type: "LOGOUT_USER",
     });
   }
 
-  function clearErrors() {
+  const clearErrors = () => {
     dispatch({
       type: "CLEAR_ERRORS",
     });
@@ -533,7 +541,9 @@ export const GlobalProvider = ({ children }) => {
         setSubmitClicked,
         snackbarMessage: state.snackbarMessage,
         setSnackbarMessage,
-        toggleFavorite
+        toggleFavorite,
+        page: state.page,
+        setPage,
       }}
     >
       {children}
