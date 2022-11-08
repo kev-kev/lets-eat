@@ -9,7 +9,7 @@ import { IconButton, Grid, CircularProgress, Divider, Typography } from "@materi
 import { gridStyle } from "../muiStyling";
 import GroceryListModal from "./GroceryListModal";
 
-const RECIPES_PER_PAGE = 2;
+const RECIPES_PER_PAGE = 12;
 const EMPTY_GRID_STR = {
   inbox: "Your inbox is empty...",
   favorites: "You haven't favorited any recipes yet...",
