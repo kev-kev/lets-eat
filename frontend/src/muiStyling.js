@@ -56,7 +56,6 @@ export const homeStyle = makeStyles((theme) => ({
     flexGrow: 1,
     height: "100vh",
     overflow: "auto",
-    padding: "1vh",
   },
   container: {
     margin: 0,

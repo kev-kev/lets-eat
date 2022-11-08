@@ -24,7 +24,7 @@ import avatar from "../assets/avatar.png"
 
 const Sidebar = () => {
   const classes = sidebarStyle();
-  const { logoutUser, inboxRecipes, changeSelectedWeek } =
+  const { logoutUser, inboxRecipes, changeSelectedWeek, setPage } =
     useContext(GlobalContext);
   let history = useHistory();
 
@@ -39,6 +39,7 @@ const Sidebar = () => {
 
   const handleClick = () => {
     document.querySelector("main").scrollTo(0,0);
+    setPage(1);
   }
 
   return (

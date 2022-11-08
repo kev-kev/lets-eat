@@ -39,7 +39,7 @@ export const AppReducer = (state, action) => {
     case "SUBMIT_RECIPE_SUCCESS":
       return {
         ...state,
-        pendingRecipes: [...state.pendingRecipes, action.payload],
+        pendingRecipes: [action.payload, ...state.pendingRecipes],
         isSubmittingRecipe: false,
       };
     case "SUBMIT_RECIPE_FAILURE":

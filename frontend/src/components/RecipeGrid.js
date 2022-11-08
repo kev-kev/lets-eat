@@ -74,55 +74,32 @@ export default function RecipeGrid(props) {
 
   const [shouldShowBackBtn, setShouldShowBackBtn] = useState(false);
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(false);
-
+  
   useEffect(() => {
-    if (props.type === "index") {
-      if (indexRecipes.length / RECIPES_PER_PAGE > 1) {
-        setShouldShowFwdBtn(true);
-      } else {
-        setShouldShowFwdBtn(false);
-      }  
-    } else if(props.type === "favorite") {
-      const favs = [...weeklyRecipes, ...indexRecipes].filter(recipe => recipe.isFavorited);
-      if(favs.length / RECIPES_PER_PAGE >1) {
-        setShouldShowFwdBtn(true);
-      } else {
-        setShouldShowFwdBtn(false)
-      }
+    if (props.type == "index") {
+      setPageNavBtns(page, indexRecipes);
     }
-  }, [indexRecipes, props.type]);
-
-  useEffect(() => {
-    if (props.type === "inbox") {
-      if (pendingRecipes.length / RECIPES_PER_PAGE > 1) {
-        setShouldShowFwdBtn(true);
-      } else {
-        setShouldShowFwdBtn(false);
-      }  
+    if (props.type == "favorites") {
+      console.log("Update the page nav buttons now!!")
     }
-  }, [pendingRecipes, props.type]);
+  }, [indexRecipes, page, props.type]);
 
   useEffect(() => {
-    if (props.type === "rejected") {
-      if (rejectedRecipes.length / RECIPES_PER_PAGE > 1) {
-        setShouldShowFwdBtn(true);
-      } else {
-        setShouldShowFwdBtn(false);
-      }  
+    if (props.type == "inbox") {
+      setPageNavBtns(page, pendingRecipes);
     }
-  }, [rejectedRecipes, props.type]);
+  }, [pendingRecipes, page, props.type]);
 
   useEffect(() => {
-    setPage(1);
-  }, []); // eslint-disable-line
+    if (props.type == "rejected") {
+      setPageNavBtns(page, rejectedRecipes);
+    }
+  }, [rejectedRecipes, page, props.type]);
 
   useEffect(() => {
-    page === 1 && setShouldShowBackBtn(false);
-  }, [page]);
-
-  useEffect(() => {
-    if(props.type === "index") setPageNavBtns(page, indexRecipes)
-  }, [indexRecipes, page])
+    if(page > 1 && indexRecipes.length % RECIPES_PER_PAGE === 0) setPage(page - 1);
+    setPageNavBtns(page, indexRecipes);
+  }, [weeklyRecipes]);
 
   const handleChangeWeek = (dir) => {
     dir === "back"
@@ -139,9 +116,12 @@ export default function RecipeGrid(props) {
 
   const setPageNavBtns = (page, recipes) => {
     page > 1 ? setShouldShowBackBtn(true) : setShouldShowBackBtn(false);
-    page < recipes.length / RECIPES_PER_PAGE
-      ? setShouldShowFwdBtn(true)
-      : setShouldShowFwdBtn(false);
+    const totalPages = recipes.length / RECIPES_PER_PAGE;
+    if (page < totalPages) {
+      setShouldShowFwdBtn(true);
+    } else {
+      setShouldShowFwdBtn(false);
+    }
   }
 
   const renderRecipes = (recipes, type) => {
@@ -224,8 +204,7 @@ export default function RecipeGrid(props) {
     case "favorites":
       return (
         <div className={classes.recipeGridSectionContainer}>
-          {renderRecipes([...weeklyRecipes, ...indexRecipes].filter(recipe => recipe.isFavorited), "favorites")}
-          {renderPageNav([...weeklyRecipes, ...indexRecipes].filter(recipe => recipe.isFavorited))}
+          {renderGridContainer([...weeklyRecipes, ...indexRecipes].filter(recipe => recipe.isFavorited), "favorites", classes)}
         </div>
       )
     case "rejected":
