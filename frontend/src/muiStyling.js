@@ -210,9 +210,6 @@ export const modalStyle = makeStyles((theme) => ({
     justifyContent: "space-between",
     padding: theme.spacing(3, 0, 1),
   },
-  deleteContainer: {
-    margin: 0
-  },
   noteTypography: {
     marginLeft: theme.spacing(1)
   },
@@ -257,7 +254,6 @@ export const recipeFormStyle = makeStyles((theme) => ({
     width: "auto",
   },
   field: {
-    // margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px`
     margin: theme.spacing(1, 0, 1)
   },
   unitSelect: {
