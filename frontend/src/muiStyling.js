@@ -44,7 +44,8 @@ export const gridStyle = makeStyles((theme) => ({
     padding: theme.spacing(7, 0)
   },
   mobileTypography: {
-    fontSize: 15
+    fontSize: 15,
+    display: "inline-block"
   }
 }), {index: 1});
 
@@ -76,6 +77,9 @@ export const titleStyle = makeStyles((theme) => ({
   pageTitle: {
     paddingTop: theme.spacing(4),
     textAlign: "center",
+    ["@media (max-width:600px)"]: { // eslint-disable-line
+      paddingTop: theme.spacing(10)
+    },
   }
 }));
 
@@ -331,6 +335,7 @@ export const topnavStyle = makeStyles((theme) => ({
   appBar: {
     color: "white",
     boxShadow: "none",
+    position: "fixed",
   },
   toolBar: {
     display: "flex",

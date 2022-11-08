@@ -39,8 +39,9 @@ const Home = () => {
     return (
       <div className={mobile ? "" : classes.root}>
         <CssBaseline />
-        {mobile ? <Topnav /> : <Sidebar />}
+        {!mobile && <Sidebar />}
         <main className={classes.content}>
+          {mobile && <Topnav />}
           <Container maxWidth={false} className={classes.container}>
             <Switch>
               <Route path="/new">

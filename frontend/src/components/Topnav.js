@@ -41,7 +41,7 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           <IconButton 
             edge="start"
