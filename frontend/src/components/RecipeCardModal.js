@@ -5,7 +5,8 @@ import {
   Button,
   Typography,
   Fade,
-  Backdrop
+  Backdrop,
+  useMediaQuery
 } from "@material-ui/core";
 import { DeleteForeverRounded, EditRounded, ArrowBackRounded } from "@material-ui/icons";
 import { modalStyle } from "../muiStyling";
@@ -34,6 +35,7 @@ const CardModal = (props) => {
   const classes = modalStyle();
   const { openRecipeId, deleteRecipe, setOpenRecipeId, showEditForm, setShowEditForm, user } = useContext(GlobalContext);
   const [showDelete, setShowDelete] = useState(false);
+  const mobile = useMediaQuery('(max-width:600px)');
 
   const renderCardModalBody = () => {
     if (showEditForm) {
@@ -56,6 +58,7 @@ const CardModal = (props) => {
             <div className={classes.deleteButtonContainer}>
               <Button
                 className={classes.button}
+                size={mobile ? "small" : ""}
                 color="primary"
                 variant="contained"
                 autoFocus
@@ -66,6 +69,7 @@ const CardModal = (props) => {
               </Button>
               <Button
                 className={classes.button}
+                size={mobile ? "small" : ""}
                 color="primary"
                 variant="contained"
                 onClick={() => {

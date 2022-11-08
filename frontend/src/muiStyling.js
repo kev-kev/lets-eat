@@ -202,16 +202,13 @@ export const modalStyle = makeStyles((theme) => ({
   ingredientTypography: {
     marginLeft: theme.spacing(1)
   },
-  deleteContainer: {
-
-  },
   deleteTypography: {
     margin: theme.spacing(1)
   },
   deleteButtonContainer: {
     display: "flex",
     justifyContent: "space-between",
-    padding: theme.spacing(3, 0, 1)
+    padding: theme.spacing(3, 0, 1),
   },
   noteTypography: {
     marginLeft: theme.spacing(1)
