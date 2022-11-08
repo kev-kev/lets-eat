@@ -114,6 +114,7 @@ const CardModal = (props) => {
   }
 
   const renderEditButton = () => {
+    debugger
     if (props.recipe.status === "approved" || props.recipe.submittedBy === user.username){
       return (
         <div className={classes.buttonContainer}>

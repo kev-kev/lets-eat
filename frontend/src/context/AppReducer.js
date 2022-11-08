@@ -141,6 +141,7 @@ export const AppReducer = (state, action) => {
       const updatedRecipe = state.inboxRecipes.find(
         (recipe) => recipe.id === action.payload.recipeId
       );
+      updatedRecipe.status = action.payload.recipe_status;
       const indexToRemove = state.inboxRecipes.indexOf(updatedRecipe);
       const updatedInboxRecipes = [
           ...state.inboxRecipes.slice(0, indexToRemove),
