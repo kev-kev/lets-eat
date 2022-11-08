@@ -52,37 +52,39 @@ const CardModal = (props) => {
       );
     } else if (showDelete) {
       return(
-        <div className={classes.deleteContainer}>
-          <Typography variant={"body1"} className={classes.deleteTypography}>Delete Recipe?</Typography>
-          <Typography variant={"body2"} className={classes.deleteTypography}>Recipe will be deleted forever.</Typography>
-            <div className={classes.deleteButtonContainer}>
-              <Button
-                className={classes.button}
-                size={mobile ? "small" : ""}
-                color="primary"
-                variant="contained"
-                autoFocus
-                startIcon={<ArrowBackRounded className={classes.backArrow}/>}
-                onClick={() => setShowDelete(false)}
-              >
-                Nevermind...
-              </Button>
-              <Button
-                className={classes.button}
-                size={mobile ? "small" : ""}
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  deleteRecipe(props.recipe.id, props.type);
-                  setShowDelete(false);
-                  setOpenRecipeId(null);
-                }}
-                startIcon={<DeleteForeverRounded/>}
-              >
-                Delete Forever
-              </Button>
-            </div>
-        </div>
+        <>
+          <div className={classes.deleteTypographyContainer}>
+            <Typography className={classes.deleteTypography}>Delete Recipe?</Typography>
+            <Typography className={classes.deleteTypography}>Recipe will be deleted forever.</Typography>
+          </div>
+          <div className={classes.deleteButtonContainer}>
+            <Button
+              className={classes.button}
+              size={mobile ? "small" : ""}
+              color="primary"
+              variant="contained"
+              autoFocus
+              startIcon={<ArrowBackRounded className={classes.backArrow}/>}
+              onClick={() => setShowDelete(false)}
+            >
+              Nevermind...
+            </Button>
+            <Button
+              className={classes.button}
+              size={mobile ? "small" : ""}
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                deleteRecipe(props.recipe.id, props.type);
+                setShowDelete(false);
+                setOpenRecipeId(null);
+              }}
+              startIcon={<DeleteForeverRounded/>}
+            >
+              Delete Forever
+            </Button>
+          </div>
+        </>
       )
     } else {
       return (

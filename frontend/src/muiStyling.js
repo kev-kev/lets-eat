@@ -210,6 +210,9 @@ export const modalStyle = makeStyles((theme) => ({
     justifyContent: "space-between",
     padding: theme.spacing(3, 0, 1),
   },
+  deleteContainer: {
+    margin: 0
+  },
   noteTypography: {
     marginLeft: theme.spacing(1)
   },
