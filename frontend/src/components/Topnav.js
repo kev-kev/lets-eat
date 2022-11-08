@@ -13,11 +13,13 @@ import { Menu as MenuIcon, MailOutlineRounded as MailIcon } from '@material-ui/i
 import { topnavStyle } from "../muiStyling"
 import { GlobalContext } from "../context/GlobalState";
 import avatar from "../assets/avatar.png"
+import { useHistory } from "react-router-dom";
 
 export default function MenuAppBar() {
   const classes = topnavStyle();
-  const { inboxRecipes } = useContext(GlobalContext)
+  const { inboxRecipes, logoutUser } = useContext(GlobalContext)
   const [anchorEl, setAnchorEl] = useState(null);
+  let history = useHistory();
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -31,6 +33,11 @@ export default function MenuAppBar() {
     document.querySelector("main").scrollTo(0,0);
     setAnchorEl(null);
   }
+
+  const handleLogout = () => {
+    logoutUser();
+    history.push("/");
+  };
 
   return (
     <div className={classes.root}>
@@ -99,6 +106,12 @@ export default function MenuAppBar() {
                 to="/rejected"
               >
                 Rejected
+              </MenuItem>
+              <MenuItem
+                className={classes.menuItem}
+                onClick={handleLogout}
+              >
+                Log out
               </MenuItem>
             </div>
           </Menu>

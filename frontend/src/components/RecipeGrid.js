@@ -76,22 +76,19 @@ export default function RecipeGrid(props) {
   const [shouldShowFwdBtn, setShouldShowFwdBtn] = useState(false);
   
   useEffect(() => {
-    if (props.type == "index") {
+    if (props.type === "index") {
       setPageNavBtns(page, indexRecipes);
-    }
-    if (props.type == "favorites") {
-      console.log("Update the page nav buttons now!!")
     }
   }, [indexRecipes, page, props.type]);
 
   useEffect(() => {
-    if (props.type == "inbox") {
+    if (props.type === "inbox") {
       setPageNavBtns(page, pendingRecipes);
     }
   }, [pendingRecipes, page, props.type]);
 
   useEffect(() => {
-    if (props.type == "rejected") {
+    if (props.type === "rejected") {
       setPageNavBtns(page, rejectedRecipes);
     }
   }, [rejectedRecipes, page, props.type]);
@@ -99,7 +96,7 @@ export default function RecipeGrid(props) {
   useEffect(() => {
     if(page > 1 && indexRecipes.length % RECIPES_PER_PAGE === 0) setPage(page - 1);
     setPageNavBtns(page, indexRecipes);
-  }, [weeklyRecipes]);
+  }, [weeklyRecipes]); // eslint-disable-line
 
   const handleChangeWeek = (dir) => {
     dir === "back"

@@ -89,7 +89,10 @@ export const loginStyle = makeStyles((theme) => ({
   kirby: {
     width: "auto",
     height: theme.spacing(12),
-    margin: "20px",
+    margin: theme.spacing(4),
+    ["@media (max-width:600px)"]: { // eslint-disable-line
+      margin: 0
+    },
   },
   form: {
     width: "100%", // Fix IE 11 issue.
