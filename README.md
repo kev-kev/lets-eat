@@ -1,17 +1,35 @@
-## Let's Eat
+# Let's Eat
 
-A web app to help you and your partner decide what recipes to make and eat!
+### A web app designed to help you and your partner plan what recipes to make and eat!
 
-<img src="./lets-eat.png" width="500" />
+[Live Demo](https://lets-eat-demo.herokuapp.com/)
 
-Users can submit recipes to each other to be added to a shared recipe bank. When a recipe is submitted, it's sent to your partner for them to vote on. Approved recipes get added to your shared recipe bank, while rejected recipes are deleted.
-End up not liking a recipe that you've added to your collection? Recipes can still be deleted from your recipe collection after they've been approved.
+For access to the demo, [contact me](https://kev-kev.github.io/portfolio)
 
-Walkthrough: https://bit.ly/3hJCjbX
+<img src="./lets-eat-desktop.png" width="500" />
 
-Backend: Rails API
 
-Frontend: React JS
+<img src="./lets-eat-mobile.png" height="500" />
+
+
+<hr/>
+
+
+Users can submit recipes to each other to be added to a shared collection. When a recipe is submitted, it's sent to your partner for them to approve or reject. Approved recipes get added to your collection, while rejected recipes are deleted.
+
+Plan out what you'd like to make in advance using the weekly planner. Recipes from your collection can be added to (and removed from) the weekly section. After choosing what you'd like to cook for the week, users can generate a grocery list, which combines and consolidates ingredients from all your weekly recipes into one convenient list.
+
+Made a mistake or ended up not liking that viral 5-minute recipe you added? Recipes can easily be edited or deleted from your recipe collection.
+
+Let's Eat uses media queries and fluid grid breakpoints, so it's responsive on devices of all sizes.
+
+Backend: Ruby on Rails API
+
+Frontend: ReactJS
+
+
+<hr>
+
 
 ## 1. Install dependencies (optionally you can install [yarn](https://yarnpkg.com/)):
 
@@ -46,5 +64,3 @@ In another terminal window, navigate to the frontend folder and run:
 or if you are using yarn, run:
 
 `yarn start`
-
-.
