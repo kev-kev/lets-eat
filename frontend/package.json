@@ -19,14 +19,14 @@
     "react-dom": "^16.13.1",
     "react-responsive": "^9.0.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-uuid": "^1.0.2",
     "serialize-javascript": ">=3.1.0",
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "heroku-postbuild": "npm run build",
     "test": "jest --coverage",
     "eject": "react-scripts eject",
