@@ -13,4 +13,19 @@ class Recipe < ApplicationRecord
   end
 
   enum status: [:pending, :approved, :rejected]
+
+  after_initialize :set_defaults
+  def set_defaults
+    default_recipe_imgs = [
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_1.jpg",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_2.png",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_3.jpeg",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_4.jpeg",
+      "https://lets-eat-imgs.s3.amazonaws.com/recipe_5.jpeg",
+    ]
+
+    if !self.img_url || self.img_url == "" || self.img_url == " "
+      self.img_url = default_recipe_imgs.sample
+    end
+  end
 end
