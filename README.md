@@ -2,7 +2,7 @@
 
 ### A web app designed to help you and your partner plan what recipes to make and eat!
 
-[Live Demo](https://lets-eat-demo.herokuapp.com/)
+[Live Demo](https://lets-eat-together.onrender.com/)
 
 For access to the demo, [contact me](https://kev-kev.github.io/portfolio)
 
